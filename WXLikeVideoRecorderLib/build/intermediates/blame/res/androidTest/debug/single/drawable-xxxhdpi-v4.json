@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxxhdpi-v4\\ms_smallvideo_icon.png",
+        "source": "E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\build\\intermediates\\bundles\\debug\\res\\drawable-xxxhdpi-v4\\ms_smallvideo_icon.png"
+    },
+    {
+        "merged": "E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxxhdpi-v4\\ms_video_focus_icon.png",
+        "source": "E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\build\\intermediates\\bundles\\debug\\res\\drawable-xxxhdpi-v4\\ms_video_focus_icon.png"
+    }
+]

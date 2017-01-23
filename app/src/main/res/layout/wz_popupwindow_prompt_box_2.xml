@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/promptBox_ll_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="70dp"
+        android:paddingTop="80dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="#50000000"
+        android:orientation="vertical" >
+
+        <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+
+            <WebView
+                android:id="@+id/promptBox_tv_content_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></WebView>
+
+        <!--</ScrollView>-->
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/promptBox_tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:textColor="@color/but_text_color" />
+
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/promptBox_tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/wz_shape_prompt_border_cancel"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/but_text_color"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/promptBox_tv_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/wz_shape_prompt_border_submit"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/but_text_color"
+                android:textSize="16sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

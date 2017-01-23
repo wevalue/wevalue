@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/head" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_shouyi"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="收益排行榜"
+            android:textColor="@drawable/tab_text_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/line_we_fgx" />
+
+        <RadioButton
+            android:id="@+id/rb_zhuanfa"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:button="@null"
+            android:gravity="center"
+            android:text="转发排行榜"
+            android:textColor="@drawable/tab_text_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/line_we_fgx" />
+
+        <RadioButton
+            android:id="@+id/rb_dashang"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:button="@null"
+            android:gravity="center"
+            android:text="打赏排行榜"
+            android:textColor="@drawable/tab_text_color" />
+
+    </RadioGroup>
+
+    <ImageView
+        android:id="@+id/cursor"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white"
+        android:scaleType="matrix"
+        android:src="@mipmap/myreleaseline"
+        />
+
+
+    <com.wevalue.view.LazyViewPager
+        android:id="@+id/lvp_ranking_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.wevalue.view.LazyViewPager>
+
+</LinearLayout>

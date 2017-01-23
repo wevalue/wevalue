@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:Android="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@mipmap/main_top"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/tv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical"
+        android:src="@mipmap/back" />
+
+    <TextView
+        android:id="@+id/tv_head_title"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginRight="5dp"
+        android:background="@mipmap/xuanze_kuang"
+        android:gravity="center"
+        android:paddingRight="10dp"
+        android:text="综合"
+        android:textSize="16sp"></TextView>
+    <!--android:imeOptions="actionDone"-->
+
+    <EditText
+        android:id="@+id/ed_sousuo"
+        android:layout_width="0dp"
+        android:layout_height="31dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="25dp"
+        android:layout_weight="1"
+        android:background="@drawable/shape_edit_comment"
+        android:hint="输入你想的，去发现"
+        android:imeOptions="actionSearch"
+        android:maxLength="11"
+        android:paddingLeft="30dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+</LinearLayout>

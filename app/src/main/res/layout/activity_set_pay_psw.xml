@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:background="@color/background"
+    android:orientation="vertical" >
+
+    <include layout="@layout/head"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:id="@+id/tv_isTel_email"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="手机号:"
+                    android:textColor="@color/text_black"
+                    android:layout_marginLeft="15dp"
+                    />
+                <TextView
+                    android:id="@+id/tv_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/login_text_blue"
+                    android:textColorHint="@color/login_text_blue"
+                    android:hint="请输入手机号"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/ui_line"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="验证码:"
+                    android:textColor="@color/text_black"
+                    android:layout_marginLeft="15dp"
+                    />
+                <EditText
+                    android:id="@+id/et_code"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="40dp"
+                    android:background="@null"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="10dp"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/login_text_blue"
+                    android:textColorHint="@color/login_text_blue"
+                    android:hint="请输入验证码"/>
+
+
+                <Button
+                    android:id="@+id/but_getcode"
+                    android:layout_width="90dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@mipmap/kuang_huoquyanzhengma"
+                    android:text="获取验证码"
+                    android:textSize="14sp"
+                    android:textColor="@color/login_text_blue"
+                    />
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/ui_line"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:id="@+id/tv_hint"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="支付密码:"
+                    android:textColor="@color/text_black"
+                    android:layout_marginLeft="15dp"
+                    />
+
+                <EditText
+                    android:id="@+id/et_psw"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:inputType="numberPassword"
+                    android:maxLength="6"
+                    android:minEms="6"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/login_text_blue"
+                    android:textColorHint="@color/login_text_blue"
+                    android:hint="请输入新密码"/>
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/ui_line"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="再次输入:"
+                    android:textColor="@color/text_black"
+                    android:layout_marginLeft="15dp"
+                    />
+                <EditText
+                    android:id="@+id/et_psw_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@null"
+                    android:textSize="16sp"
+                    android:inputType="numberPassword"
+                    android:maxLength="6"
+                    android:minEms="6"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/login_text_blue"
+                    android:textColorHint="@color/login_text_blue"
+                    android:hint="请再次输入密码"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/ui_line"
+                />
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:text="尊："
+                    android:textColor="@color/text_black"
+                    android:textSize="14sp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/paypsw_hint_content"
+                    android:textSize="14sp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textColor="@color/text_black"
+                    />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="1dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="请设置密保问题一：(四选一)"
+                    android:gravity="center_vertical"
+                    android:id="@+id/tv_wenti_1"
+                    android:textColor="@color/but_text_color"
+                    android:textSize="16sp"
+                    />
+                <EditText
+                    android:visibility="invisible"
+                    android:id="@+id/et_wenti_daan_1"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/but_text_color"
+                    android:paddingLeft="10dp"
+                    android:textSize="16sp"
+                    android:hint="请输入答案"
+                    android:background="@null"
+                    />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="1dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:id="@+id/tv_wenti_2"
+                    android:textColor="@color/but_text_color"
+                    android:textSize="16sp"
+                    android:text="请设置密保问题二：(四选一)"
+                    />
+                <EditText
+                    android:visibility="invisible"
+                    android:id="@+id/et_wenti_daan_2"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/but_text_color"
+                    android:paddingLeft="10dp"
+                    android:textSize="16sp"
+                    android:hint="请输入答案"
+                    android:background="@null"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,82 @@
+apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'wevalue'
+            keyPassword 'wevalue'
+            storeFile file('E:/Works/WeValue/wevalue.jks')
+            storePassword 'wevalue'
+        }
+    }
+    compileSdkVersion 23
+    buildToolsVersion '24.0.2'
+    useLibrary 'org.apache.http.legacy'
+    allprojects {
+        repositories {
+            maven { url "https://jitpack.io" }
+        }
+    }
+    defaultConfig {
+        applicationId "com.wevalue"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.01"
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "6194f9a1b89403697b961b62",
+                JPUSH_CHANNEL: "developer-default",
+        ]
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //    testCompile 'junit:junit:4.12'
+    compile files('libs/BaiduLBS_Android.jar')
+    compile 'com.google.code.gson:gson:2.7'
+    //    compile 'com.yalantis:starwarstiles:0.1.0'
+    compile project(path: ':base_library_pullToRefresh_chenyoca')
+    compile project(path: ':photoview_library')
+    compile project(path: ':WXLikeVideoRecorderLib')
+    compile 'com.android.support:design:23.0.1'
+    //    compile files('libs/nineoldanimatin.jar')
+    compile project(path: ':library')
+    compile files('libs/pinyin4j-2.5.0.jar')
+    compile files('libs/zxing.jar')
+    compile 'cn.jiguang:jpush:2.1.8'
+    compile files('libs/ShareSDK-QZone-2.7.7.jar')
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile files('libs/libammsdk.jar')
+    compile files('libs/alipaySdk-20161009.jar')
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    //    compile files('libs/pgyer_sdk_2.4.5.jar')
+    compile project(path: ':pickerview')
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+   // compile 'com.github.chrisbanes.photoview:library:1.2.4'
+    compile files('libs/umeng-analytics-v6.0.8.jar')
+    compile 'com.jiechic.library:xUtils:2.6.14'
+    compile files('libs/okhttp-2.1.0.jar')
+    compile files('libs/okio-1.0.0.jar')
+}
+

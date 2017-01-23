@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/catalog"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="#ededed"
+        android:textColor="@color/text_black"
+        android:paddingLeft="15dip"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:text="我的好友"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_head" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/image"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/tv_haoyou"
+            >
+            <TextView
+                android:id="@+id/tv_tel_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="昵称"
+                android:layout_marginRight="10dp"
+                android:singleLine="true"
+                android:textColor="@color/text_black"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/tv_dengji"
+                android:layout_toRightOf="@+id/tv_tel_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="等级"
+                android:singleLine="true"
+                android:textColor="@color/login_text_blue"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/tv_phonename"
+                android:layout_below="@+id/tv_tel_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:maxLength="20"
+                android:text="个人简介"
+                android:singleLine="true"
+                android:textColor="@color/but_text_color"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_haoyou"
+            android:layout_width="70dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/search_add_friend"
+            android:gravity="center"
+            android:text="加好友"
+            android:textColor="@color/but_text_color"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tv_jiaguanzhu"
+            android:visibility="gone"
+            android:layout_width="70dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tv_haoyou"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/search_add_friend"
+            android:gravity="center"
+            android:text="加关注"
+            android:textColor="@color/but_text_color"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</LinearLayout>

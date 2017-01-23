@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/head" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="昵称 :"
+            android:textColor="@color/text_black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="30dp"
+            android:background="@null"
+            android:hint="请输入昵称"
+            android:maxLength="10"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/login_text_blue"
+            android:textColorHint="@color/login_text_blue"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="85dp"
+        android:layout_marginRight="30dp"
+        android:background="@color/ui_line" />
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    >
+
+    <TextView
+    android:layout_width="70dp"
+    android:layout_height="wrap_content"
+    android:textSize="16sp"
+    android:text="性别:"
+    android:textColor="@color/text_black"
+    android:layout_marginLeft="30dp"
+    />
+
+    <TextView
+    android:id="@+id/tv_set_sex"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textSize="16sp"
+     android:layout_marginLeft="20dp"
+    android:layout_marginRight="30dp"
+    android:gravity="center_vertical"
+    android:textColor="@color/login_text_blue"
+    android:textColorHint="@color/login_text_blue"
+    android:hint="选择性别"/>
+
+
+    </LinearLayout>
+
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_marginLeft="85dp"
+    android:layout_marginRight="30dp"
+    android:background="@color/ui_line"
+    />
+
+    <!--<LinearLayout -->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="45dp"-->
+    <!--android:orientation="horizontal"-->
+    <!--&gt;-->
+    <!---->
+    <!--<TextView -->
+    <!--android:layout_width="80dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textSize="16sp"-->
+    <!--android:text="地区:"-->
+    <!--android:textColor="@color/text_black"-->
+    <!--android:layout_marginLeft="30dp"-->
+    <!--/>-->
+    <!--<TextView-->
+    <!--android:id="@+id/tv_choice_city"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@null"-->
+    <!--android:textSize="16sp"-->
+    <!--android:paddingLeft="40dp"-->
+    <!--android:layout_marginRight="30dp"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:textColor="@color/login_text_blue"-->
+    <!--android:textColorHint="@color/login_text_blue"-->
+    <!--android:hint="选择地区"/>-->
+    <!---->
+    <!--</LinearLayout>-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_marginLeft="85dp"-->
+    <!--android:layout_marginRight="30dp"-->
+    <!--android:background="@color/ui_line"-->
+    <!--/>-->
+
+    <!--<LinearLayout -->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:orientation="horizontal"-->
+    <!--&gt;-->
+    <!--<TextView -->
+    <!--android:layout_width="80dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textSize="16sp"-->
+    <!--android:text="简介:"-->
+    <!--android:textColor="@color/text_black"-->
+    <!--android:layout_marginLeft="30dp"-->
+    <!--/>-->
+    <!---->
+    <!--<EditText -->
+    <!--android:id="@+id/et_jianjie"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:paddingBottom="5dp"-->
+    <!--android:paddingTop="5dp"-->
+    <!--android:background="@null"-->
+    <!--android:paddingLeft="40dp"-->
+    <!--android:layout_marginRight="30dp"-->
+    <!--android:maxLength="20"-->
+    <!--android:textSize="16sp"-->
+    <!--android:textColor="@color/login_text_blue"-->
+    <!--android:textColorHint="@color/login_text_blue"-->
+    <!--android:hint="请输入简介"/>-->
+
+    <!--</LinearLayout>-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_marginLeft="85dp"-->
+    <!--android:layout_marginRight="30dp"-->
+    <!--android:background="@color/ui_line"-->
+    <!--/>-->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="属性:"
+            android:textColor="@color/text_black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_choice_attr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="30dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="选择属性"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/login_text_blue"
+            android:textColorHint="@color/login_text_blue"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="85dp"
+        android:layout_marginRight="30dp"
+        android:background="@color/ui_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="密码:"
+            android:textColor="@color/text_black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_psw"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="30dp"
+            android:background="@null"
+            android:digits="0123456789
+              abcdefghigklmnopqrstuvwxyz
+             ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/login_text_blue"
+            android:textColorHint="@color/login_text_blue"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="85dp"
+        android:layout_marginRight="30dp"
+        android:background="@color/ui_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="再输入:"
+            android:textColor="@color/text_black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_psw_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="30dp"
+            android:background="@null"
+            android:digits="0123456789
+              abcdefghigklmnopqrstuvwxyz
+             ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:hint="请再次输入密码"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/login_text_blue"
+            android:textColorHint="@color/login_text_blue"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="85dp"
+        android:layout_marginRight="30dp"
+        android:background="@color/ui_line" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background">
+
+        <TextView
+            android:id="@+id/tv_xieyi"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:background="@color/background"
+            android:gravity="center"
+            android:text="注册代表你同意《微值协议》"
+            android:textColor="@color/but_text_color"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_register_but"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_above="@+id/tv_xieyi"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/orange"
+            android:gravity="center"
+            android:text="注册"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

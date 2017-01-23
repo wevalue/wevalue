@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/prsv_ScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"
+        android:dividerHeight="0dip"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:scrollbars="none"
+        android:smoothScrollbar="true">
+
+        <LinearLayout
+            android:id="@+id/ll_xs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:id="@+id/ll_cityInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/world_beijing_background"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginLeft="290dp"
+                    android:id="@+id/textshiftcity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:padding="5dp"
+                    android:text="切换城市"
+                    android:textSize="12dp"
+                    android:background="@mipmap/world_beijing_shiftcity"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/textrefresh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:text="已更新"
+                    android:textSize="16dp"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/textcity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center_horizontal"
+                    android:text="当前城市：北京"
+                    android:textSize="16dp"
+                    android:textColor="@color/white" />
+
+
+            </RelativeLayout>
+
+            <com.wevalue.view.NoScrollListview
+                android:id="@+id/mNoScrollListview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:divider="@color/background"
+                android:dividerHeight="0.5dp"
+                android:listSelector="@color/transparent"
+                android:scrollbars="none"
+                android:visibility="visible" />
+        </LinearLayout>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
+
+</LinearLayout>

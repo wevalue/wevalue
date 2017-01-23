@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_rank_list_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/head"></include>
+
+    <LinearLayout
+        android:id="@+id/ll_catalog"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+          >
+        <TextView
+            android:id="@+id/tv_world"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="世界"
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/tv_influence"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="影响力"
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/tv_friends"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="朋友们"
+            android:textSize="16sp"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/cursor"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="@color/white"
+        android:scaleType="matrix"
+        android:src="@mipmap/myreleaseline"
+        />
+
+    <FrameLayout
+        android:id="@+id/ft_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
+</LinearLayout>

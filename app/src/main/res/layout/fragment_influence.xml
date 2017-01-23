@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp">
+
+        <LinearLayout
+            android:id="@+id/ll_quanbu_ui"
+            android:layout_width="0dp"
+            android:layout_height="31dp"
+            android:layout_weight="1.2"
+            android:background="@mipmap/influence_xiala"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_friends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="2dp"
+                android:text="影响力"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/influence_friends" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_heat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:background="@mipmap/influence_redu"
+            android:drawableRight="@mipmap/influence_heat"
+            android:gravity="center"
+            android:paddingRight="15dp"
+            android:text="热度"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:background="@mipmap/influence_redu"
+            android:drawableRight="@mipmap/influence_price"
+            android:gravity="center"
+            android:paddingRight="15dp"
+            android:text="价格"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:background="@mipmap/influence_redu"
+            android:drawableRight="@mipmap/influence_time"
+            android:gravity="center"
+            android:paddingRight="15dp"
+            android:text="时间"
+            android:textColor="@color/black" />
+
+
+        <!---->
+        <!--<LinearLayout-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/wz_text_shape_button"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal">-->
+
+        <!---->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/wz_text_shape_button"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal">-->
+
+        <!---->
+
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_marginLeft="10dp"-->
+
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/wz_text_shape_button"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal">-->
+
+        <!---->
+
+        <!--</LinearLayout>-->
+
+    </LinearLayout>
+
+    <ProgressBar
+
+        android:layout_gravity="center"
+        android:id="@+id/pgb"
+        android:indeterminateDrawable="@drawable/indeterminte_drawable"
+        android:visibility="gone"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/prsv_ScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"
+        android:dividerHeight="0dip"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:paddingTop="5dp"
+        android:scrollbars="none"
+        android:smoothScrollbar="true">
+
+        <com.wevalue.view.NoScrollListview
+            android:id="@+id/mNoScrollListview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/background"
+            android:dividerHeight="8dp"
+            android:listSelector="@color/transparent"
+            android:scrollbars="none"
+            android:visibility="visible" />
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
+</LinearLayout>

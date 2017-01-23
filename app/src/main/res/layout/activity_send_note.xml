@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <include layout="@layout/head_3"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <EditText
+                android:id="@+id/et_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:minLines="5"
+                android:textColor="@color/but_text_color"
+                android:textSize="16sp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:gravity="start"
+                />
+            <RelativeLayout
+                android:id="@+id/rl_videoAndAudio"
+                android:visibility="gone"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="3dp">
+                <ImageView
+                    android:id="@+id/iv_video_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/bg"/>
+                <ImageView
+                    android:id="@+id/iv_paly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/play"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+            <com.wevalue.view.NoScrollGridView
+                android:visibility="gone"
+                android:id="@+id/nsgv_send_note_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:horizontalSpacing="3dp"
+                android:verticalSpacing="3dp"
+                android:gravity="center_vertical"
+                android:stretchMode="columnWidth"
+                android:listSelector="@color/transparent"
+                android:numColumns="3"
+                >
+            </com.wevalue.view.NoScrollGridView>
+
+
+            <include layout="@layout/include_send_note_1"/>
+
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

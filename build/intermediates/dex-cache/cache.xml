@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\okhttp-2.1.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9b51f7d0c19f179b52beab7cb433f8ba5cf786a4">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\okhttp-2.1.0_e2f5c42858e7fd6a6000c5afcfb4a964e51e6ead\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\SDK\extras\android\m2repository\com\android\support\support-annotations\23.1.1\support-annotations-23.1.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.1.1_2d8b48096e1da4c96bb56725af3580061fb9bde9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\glide-3.7.0_1f3ddf859a86296da03fddcf50d19f29d652df81\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.mcxiaoke.volley\library\1.0.19\a8f23f65fc1e522ee4a1a697ee569901a46741fa\library-1.0.19.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="a8f23f65fc1e522ee4a1a697ee569901a46741fa">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\library-1.0.19_78f0bb23743784ba5177d1b9659f6fa6d6a7bd06\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\pinyin4j-2.5.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="baadab97e6e787f81c369eb27c4ca52a8b38290c">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\pinyin4j-2.5.0_af2dfc5211399e980968fb7ed666747c69eb3bf2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\ShareSDK-QZone-2.7.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="558713df8d3cc7543375e51e63a0638aeb0e2e9f">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\ShareSDK-QZone-2.7.7_8046557e437dbb352bc49d063b3dcc001c52108a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\build\intermediates\exploded-aar\cn.jiguang\jpush\2.1.8\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="6bae57dc18d9f50285151cc473361ddaddb156cd">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\cn.jiguang-jpush-2.1.8_e99aa8d9ad7020566b458e8e10771d785808fdca\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.7\751f548c85fa49f330cecbb1875893f971b33c4e\gson-2.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="751f548c85fa49f330cecbb1875893f971b33c4e">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.7_2e85dbf641c4a16c73925139bd4ff50ebb0450dd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\umeng-analytics-v6.0.8.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9bc143560e9f01e5d299a752e8013e636b7ac13f">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\umeng-analytics-v6.0.8_4b95a3c1cda0e79e344567c41b139e952027bb36\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="2fe6dd6f6bc8c29d2982668153c561c0eb973fc4">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_82b4918720754a55602c064bfa7552fb82d43195\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\zxing.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="6fe22c135f19470d05b0816d5996c442ef67da3f">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\zxing_6d877460fe6ff4f08e2f33e02497843af051c8ca\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\build\intermediates\exploded-aar\com.getkeepsafe.relinker\relinker\1.2.2\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b64dd5f01bc37de289f90fd59299b0c76d119611">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.getkeepsafe.relinker-relinker-1.2.2_e8977424b7f1f9ad177bc9739f1aaac530c05376\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5c7e01026fe57ee10bda0d1c442f053bdf12a1bc">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_d9bf3467018882826c719d038b44c4f89bc02189\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\io.realm\realm-annotations\2.0.2\e97f64258ef6d0daeb26b3b88988215e0b14d9b2\realm-annotations-2.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="e97f64258ef6d0daeb26b3b88988215e0b14d9b2">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\realm-annotations-2.0.2_2593ecce20622d842ef4073b6c8eac396734ad35\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\MobCommons-2016.0830.1940.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="ca36dc249a46648f8c8f53ad5ee4a935e80956a8">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\MobCommons-2016.0830.1940_c1fad4b6b6f6abc45d3955b7c2789c91102e284c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\io.reactivex\rxjava\1.1.6\2586312cd2b8a511e4c6236736f5a039fc0f2273\rxjava-1.1.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="2586312cd2b8a511e4c6236736f5a039fc0f2273">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\rxjava-1.1.6_11e5c01617ee667d4a45ba948a656c898b69cbfd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\ShareSDK-Wechat-2.7.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b97a04213d77372e90bbd280ad2149a0623e4e0b">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\ShareSDK-Wechat-2.7.7_fb4a50062bc05e57e76341faf389734565b36e67\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\MobTools-2016.0830.1940.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="210bf77409df74387b9df1d7987de310a2e0b145">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\MobTools-2016.0830.1940_cdb53e5a2be149c55a8d19439a9f5e378c427b14\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\build\intermediates\exploded-aar\com.jiechic.library\xUtils\2.6.14\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="fe75606aa9485cd20177894c204291a79a0cc7ab">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.jiechic.library-xUtils-2.6.14_3794f59576b2526c9ce68c710adf6fa1ee91d758\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\ShareSDK-SinaWeibo-2.7.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9d6f84355d4f6252240aebc751ba21eaea07e2dd">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\ShareSDK-SinaWeibo-2.7.7_d1bd5dd7a4b944c06e889d9bf40d1f7439dfd6ff\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\build\intermediates\exploded-aar\WeValue\WXLikeVideoRecorderLib\unspecified\jars\libs\ffmpeg.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b9c230c5a796ee378d478fb877c94dff3d485cfe">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\8\ffmpeg_8c20394a00a0f6fb04408c3adfca9ee44b8fbd14\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\pgyer_sdk_2.4.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b6dcf861c0dd2c7673110b9b3da795be86d4acd0">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\pgyer_sdk_2.4.5_3608a40107f69bacfc6ec15164108a760b19b696\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\build\intermediates\exploded-aar\com.android.support\design\23.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-23.0.1_388f1ae5907d83c9a3bdee3a9610e3a879245456\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\BaiduLBS_Android.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b833a076b8eca1608de4d124ca4bbb39257ce020">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\BaiduLBS_Android_0dd1dd1e16890d19c66a61f4df2f4f86bc5c1636\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.1.1_14fdeb4a4544c69f5f9af25cc9a90bc684280468\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\build\intermediates\exploded-aar\io.realm\realm-android-library\2.0.2\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="716030a2499afe39ca5b9c8bc09bc868ca372206">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\io.realm-realm-android-library-2.0.2_495f4dcd5aca4c3a1dd5e9dc89b1d85c8de5728f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\libs\internal_impl-23.1.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.1.1_674832248d17bf0b1485040c273c92e300619360\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\okio-1.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="02534c458682c73f5b9871131ab3098d3f987ca3">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\okio-1.0.0_3c8b2a862f9487aee05bcee87743130651f01805\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\build\intermediates\exploded-aar\WeValue\WXLikeVideoRecorderLib\unspecified\jars\libs\javacpp.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="be2d53e0ee959256f758f075024402c7b5ea03fd">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\8\javacpp_239d70819f1a9b7b6b9fc26757e37325afbdf355\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\ShareSDK-Core-2.7.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b060c818956585ebc16be9c034ba4970e5552d25">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\ShareSDK-Core-2.7.7_1da0611f705ffdea6b236d81a0d4cb0292611eba\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\build\intermediates\exploded-aar\io.reactivex\rxandroid\1.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5a2386ad9bfff580b206a7fe305cdccd00798159">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\io.reactivex-rxandroid-1.2.1_4417ad59faaf3e8928bec14d1cbace85889cc506\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\build\intermediates\exploded-aar\cn.jiguang\jpush\2.1.8\jars\libs\jpush-android-2.1.8.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="86f15a6e7555400affa351041374d5129e99660e">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\jpush-android-2.1.8_af7402d12788953e2850d3530ecaf252cf4eab00\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\nineoldanimatin.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="0c9460454d4f6578861c7312199a6bab9e1a9db7">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\nineoldanimatin_cb80251f25d45782c099e307fb1650bdfe623dcb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\ShareSDK-Wechat-Moments-2.7.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="1029839bf5cfc4522366b1fc17eb30627fa5b431">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\ShareSDK-Wechat-Moments-2.7.7_c0f68e658bad6fed911a24764ca9cf2134420223\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\alipaySdk-20161009.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="1275bd1ea78a827546f3014ee58371d65ab1280e">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\alipaySdk-20161009_a6f3252c8517d1810e00c0bd25449f5b2dc83af6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.1.1_1cae154457ca0ce82520d672b48c6937d3adc9dd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\libammsdk.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d7c2f29c05b35e8c8713be2b81c41cf18f98b64a">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\libammsdk_fac175d4ce4f7b6766be745b5dd22bf2b3a34679\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Works\WeValue\app\libs\ShareSDK-Wechat-Core-2.7.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7942d022e2d3d8ed7ccbaf17df22da2eeddddfff">
+        <dex dex="E:\Works\WeValue\app\build\intermediates\transforms\dex\debug\folders\1000\2\ShareSDK-Wechat-Core-2.7.7_a814dc8774796068755f410afa35414b81a6fe68\classes.dex" />
+    </item>
+
+</items>

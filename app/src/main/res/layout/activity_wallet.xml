@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <include layout="@layout/head" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_suiyin"
+        android:layout_width="match_parent"
+
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_height="45dp"
+        >
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="我的碎银"
+            android:textColor="@color/text_black"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:id="@+id/tv_suiyin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/iv_zuo"
+            android:textColor="@color/text_black"
+            android:layout_marginRight="10dp"
+            android:text="0"
+            android:textSize="16sp"
+            android:layout_centerInParent="true"
+            />
+        <ImageView
+            android:id="@+id/iv_zuo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/arrows_left_2"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/ui_line"
+            />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_shouzhimingxi"
+        android:layout_width="match_parent"
+
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_height="45dp"
+        >
+        <TextView
+            android:id="@+id/tv_shouzhimingxi"
+            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="收支明细"
+            android:textColor="@color/text_black"
+            android:textSize="16sp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/arrows_left_2"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/ui_line"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_quanxian"
+        android:layout_width="match_parent"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="1dp"
+        >
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="我的权限"
+            android:textColor="@color/text_black"
+            android:textSize="16sp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/arrows_left_2"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/ui_line"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

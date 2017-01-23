@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/background"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/head"/>
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+       <ImageView
+           android:id="@+id/iv_12"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:src="@mipmap/banben_logo"
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="60dp"
+           />
+       <TextView
+           android:layout_below="@+id/iv_12"
+           android:id="@+id/tv_banbenhao"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="10dp"
+           android:textSize="16sp"
+           android:text="你好"
+           android:textColor="@color/gray_text"
+           />
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/iv_12"
+           android:layout_marginTop="60dp"
+           android:layout_marginLeft="20dp"
+           android:layout_marginRight="20dp"
+           android:orientation="vertical"
+           >
+           <RelativeLayout
+               android:id="@+id/rl_bangzhu"
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               >
+               <TextView
+                   android:id="@+id/_9"
+                   android:layout_height="wrap_content"
+                   android:layout_width="100dp"
+                   android:layout_centerVertical="true"
+                   android:layout_marginLeft="15dp"
+                   android:text="说明与帮助"
+                   android:textColor="@color/black"
+                   android:textSize="16sp"
+                   />
+
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentRight="true"
+                   android:layout_centerVertical="true"
+                   android:layout_marginRight="15dp"
+                   android:src="@mipmap/arrows_left_2"/>
+
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_alignParentBottom="true"
+                   android:layout_height="0.5dp"
+                   android:background="@color/ui_line"
+                   android:layout_marginRight="15dp"
+                   android:layout_marginLeft="15dp"
+                   />
+
+           </RelativeLayout>
+
+           <RelativeLayout
+               android:id="@+id/rl_xieyi"
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               >
+               <TextView
+                   android:layout_height="wrap_content"
+                   android:layout_width="100dp"
+                   android:layout_centerVertical="true"
+                   android:layout_marginLeft="15dp"
+                   android:text="用户协议"
+                   android:textColor="@color/black"
+                   android:textSize="16sp"
+                   />
+
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentRight="true"
+                   android:layout_centerVertical="true"
+                   android:layout_marginRight="15dp"
+                   android:src="@mipmap/arrows_left_2"/>
+
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_alignParentBottom="true"
+                   android:layout_height="0.5dp"
+                   android:background="@color/ui_line"
+                   android:layout_marginRight="15dp"
+                   android:layout_marginLeft="15dp"
+                   />
+
+           </RelativeLayout>
+
+       </LinearLayout>
+
+       <TextView
+           android:id="@+id/tv_1222"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerHorizontal="true"
+           android:layout_alignParentBottom="true"
+           android:layout_marginBottom="20dp"
+           android:textSize="12sp"
+           android:textColor="@color/gray_2_text"
+           android:text="Copyright © 2016 www.wzbzchina.com"
+           />
+
+       <TextView
+           android:layout_above="@+id/tv_1222"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerHorizontal="true"
+           android:textColor="@color/gray_2_text"
+           android:textSize="12sp"
+           android:text="陕西微值辩证信息科技有限公司版权所有"
+           />
+
+   </RelativeLayout>
+
+
+</LinearLayout>

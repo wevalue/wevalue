@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true"
+    >
+
+
+    <item android:drawable="@mipmap/a_1" android:duration="300"/>
+    <item android:drawable="@mipmap/a_2" android:duration="300"/>
+    <item android:drawable="@mipmap/a_3" android:duration="300"/>
+    <item android:drawable="@mipmap/a_4" android:duration="300"/>
+  <!--  <item android:drawable="@mipmap/load_animation_h4" android:duration="150"/>
+    <item android:drawable="@mipmap/load_anim·ion_h5" android:duration="150"/>
+    <item android:drawable="@mipmap/load_animation_h6" android:duration="150"/>
+    <item android:drawable="@mipmap/load_animation_h7" android:duration="150"/>
+    <item android:drawable="@mipmap/load_animation_h8" android:duration="150"/>
+    <item android:drawable="@mipmap/load_animation_h9" android:duration="150"/>
+    <item android:drawable="@mipmap/load_animation_h10" android:duration="150"/>-->
+   <!-- <item android:drawable="@mipmap/gif_11" android:duration="150"/>
+    <item android:drawable="@mipmap/gif_12" android:duration="150"/>
+    <item android:drawable="@mipmap/gif_13" android:duration="150"/>
+    <item android:drawable="@mipmap/gif_14" android:duration="150"/>
+    <item android:drawable="@mipmap/gif_15" android:duration="150"/>
+    <item android:drawable="@mipmap/gif_16" android:duration="150"/>
+    <item android:drawable="@mipmap/gif_17" android:duration="150"/>
+    <item android:drawable="@mipmap/gif_18" android:duration="150"/>
+    <item android:drawable="@mipmap/gif_19" android:duration="150"/>
+    <item android:drawable="@mipmap/gif_20" android:duration="150"/>-->
+
+
+</animation-list>

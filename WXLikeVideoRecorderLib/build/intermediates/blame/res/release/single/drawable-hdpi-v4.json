@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ms_smallvideo_icon.png",
+        "source": "E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\src\\main\\res\\drawable-hdpi\\ms_smallvideo_icon.png"
+    },
+    {
+        "merged": "E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ms_video_focus_icon.png",
+        "source": "E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\src\\main\\res\\drawable-hdpi\\ms_video_focus_icon.png"
+    }
+]

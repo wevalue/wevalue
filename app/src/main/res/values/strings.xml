@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">微值</string>
+    <string name="hint_email">请输入邮箱</string>
+    <string name="hint_send_note_content">说点儿什么...（最多输入300字）</string>
+    <string name="hint_send_note_content_2">说点儿什么吧...（100字以内）</string>
+    <string name="hint_send_note_content_3">说点儿什么吧...（2000字以内）</string>
+    <string name="type_hint_content">尊敬的用户：您的选择对于您和我们都很重要，类别选择可能会为您节省宝贵的时间、提升阅读效率、增加志同道合的好友可能；对于我们，则便于我们更多的了解您，为您提供更好的服务。您小小的勾选，会为微值和您带来价值。</string>
+    <string name="paypsw_hint_content">密保问题是我们为您设计的最后的防火墙，他可能降低您在手机丢失、被盗或个人其他资料泄漏时带给您的经济及其他方面的风险！！请您牢记并妥善设定。</string>
+    <string name="fankui_edit_hint_content">终于等到你，快让你的锦囊妙计启程吧，镖师已携银票恭候多时（300字以内）</string>
+    <string name="fankui_hint_content">提示：你的建议一经采纳，微值将会奖励500元起</string>
+    <string name="msg_default_status">将二维码放入框内，即可自动扫描</string>
+    <string name="alltype">频道推荐</string>
+    <string name="yixuanpindao">我的频道</string>
+    <string name="Next_step">下一步</string>
+    <string name="Determine">确定</string>
+    <string name="Release">发布</string>
+    <string name="Forward">转发</string>
+    <string name="emotion">发表情绪</string>
+    <string name="psw_digis">1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM</string>
+
+    <string name="hello">Hello World, JPush!</string>
+    <string name="tag_hint">Tag can be number, alphabet, underscore, Chinese. Use , to split many tags.</string>
+    <string name="alias_hint">Alias can be number, alphabet, underscore, Chinese.</string>
+    <string name="style_hint">style should be number</string>
+    <string name="error_style_empty">style cannot be empty</string>
+    <string name="error_alias_empty">alias cannot be empty</string>
+    <string name="error_tag_empty">tag cannot be empty</string>
+    <string name="error_tag_gs_empty">Invalid format</string>
+    <string name="error_network">Failed to init due to network exception.</string>
+    <string name="logining">Running in background. Please see log.</string>
+    <string name="setting_su">Succeed to set</string>
+
+</resources>
