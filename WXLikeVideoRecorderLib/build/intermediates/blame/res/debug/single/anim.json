@@ -1,10 +1,18 @@
 [
     {
-        "merged": "E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\build\\intermediates\\res\\merged\\debug\\anim\\indicator_animation.xml",
-        "source": "E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\src\\main\\res\\anim\\indicator_animation.xml"
+        "merged": "/Users/huiwen/Desktop/wevalue_android/E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\build\\intermediates\\res\\merged\\debug\\anim\\indicator_animation.xml",
+        "source": "/Users/huiwen/Desktop/wevalue_android/E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\src\\main\\res\\anim\\indicator_animation.xml"
     },
     {
-        "merged": "E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\build\\intermediates\\res\\merged\\debug\\anim\\focus_animation.xml",
-        "source": "E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\src\\main\\res\\anim\\focus_animation.xml"
+        "merged": "/Users/huiwen/Desktop/wevalue_android/E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\build\\intermediates\\res\\merged\\debug\\anim\\focus_animation.xml",
+        "source": "/Users/huiwen/Desktop/wevalue_android/E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\src\\main\\res\\anim\\focus_animation.xml"
+    },
+    {
+        "merged": "/Users/huiwen/Desktop/wevalue_android/WXLikeVideoRecorderLib/build/intermediates/res/merged/debug/anim/focus_animation.xml",
+        "source": "/Users/huiwen/Desktop/wevalue_android/WXLikeVideoRecorderLib/src/main/res/anim/focus_animation.xml"
+    },
+    {
+        "merged": "/Users/huiwen/Desktop/wevalue_android/WXLikeVideoRecorderLib/build/intermediates/res/merged/debug/anim/indicator_animation.xml",
+        "source": "/Users/huiwen/Desktop/wevalue_android/WXLikeVideoRecorderLib/src/main/res/anim/indicator_animation.xml"
     }
 ]
