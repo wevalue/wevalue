@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'wevalue'
             keyPassword 'wevalue'
-            storeFile file('E:/Works/WeValue/wevalue.jks')
+            storeFile file('/Users/huiwen/Desktop/wevalue_android/wevalue.jks')
             storePassword 'wevalue'
         }
     }

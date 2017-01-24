@@ -282,7 +282,7 @@ public class PersonInfoFragment extends BaseFragment implements View.OnClickList
                 setIsLoginStatus();
             } else if (obj.getString("result").equals("5")){
                 ShowUtil.showToast(mContext, obj.getString("message"));
-                SharedPreferencesUtil.clearSharedPreferencesInfo(WeValueApplication.applicationContext, "UserInfo");
+//                SharedPreferencesUtil.clearSharedPreferencesInfo(WeValueApplication.applicationContext, "UserInfo");
                 setIsLoginStatus();
             }else {
                 ShowUtil.showToast(mContext, obj.getString("message"));
