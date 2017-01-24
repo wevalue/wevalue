@@ -8,8 +8,8 @@
         android:name="com.wevalue.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
     <permission android:name="android.permission.INTERACT_ACROSS_USERS" />
-    <!-- Required  一些系统要求的权限，如访问网络等 -->
 
+    <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="android.permission.BIND_TELECOM_CONNECTION_SERVICE" />
     <uses-permission android:name="com.wevalue.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
