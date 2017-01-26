@@ -103,7 +103,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener, WZ
             tv_back_app.setVisibility(View.VISIBLE);
         }
         try {
-            tv_cache_num.setText(DataCleanManager.getCacheSize(this.getCacheDir()));
+            if (DataCleanManager.getFolderSize(this.getCacheDir()) > 1024 ) {
+                tv_cache_num.setText(DataCleanManager.getCacheSize(this.getCacheDir()));
+            }else {
+                tv_cache_num.setText("暂无缓存");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -145,7 +149,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener, WZ
                 }.start();
                 try {
 //				tv_cache_num.setText(DataCleanManager.getFormatSize(DataCleanManager.getFolderSize(this.getExternalCacheDir())));
-                    tv_cache_num.setText("0kb");
+                    tv_cache_num.setText("暂无缓存");
                     LogUtils.e("---缓存大小-----" + DataCleanManager.getCacheSize(this.getCacheDir()));
 
 //				tv_cache_num.setText("1");
