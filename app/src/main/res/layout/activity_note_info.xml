@@ -44,7 +44,6 @@
         android:fastScrollEnabled="false"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
-        android:scrollbars="none"
         android:smoothScrollbar="true">
 
         <LinearLayout
@@ -373,7 +372,6 @@
                 android:divider="@color/background"
                 android:dividerHeight="0dp"
                 android:listSelector="@color/transparent"
-                android:scrollbars="none"
                 android:visibility="visible" />
         </LinearLayout>
 
