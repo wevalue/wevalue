@@ -476,12 +476,14 @@ public class PopuUtil {
                 promptBoxPopupWindow.dismiss();
             }
         });
-        prompt_box.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                promptBoxPopupWindow.dismiss();
-            }
-        });
+//start  取消点击背景弹出框消失 by huiwen 2017、1、26
+//        prompt_box.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                promptBoxPopupWindow.dismiss();
+//            }
+//        });
+//end
         if (!TextUtils.isEmpty(money)) {
             et_jiage.setText(money);
         }
