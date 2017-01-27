@@ -74,8 +74,8 @@ public class PopuUtil {
             }
         });
         TextView tv_fujin = (TextView) prompt_box.findViewById(R.id.tv_fujin);
-        TextView tv_add_channel = (TextView) prompt_box.findViewById(R.id.tv_add_channel);
-        TextView tv_saoyisao = (TextView) prompt_box.findViewById(R.id.tv_saoyisao);
+//        TextView tv_add_channel = (TextView) prompt_box.findViewById(R.id.tv_add_channel);
+//        TextView tv_saoyisao = (TextView) prompt_box.findViewById(R.id.tv_saoyisao);
         TextView tv_paihangbang = (TextView) prompt_box.findViewById(R.id.tv_paihangbang);
         TextView tv_add_haoyou = (TextView) prompt_box.findViewById(R.id.tv_add_haoyou);
         TextView tv_shuoming = (TextView) prompt_box.findViewById(R.id.tv_shuoming);
@@ -93,38 +93,38 @@ public class PopuUtil {
             }
         });
         //添加频道
-        tv_add_channel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                main.startActivity(new Intent(main, TypeChoiceActivity.class));
-                promptBoxPopupWindow.dismiss();
-                HashMap map = new HashMap();
-
-                MobclickAgent.onEvent(main, StatisticsConsts.event_more, "addChanel");
-            }
-        });
+//        tv_add_channel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                main.startActivity(new Intent(main, TypeChoiceActivity.class));
+//                promptBoxPopupWindow.dismiss();
+//                HashMap map = new HashMap();
+//
+//                MobclickAgent.onEvent(main, StatisticsConsts.event_more, "addChanel");
+//            }
+//        });
         //扫一扫
-        tv_saoyisao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO 跳转扫码
-                Intent intent;
-                if (TextUtils.isEmpty(SharedPreferencesUtil.getUid(main))) {
-                    intent = new Intent(main, LoginActivity.class);
-                    main.startActivity(intent);
-                    promptBoxPopupWindow.dismiss();
-                } else {
-                    intent = new Intent(main, CaptureActivity.class);
-                    main.startActivity(intent);
-                    HashMap map = new HashMap();
-
-                    MobclickAgent.onEvent(main, StatisticsConsts.event_more, "scanQr");
-                    promptBoxPopupWindow.dismiss();
-                }
-
-
-            }
-        });
+//        tv_saoyisao.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //TODO 跳转扫码
+//                Intent intent;
+//                if (TextUtils.isEmpty(SharedPreferencesUtil.getUid(main))) {
+//                    intent = new Intent(main, LoginActivity.class);
+//                    main.startActivity(intent);
+//                    promptBoxPopupWindow.dismiss();
+//                } else {
+//                    intent = new Intent(main, CaptureActivity.class);
+//                    main.startActivity(intent);
+//                    HashMap map = new HashMap();
+//
+//                    MobclickAgent.onEvent(main, StatisticsConsts.event_more, "scanQr");
+//                    promptBoxPopupWindow.dismiss();
+//                }
+//
+//
+//            }
+//        });
         //排行榜
         tv_paihangbang.setOnClickListener(new View.OnClickListener() {
             @Override
