@@ -289,7 +289,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         viewList = new ArrayList<>();
         if (null != mListData_lunbo && mListData_lunbo.size() > 0) {
             for (int i = 0; i < mListData_lunbo.size(); i++) {
-                View view1 = LayoutInflater.from(mContext).inflate(R.layout.item_world_tuijian, null);
+                View view1 = LayoutInflater.from(mContext).inflate(R.layout.item_world_tuijian_copy, null);
                 setViewData(view1, i);
                 viewList.add(view1);
             }
@@ -330,83 +330,8 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         if (index == 0) {
             LogUtils.e("轮播  -  setViewData  --" + index);
         }
-        TextView tv_nickname = (TextView) v.findViewById(R.id.tv_nickname);
-        TextView tv_img_content = (TextView) v.findViewById(R.id.tv_img_content);
-        TextView tv_dengji_text = (TextView) v.findViewById(R.id.tv_dengji_text);
-        TextView tv_danjia_text = (TextView) v.findViewById(R.id.tv_danjia_text);
-        TextView tv_shouyi_text = (TextView) v.findViewById(R.id.tv_shouyi_text);
-        TextView tv_day = (TextView) v.findViewById(R.id.tv_day);
-        TextView tv_yuedu_num = (TextView) v.findViewById(R.id.tv_yuedu_num);
-        TextView tv_zhuanfa_num = (TextView) v.findViewById(R.id.tv_zhuanfa_num);
-        TextView tv_zan_num = (TextView) v.findViewById(R.id.tv_zan_num);
-        TextView tv_content_content = (TextView) v.findViewById(R.id.tv_content_content);
-        LinearLayout ll_imgAndAudioAndVideo_ui = (LinearLayout) v.findViewById(R.id.ll_imgAndAudioAndVideo_ui);
-        View in_audio_video_ui = v.findViewById(R.id.in_audio_video_ui);
-        View in_img_ui = v.findViewById(R.id.in_img_ui);
-        ImageView iv_user_img = (ImageView) v.findViewById(R.id.iv_user_img);
-        ImageView iv_play = (ImageView) v.findViewById(R.id.iv_play);
-        ImageView iv_video_img = (ImageView) v.findViewById(R.id.iv_video_img);
-        iv_tuijian_img_1 = (ImageView) v.findViewById(R.id.iv_tuijian_img_1);
-        iv_tuijian_img_2 = (ImageView) v.findViewById(R.id.iv_tuijian_img_2);
-        iv_tuijian_img_3 = (ImageView) v.findViewById(R.id.iv_tuijian_img_3);
-
-        LogUtils.e("viewList size=" + viewList.size());
-        LogUtils.e("index index=" + index);
-
-        NoteBean.NoteEntity noteEntity = mListData_lunbo.get(index);
-        String noteType = noteEntity.getNotetype();
-        imgViewSetData(noteEntity.getUserface(), iv_user_img);
-        tv_nickname.setText(noteEntity.getUsernickname());
-        tv_img_content.setText(noteEntity.getContent());
-        tv_dengji_text.setText(noteEntity.getUserlevel());
-        tv_danjia_text.setText("¥" + noteEntity.getPaynum());
-        tv_shouyi_text.setText("¥" + noteEntity.getShouyi());
-        tv_day.setText(DateTiemUtils.editTime(noteEntity.getAddtime()));
-        tv_yuedu_num.setText(noteEntity.getClickcount());
-        tv_zhuanfa_num.setText(noteEntity.getRepostcount());
-        tv_zan_num.setText(noteEntity.getZancount());
-
-        switch (noteType) {
-            case "4"://纯文字
-                if (noteEntity.getList() != null && noteEntity.getList().size() > 0) {
-                    tv_content_content.setVisibility(View.GONE);
-                    ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
-                    in_audio_video_ui.setVisibility(View.GONE);
-                    in_img_ui.setVisibility(View.VISIBLE);
-                    lunboImageviewSetData(noteEntity);
-                } else {
-                    tv_content_content.setText(noteEntity.getContent());
-                    tv_content_content.setVisibility(View.VISIBLE);
-                    ll_imgAndAudioAndVideo_ui.setVisibility(View.GONE);
-                    in_audio_video_ui.setVisibility(View.GONE);
-                    in_img_ui.setVisibility(View.GONE);
-                }
-
-                break;
-            case "1"://视频文
-                tv_content_content.setVisibility(View.GONE);
-                ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
-                in_audio_video_ui.setVisibility(View.VISIBLE);
-                in_img_ui.setVisibility(View.GONE);
-                imgViewSetData(noteEntity.getNotevideopic(), iv_video_img);
-                iv_play.setImageResource(R.mipmap.note_play);
-                break;
-            case "2"://音频文
-                tv_content_content.setVisibility(View.GONE);
-                ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
-                in_audio_video_ui.setVisibility(View.VISIBLE);
-                in_img_ui.setVisibility(View.GONE);
-                iv_video_img.setImageResource(R.mipmap.bg_yinpinbg);
-                iv_play.setImageResource(R.mipmap.btn_music_bf);
-                break;
-            case "3"://图文
-                tv_content_content.setVisibility(View.GONE);
-                ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
-                in_audio_video_ui.setVisibility(View.GONE);
-                in_img_ui.setVisibility(View.VISIBLE);
-                lunboImageviewSetData(noteEntity);
-                break;
-        }
+        ImageView iv_img = (ImageView) v.findViewById(R.id.iv_img);
+        imgViewSetData("",iv_img);
     }
 
     /**
@@ -421,6 +346,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         Glide.with(getActivity())
                 .load(RequestPath.SERVER_PATH + url)
                 .placeholder(R.mipmap.default_head)
+                .error(R.mipmap.default_head)
                 .crossFade()
                 .into(iv);
     }
