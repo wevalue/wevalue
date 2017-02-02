@@ -30,6 +30,7 @@ import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.world.activity.ShiftCityActivity;
 import com.wevalue.ui.world.adapter.WorldListAdapter;
+import com.wevalue.ui.world.adapter.WorldListmAdapter_Copy;
 import com.wevalue.utils.DateTiemUtils;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.RealmUtils;
@@ -53,7 +54,7 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
     private Context mContext;
     private PullToRefreshScrollView prsv_ScrollView;
     private NoScrollListview mNoScrollListview;
-    private WorldListAdapter mHAdapter;
+    private WorldListmAdapter_Copy mHAdapter;
     private List<NoteBean.NoteEntity> mHListData;
     private List<NoteBean.NoteEntity> mListData_jiage;
     //帖子的标签
@@ -334,7 +335,7 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
                                 mHListData.add(1, mListData_jiage.get(1));
                                 mHListData.add(2, mListData_jiage.get(2));
                             }
-                            mHAdapter = new WorldListAdapter(mHListData, mListData_jiage, mainActivity, "nnn");
+                            mHAdapter = new WorldListmAdapter_Copy(mHListData, mListData_jiage, mainActivity, "nnn");
                             mHAdapter.notifyDataSetChanged();
                             mNoScrollListview.setAdapter(mHAdapter);
                         }

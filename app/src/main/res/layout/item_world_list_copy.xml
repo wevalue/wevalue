@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/id_world_itme_ui"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/style_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:maxLines="2"
+            android:paddingRight="80dp" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/style_content_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:textColor="@color/font_gray" />
+
+        <TextView
+            android:id="@+id/tv_income"
+            style="@style/style_content_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_price"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/blue_price" />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_content_content"
+        style="@style/style_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <com.wevalue.view.NoScrollGridView
+        android:id="@+id/nsgv_world_list_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:horizontalSpacing="3dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:listSelector="@color/transparent"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="3dp"
+        android:visibility="gone"></com.wevalue.view.NoScrollGridView>
+
+    <include
+        android:id="@+id/in_audio_video_ui"
+        layout="@layout/item_world_tuijian_include_1"
+        android:visibility="gone" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center_vertical">
+
+        <com.wevalue.view.RoundImageView
+            android:id="@+id/iv_user_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxHeight="18dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_head"
+            app:type="round" />
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            style="@style/style_content_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
+            android:text="作者名称"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/font_gray" />
+        <TextView
+            android:id="@+id/tv_zhuanfa_num"
+            android:gravity="right"
+            style="@style/style_content_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="送给朋友们(0)"
+            android:drawablePadding="5dp"
+            android:drawableLeft="@mipmap/note_detail_zhuanfa"
+            android:textColor="@color/font_gray" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/font_gray"
+        />
+</LinearLayout>

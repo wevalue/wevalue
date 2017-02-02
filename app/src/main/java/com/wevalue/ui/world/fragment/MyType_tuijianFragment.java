@@ -39,6 +39,7 @@ import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.influence.PopClickInterface;
 import com.wevalue.ui.world.adapter.WorldListAdapter;
+import com.wevalue.ui.world.adapter.WorldListmAdapter_Copy;
 import com.wevalue.utils.DateTiemUtils;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.PopuUtil;
@@ -76,7 +77,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
     public boolean isContinue = true;
     private PullToRefreshScrollView prsv_ScrollView;
     private NoScrollListview mNoScrollListview;
-    private WorldListAdapter mHAdapter;
+    private WorldListmAdapter_Copy mHAdapter;
     private List<NoteBean.NoteEntity> mHListData;
     private List<NoteBean.NoteEntity> mListData_lunbo;
     private List<NoteBean.NoteEntity> mListData_jiage;
@@ -344,7 +345,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         View in_img_ui = v.findViewById(R.id.in_img_ui);
         ImageView iv_user_img = (ImageView) v.findViewById(R.id.iv_user_img);
         ImageView iv_play = (ImageView) v.findViewById(R.id.iv_play);
-        ImageView iv_video_and_audio_img = (ImageView) v.findViewById(R.id.iv_video_and_audio_img);
+        ImageView iv_video_img = (ImageView) v.findViewById(R.id.iv_video_img);
         iv_tuijian_img_1 = (ImageView) v.findViewById(R.id.iv_tuijian_img_1);
         iv_tuijian_img_2 = (ImageView) v.findViewById(R.id.iv_tuijian_img_2);
         iv_tuijian_img_3 = (ImageView) v.findViewById(R.id.iv_tuijian_img_3);
@@ -387,7 +388,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
                 ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                 in_audio_video_ui.setVisibility(View.VISIBLE);
                 in_img_ui.setVisibility(View.GONE);
-                imgViewSetData(noteEntity.getNotevideopic(), iv_video_and_audio_img);
+                imgViewSetData(noteEntity.getNotevideopic(), iv_video_img);
                 iv_play.setImageResource(R.mipmap.note_play);
                 break;
             case "2"://音频文
@@ -395,7 +396,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
                 ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                 in_audio_video_ui.setVisibility(View.VISIBLE);
                 in_img_ui.setVisibility(View.GONE);
-                iv_video_and_audio_img.setImageResource(R.mipmap.bg_yinpinbg);
+                iv_video_img.setImageResource(R.mipmap.bg_yinpinbg);
                 iv_play.setImageResource(R.mipmap.btn_music_bf);
                 break;
             case "3"://图文
@@ -813,7 +814,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
                         }
 
                     }
-                    mHAdapter = new WorldListAdapter(mHListData, mListData_jiage, mainActivity, "tuijian");
+                    mHAdapter = new WorldListmAdapter_Copy(mHListData, mListData_jiage, mainActivity, "tuijian");
                     mHAdapter.notifyDataSetChanged();
                     mNoScrollListview.setAdapter(mHAdapter);
                 }

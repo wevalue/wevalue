@@ -22,6 +22,7 @@ import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.world.activity.ShiftCityActivity;
 import com.wevalue.ui.world.adapter.WorldListAdapter;
+import com.wevalue.ui.world.adapter.WorldListmAdapter_Copy;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
@@ -35,7 +36,7 @@ public class MyType_BeijingFragment extends BaseFragment implements WZHttpListen
     private Context mContext;
     private PullToRefreshScrollView prsv_ScrollView;
     private NoScrollListview mNoScrollListview;
-    private WorldListAdapter mHAdapter;
+    private WorldListmAdapter_Copy mHAdapter;
     private List<NoteBean.NoteEntity> mHListData;
     private List<NoteBean.NoteEntity> mListData_jiage;
     private int viewIndex = -1;

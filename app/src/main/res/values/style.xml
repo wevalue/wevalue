@@ -13,4 +13,24 @@
 		<item name="android:hint">@string/tag_hint</item>
 		<item name="android:textSize">14sp</item>
 	</style>
+
+	<style name="style_title">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:ellipsize">none</item>
+		<item name="android:maxLines">2</item>
+		<item name="android:lines">2</item>
+		<item name="android:textColor">@color/black</item>
+	</style>
+	<style name="style_content">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textStyle">normal</item>
+		<item name="android:ellipsize">end</item>
+		<item name="android:maxLines">5</item>
+		<item name="android:textColor">@color/black_444</item>
+	</style>
+	<style name="style_content_price">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textStyle">normal</item>
+	</style>
 </resources>

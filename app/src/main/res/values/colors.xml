@@ -5,6 +5,10 @@
     <color name="colorAccent">#FF4081</color>
     <color name="red">#DD501E</color>
 
+    <color name="black">#000000</color>
+    <color name="black_444">#444444</color>
+    <color name="subscribe_item_text_color_pressed_night">#ff303030</color>
+    <color name="text_black">#3d3d3d</color>
 
     <color name="background">#f7f7f7</color>
     <color name="but_text_color">#747474</color>
@@ -13,9 +17,10 @@
     <color name="orange">#DD501E</color>
     <color name="white">#ffffff</color>
     <color name="touming_white">#eaffffff</color>
-    <color name="text_black">#3d3d3d</color>
-    <color name="black">#000000</color>
+
+
     <color name="blue">#54b1f2</color>
+    <color name="blue_price">#2a8cff</color>
     <color name="login_text_blue">#54b1f2</color>
     <color name="login_text_blue_2">#9552b2f7</color>
     <color name="ui_line">#eeeeee</color>
@@ -30,7 +35,6 @@
     </item>
 
     <color name="default_text_night">#ff747474</color>
-    <color name="subscribe_item_text_color_pressed_night">#ff303030</color>
     <color name="subscribe_item_selected_stroke_night">#ffbc494d</color>
     <color name="subscribe_item_drag_stroke">#ffd2d2d2</color>
     <color name="subscribe_item_drag_bg">#fff5f5f5</color>
