@@ -53,7 +53,7 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
     private List<NoteBean.NoteEntity> mListData_lunbo;
     private List<NoteBean.NoteEntity> mListData_jiage;
     private int pageindex = 1;
-    private String notezone = "2";
+    private String notezone = "1"; // 1 朋友们  2 影响力
     private String orderstatus = "1";//1倒序   0 正序
     private String ordertype = "0";
     private TextView tv_friends;
