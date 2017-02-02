@@ -16,14 +16,20 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.wevalue.R;
 import com.wevalue.base.BaseActivity;
 import com.wevalue.net.RequestPath;
@@ -48,7 +54,7 @@ public class ImgShowActivity extends BaseActivity {
 //    private ImageView iv_back;
     private String[] mImgUrl;
     private List<String> mDatas;
-    private List<PhotoView> imageViewList;
+    private List<ImageView> imageViewList;
     private PhotoViewPager vp_img_show;
     private ImageView iv_donghua;
     private int index;//选择的图片位置
@@ -241,16 +247,13 @@ public class ImgShowActivity extends BaseActivity {
         }
 
         if (imageViewList == null) {
-            imageViewList = new ArrayList<PhotoView>();
+            imageViewList = new ArrayList<ImageView>();
         }
         imageViewList.clear();
 
         for (String url : imageList) {
             final PhotoView imageView = new PhotoView(this);
             imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//            imageView.setBackgroundResource(R.color.transparent);
-//            imageView.setImageResource(R.drawable.pic_lunbo);
-//            bitmapUtils.display(imageView, RequestPath.SERVER_PATH + url);
 
             if ("yes".equals(getIntent().getStringExtra("imPreview"))) {
                 LogUtils.e("url=" + url);
@@ -267,36 +270,34 @@ public class ImgShowActivity extends BaseActivity {
                 animaition.setOneShot(false);
                 animaition.start();
 
-                SimpleTarget target = new SimpleTarget() {
+                ViewTarget viewTarget = new ViewTarget(imageView) {
                     @Override
                     public void onResourceReady(Object resource, GlideAnimation glideAnimation) {
-                        animaition.stop();
-                        Drawable drawable = (Drawable) resource;
-                        LogUtils.e("---h---" + drawable.getMinimumHeight());
-                        LogUtils.e("---w---" + drawable.getMinimumWidth());
-                        if (drawable.getMinimumHeight() - drawable.getMinimumWidth() > drawable.getMinimumWidth() * 2) {
-                            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//                            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(imageView.getLayoutParams());
-//                            params.setMargins(0, 0, 0, 0);
-//                            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(params);
-//                            imageView.setScrollX(0);
-                            imageView.setImageDrawable(drawable);
-                            LogUtils.e("---w-00000--");
-                            tv_baocun.setVisibility(View.VISIBLE);
-                        } else {
-                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                            imageView.setImageDrawable(drawable);
-                            tv_baocun.setVisibility(View.VISIBLE);
+                        {
+                            animaition.stop();
+                            Drawable drawable ;
+                                drawable = (Drawable) resource;
+                                if (drawable.getMinimumHeight() - drawable.getMinimumWidth() > drawable.getMinimumWidth() * 2) {
+                                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                                    imageView.setImageDrawable(drawable);
+                                    LogUtils.e("---w-00000--");
+                                    tv_baocun.setVisibility(View.VISIBLE);
+                                } else {
+                                    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                                    imageView.setImageDrawable(drawable);
+                                    tv_baocun.setVisibility(View.VISIBLE);
+                                }
                         }
                     }
                 };
 
                 Glide.with(this)
                         .load(RequestPath.SERVER_PATH + url)
-//                        .crossFade()
-                        .into(target);
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                        //.crossFade()
+                        .into(viewTarget);
+                Log.d("IMG","url: "+url);
             }
-//            imageView.setLayoutParams(news LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             imageViewList.add(imageView);
             imageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
                 @Override
@@ -311,7 +312,6 @@ public class ImgShowActivity extends BaseActivity {
         vp_img_show.setCurrentItem(index);
     }
 
-
     /**
      * Title:  GoodDetailImagePagerAdapter<br>
      * Description: TODO  大图适配器<br>
@@ -320,9 +320,9 @@ public class ImgShowActivity extends BaseActivity {
      */
     public class GoodDetailImagePagerAdapter extends PagerAdapter {
         private Context context;
-        private List<PhotoView> imageViewList;
+        private List<ImageView> imageViewList;
 
-        public GoodDetailImagePagerAdapter(Context context, List<PhotoView> imageViewList) {
+        public GoodDetailImagePagerAdapter(Context context, List<ImageView> imageViewList) {
             super();
             this.context = context;
             this.imageViewList = imageViewList;
