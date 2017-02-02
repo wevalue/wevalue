@@ -19,6 +19,7 @@
         android:id="@+id/rl_is_show_tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/subscribe_item_drag_bg"
         android:orientation="horizontal">
 
         <ImageView
@@ -26,7 +27,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_alignParentRight="true"
-            android:background="@color/white"
+            android:background="@color/subscribe_item_drag_bg"
             android:scaleType="center"
             android:src="@mipmap/btn_fl_fenleitianjia" />
 
@@ -35,8 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_toLeftOf="@+id/iv_add_class"
-            android:background="@color/white"
-            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorColor="@color/subscribe_item_drag_bg"
             app:tabMode="scrollable"></android.support.design.widget.TabLayout>
 
 
