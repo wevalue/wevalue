@@ -42,6 +42,7 @@ import com.wevalue.ui.add.activity.RankingListActivity;
 import com.wevalue.ui.influence.PopClickInterface;
 import com.wevalue.ui.login.LoginActivity;
 import com.wevalue.ui.login.TypeChoiceActivity;
+import com.wevalue.ui.mine.activity.FeedbackActivity;
 import com.wevalue.ui.mine.activity.SetPayPswActivity;
 import com.wevalue.ui.mine.activity.WebActivity;
 import com.wevalue.ui.release.ReleaseNoteActivity;
@@ -73,11 +74,17 @@ public class PopuUtil {
                 promptBoxPopupWindow.dismiss();
             }
         });
+        //附近
         TextView tv_fujin = (TextView) prompt_box.findViewById(R.id.tv_fujin);
 //        TextView tv_add_channel = (TextView) prompt_box.findViewById(R.id.tv_add_channel);
 //        TextView tv_saoyisao = (TextView) prompt_box.findViewById(R.id.tv_saoyisao);
+        //意见反馈
+        TextView tv_feedback = (TextView) prompt_box.findViewById(R.id.tv_feedback);
+       //排行榜
         TextView tv_paihangbang = (TextView) prompt_box.findViewById(R.id.tv_paihangbang);
+        //添加好友
         TextView tv_add_haoyou = (TextView) prompt_box.findViewById(R.id.tv_add_haoyou);
+        //帮助与说明
         TextView tv_shuoming = (TextView) prompt_box.findViewById(R.id.tv_shuoming);
         //附近的人
         tv_fujin.setOnClickListener(new View.OnClickListener() {
@@ -87,9 +94,18 @@ public class PopuUtil {
                 main.startActivity(intent);
                 promptBoxPopupWindow.dismiss();
                 HashMap map = new HashMap();
-
                 MobclickAgent.onEventValue(main, StatisticsConsts.event_more, map, 1);
 
+            }
+        });
+        //意见反馈点击
+        tv_feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(main, FeedbackActivity.class);
+                main.startActivity(intent);
+                promptBoxPopupWindow.dismiss();
+                MobclickAgent.onEvent(main, StatisticsConsts.event_more, "feedback");
             }
         });
         //添加频道
@@ -121,8 +137,6 @@ public class PopuUtil {
 //                    MobclickAgent.onEvent(main, StatisticsConsts.event_more, "scanQr");
 //                    promptBoxPopupWindow.dismiss();
 //                }
-//
-//
 //            }
 //        });
         //排行榜
@@ -133,7 +147,6 @@ public class PopuUtil {
                 main.startActivity(intent);
                 promptBoxPopupWindow.dismiss();
                 HashMap map = new HashMap();
-
                 MobclickAgent.onEvent(main, StatisticsConsts.event_more, "rankList");
             }
         });

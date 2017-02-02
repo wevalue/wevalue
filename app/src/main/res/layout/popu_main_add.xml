@@ -3,14 +3,13 @@
     android:orientation="vertical"
     android:gravity="right"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     >
-
     <LinearLayout
-        android:background="@mipmap/more_shape"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
+        android:background="@mipmap/more_shape"
         android:orientation="vertical">
         <TextView
             android:layout_marginTop="10dp"
@@ -30,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/ui_line_2"/>
-        <TextView
+       <!-- <TextView
             android:id="@+id/tv_saoyisao"
             android:layout_marginTop="0.5dp"
             android:layout_width="match_parent"
@@ -60,11 +59,8 @@
             android:gravity="center_vertical"
             android:drawablePadding="5dp"
             android:textSize="14sp"
-            android:textColor="@color/but_text_color"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/ui_line_2"/>
+            android:textColor="@color/but_text_color"/>-->
+
 
         <TextView
             android:id="@+id/tv_fujin"
@@ -98,6 +94,24 @@
             android:padding="5dp"
             android:textSize="14sp"
             android:textColor="@color/but_text_color"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/ui_line_2"/>
+        <TextView
+            android:id="@+id/tv_feedback"
+            android:layout_marginTop="0.5dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="3dp"
+            android:text="意见反馈"
+            android:drawableLeft="@mipmap/more_addtype"
+            android:padding="5dp"
+            android:gravity="center_vertical"
+            android:drawablePadding="5dp"
+            android:textSize="14sp"
+            android:textColor="@color/but_text_color"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0.5dp"

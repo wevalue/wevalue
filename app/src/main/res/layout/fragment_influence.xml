@@ -31,7 +31,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="5dp"
                 android:paddingRight="2dp"
-                android:text="影响力"
+                android:text="朋友们"
                 android:textColor="@color/black" />
 
             <ImageView
