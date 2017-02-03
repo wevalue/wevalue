@@ -21,6 +21,7 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.WZHttpListener;
+import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
 import com.wevalue.ui.details.activity.UserDetailsActivity;
 import com.wevalue.ui.world.activity.ImgShowActivity;
@@ -31,9 +32,6 @@ import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.NoScrollGridView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -51,8 +49,6 @@ public class WorldListAdapter extends BaseAdapter {
     private WorldListGridViewAdapter mGirdViewAdapter;
     private String mType;
     // 图片下载器
-//    private BitmapUtils mBitmap;
-//    private BitmapDisplayConfig bitmapDisplayConfig;
     Drawable iszan;
     Drawable nozan;
 
@@ -98,51 +94,26 @@ public class WorldListAdapter extends BaseAdapter {
         }
 //         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_world_list, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_world_list_copy, null);
             viewHolder = new ViewHolder();
+            viewHolder.tv_content_content = (TextView) convertView.findViewById(R.id.tv_content_content);
+            viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
             viewHolder.tv_nickname = (TextView) convertView.findViewById(R.id.tv_nickname);
             viewHolder.iv_user_img = (ImageView) convertView.findViewById(R.id.iv_user_img);
+            viewHolder.in_audio_video_ui = (LinearLayout) convertView.findViewById(R.id.in_audio_video_ui);
             viewHolder.iv_play = (ImageView) convertView.findViewById(R.id.iv_play);
-            viewHolder.iv_video_and_audio_img = (ImageView) convertView.findViewById(R.id.iv_video_and_audio_img);
-            viewHolder.tv_dengji = (TextView) convertView.findViewById(R.id.tv_dengji);
-            viewHolder.tv_day = (TextView) convertView.findViewById(R.id.tv_day);
+            viewHolder.iv_video_img = (ImageView) convertView.findViewById(R.id.iv_video_img);
+            viewHolder.iv_audio_img = (ImageView) convertView.findViewById(R.id.iv_audio_img);
             viewHolder.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
             viewHolder.tv_income = (TextView) convertView.findViewById(R.id.tv_income);
-            viewHolder.tv_read_num = (TextView) convertView.findViewById(R.id.tv_read_num);
             viewHolder.tv_zhuanfa_num = (TextView) convertView.findViewById(R.id.tv_zhuanfa_num);
-            viewHolder.tv_praise_num = (TextView) convertView.findViewById(R.id.tv_praise_num);
-            viewHolder.tv_content_content = (TextView) convertView.findViewById(R.id.tv_content_content);
-            viewHolder.tv_img_content = (TextView) convertView.findViewById(R.id.tv_img_content);
-            viewHolder.tv_zanAndImg = (TextView) convertView.findViewById(R.id.tv_zanAndImg);
-            viewHolder.tv_bu_down = (TextView) convertView.findViewById(R.id.tv_bu_down);
-            viewHolder.tv_bu_up = (TextView) convertView.findViewById(R.id.tv_bu_up);
-            viewHolder.in_audio_video_ui = convertView.findViewById(R.id.in_audio_video_ui);
-            viewHolder.ll_praise = (LinearLayout) convertView.findViewById(R.id.ll_praise);
-            viewHolder.ll_imgAndAudioAndVideo_ui = (LinearLayout) convertView.findViewById(R.id.ll_imgAndAudioAndVideo_ui);
             viewHolder.nsgv_world_list_gridview = (NoScrollGridView) convertView.findViewById(R.id.nsgv_world_list_gridview);
-            viewHolder.rl_zhuan_content_ui = (RelativeLayout) convertView.findViewById(R.id.rl_zhuan_content_ui);
-            viewHolder.rl_note_content_ui = (RelativeLayout) convertView.findViewById(R.id.rl_note_content_ui);
-            viewHolder.tv_transmit_num = (TextView) convertView.findViewById(R.id.tv_transmit_num);
-            viewHolder.ll_transmit_info = (LinearLayout) convertView.findViewById(R.id.ll_transmit_info);
-            viewHolder.ll_head_info = (LinearLayout) convertView.findViewById(R.id.ll_head_info);
-            viewHolder.ll_ZF_but = (LinearLayout) convertView.findViewById(R.id.ll_ZF_but);
-            viewHolder.id_world_itme_ui = (LinearLayout) convertView.findViewById(R.id.id_world_itme_ui);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         noteEntity = mDatas.get(position);
-//        String s = noteEntity.toString();
-//        LogUtils.e("NOTEENTITY", s);
-//        String context= "@"+mDatas.get(position).getOldusernickname()+"："+noteEntity.getContent();
-//        SpannableStringBuilder style = news SpannableStringBuilder(context);
-//        style.setSpan(news ForegroundColorSpan(mContext.getResources().getColor(R.color.blue)),
-//                0, mDatas.get(position).getOldusernickname().length()+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//        viewHolder.tv_img_content.setText(style);
-//        viewHolder.tv_content_content.setText(style);
-//
-//if ("2".equals(noteEntity.))
-//        viewHolder.iv_isRenzheng.setVisibility(View.VISIBLE);
+
         //头像点击事件
         viewHolder.iv_user_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,140 +125,103 @@ public class WorldListAdapter extends BaseAdapter {
                 mActivity.startActivity(intent);
             }
         });
-
+        //头像点击事件
+        viewHolder.tv_nickname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogUtils.e("DETAIL", position + "");
+                Intent intent = new Intent(mActivity, UserDetailsActivity.class);
+                intent.putExtra("detailuserid", mDatas.get(position).getUserid());
+//                SharedPreferencesUtil.setDetailUserid(mContext, mDatas.get(position).getUserid());
+                mActivity.startActivity(intent);
+            }
+        });
         imgViewSetData(mDatas.get(position).getUserface(), viewHolder.iv_user_img);
-
-        viewHolder.tv_nickname.setText(noteEntity.getUsernickname());
-
-        viewHolder.tv_img_content.setText(noteEntity.getContent());
-        viewHolder.tv_dengji.setText(noteEntity.getUserlevel());
+        viewHolder.tv_nickname.setText(noteEntity.getUsernickname()+"-"+noteEntity.getNotetype());
         viewHolder.tv_price.setText("¥" + noteEntity.getPaynum());
         viewHolder.tv_income.setText("¥" + noteEntity.getShouyi());
-        viewHolder.tv_day.setText(DateTiemUtils.editTime(noteEntity.getAddtime()));
+        viewHolder.tv_zhuanfa_num.setText("送给朋友们("+noteEntity.getRepostcount()+")");
 
-        viewHolder.tv_read_num.setText(noteEntity.getClickcount());
-        viewHolder.tv_zhuanfa_num.setText(noteEntity.getRepostcount());
-        viewHolder.tv_praise_num.setText(noteEntity.getZancount());
-        if ("1".equals(noteEntity.getIszan())) {
-            viewHolder.tv_zanAndImg.setCompoundDrawables(null, null, iszan, null);
-        } else if (("0").equals(noteEntity.getIszan())) {
-            viewHolder.tv_zanAndImg.setCompoundDrawables(null, null, nozan, null);
-        }
+        viewHolder.tv_content_content.setVisibility(View.GONE);
+        viewHolder.tv_title.setVisibility(View.GONE);
+        viewHolder.iv_play.setVisibility(View.GONE);
+        viewHolder.iv_video_img.setVisibility(View.GONE);
+        viewHolder.iv_audio_img.setVisibility(View.GONE);
+        viewHolder.nsgv_world_list_gridview.setVisibility(View.GONE);
+
         try {
             final String noteId = noteEntity.getNoteid();
             String notetype = noteEntity.getNotetype();
             switch (notetype) {
                 case "4"://文字
-                    viewHolder.id_world_itme_ui.setVisibility(View.VISIBLE);
-
                     if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-                        viewHolder.tv_content_content.setVisibility(View.GONE);
-                        viewHolder.in_audio_video_ui.setVisibility(View.GONE);
-                        viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
+                        //如果有图片 那就显示 标题和图片
                         viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
+                        viewHolder.tv_title.setVisibility(View.VISIBLE);
+                        viewHolder.tv_title.setText(noteEntity.getContent());
                         mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
-//                        mGirdViewAdapter.notifyDataSetChanged();
                         viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
                     } else {
+                        viewHolder.tv_title.setVisibility(View.VISIBLE);
+                        viewHolder.tv_title.setText(noteEntity.getContent());
                         viewHolder.tv_content_content.setVisibility(View.VISIBLE);
                         viewHolder.tv_content_content.setText(noteEntity.getContent());
-                        viewHolder.tv_img_content.setText(noteEntity.getContent());
-                        viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.GONE);
                     }
                     break;
                 case "1"://视频文
-                    viewHolder.id_world_itme_ui.setVisibility(View.VISIBLE);
-
-                    viewHolder.tv_content_content.setVisibility(View.GONE);
+                    viewHolder.tv_title.setVisibility(View.VISIBLE);
                     viewHolder.in_audio_video_ui.setVisibility(View.VISIBLE);
-                    viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
-                    viewHolder.nsgv_world_list_gridview.setVisibility(View.GONE);
-//                    viewHolder.iv_play.setImageResource(R.mipmap.note_play);
-                    Glide.with(mActivity).load(R.mipmap.note_play).into(viewHolder.iv_play);
-                    imgViewSetData(mDatas.get(position).getNotevideopic(), viewHolder.iv_video_and_audio_img);
+                    viewHolder.iv_play.setVisibility(View.VISIBLE);
+                    viewHolder.iv_video_img.setVisibility(View.VISIBLE);
+                    viewHolder.tv_title.setText(noteEntity.getContent());
+                    //viewHolder.iv_play.setImageResource(R.mipmap.note_play);
+                    imgViewSetData(mDatas.get(position).getNotevideopic(), viewHolder.iv_video_img);
                     break;
                 case "2"://音频文
-                    viewHolder.id_world_itme_ui.setVisibility(View.VISIBLE);
-
-
-                    viewHolder.tv_content_content.setVisibility(View.GONE);
                     viewHolder.in_audio_video_ui.setVisibility(View.VISIBLE);
-//                    Glide.with(mActivity)
-//                            .load(RequestPath.SERVER_PATH + url)
-//                            .placeholder(R.mipmap.default_head)
-//                            .error(R.mipmap.default_head)
-//                            .crossFade()
-//                            .into(iv);
-                    Glide.with(mActivity).load(R.mipmap.btn_music_bf).into(viewHolder.iv_play);
-                    Glide.with(mActivity).load(R.mipmap.bg_yinpinbg).into(viewHolder.iv_video_and_audio_img);
-//                    viewHolder.iv_play.setImageResource(R.mipmap.btn_music_bf);
-//                    viewHolder.iv_video_and_audio_img.setImageResource(R.mipmap.bg_yinpinbg);
-                    viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
-                    viewHolder.nsgv_world_list_gridview.setVisibility(View.GONE);
+                    viewHolder.iv_audio_img.setVisibility(View.VISIBLE);
+                    viewHolder.tv_title.setVisibility(View.VISIBLE);
+                    viewHolder.tv_title.setText(noteEntity.getContent());
+                    viewHolder.iv_audio_img.setImageResource(R.mipmap.ic_music);
                     break;
                 case "3"://图文
-                    viewHolder.id_world_itme_ui.setVisibility(View.VISIBLE);
-
-
                     if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-//                        int l = noteEntity.getList().size();
-                        viewHolder.tv_content_content.setVisibility(View.GONE);
-                        viewHolder.in_audio_video_ui.setVisibility(View.GONE);
-                        viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
+                        viewHolder.tv_title.setVisibility(View.VISIBLE);
+                        viewHolder.tv_title.setText(noteEntity.getContent());
                         viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
-
                         mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
                         viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
                     } else {
                         if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-                            viewHolder.tv_content_content.setVisibility(View.GONE);
-                            viewHolder.in_audio_video_ui.setVisibility(View.GONE);
-                            viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                             viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
                             mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
-//                        mGirdViewAdapter.notifyDataSetChanged();
                             viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
-                        } else {
-                            viewHolder.tv_content_content.setVisibility(View.VISIBLE);
-                            viewHolder.tv_content_content.setText(noteEntity.getContent());
-                            viewHolder.tv_img_content.setText(noteEntity.getContent());
-                            viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.GONE);
                         }
-
+                        viewHolder.tv_title.setVisibility(View.VISIBLE);
+                        viewHolder.tv_title.setText(noteEntity.getContent());
+                        viewHolder.tv_content_content.setVisibility(View.VISIBLE);
+                        viewHolder.tv_content_content.setText(noteEntity.getContent());
                     }
                     break;
-                case "5":
-                    viewHolder.id_world_itme_ui.setVisibility(View.VISIBLE);
+                case "5": // 转发 图文混排
                     if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
 //                        int l = noteEntity.getList().size();
-                        viewHolder.tv_content_content.setVisibility(View.GONE);
-                        viewHolder.in_audio_video_ui.setVisibility(View.GONE);
-                        viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
+                        viewHolder.tv_title.setVisibility(View.VISIBLE);
+                        viewHolder.tv_title.setText(noteEntity.getContent());
                         viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
-
+                        viewHolder.tv_content_content.setText(noteEntity.getContent());
                         mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
                         viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
                     } else {
-                        if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-                            viewHolder.tv_content_content.setVisibility(View.GONE);
-                            viewHolder.in_audio_video_ui.setVisibility(View.GONE);
-                            viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
-                            viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
-                            mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
-//                        mGirdViewAdapter.notifyDataSetChanged();
-                            viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
-                        } else {
-                            viewHolder.tv_content_content.setVisibility(View.VISIBLE);
-                            viewHolder.tv_content_content.setText(noteEntity.getContent());
-                            viewHolder.tv_img_content.setText(noteEntity.getContent());
-                            viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.GONE);
-                        }
-
+                        viewHolder.tv_title.setVisibility(View.VISIBLE);
+                        viewHolder.tv_title.setText(noteEntity.getContent());
+                        viewHolder.tv_content_content.setVisibility(View.VISIBLE);
+                        viewHolder.tv_content_content.setText(noteEntity.getContent());
                     }
 
                     break;
             }
-
+            //点击图片
             viewHolder.nsgv_world_list_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
@@ -301,70 +235,16 @@ public class WorldListAdapter extends BaseAdapter {
                     mActivity.startActivity(intent);
                 }
             });
-
             mNoteRequestBase = NoteRequestBase.getNoteRequestBase(mContext);
-            viewHolder.ll_praise.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View view) {
-                    if (ButtontimeUtil.isFastDoubleClick()) {
-                        return;
-                    }
-                    if (!TextUtils.isEmpty(SharedPreferencesUtil.getUid(mContext))) {
-                        if (mDatas.get(position).getIszan().equals("1")) {
-                            ShowUtil.showToast(mContext, "取消点赞");
-                            String s = String.valueOf(Integer.parseInt(mDatas.get(position).getZancount()) - 1);
-                            mDatas.get(position).setZancount(s);
-                            mDatas.get(position).setIszan("0");
-                        } else {
-                            ShowUtil.showToast(mContext, "点赞成功");
-                            String s = String.valueOf(Integer.parseInt(mDatas.get(position).getZancount()) + 1);
-                            mDatas.get(position).setZancount(s);
-                            mDatas.get(position).setIszan("1");
-                        }
-                        notifyDataSetChanged();
-
-                        mNoteRequestBase.postNoteLike((Activity) mContext, noteId, mDatas.get(position).getRepostid(), new WZHttpListener() {
-                            public void onSuccess(String content, String isUrl) {
-//                                try {
-//                                    JSONObject json = new JSONObject(content);
-//                                    if (json.getString("result").equals("1")) {
-//                                        ShowUtil.showToast(mContext, json.getString("message"));
-//                                        if(mDatas.get(position).getIszan().equals("1")){
-//                                            String s = String.valueOf(Integer.parseInt(mDatas.get(position).getZancount()) - 1);
-//                                            mDatas.get(position).setZancount(s);
-//                                            mDatas.get(position).setIszan("0");
-//                                        }else {
-//                                            String s = String.valueOf(Integer.parseInt(mDatas.get(position).getZancount()) + 1);
-//                                            mDatas.get(position).setZancount(s);
-//                                            mDatas.get(position).setIszan("1");
-//                                        }
-//
-//                                        notifyDataSetChanged();
-//                                    }
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-                            }
-
-                            @Override
-                            public void onFailure(String content) {
-
-                            }
-                        });
-                    } else {
-                        ShowUtil.showToast(mContext, "对不起,请您先登录");
-                    }
-                }
-            });
-            viewHolder.ll_transmit_info.setOnClickListener(new View.OnClickListener() {
+            //点击标题
+            viewHolder.tv_title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = null;
                     //跳转到转发帖子详情页
-                    intent = new Intent(mContext, RepostNoteDetailActivity.class);
+                    intent = new Intent(mContext, NoteDetailsActivity.class);
                     intent.putExtra("noteId", mDatas.get(position).getNoteid());
-                    intent.putExtra("repostid", mDatas.get(position).getRepostid());
-                    intent.putExtra("repostfrom", "1");
+                    intent.putExtra("repostid", "0");
                     mContext.startActivity(intent);
                 }
             });
@@ -372,50 +252,8 @@ public class WorldListAdapter extends BaseAdapter {
             e.printStackTrace();
             return convertView;
         }
-        if (mType.equals("tuijian")) {
-            if (jiageData != null && jiageData.size() > 0) {
-                if (jiageData.size() > 3) {
-                    if (position < 3) {
-                        viewHolder.id_world_itme_ui.setBackgroundResource(R.color.transparent);
-                        viewHolder.tv_bu_down.setVisibility(View.VISIBLE);
-                        viewHolder.tv_bu_up.setVisibility(View.VISIBLE);
-                    } else {
-                        viewHolder.id_world_itme_ui.setBackgroundResource(R.color.transparent);
-                        viewHolder.tv_bu_down.setVisibility(View.GONE);
-                        viewHolder.tv_bu_up.setVisibility(View.GONE);
-                    }
-                } else {
-                    if (position < jiageData.size()) {
-                        viewHolder.id_world_itme_ui.setBackgroundResource(R.color.transparent);
-                        viewHolder.tv_bu_down.setVisibility(View.VISIBLE);
-                        viewHolder.tv_bu_up.setVisibility(View.VISIBLE);
-                    } else {
-                        viewHolder.tv_bu_down.setVisibility(View.GONE);
-                        viewHolder.tv_bu_up.setVisibility(View.GONE);
-                        viewHolder.id_world_itme_ui.setBackgroundResource(R.color.transparent);
-                    }
-                }
-            }
-        } else {
-            if (jiageData != null && jiageData.size() > 0) {
-                if (jiageData.size() > 3) {
-                    if (position < 3) {
-                        viewHolder.id_world_itme_ui.setBackgroundResource(R.mipmap.bianxian);
-                    } else {
-                        viewHolder.id_world_itme_ui.setBackgroundResource(R.color.transparent);
-                    }
-                } else {
-                    if (position < jiageData.size()) {
-                        viewHolder.id_world_itme_ui.setBackgroundResource(R.mipmap.bianxian);
-                    } else {
-                        viewHolder.id_world_itme_ui.setBackgroundResource(R.color.transparent);
-                    }
-                }
-            }
-        }
-
         //转发点击事件
-        viewHolder.ll_ZF_but.setOnClickListener(new View.OnClickListener() {
+        viewHolder.tv_zhuanfa_num.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, TransmitNoteActivity.class);
@@ -438,41 +276,30 @@ public class WorldListAdapter extends BaseAdapter {
     private void imgViewSetData(String url, ImageView iv) {
         Glide.with(mActivity)
                 .load(RequestPath.SERVER_PATH + url)
-                .placeholder(R.mipmap.default_head)
-                .error(R.mipmap.default_head)
+                .dontAnimate() // 不使用默认动画 解决占位为题
+                //.thumbnail(0.5f) // 用一般大小作为缩略图
+                .placeholder(R.mipmap.default_video)
+                .error(R.mipmap.default_video)
                 .crossFade()
                 .into(iv);
     }
 
     class ViewHolder {
-        LinearLayout ll_info_line;//底部点赞阅读数等信息的布局
-        LinearLayout ll_transmit_info;//转发信息的布局
-        LinearLayout ll_head_info;//用户信息
-        TextView tv_transmit_num;//转发信息的打赏或收益情况
-        ImageView iv_user_img;             //用户头像
-        ImageView iv_video_and_audio_img;//视频音频 图片
-        TextView tv_nickname;//昵称
-        TextView tv_dengji;//等级
-        TextView tv_day;//日期
+        TextView tv_title;//标题
+        TextView tv_content_content;//纯文字信息内容
         TextView tv_price;//单价
         TextView tv_income;//总收益
-        TextView tv_read_num;//阅读数
-        TextView tv_zhuanfa_num;//转发数
-        TextView tv_praise_num;//点赞数
-        TextView tv_zanAndImg;//赞
-        TextView tv_content_content;//纯文字信息内容
-        TextView tv_img_content;//图文信息内容
-        TextView tv_bu_up;//上花边
-        TextView tv_bu_down;//下花边
-        ImageView iv_isRenzheng;//认证用户标识
+        //视频 音频
+        LinearLayout in_audio_video_ui;
         ImageView iv_play;//播放图标
-        View in_audio_video_ui;//视频音频的图片区域;
+        ImageView iv_video_img;//视频 图片
+        ImageView iv_audio_img;//音频 图片
+        //ImageView iv_video_and_audio_img;//视频音频 图片
+        //图片布局
         NoScrollGridView nsgv_world_list_gridview;//图片列表;
-        LinearLayout ll_praise;
-        LinearLayout ll_ZF_but;
-        LinearLayout id_world_itme_ui;
-        LinearLayout ll_imgAndAudioAndVideo_ui;
-        RelativeLayout rl_zhuan_content_ui;
-        RelativeLayout rl_note_content_ui;
+
+        ImageView iv_user_img;             //用户头像
+        TextView tv_nickname;//昵称
+        TextView tv_zhuanfa_num;//转发数
     }
 }

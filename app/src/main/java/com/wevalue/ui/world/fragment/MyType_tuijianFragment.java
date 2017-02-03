@@ -39,7 +39,6 @@ import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.influence.PopClickInterface;
 import com.wevalue.ui.world.adapter.WorldListAdapter;
-import com.wevalue.ui.world.adapter.WorldListmAdapter_Copy;
 import com.wevalue.utils.DateTiemUtils;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.PopuUtil;
@@ -77,7 +76,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
     public boolean isContinue = true;
     private PullToRefreshScrollView prsv_ScrollView;
     private NoScrollListview mNoScrollListview;
-    private WorldListmAdapter_Copy mHAdapter;
+    private WorldListAdapter mHAdapter;
     private List<NoteBean.NoteEntity> mHListData;
     private List<NoteBean.NoteEntity> mListData_lunbo;
     private List<NoteBean.NoteEntity> mListData_jiage;
@@ -740,7 +739,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
                         }
 
                     }
-                    mHAdapter = new WorldListmAdapter_Copy(mHListData, mListData_jiage, mainActivity, "tuijian");
+                    mHAdapter = new WorldListAdapter(mHListData, mListData_jiage, mainActivity, "tuijian");
                     mHAdapter.notifyDataSetChanged();
                     mNoScrollListview.setAdapter(mHAdapter);
                 }

@@ -8,25 +8,55 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp">
-
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
         <ImageView
-            android:id="@+id/iv_video_and_audio_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/iv_video_img"
+            android:layout_width="200dp"
+            android:layout_height="112dp"
             android:layout_centerInParent="true"
             android:adjustViewBounds="true"
-            android:maxHeight="100dp"
-            android:maxWidth="500dp"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
             android:src="@mipmap/default_video"/>
-
         <ImageView
             android:id="@+id/iv_play"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
+            android:visibility="gone"
             android:src="@mipmap/note_play" />
-
     </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+        <ImageView
+            android:id="@+id/iv_audio_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:maxHeight="100dp"
+            android:maxWidth="500dp"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            android:src="@mipmap/ic_music"/>
+             <!--音频时长 暂时没用-->
+            <TextView
+                android:id="@+id/tv_audio_long"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/style_content_price"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:layout_alignRight="@+id/iv_audio_img"
+                android:layout_alignEnd="@+id/iv_audio_img" />
+        </RelativeLayout>
+    </RelativeLayout>
+
 
 </LinearLayout>

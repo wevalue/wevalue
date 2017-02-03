@@ -84,7 +84,9 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
     NoteBean noteBean;
     NoteBean.NoteEntity noteEntity;
     ImageView iv_user_img;//用户头像
-    ImageView iv_video_and_audio_img, iv_play;//视频音频 图片
+    ImageView iv_video_img;//视频 图片
+    ImageView iv_audio_img;//音频 图片
+    ImageView  iv_play;//视频音频 图片
     ImageView iv_dashang;//打赏图标
     String iv_video_and_audio_url;
     TextView tv_nickname;//昵称
@@ -245,7 +247,8 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
 
         tv_nickname = (TextView) findViewById(R.id.tv_nickname);
         iv_user_img = (ImageView) findViewById(R.id.iv_user_img);
-        iv_video_and_audio_img = (ImageView) findViewById(R.id.iv_video_and_audio_img);
+        iv_video_img = (ImageView) findViewById(R.id.iv_video_img);
+        iv_audio_img = (ImageView) findViewById(R.id.iv_audio_img);
         tv_dengji = (TextView) findViewById(R.id.tv_dengji);
         tv_day = (TextView) findViewById(R.id.tv_day);
         tv_price = (TextView) findViewById(R.id.tv_price);
@@ -254,7 +257,8 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
         tv_content_content = (TextView) findViewById(R.id.tv_content_content);
         tv_img_content = (TextView) findViewById(R.id.tv_img_content);
         in_audio_video_ui = findViewById(R.id.in_audio_video_ui);
-        iv_video_and_audio_img.setOnClickListener(this);
+        iv_video_img.setOnClickListener(this);
+        iv_audio_img.setOnClickListener(this);
 
         iv_dashang.setOnClickListener(this);
         iv_back.setOnClickListener(this);
@@ -453,7 +457,15 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
                     PopuUtil.initPayPopu(this, this, map1);
                 }
                 break;
-            case R.id.iv_video_and_audio_img:
+            case R.id.iv_video_img:
+                intent = new Intent(FriendsNoteDetailsActivity.this, Play_videoActivity.class);
+                intent.putExtra("url", RequestPath.SERVER_PATH + iv_video_and_audio_url);
+                intent.putExtra("mediatype", notetype);
+                LogUtils.e("图片被点击");
+                startActivity(intent);
+//                finish();
+                break;
+            case R.id.iv_audio_img:
                 intent = new Intent(FriendsNoteDetailsActivity.this, Play_videoActivity.class);
                 intent.putExtra("url", RequestPath.SERVER_PATH + iv_video_and_audio_url);
                 intent.putExtra("mediatype", notetype);
@@ -848,16 +860,19 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
                 tv_content_content.setVisibility(View.GONE);
                 in_audio_video_ui.setVisibility(View.VISIBLE);
                 ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
+                iv_play.setVisibility(View.VISIBLE);
+                iv_video_img.setVisibility(View.VISIBLE);
                 nsgv_world_list_gridview.setVisibility(View.GONE);
                 iv_play.setImageResource(R.mipmap.note_play);
-                imgViewSetData(noteEntity.getNotevideopic(), iv_video_and_audio_img);
+                imgViewSetData(noteEntity.getNotevideopic(), iv_video_img);
                 break;
             case "2"://音频文
                 tv_content_content.setVisibility(View.GONE);
                 in_audio_video_ui.setVisibility(View.VISIBLE);
                 ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
+                iv_audio_img.setVisibility(View.VISIBLE);
                 nsgv_world_list_gridview.setVisibility(View.GONE);
-                iv_video_and_audio_img.setImageResource(R.mipmap.bg_yinpinbg);
+                iv_audio_img.setImageResource(R.mipmap.ic_music);
                 iv_play.setImageResource(R.mipmap.btn_music_bf);
                 break;
             case "3"://图文

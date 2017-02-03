@@ -63,6 +63,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 转发详情界面
+ */
 public class RepostNoteDetailActivity extends BaseActivity implements View.OnClickListener, PayInterface, WZHttpListener {
     NoteBean.NoteEntity noteEntity;
     HashMap shareMap;//分享时候的信息
@@ -134,7 +137,8 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
     NoteBean noteBean;
     private TextView tv_iszan;
     ImageView iv_user_img;//用户头像
-    ImageView iv_video_and_audio_img;//视频音频 图片
+    ImageView iv_video_img;//视频音频 图片
+    ImageView iv_audio_img;//视频音频 图片
     String iv_video_and_audio_url;
     TextView tv_nickname;//昵称
     TextView tv_dengji;//等级
@@ -287,7 +291,8 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
 
         tv_nickname = (TextView) findViewById(R.id.tv_nickname);
         iv_user_img = (ImageView) findViewById(R.id.iv_user_img);
-        iv_video_and_audio_img = (ImageView) findViewById(R.id.iv_video_and_audio_img);
+        iv_video_img = (ImageView) findViewById(R.id.iv_video_img);
+        iv_audio_img = (ImageView) findViewById(R.id.iv_audio_img);
         tv_dengji = (TextView) findViewById(R.id.tv_dengji);
         tv_day = (TextView) findViewById(R.id.tv_day);
         tv_price = (TextView) findViewById(R.id.tv_price);
@@ -297,7 +302,11 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         tv_img_content = (TextView) findViewById(R.id.tv_img_content);
         in_audio_video_ui = findViewById(R.id.in_audio_video_ui);
 
-        iv_video_and_audio_img.setOnClickListener(this);
+        iv_video_img.setOnClickListener(this);
+        iv_audio_img.setOnClickListener(this);
+        iv_video_img.setVisibility(View.GONE);
+        iv_audio_img.setVisibility(View.GONE);
+
 
         iv_back.setOnClickListener(this);
         iv_user_img.setOnClickListener(this);
@@ -498,18 +507,22 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         }
 
     }
-
+    private void starPlayAct() {
+        Intent intent = new Intent(RepostNoteDetailActivity.this, Play_videoActivity.class);
+        intent.putExtra("url", RequestPath.SERVER_PATH + iv_video_and_audio_url);
+        intent.putExtra("mediatype", notetype);
+        LogUtils.e("图片被点击");
+        startActivity(intent);
+    }
     @Override
     public void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
-            case R.id.iv_video_and_audio_img:
-                intent = new Intent(RepostNoteDetailActivity.this, Play_videoActivity.class);
-                intent.putExtra("url", RequestPath.SERVER_PATH + iv_video_and_audio_url);
-                intent.putExtra("mediatype", notetype);
-                LogUtils.e("图片被点击");
-                startActivity(intent);
-//                finish();
+            case R.id.iv_video_img:
+                starPlayAct();
+                break;
+            case R.id.iv_audio_img:
+                starPlayAct();
                 break;
             case R.id.iv_back:
                 finish();
@@ -900,6 +913,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         tv_day.setText(DateTiemUtils.editTime(noteEntity.getAddtime()));
         tv_read_num.setText("阅读：" + noteEntity.getClickcount());
         notetype = noteEntity.getNotetype();
+
         switch (notetype) {
             case "4"://文字
                 if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
@@ -929,14 +943,16 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                 in_audio_video_ui.setVisibility(View.VISIBLE);
                 ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                 nsgv_world_list_gridview.setVisibility(View.GONE);
-                imgViewSetData(noteEntity.getNotevideopic(), iv_video_and_audio_img);
+                iv_video_img.setVisibility(View.VISIBLE);
+                imgViewSetData(noteEntity.getNotevideopic(), iv_video_img);
                 break;
             case "2"://音频文
                 tv_content_content.setVisibility(View.GONE);
                 in_audio_video_ui.setVisibility(View.VISIBLE);
                 ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                 nsgv_world_list_gridview.setVisibility(View.GONE);
-                iv_video_and_audio_img.setImageResource(R.mipmap.bg);
+                iv_audio_img.setVisibility(View.VISIBLE);
+                iv_audio_img.setImageResource(R.mipmap.ic_music);
                 break;
             case "3"://图文
                 tv_content_content.setVisibility(View.GONE);

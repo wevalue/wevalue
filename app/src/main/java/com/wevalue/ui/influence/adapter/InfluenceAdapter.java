@@ -113,7 +113,8 @@ public class InfluenceAdapter extends BaseAdapter {
             viewHolder.iv_play = (ImageView) convertView.findViewById(R.id.iv_play);
             viewHolder.tv_nickname = (TextView) convertView.findViewById(R.id.tv_nickname);
             viewHolder.iv_user_img = (ImageView) convertView.findViewById(R.id.iv_user_img);
-            viewHolder.iv_video_and_audio_img = (ImageView) convertView.findViewById(R.id.iv_video_and_audio_img);
+            viewHolder.iv_video_img = (ImageView) convertView.findViewById(R.id.iv_video_img);
+            viewHolder.iv_audio_img = (ImageView) convertView.findViewById(R.id.iv_audio_img);
             viewHolder.tv_dengji = (TextView) convertView.findViewById(R.id.tv_dengji);
             viewHolder.tv_day = (TextView) convertView.findViewById(R.id.tv_day);
             viewHolder.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
@@ -184,6 +185,9 @@ public class InfluenceAdapter extends BaseAdapter {
         try {
             final String noteId = noteEntity.getNoteid();
             String notetype = noteEntity.getNotetype();
+            viewHolder.iv_audio_img.setVisibility(View.GONE);
+            viewHolder.iv_play.setVisibility(View.GONE);
+            viewHolder.iv_video_img.setVisibility(View.GONE);
             switch (notetype) {
                 case "4"://文字
                     if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
@@ -205,17 +209,19 @@ public class InfluenceAdapter extends BaseAdapter {
                     viewHolder.tv_content_content.setVisibility(View.GONE);
                     viewHolder.in_audio_video_ui.setVisibility(View.VISIBLE);
                     viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
+                    viewHolder.iv_video_img.setVisibility(View.VISIBLE);
+                    viewHolder.iv_play.setVisibility(View.VISIBLE);
                     viewHolder.nsgv_world_list_gridview.setVisibility(View.GONE);
                     viewHolder.iv_play.setImageResource(R.mipmap.note_play);
-                    imgViewSetData(mDatas.get(position).getNotevideopic(), viewHolder.iv_video_and_audio_img);
+                    imgViewSetData(mDatas.get(position).getNotevideopic(), viewHolder.iv_video_img);
                     break;
                 case "2"://音频文
                     viewHolder.tv_content_content.setVisibility(View.GONE);
                     viewHolder.in_audio_video_ui.setVisibility(View.VISIBLE);
+                    viewHolder.iv_audio_img.setVisibility(View.VISIBLE);
                     viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                     viewHolder.nsgv_world_list_gridview.setVisibility(View.GONE);
-                    viewHolder.iv_play.setImageResource(R.mipmap.btn_music_bf);
-                    viewHolder.iv_video_and_audio_img.setImageResource(R.mipmap.bg_yinpinbg);
+                    viewHolder.iv_audio_img.setImageResource(R.mipmap.ic_music);
                     break;
                 case "3"://图文
                     viewHolder.tv_content_content.setVisibility(View.GONE);
@@ -469,7 +475,8 @@ public class InfluenceAdapter extends BaseAdapter {
         TextView tv_transmit_num;//转发信息的打赏或收益情况
 
         ImageView iv_user_img;             //用户头像
-        ImageView iv_video_and_audio_img;//视频音频 图片
+        ImageView iv_video_img;//视频 图片
+        ImageView iv_audio_img;//音频 图片
         TextView tv_nickname;//昵称
         TextView tv_dengji;//等级
         TextView tv_day;//日期

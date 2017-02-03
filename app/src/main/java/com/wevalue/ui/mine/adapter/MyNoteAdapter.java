@@ -104,7 +104,8 @@ public class MyNoteAdapter extends BaseAdapter {
             viewHolder.tv_nickname = (TextView) convertView.findViewById(R.id.tv_nickname);
             viewHolder.iv_user_img = (ImageView) convertView.findViewById(R.id.iv_user_img);
             viewHolder.iv_play = (ImageView) convertView.findViewById(R.id.iv_play);
-            viewHolder.iv_video_and_audio_img = (ImageView) convertView.findViewById(R.id.iv_video_and_audio_img);
+            viewHolder.iv_video_img = (ImageView) convertView.findViewById(R.id.iv_video_img);
+            viewHolder.iv_audio_img = (ImageView) convertView.findViewById(R.id.iv_audio_img);
             viewHolder.tv_dengji = (TextView) convertView.findViewById(R.id.tv_dengji);
             viewHolder.tv_day = (TextView) convertView.findViewById(R.id.tv_day);
 //            viewHolder.tv_day_time = (TextView) convertView.findViewById(R.id.tv_day_time);
@@ -157,7 +158,9 @@ public class MyNoteAdapter extends BaseAdapter {
         } else if (("0").equals(noteEntity.getIszan())) {
             viewHolder.tv_zanAndImg.setCompoundDrawables(null, null, nozan, null);
         }
-
+        viewHolder.iv_audio_img.setVisibility(View.GONE);
+        viewHolder.iv_play.setVisibility(View.GONE);
+        viewHolder.iv_video_img.setVisibility(View.GONE);
         switch (mDatas.get(position).getNotetype()) {
             case "4"://文字
                 if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
@@ -177,28 +180,24 @@ public class MyNoteAdapter extends BaseAdapter {
             case "1"://视频文
                 LogUtils.e("positionshipin", position + "");
                 viewHolder.tv_content_content.setVisibility(View.GONE);
+
                 viewHolder.in_audio_video_ui.setVisibility(View.VISIBLE);
                 viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
+                viewHolder.iv_play.setVisibility(View.VISIBLE);
+                viewHolder.iv_video_img.setVisibility(View.VISIBLE);
                 viewHolder.nsgv_world_list_gridview.setVisibility(View.GONE);
 //                viewHolder.iv_video_and_audio_img.setImageResource(R.mipmap.default_head);
-                imgViewSetData(mDatas.get(position).getNotevideopic(), viewHolder.iv_video_and_audio_img);
-
-                viewHolder.iv_play.setImageResource(R.mipmap.note_play);
+                imgViewSetData(mDatas.get(position).getNotevideopic(), viewHolder.iv_video_img);
                 break;
             case "2"://音频文
                 LogUtils.e("positionyinyue", position + "");
                 viewHolder.tv_content_content.setVisibility(View.GONE);
                 viewHolder.in_audio_video_ui.setVisibility(View.VISIBLE);
                 viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
+                viewHolder.iv_audio_img.setVisibility(View.VISIBLE);
                 viewHolder.nsgv_world_list_gridview.setVisibility(View.GONE);
-//                viewHolder.iv_video_and_audio_img.setImageResource(R.mipmap.bg_yinpinbg);
-                Glide.with(mActivity)
-                        .load(R.mipmap.bg_yinpinbg)
-                        .placeholder(R.mipmap.bg_yinpinbg)
-                        .crossFade()
-                        .into(viewHolder.iv_video_and_audio_img);
+                 viewHolder.iv_audio_img.setImageResource(R.mipmap.ic_music);
 
-                viewHolder.iv_play.setImageResource(R.mipmap.btn_music_bf);
                 break;
             case "3"://图文
 
@@ -450,7 +449,8 @@ public class MyNoteAdapter extends BaseAdapter {
 
     class ViewHolder {
         ImageView iv_user_img;//用户头像
-        ImageView iv_video_and_audio_img;//视频音频 图片
+        ImageView iv_video_img;//视频 图片
+        ImageView iv_audio_img;//音频 图片
         ImageView iv_play;//播放按钮
         TextView tv_nickname;//昵称
         TextView tv_dengji;//等级

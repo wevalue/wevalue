@@ -60,7 +60,8 @@ public class PaymentDetails_DetailsActivity extends BaseActivity implements View
     private LinearLayout ll_withdraw;
     private TextView tv_content_content;
     private TextView tv_img_content;
-    private ImageView iv_video_and_audio_img;
+    ImageView iv_video_img;//视频 图片
+    ImageView iv_audio_img;//音频 图片
     private NoScrollGridView nsgv_world_list_gridview;
     private LinearLayout ll_imgAndAudioAndVideo_ui;
     View in_audio_video_ui;//视频音频的图片区域;
@@ -110,7 +111,8 @@ public class PaymentDetails_DetailsActivity extends BaseActivity implements View
         ll_withdraw = (LinearLayout) findViewById(R.id.ll_withdraw);
         tv_content_content = (TextView) findViewById(R.id.tv_content_content);
         tv_img_content = (TextView) findViewById(R.id.tv_img_content);
-        iv_video_and_audio_img = (ImageView) findViewById(R.id.iv_video_and_audio_img);
+        iv_video_img = (ImageView) findViewById(R.id.iv_video_img);
+        iv_audio_img = (ImageView) findViewById(R.id.iv_audio_img);
         nsgv_world_list_gridview = (NoScrollGridView) findViewById(R.id.nsgv_world_list_gridview);
         ll_imgAndAudioAndVideo_ui = (LinearLayout) findViewById(R.id.ll_imgAndAudioAndVideo_ui);
         in_audio_video_ui = findViewById(R.id.in_audio_video_ui);
@@ -304,8 +306,10 @@ public class PaymentDetails_DetailsActivity extends BaseActivity implements View
                     tv_content_content.setVisibility(View.GONE);
                     in_audio_video_ui.setVisibility(View.VISIBLE);
                     ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
+                    iv_play.setVisibility(View.VISIBLE);
+                    iv_video_img.setVisibility(View.VISIBLE);
                     nsgv_world_list_gridview.setVisibility(View.GONE);
-                    imgViewSetData(noteInfo.getNotevideopic(), iv_video_and_audio_img);
+                    imgViewSetData(noteInfo.getNotevideopic(), iv_video_img);
                     iv_play.setImageResource(R.mipmap.note_play);
                     break;
                 case "2"://音频文
@@ -313,8 +317,7 @@ public class PaymentDetails_DetailsActivity extends BaseActivity implements View
                     in_audio_video_ui.setVisibility(View.VISIBLE);
                     ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                     nsgv_world_list_gridview.setVisibility(View.GONE);
-                    iv_play.setImageResource(R.mipmap.btn_music_bf);
-                    iv_video_and_audio_img.setImageResource(R.mipmap.bg_yinpinbg);
+                    iv_audio_img.setImageResource(R.mipmap.ic_music);
                     break;
                 case "3"://图文
                     tv_content_content.setVisibility(View.GONE);

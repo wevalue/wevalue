@@ -32,5 +32,20 @@
 	<style name="style_content_price">
 		<item name="android:textSize">14sp</item>
 		<item name="android:textStyle">normal</item>
+		<item name="android:singleLine">true</item>
+	</style>
+
+	<style name="style_note_title">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:ellipsize">none</item>
+		<item name="android:maxLength">32</item>
+		<item name="android:textColor">@color/black</item>
+	</style>
+	<style name="style_note_content">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textStyle">normal</item>
+		<item name="android:ellipsize">end</item>
+		<item name="android:textColor">@color/black_444</item>
 	</style>
 </resources>
