@@ -85,9 +85,9 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
     private TextView tv_choice_tilte;
     private TextView tv_nickname;
     private EditText et_edit_reci;
-    private EditText et_content;
+    private EditText et_content;  //发布内容
     private TextView tv_is_yuanchuang;
-    private TextView tv_is_shoufei;
+    private TextView tv_is_shoufei;//是否收费
     private TextView tv_is_type;
     private TextView tv_qingxu;
     private TextView tv_id_xinghao;
@@ -308,6 +308,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                 initGridViewData();
                 break;
             case 4://文字
+
                 et_content.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2000)});
                 et_content.setHint("说点什么…（2000字以内）");
                 et_content.addTextChangedListener(new TextWatcher() {
@@ -329,6 +330,8 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                     }
                 });
                 initGridViewData();
+                //如果发表文字 则隐藏加号  加号在nsgv_send_note_gridview里面写着
+                nsgv_send_note_gridview.setVisibility(View.GONE);
                 break;
         }
     }

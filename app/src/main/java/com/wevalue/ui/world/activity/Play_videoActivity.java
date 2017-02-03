@@ -61,8 +61,6 @@ public class Play_videoActivity extends BaseActivity implements View.OnClickList
         pb_ProgressBar = (ProgressBar) findViewById(R.id.pb_ProgressBar);
         iv_back.setOnClickListener(this);
 
-
-
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
