@@ -90,11 +90,8 @@
 
         <com.wevalue.view.RoundImageView
             android:id="@+id/iv_user_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxHeight="18dp"
-            android:maxWidth="18dp"
-            android:adjustViewBounds="true"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/default_head"
             app:type="round" />
