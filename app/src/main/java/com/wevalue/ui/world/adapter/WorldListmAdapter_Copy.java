@@ -101,7 +101,8 @@ public class WorldListmAdapter_Copy extends BaseAdapter {
             viewHolder.iv_user_img = (ImageView) convertView.findViewById(R.id.iv_user_img);
             viewHolder.in_audio_video_ui = (LinearLayout) convertView.findViewById(R.id.in_audio_video_ui);
             viewHolder.iv_play = (ImageView) convertView.findViewById(R.id.iv_play);
-            viewHolder.iv_video_and_audio_img = (ImageView) convertView.findViewById(R.id.iv_video_and_audio_img);
+            viewHolder.iv_video_img = (ImageView) convertView.findViewById(R.id.iv_video_img);
+            viewHolder.iv_audio_img = (ImageView) convertView.findViewById(R.id.iv_audio_img);
             viewHolder.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
             viewHolder.tv_income = (TextView) convertView.findViewById(R.id.tv_income);
             viewHolder.tv_zhuanfa_num = (TextView) convertView.findViewById(R.id.tv_zhuanfa_num);
@@ -143,7 +144,8 @@ public class WorldListmAdapter_Copy extends BaseAdapter {
         viewHolder.tv_content_content.setVisibility(View.GONE);
         viewHolder.tv_title.setVisibility(View.GONE);
         viewHolder.iv_play.setVisibility(View.GONE);
-        viewHolder.iv_video_and_audio_img.setVisibility(View.GONE);
+        viewHolder.iv_video_img.setVisibility(View.GONE);
+        viewHolder.iv_audio_img.setVisibility(View.GONE);
         viewHolder.nsgv_world_list_gridview.setVisibility(View.GONE);
 
         try {
@@ -169,20 +171,17 @@ public class WorldListmAdapter_Copy extends BaseAdapter {
                     viewHolder.tv_title.setVisibility(View.VISIBLE);
                     viewHolder.in_audio_video_ui.setVisibility(View.VISIBLE);
                     viewHolder.iv_play.setVisibility(View.VISIBLE);
-                    viewHolder.iv_video_and_audio_img.setVisibility(View.VISIBLE);
+                    viewHolder.iv_video_img.setVisibility(View.VISIBLE);
                     viewHolder.tv_title.setText(noteEntity.getContent());
-                    viewHolder.iv_play.setImageResource(R.mipmap.note_play);
-                    imgViewSetData(mDatas.get(position).getNotevideopic(), viewHolder.iv_video_and_audio_img);
+                    //viewHolder.iv_play.setImageResource(R.mipmap.note_play);
+                    imgViewSetData(mDatas.get(position).getNotevideopic(), viewHolder.iv_video_img);
                     break;
                 case "2"://音频文
-                    viewHolder.iv_play.setVisibility(View.VISIBLE);
                     viewHolder.in_audio_video_ui.setVisibility(View.VISIBLE);
-                    viewHolder.iv_video_and_audio_img.setVisibility(View.VISIBLE);
+                    viewHolder.iv_audio_img.setVisibility(View.VISIBLE);
                     viewHolder.tv_title.setVisibility(View.VISIBLE);
                     viewHolder.tv_title.setText(noteEntity.getContent());
-                    viewHolder.iv_play.setImageResource(R.mipmap.btn_music_bf);
-                   // viewHolder.iv_video_and_audio_img.setImageResource(R.mipmap.bg_yinpinbg);
-                    Glide.with(mActivity).load(R.mipmap.bg_yinpinbg).into(viewHolder.iv_video_and_audio_img);
+                    viewHolder.iv_audio_img.setImageResource(R.mipmap.ic_music);
                     break;
                 case "3"://图文
                     if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
@@ -278,7 +277,8 @@ public class WorldListmAdapter_Copy extends BaseAdapter {
     private void imgViewSetData(String url, ImageView iv) {
         Glide.with(mActivity)
                 .load(RequestPath.SERVER_PATH + url)
-                .thumbnail(0.5f) // 用一般大小作为缩略图
+                .dontAnimate() // 不使用默认动画 解决占位为题
+                //.thumbnail(0.5f) // 用一般大小作为缩略图
                 .placeholder(R.mipmap.default_video)
                 .error(R.mipmap.default_video)
                 .crossFade()
@@ -293,7 +293,9 @@ public class WorldListmAdapter_Copy extends BaseAdapter {
         //视频 音频
         LinearLayout in_audio_video_ui;
         ImageView iv_play;//播放图标
-        ImageView iv_video_and_audio_img;//视频音频 图片
+        ImageView iv_video_img;//视频 图片
+        ImageView iv_audio_img;//音频 图片
+        //ImageView iv_video_and_audio_img;//视频音频 图片
         //图片布局
         NoScrollGridView nsgv_world_list_gridview;//图片列表;
 
