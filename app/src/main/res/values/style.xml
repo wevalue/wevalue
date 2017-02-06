@@ -56,4 +56,10 @@
 		<item name="android:ellipsize">end</item>
 		<item name="android:textColor">@color/black_444</item>
 	</style>
+
+	<style name="style_text">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textStyle">normal</item>
+		<item name="android:textColor">@color/font_gray</item>
+	</style>
 </resources>

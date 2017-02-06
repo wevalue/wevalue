@@ -82,14 +82,17 @@ import java.util.Map;
 public class ReleaseNoteActivity extends BaseActivity implements View.OnClickListener, PayInterface {
     private TextView tv_send_note;
     private TextView tv_back;
-    private TextView tv_choice_tilte;
     private TextView tv_nickname;
-    private EditText et_edit_reci;
-    private EditText et_content;  //发布内容
-    private TextView tv_is_yuanchuang;
+    private TextView tv_choice_tilte; //选择领域，标签
+    private EditText et_edit_reci; //热词
     private TextView tv_is_shoufei;//是否收费
-    private TextView tv_is_type;
-    private TextView tv_qingxu;
+    private TextView tv_is_yuanchuang; //是否原创
+
+    private EditText et_title;  //发布标题
+    private EditText et_content;  //发布内容
+   // private TextView tv_is_type; // 发布世界 朋友圈
+   // private TextView tv_qingxu;
+
     private TextView tv_id_xinghao;
     private TextView tv_id_xinghao_2;
     private ImageView iv_video_img;
@@ -128,13 +131,11 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
     //发布时用户选择的内容标签
     private String noteClass = "1";
 
-
     private MediaPlayer mMediaPlayer;//媒体播放器
     private String money;// 帖子价格
     private String orderno;//订单编号
     private String spendtype;//支付类型
     private ProgressDialog mProgressDialog;
-    private String isShare = "0";
     private String filenum = "0";
     List<Integer> integerList;
     private String releaseType = "";
@@ -169,12 +170,15 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
         tv_back = (TextView) findViewById(R.id.tv_back);
         tv_choice_tilte = (TextView) findViewById(R.id.tv_choice_tilte);
         tv_is_yuanchuang = (TextView) findViewById(R.id.tv_is_yuanchuang);
+        tv_is_yuanchuang.setTag(false);
         tv_is_shoufei = (TextView) findViewById(R.id.tv_is_shoufei);
-        tv_is_type = (TextView) findViewById(R.id.tv_is_type);
-        tv_qingxu = (TextView) findViewById(R.id.tv_qingxu);
+        tv_is_shoufei.setTag(true);
+      //  tv_is_type = (TextView) findViewById(R.id.tv_is_type);
+        //tv_qingxu = (TextView) findViewById(R.id.tv_qingxu);
         tv_id_xinghao = (TextView) findViewById(R.id.tv_id_xinghao);
         tv_id_xinghao_2 = (TextView) findViewById(R.id.tv_id_xinghao_2);
         rgb_isShare = (ImageView) findViewById(R.id.rgb_isShare);
+        rgb_isShare.setTag(true);
         et_edit_reci = (EditText) findViewById(R.id.et_edit_reci);
         et_edit_reci.addTextChangedListener(new TextWatcher() {
             @Override
@@ -202,6 +206,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
 
             }
         });
+        et_title = (EditText) findViewById(R.id.et_title);
         et_content = (EditText) findViewById(R.id.et_content);
         iv_video_img = (ImageView) findViewById(R.id.iv_video_img);
         iv_paly = (ImageView) findViewById(R.id.iv_paly);
@@ -215,7 +220,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
         tv_is_yuanchuang.setOnClickListener(this);
         tv_is_shoufei.setOnClickListener(this);
 //        tv_is_type.setOnClickListener(this);
-        tv_qingxu.setOnClickListener(this);
+        //tv_qingxu.setOnClickListener(this);
         iv_paly.setOnClickListener(this);
         nsgv_send_note_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -407,17 +412,16 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                         tv_is_shoufei.setText(mSFDatas.get(options1));
                         if (mSFDatas.get(options1).equals("付费")) {
                             isFree = false;
-                            tv_is_type.setText("世界");
                         } else {
-                            tv_is_type.setText("朋友们");
                             isFree = true;
                         }
+                        tv_is_shoufei.setTag(isFree);
                         break;
                     case 4:
-                        tv_is_type.setText(mFWDatas.get(options1));
+                        //tv_is_type.setText(mFWDatas.get(options1));
                         break;
                     case 5:
-                        tv_qingxu.setText(mQXDatas.get(options1));
+                        //tv_qingxu.setText(mQXDatas.get(options1));
                         break;
                 }
             }
@@ -470,12 +474,13 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rgb_isShare:
-                if (isShare.equals("0")) {
-                    isShare = "1";
+                boolean tag = (boolean) rgb_isShare.getTag();
+                if (tag) {
+                    rgb_isShare.setTag(false);
                     rgb_isShare.setImageResource(R.mipmap.icon_fabu_weigouxuan);
                     ShowUtil.showToast(this, "尊，分享至其他平台也可以扩大您的影响力！");
                 } else {
-                    isShare = "0";
+                    rgb_isShare.setTag(true);
                     rgb_isShare.setImageResource(R.mipmap.iconfont_duihao);
                 }
                 break;
@@ -484,38 +489,26 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.tv_send_note:
-//                if (TextUtils.isEmpty(tv_is_yuanchuang.getText().toString().trim())) {
-//                    ShowUtil.showToast(ReleaseNoteActivity.this, "请完善发布信息");
-//                    return;
-//                }
-                if (TextUtils.isEmpty(tv_is_shoufei.getText().toString().trim())) {
-                    ShowUtil.showToast(ReleaseNoteActivity.this, "请完善发布信息");
+//                boolean IsShoufi = (boolean) tv_is_shoufei.getTag();
+//                boolean IsShare = (boolean) tv_is_shoufei.getTag();
+//                boolean IsYuan = (boolean) tv_is_yuanchuang.getTag();
+
+
+                if (TextUtils.isEmpty(et_title.getText().toString().trim()) && TextUtils.isEmpty(fileUrl) && MainActivity.mSelectedImage.size() == 0) {
+                    ShowUtil.showToast(ReleaseNoteActivity.this, "发布内容不能为空");
                     return;
                 }
-                if (!tv_is_shoufei.getText().toString().contains("免费")) {
-                    if (TextUtils.isEmpty(tv_choice_tilte.getText().toString().trim())) {
-                        ShowUtil.showToast(ReleaseNoteActivity.this, "请选择标签");
-                        return;
-                    }
-                }
-//                if (TextUtils.isEmpty(tv_qingxu.getText().toString().trim())){
-//                    ShowUtil.showToast(ReleaseNoteActivity.this, "请完善发布信息");
-//                    return;
-//                }
+                //如果发布的是纯文字 则必须写内容
+                if (isSendType==4)
                 if (TextUtils.isEmpty(et_content.getText().toString().trim()) && TextUtils.isEmpty(fileUrl) && MainActivity.mSelectedImage.size() == 0) {
                     ShowUtil.showToast(ReleaseNoteActivity.this, "发布内容不能为空");
                     return;
                 }
-                if (fileUrl != null && isSendType == 1 || isSendType == 2) {
-//                    File file = new File(fileUrl);
-//                    if (getFileSize(file) / 1024 / 1024 > 10) {
-//                        if (isSendType == 1) {
-//                            ShowUtil.showToast(this, "请上传10s以内的视频，超过10s的视频请登录PC端上传");
-//                        } else {
-//                            ShowUtil.showToast(this, "请上传10s以内的音频，超过10s的音频请登录PC端上传");
-//                        }
-//                        return;
-//                    }
+                if (!isFree) {
+                    if (TextUtils.isEmpty(tv_choice_tilte.getText().toString().trim())) {
+                        ShowUtil.showToast(ReleaseNoteActivity.this, "请选择标签");
+                        return;
+                    }
                 }
                 if (!ButtontimeUtil.isFastDoubleClick()) {
                     if (isFree) {
@@ -540,49 +533,50 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                 pvOptions.show();
                 break;
             case R.id.tv_is_yuanchuang://原创
-                if (tv_is_yuanchuang.getText().toString().equals("原创")) {
-                    tv_is_yuanchuang.setText("非原创");
-                } else {
-                    tv_is_yuanchuang.setText("原创");
+              boolean isYuan = (boolean) tv_is_yuanchuang.getTag();
+                if (isYuan){
+                    tv_is_yuanchuang.setBackgroundResource(R.mipmap.original_1);
+                }else {
+                    tv_is_yuanchuang.setBackgroundResource(R.mipmap.original_2);
                 }
+                tv_is_yuanchuang.setTag(!isYuan);
 
                 break;
             case R.id.tv_is_shoufei://收费
-                if (tv_is_shoufei.getText().toString().equals("付费")) {
-                    isFree = true;
-                    tv_is_type.setText("朋友们");
-                    tv_is_shoufei.setText("免费");
+                //tag  1 收费发布世界  2  免费发朋友圈
+                isFree = (boolean) tv_is_shoufei.getTag();
+                if (!isFree) {
+                    isFree = false;
+                    tv_is_shoufei.setTag(isFree);
+                    tv_is_shoufei.setBackgroundResource(R.mipmap.release_type_1);
                     tv_is_yuanchuang.setEnabled(false);
                     tv_choice_tilte.setEnabled(false);
                     tv_id_xinghao.setVisibility(View.INVISIBLE);
                     tv_id_xinghao_2.setVisibility(View.INVISIBLE);
                     ll_isTongyi.setVisibility(View.INVISIBLE);
                 } else {
-                    tv_is_type.setText("世界");
-                    tv_is_shoufei.setText("付费");
+                    isFree = true;
+                    tv_is_shoufei.setTag(isFree);
+                    tv_is_shoufei.setBackgroundResource(R.mipmap.release_type_2);
                     tv_is_yuanchuang.setEnabled(true);
                     tv_choice_tilte.setEnabled(true);
                     tv_id_xinghao.setVisibility(View.VISIBLE);
                     tv_id_xinghao_2.setVisibility(View.VISIBLE);
                     ll_isTongyi.setVisibility(View.VISIBLE);
-                    isFree = false;
                 }
 
-//                isClickWho = 3;
-//                initHuaLunPicker(mSFDatas);
+                break;
+//            case R.id.tv_is_type://范围
+//                isClickWho = 4;
+//                initHuaLunPicker(mFWDatas);
 //                pvOptions.show();
-                break;
-            case R.id.tv_is_type://范围
-                isClickWho = 4;
-                initHuaLunPicker(mFWDatas);
-                pvOptions.show();
-                break;
-            case R.id.tv_qingxu://情緒
-                hideInput();
-                isClickWho = 5;
-                initHuaLunPicker(mQXDatas);
-                pvOptions.show();
-                break;
+//                break;
+//            case R.id.tv_qingxu://情緒
+//                hideInput();
+//                isClickWho = 5;
+//                initHuaLunPicker(mQXDatas);
+//                pvOptions.show();
+//                break;
             case R.id.iv_paly://播放
                 if (isSendType == 2) {
                     try {
@@ -714,7 +708,9 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
         map.put("orderno", orderno);
         map.put("spendtype", spendtype);
         map.put("cityname", SharedPreferencesUtil.getLocationCity(this));
-        if (tv_is_yuanchuang.getText().toString().trim().equals("原创")) {
+
+        boolean isYuan = (boolean) tv_is_yuanchuang.getTag();
+        if (isYuan) {
             map.put("isself", "0");
         } else {
             map.put("isself", "1");
@@ -727,7 +723,8 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
             map.put("notezone", "1");
         }
         map.put("hotword", et_edit_reci.getText().toString().trim());
-        map.put("notemood", tv_qingxu.getText().toString().trim());
+       // map.put("notemood", tv_qingxu.getText().toString().trim()); //去掉情绪
+        String isShare = (boolean)rgb_isShare.getTag()? "0" : "1";
         map.put("isshare", isShare);
         map.put("paynum", money);
         if (videoFile != null) {
