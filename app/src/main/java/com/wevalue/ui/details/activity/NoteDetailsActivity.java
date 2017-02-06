@@ -328,7 +328,6 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
         tv_zan_but.setOnClickListener(new MyOnClickListener(3));
         tv_shang_but.setOnClickListener(new MyOnClickListener(4));
         //隐藏 视频音频 图片 内容 等控件
-        tv_note_content.setVisibility(View.GONE);
         in_audio_video_ui.setVisibility(View.GONE);
         iv_video_img.setVisibility(View.GONE);
         iv_play.setVisibility(View.GONE);
@@ -608,7 +607,7 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                     if (noteEntity.getIszan().equals("1")) {//已经点赞
                         tv_zan_but.performClick();
                         ShowUtil.showToast(getApplicationContext(), "取消点赞！");
-                        tv_iszan.setCompoundDrawables(null, null, nozan, null);
+                        tv_iszan.setCompoundDrawables(nozan, null, null, null);
                         String s;
                         if (noteEntity.getZancount().equals("0")) {
                             s = String.valueOf(Integer.parseInt(noteEntity.getZancount()));
@@ -620,7 +619,7 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                     } else if (noteEntity.getIszan().equals("0")) {//还未点赞
                         tv_zan_but.performClick();
                         ShowUtil.showToast(getApplicationContext(), "点赞成功！");
-                        tv_iszan.setCompoundDrawables(null, null, iszan, null);
+                        tv_iszan.setCompoundDrawables(iszan, null, null, null);
                         String s = String.valueOf(Integer.parseInt(noteEntity.getZancount()) + 1);
                         noteEntity.setZancount(s);
                         noteEntity.setIszan("1");
@@ -915,11 +914,11 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                 }
                 break;
         }
-        tv_zhuanfa_but.setText("转发  " + noteInfoBean.getRepost_Total());
-        tv_zan_but.setText("赞  " + noteInfoBean.getZan_Total());
-        tv_pinglun_but.setText("评论  " + noteInfoBean.getComment_Total());
-        tv_shang_but.setText("赏  " + noteInfoBean.getReward_Total());
-        tv_qingxu_but.setText("情绪  " + noteInfoBean.getMood_Total());
+        tv_zhuanfa_but.setText("送给朋友们\n" + noteInfoBean.getRepost_Total());
+        tv_zan_but.setText("赞\n" + noteInfoBean.getZan_Total());
+        tv_pinglun_but.setText("评论\n" + noteInfoBean.getComment_Total());
+        tv_shang_but.setText("赏\n" + noteInfoBean.getReward_Total());
+        tv_qingxu_but.setText("情绪\n" + noteInfoBean.getMood_Total());
     }
 
     /**
@@ -927,9 +926,9 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
      **/
     private void setUIData(final NoteBean.NoteEntity noteEntity) {
         if (noteEntity.getIszan().equals("0")) {
-            tv_iszan.setCompoundDrawables(null, null, nozan, null);
+            tv_iszan.setCompoundDrawables(nozan, null, null, null);
         } else if (noteEntity.getIszan().equals("1")) {
-            tv_iszan.setCompoundDrawables(null, null, iszan, null);
+            tv_iszan.setCompoundDrawables(iszan, null,null , null);
         }
         nickname = noteEntity.getUsernickname();
         tv_nickname.setText(noteEntity.getUsernickname());

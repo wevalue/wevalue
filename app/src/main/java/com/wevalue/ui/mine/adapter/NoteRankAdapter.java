@@ -75,6 +75,7 @@ public class NoteRankAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.tv_nickname = (TextView) convertView.findViewById(R.id.tv_nickname);
             viewHolder.iv_user_img = (ImageView) convertView.findViewById(R.id.iv_user_img);
+            viewHolder.iv_play = (ImageView) convertView.findViewById(R.id.iv_play);
             viewHolder.iv_video_img = (ImageView) convertView.findViewById(R.id.iv_video_img);
             viewHolder.iv_audio_img = (ImageView) convertView.findViewById(R.id.iv_audio_img);
             viewHolder.tv_dengji = (TextView) convertView.findViewById(R.id.tv_dengji);
@@ -140,6 +141,8 @@ public class NoteRankAdapter extends BaseAdapter {
         String notetype = noteEntity.getNotetype();
         viewHolder.iv_audio_img.setVisibility(View.GONE);
         viewHolder.iv_video_img.setVisibility(View.GONE);
+        viewHolder.iv_play.setVisibility(View.GONE);
+
         switch (notetype) {
             case "4"://文字
                 if (noteEntity.getList() != null && noteEntity.getList().size() > 0) {
@@ -160,6 +163,7 @@ public class NoteRankAdapter extends BaseAdapter {
                 viewHolder.tv_content_content.setVisibility(View.GONE);
                 viewHolder.nsgv_world_list_gridview.setVisibility(View.GONE);
                 viewHolder.in_audio_video_ui.setVisibility(View.VISIBLE);
+                viewHolder.iv_play.setVisibility(View.VISIBLE);
                 viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                 viewHolder.iv_video_img.setVisibility(View.VISIBLE);
                 imgViewSetData(mDatas.get(position).getNotevideopic(), viewHolder.iv_video_img);
@@ -253,6 +257,7 @@ public class NoteRankAdapter extends BaseAdapter {
         LinearLayout ll_head_info;//用户信息
         TextView tv_transmit_num;//转发信息的打赏或收益情况
         ImageView iv_user_img;    //用户头像
+        ImageView iv_play;//视频 播放按钮
         ImageView iv_video_img;//视频 图片
         ImageView iv_audio_img;//音频 图片
         TextView tv_nickname;//昵称

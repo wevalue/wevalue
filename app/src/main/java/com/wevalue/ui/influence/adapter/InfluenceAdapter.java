@@ -35,9 +35,6 @@ import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.NoScrollGridView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.List;
 
 /**
@@ -76,6 +73,7 @@ public class InfluenceAdapter extends BaseAdapter {
         iszan = mContext.getResources().getDrawable(R.mipmap.notedetail_hongxin);
         iszan.setBounds(0, 0, iszan.getMinimumWidth(), iszan.getMinimumHeight()); //设置边界
         nozan.setBounds(0, 0, nozan.getMinimumWidth(), nozan.getMinimumHeight()); //设置边界
+
     }
 
     public void setmDatas(List<NoteBean.NoteEntity> mDatas) {
@@ -108,7 +106,7 @@ public class InfluenceAdapter extends BaseAdapter {
         }
 //         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_world_list, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_infulence, null);
             viewHolder = new ViewHolder();
             viewHolder.iv_play = (ImageView) convertView.findViewById(R.id.iv_play);
             viewHolder.tv_nickname = (TextView) convertView.findViewById(R.id.tv_nickname);
@@ -119,18 +117,15 @@ public class InfluenceAdapter extends BaseAdapter {
             viewHolder.tv_day = (TextView) convertView.findViewById(R.id.tv_day);
             viewHolder.tv_price = (TextView) convertView.findViewById(R.id.tv_price);
             viewHolder.tv_income = (TextView) convertView.findViewById(R.id.tv_income);
-            viewHolder.tv_read_num = (TextView) convertView.findViewById(R.id.tv_read_num);
+            viewHolder.tv_comment_num = (TextView) convertView.findViewById(R.id.tv_comment_num);
             viewHolder.tv_zhuanfa_num = (TextView) convertView.findViewById(R.id.tv_zhuanfa_num);
             viewHolder.tv_praise_num = (TextView) convertView.findViewById(R.id.tv_praise_num);
             viewHolder.tv_content_content = (TextView) convertView.findViewById(R.id.tv_content_content);
             viewHolder.tv_img_content = (TextView) convertView.findViewById(R.id.tv_img_content);
             viewHolder.tv_zanAndImg = (TextView) convertView.findViewById(R.id.tv_zanAndImg);
-            viewHolder.tv_bu_down = (TextView) convertView.findViewById(R.id.tv_bu_down);
             viewHolder.textView = (TextView) convertView.findViewById(R.id.textView);
-            viewHolder.tv_bu_up = (TextView) convertView.findViewById(R.id.tv_bu_up);
             viewHolder.in_audio_video_ui = convertView.findViewById(R.id.in_audio_video_ui);
             viewHolder.ll_praise = (LinearLayout) convertView.findViewById(R.id.ll_praise);
-            viewHolder.id_world_itme_ui = (LinearLayout) convertView.findViewById(R.id.id_world_itme_ui);
             viewHolder.ll_imgAndAudioAndVideo_ui = (LinearLayout) convertView.findViewById(R.id.ll_imgAndAudioAndVideo_ui);
             viewHolder.nsgv_world_list_gridview = (NoScrollGridView) convertView.findViewById(R.id.nsgv_world_list_gridview);
             viewHolder.rl_zhuan_content_ui = (RelativeLayout) convertView.findViewById(R.id.rl_zhuan_content_ui);
@@ -174,13 +169,13 @@ public class InfluenceAdapter extends BaseAdapter {
         viewHolder.tv_income.setText("¥" + noteEntity.getShouyi());
         viewHolder.tv_day.setText(DateTiemUtils.editTime(noteEntity.getAddtime()));
 
-        viewHolder.tv_read_num.setText(noteEntity.getClickcount());
+        viewHolder.tv_comment_num.setText(noteEntity.getCommcount());
         viewHolder.tv_zhuanfa_num.setText(noteEntity.getRepostcount());
         viewHolder.tv_praise_num.setText(noteEntity.getZancount());
         if ("1".equals(noteEntity.getIszan())) {
-            viewHolder.tv_zanAndImg.setCompoundDrawables(null, null, iszan, null);
+            viewHolder.tv_zanAndImg.setCompoundDrawables(iszan, null, null, null);
         } else if (("0").equals(noteEntity.getIszan())) {
-            viewHolder.tv_zanAndImg.setCompoundDrawables(null, null, nozan, null);
+            viewHolder.tv_zanAndImg.setCompoundDrawables(nozan, null, null, null);
         }
         try {
             final String noteId = noteEntity.getNoteid();
@@ -355,73 +350,6 @@ public class InfluenceAdapter extends BaseAdapter {
             return convertView;
         }
 
-        LogUtils.e(" -------orderType: =" + orderType);
-        switch (orderType) {
-            case "0":
-                LogUtils.e("mLunBoDatas=" + mLunBoDatas.size() + "----mJiaGeDatas=" + mJiaGeDatas.size());
-                if (mLunBoDatas != null) {
-                    if (position < mLunBoDatas.size()) {
-                        viewHolder.id_world_itme_ui.setBackgroundResource(R.drawable.xinfengcaitiao);
-                        viewHolder.tv_bu_down.setVisibility(View.GONE);
-                        viewHolder.tv_bu_up.setVisibility(View.GONE);
-                        LogUtils.e("if(mLunBoDatas!=null){=" + position);
-
-                    } else {
-                        if (mJiaGeDatas != null) {
-                            if (position < mJiaGeDatas.size() + mLunBoDatas.size()) {
-                                viewHolder.id_world_itme_ui.setBackgroundResource(R.color.transparent);
-                                viewHolder.tv_bu_down.setVisibility(View.VISIBLE);
-                                viewHolder.tv_bu_up.setVisibility(View.VISIBLE);
-
-                                LogUtils.e("}else {if (mJiaGeDatas!=null){" + position);
-                            } else {
-                                viewHolder.id_world_itme_ui.setBackgroundResource(R.color.transparent);
-                                viewHolder.tv_bu_down.setVisibility(View.GONE);
-                                viewHolder.tv_bu_up.setVisibility(View.GONE);
-                                LogUtils.e("}else {if  else   (mJiaGeDatas!=null){" + position);
-                            }
-                        }
-
-                    }
-
-
-                } else if (mJiaGeDatas != null) {
-                    if (position < mJiaGeDatas.size()) {
-                        viewHolder.id_world_itme_ui.setBackgroundResource(R.color.transparent);
-                        viewHolder.tv_bu_down.setVisibility(View.VISIBLE);
-                        viewHolder.tv_bu_up.setVisibility(View.VISIBLE);
-                    } else {
-                        viewHolder.id_world_itme_ui.setBackgroundResource(R.color.transparent);
-                        viewHolder.tv_bu_down.setVisibility(View.GONE);
-                        viewHolder.tv_bu_up.setVisibility(View.GONE);
-                    }
-
-                } else {
-                    viewHolder.id_world_itme_ui.setBackgroundResource(R.color.white);
-                    viewHolder.tv_bu_down.setVisibility(View.GONE);
-                    viewHolder.tv_bu_up.setVisibility(View.GONE);
-                }
-
-                break;
-            case "1":
-                LogUtils.e(" case 1: =" + position);
-                viewHolder.id_world_itme_ui.setBackgroundResource(R.drawable.xinfengcaitiao);
-                viewHolder.tv_bu_down.setVisibility(View.GONE);
-                viewHolder.tv_bu_up.setVisibility(View.GONE);
-                break;
-            case "2":
-                LogUtils.e(" case 2: =" + position);
-                viewHolder.id_world_itme_ui.setBackgroundResource(R.color.transparent);
-                viewHolder.tv_bu_down.setVisibility(View.VISIBLE);
-                viewHolder.tv_bu_up.setVisibility(View.VISIBLE);
-                break;
-            case "3":
-                LogUtils.e(" case   3: =" + position);
-                viewHolder.id_world_itme_ui.setBackgroundResource(R.color.transparent);
-                viewHolder.tv_bu_down.setVisibility(View.GONE);
-                viewHolder.tv_bu_up.setVisibility(View.GONE);
-                break;
-        }
         if (mDatas.get(position).getIsfree().equals("1")) {
             viewHolder.textView.setText("评论");
             viewHolder.tv_zhuanfa_num.setText(noteEntity.getCommcount());
@@ -454,8 +382,6 @@ public class InfluenceAdapter extends BaseAdapter {
                 }
             }
         });
-
-
         return convertView;
     }
 
@@ -482,20 +408,17 @@ public class InfluenceAdapter extends BaseAdapter {
         TextView tv_day;//日期
         TextView tv_price;//单价
         TextView tv_income;//总收益
-        TextView tv_read_num;//阅读数
+        TextView tv_comment_num;//评论数
         TextView tv_zhuanfa_num;//转发数
         TextView tv_praise_num;//点赞数
         TextView tv_zanAndImg;//赞
         TextView tv_content_content;//纯文字信息内容
         TextView tv_img_content;//图文信息内容
-        TextView tv_bu_up;//上花边
-        TextView tv_bu_down;//下花边
         TextView textView;//转发或者评论 的文字按钮
         View in_audio_video_ui;//视频音频的图片区域;
         NoScrollGridView nsgv_world_list_gridview;//图片列表;
         LinearLayout ll_praise;
         LinearLayout ll_imgAndAudioAndVideo_ui;
-        LinearLayout id_world_itme_ui;
         LinearLayout ll_ZF_but;
         RelativeLayout rl_zhuan_content_ui;
         RelativeLayout rl_note_content_ui;

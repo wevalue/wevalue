@@ -152,7 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@color/background"
-            android:dividerHeight="8dp"
+            android:dividerHeight="1dp"
             android:listSelector="@color/transparent"
             android:scrollbars="none"
             android:visibility="visible" />

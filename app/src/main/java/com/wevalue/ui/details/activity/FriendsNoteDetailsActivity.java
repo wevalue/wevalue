@@ -95,8 +95,8 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
     TextView tv_price;//单价
     TextView tv_income;//总收益
     TextView tv_read_num;//阅读数
-    TextView tv_content_content;//纯文字信息内容
-    TextView tv_img_content;//图文信息内容
+    TextView tv_note_title;//信息内容
+    TextView tv_note_content;//纯文字信息内容
     TextView tv_delete_note;//删除帖子 按钮
     TextView tv_is_reci;//热词
     TextView tv_is_yuanchuang;//是否原创
@@ -104,7 +104,6 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
     ImageView iv_isRenzheng;//用户认证的标识
     View in_audio_video_ui;//视频音频的图片区域;
     NoScrollGridView nsgv_world_list_gridview;//图片列表;
-    LinearLayout ll_imgAndAudioAndVideo_ui;
 
     private PullToRefreshScrollView prsv_ScrollView;
     private NoScrollListview mNoScrollListview;
@@ -155,7 +154,7 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note_info);
+        setContentView(R.layout.activity_note_info_copy);
         if (getIntent() != null) {
             repostid = getIntent().getStringExtra("repostid");
             noteId = getIntent().getStringExtra("noteId");
@@ -220,7 +219,6 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
         iv_dashang = (ImageView) findViewById(R.id.iv_dashang);
         tv_head_title = (TextView) findViewById(R.id.tv_head_title);
         ll_getview_width = (LinearLayout) findViewById(R.id.ll_getview_width);
-        ll_imgAndAudioAndVideo_ui = (LinearLayout) findViewById(R.id.ll_imgAndAudioAndVideo_ui);
         tv_head_title.setText("信息详情");
         tv_zhuanfa_but = (TextView) findViewById(R.id.tv_zhuanfa_but);
         tv_pinglun_but = (TextView) findViewById(R.id.tv_pinglun_but);
@@ -254,8 +252,8 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
         tv_price = (TextView) findViewById(R.id.tv_price);
         tv_income = (TextView) findViewById(R.id.tv_income);
         tv_read_num = (TextView) findViewById(R.id.tv_read_num);
-        tv_content_content = (TextView) findViewById(R.id.tv_content_content);
-        tv_img_content = (TextView) findViewById(R.id.tv_img_content);
+        tv_note_content = (TextView) findViewById(R.id.tv_note_content);
+        tv_note_title = (TextView) findViewById(R.id.tv_note_title);
         in_audio_video_ui = findViewById(R.id.in_audio_video_ui);
         iv_video_img.setOnClickListener(this);
         iv_audio_img.setOnClickListener(this);
@@ -513,7 +511,7 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
                     if (noteEntity.getIszan().equals("1")) {//已经点赞
                         tv_zan_but.performClick();
                         ShowUtil.showToast(getApplicationContext(), "取消点赞！");
-                        tv_iszan.setCompoundDrawables(null, null, nozan, null);
+                        tv_iszan.setCompoundDrawables(nozan, null, null, null);
                         String s;
                         if (noteEntity.getZancount().equals("0")) {
                             s = String.valueOf(Integer.parseInt(noteEntity.getZancount()));
@@ -525,7 +523,7 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
                     } else if (noteEntity.getIszan().equals("0")) {//还未点赞
                         tv_zan_but.performClick();
                         ShowUtil.showToast(getApplicationContext(), "点赞成功！");
-                        tv_iszan.setCompoundDrawables(null, null, iszan, null);
+                        tv_iszan.setCompoundDrawables(iszan, null,null , null);
                         String s = String.valueOf(Integer.parseInt(noteEntity.getZancount()) + 1);
                         noteEntity.setZancount(s);
                         noteEntity.setIszan("1");
@@ -801,14 +799,15 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
      **/
     private void setUIData(final NoteBean.NoteEntity noteEntity) {
         if (noteEntity.getIszan().equals("0")) {
-            tv_iszan.setCompoundDrawables(null, null, nozan, null);
+            tv_iszan.setCompoundDrawables(nozan, null,null , null);
         } else if (noteEntity.getIszan().equals("1")) {
-            tv_iszan.setCompoundDrawables(null, null, iszan, null);
+            tv_iszan.setCompoundDrawables(iszan, null,null , null);
         }
         nickname = noteEntity.getUsernickname();
         tv_nickname.setText(noteEntity.getUsernickname());
         notecontent = noteEntity.getContent();
-        tv_img_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
+        tv_note_title.setText(noteEntity.getContent());
+        tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
         if (TextUtils.isEmpty(noteEntity.getHotword())) {
             tv_is_reci.setText("");
         } else {
@@ -836,30 +835,25 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
         switch (notetype) {
             case "4"://文字
                 if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-                    tv_content_content.setVisibility(View.GONE);
                     in_audio_video_ui.setVisibility(View.GONE);
-                    ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                     nsgv_world_list_gridview.setVisibility(View.VISIBLE);
                     mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), this);
                     mGirdViewAdapter.notifyDataSetChanged();
                     nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
                 } else {
-                    tv_content_content.setVisibility(View.VISIBLE);
+                    tv_note_content.setVisibility(View.VISIBLE);
                     if (true) {
-                        tv_content_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
+                        tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
                     } else {
                         SpannableStringBuilder builder = new SpannableStringBuilder(noteEntity.getOldusernickname() + "：" + noteEntity.getContent().replace("#换行#", "\r\n"));
                         ForegroundColorSpan blueSpan = new ForegroundColorSpan(Color.BLUE);
                         builder.setSpan(blueSpan, 0, noteEntity.getOldusernickname().length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        tv_content_content.setText(builder);
+                        tv_note_content.setText(builder);
                     }
-                    ll_imgAndAudioAndVideo_ui.setVisibility(View.GONE);
                 }
                 break;
             case "1"://视频文
-                tv_content_content.setVisibility(View.GONE);
                 in_audio_video_ui.setVisibility(View.VISIBLE);
-                ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                 iv_play.setVisibility(View.VISIBLE);
                 iv_video_img.setVisibility(View.VISIBLE);
                 nsgv_world_list_gridview.setVisibility(View.GONE);
@@ -867,18 +861,14 @@ public class FriendsNoteDetailsActivity extends BaseActivity implements WZHttpLi
                 imgViewSetData(noteEntity.getNotevideopic(), iv_video_img);
                 break;
             case "2"://音频文
-                tv_content_content.setVisibility(View.GONE);
                 in_audio_video_ui.setVisibility(View.VISIBLE);
-                ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                 iv_audio_img.setVisibility(View.VISIBLE);
                 nsgv_world_list_gridview.setVisibility(View.GONE);
                 iv_audio_img.setImageResource(R.mipmap.ic_music);
                 iv_play.setImageResource(R.mipmap.btn_music_bf);
                 break;
             case "3"://图文
-                tv_content_content.setVisibility(View.GONE);
                 in_audio_video_ui.setVisibility(View.GONE);
-                ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                 nsgv_world_list_gridview.setVisibility(View.VISIBLE);
 
                 if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {

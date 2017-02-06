@@ -141,7 +141,6 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
 
     private void initView(View view) {
         pgb = (ProgressBar) view.findViewById(R.id.pgb);
-        mNoScrollListview = (NoScrollListview) view.findViewById(R.id.mNoScrollListview);
         prsv_ScrollView = (PullToRefreshScrollView) view.findViewById(R.id.prsv_ScrollView);
         tv_friends = (TextView) view.findViewById(R.id.tv_friends);
         tv_heat = (TextView) view.findViewById(R.id.tv_heat);

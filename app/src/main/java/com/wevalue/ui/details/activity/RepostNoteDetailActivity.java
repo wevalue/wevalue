@@ -147,12 +147,9 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
     TextView tv_income;//总收益
     TextView tv_read_num;//阅读数
     TextView tv_transmit_content;//转发的内容
-    TextView tv_content_content;//纯文字信息内容
-    TextView tv_img_content;//图文信息内容
+    TextView tv_note_content;//纯文字信息内容
     View in_audio_video_ui;//视频音频的图片区域;
     NoScrollGridView nsgv_world_list_gridview;//图片列表;
-    RelativeLayout rl_release_content;
-    LinearLayout ll_imgAndAudioAndVideo_ui;
     private ImageView iv_share_note;
 
     private PullToRefreshScrollView prsv_ScrollView;
@@ -258,8 +255,8 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         iszan = getResources().getDrawable(R.mipmap.notedetail_hongxin);
         iszan.setBounds(0, 0, iszan.getMinimumWidth(), iszan.getMinimumHeight()); //设置边界
         nozan.setBounds(0, 0, nozan.getMinimumWidth(), nozan.getMinimumHeight()); //设置边界
-        rl_release_content = (RelativeLayout) findViewById(R.id.rl_release_content);
-        tv_transmit_content = (TextView) findViewById(R.id.tv_transmit_content);
+        tv_transmit_content = (TextView) findViewById(R.id.tv_note_title);
+        tv_transmit_content.setTextAppearance(this,R.style.style_note_title_normal);
         web_tuwen = (WebView) findViewById(R.id.web_tuwen);
         tv_is_yuanchuang = (TextView) findViewById(R.id.tv_is_yuanchuang);
         tv_is_reci = (TextView) findViewById(R.id.tv_is_reci);
@@ -269,7 +266,6 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         tv_jubao = (TextView) findViewById(R.id.tv_jubao);
 
         ll_getview_width = (LinearLayout) findViewById(R.id.ll_getview_width);
-        ll_imgAndAudioAndVideo_ui = (LinearLayout) findViewById(R.id.ll_imgAndAudioAndVideo_ui);
         tv_head_title.setText("转发详情");
         tv_zhuanfa_but = (TextView) findViewById(R.id.tv_zhuanfa_but);
         tv_pinglun_but = (TextView) findViewById(R.id.tv_pinglun_but);
@@ -298,8 +294,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         tv_price = (TextView) findViewById(R.id.tv_price);
         tv_income = (TextView) findViewById(R.id.tv_income);
         tv_read_num = (TextView) findViewById(R.id.tv_read_num);
-        tv_content_content = (TextView) findViewById(R.id.tv_content_content);
-        tv_img_content = (TextView) findViewById(R.id.tv_img_content);
+        tv_note_content = (TextView) findViewById(R.id.tv_note_content);
         in_audio_video_ui = findViewById(R.id.in_audio_video_ui);
 
         iv_video_img.setOnClickListener(this);
@@ -580,7 +575,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                     if (noteEntity.getIszan().equals("1")) {//已经点赞
                         tv_zan_but.performClick();
                         ShowUtil.showToast(getApplicationContext(), "取消点赞！");
-                        tv_iszan.setCompoundDrawables(null, null, nozan, null);
+                        tv_iszan.setCompoundDrawables(nozan, null, null, null);
                         String s;
                         if (noteEntity.getZancount().equals("0")) {
                             s = String.valueOf(Integer.parseInt(noteEntity.getZancount()));
@@ -592,7 +587,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                     } else if (noteEntity.getIszan().equals("0")) {//还未点赞
                         tv_zan_but.performClick();
                         ShowUtil.showToast(getApplicationContext(), "点赞成功！");
-                        tv_iszan.setCompoundDrawables(null, null, iszan, null);
+                        tv_iszan.setCompoundDrawables(iszan, null,null , null);
                         String s = String.valueOf(Integer.parseInt(noteEntity.getZancount()) + 1);
                         noteEntity.setZancount(s);
                         noteEntity.setIszan("1");
@@ -894,7 +889,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         nickname = noteEntity.getUsernickname();
         tv_nickname.setText(noteEntity.getUsernickname());
         notecontent = noteEntity.getContent();
-        tv_img_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
+        tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
         tv_transmit_content.setText(noteEntity.getRepostcontent());
         tv_dengji.setText(noteEntity.getUserlevel());
         if (TextUtils.isEmpty(noteEntity.getHotword())) {
@@ -913,51 +908,40 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         tv_day.setText(DateTiemUtils.editTime(noteEntity.getAddtime()));
         tv_read_num.setText("阅读：" + noteEntity.getClickcount());
         notetype = noteEntity.getNotetype();
-
         switch (notetype) {
             case "4"://文字
                 if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-                    tv_content_content.setVisibility(View.GONE);
                     in_audio_video_ui.setVisibility(View.GONE);
-                    ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                     nsgv_world_list_gridview.setVisibility(View.VISIBLE);
                     mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), this);
                     mGirdViewAdapter.notifyDataSetChanged();
                     nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
                 } else {
-                    tv_content_content.setVisibility(View.VISIBLE);
                     if (true) {
-                        tv_content_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
+                        tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
                     } else {
                         SpannableStringBuilder builder = new SpannableStringBuilder(noteEntity.getOldusernickname() + "：" + noteEntity.getContent().replace("#换行#", "\r\n"));
                         ForegroundColorSpan blueSpan = new ForegroundColorSpan(Color.BLUE);
                         builder.setSpan(blueSpan, 0, noteEntity.getOldusernickname().length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        tv_content_content.setText(builder);
+                        tv_note_content.setText(builder);
                     }
-                    ll_imgAndAudioAndVideo_ui.setVisibility(View.GONE);
                 }
 
                 break;
             case "1"://视频文
-                tv_content_content.setVisibility(View.GONE);
                 in_audio_video_ui.setVisibility(View.VISIBLE);
-                ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                 nsgv_world_list_gridview.setVisibility(View.GONE);
                 iv_video_img.setVisibility(View.VISIBLE);
                 imgViewSetData(noteEntity.getNotevideopic(), iv_video_img);
                 break;
             case "2"://音频文
-                tv_content_content.setVisibility(View.GONE);
                 in_audio_video_ui.setVisibility(View.VISIBLE);
-                ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                 nsgv_world_list_gridview.setVisibility(View.GONE);
                 iv_audio_img.setVisibility(View.VISIBLE);
                 iv_audio_img.setImageResource(R.mipmap.ic_music);
                 break;
             case "3"://图文
-                tv_content_content.setVisibility(View.GONE);
                 in_audio_video_ui.setVisibility(View.GONE);
-                ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                 nsgv_world_list_gridview.setVisibility(View.VISIBLE);
 
                 if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
@@ -966,22 +950,13 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                     nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
                 }
                 break;
-            case "5"://图文混排
-
-                rl_release_content.setVisibility(View.GONE);
+            case "5"://图文混排, web ,转发
                 web_tuwen.setVisibility(View.VISIBLE);
-
-                tv_aitei_who.setVisibility(View.VISIBLE);
-                tv_aitei_who.setText("@" + noteEntity.getOldusernickname() + "：");
-
                 web_tuwen.getSettings().setBlockNetworkImage(false);
                 web_tuwen.getSettings().setLoadsImagesAutomatically(true);
                 //支持js
                 web_tuwen.getSettings().setJavaScriptEnabled(true);
-
                 web_tuwen.loadUrl(RequestPath.SERVER_PATH + "/site/webcontent.aspx?noteid=" + noteEntity.getNoteid());
-
-
                 break;
         }
 
@@ -990,8 +965,8 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         SpannableStringBuilder style_2 = new SpannableStringBuilder(context_2);
         style_2.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.blue)), 0,
                 noteEntity.getOldusernickname().length() + 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tv_content_content.setText(style_2);
-        tv_img_content.setText(style_2);
+        tv_note_content.setText(style_2);
+        tv_note_content.setText(style_2);
 
         nsgv_world_list_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
