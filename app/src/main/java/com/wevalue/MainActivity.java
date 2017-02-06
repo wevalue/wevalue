@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -98,6 +99,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private int isClickType = 0; //1 = 图片 , 2 = 音频; 3 = 视频;
     private static final String PHOTO_FILE_NAME = "wevalue_img.jpg";
     private Long suijishu;
+    private RelativeLayout re_head_title;
     public ImageView iv_head_search, iv_head_add;
     public TextView tv_head_right_text;
     public TextView tv_head_title;
@@ -203,6 +205,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         lvp_main.setScrollble(false);
         lvp_main.setCurrentItem(0);
 
+        re_head_title = (RelativeLayout) findViewById(R.id.re_head_title);
         iv_head_search = (ImageView) findViewById(R.id.iv_head_search);
         iv_head_add = (ImageView) findViewById(R.id.iv_head_add);
         tv_head_right_text = (TextView) findViewById(R.id.tv_head_right_text);
@@ -233,6 +236,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             iv_head_add.setVisibility(View.GONE);
             tv_head_right_text.setVisibility(View.VISIBLE);
         }
+        re_head_title.setVisibility(View.VISIBLE);
         LogUtils.e("main 的 index = " + index);
         switch (index) {
             case 0:
@@ -241,6 +245,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                worldFragment.reSetTitles();
                 break;
             case 1:
+                re_head_title.setVisibility(View.GONE);
                 tv_head_title.setText("影响力");
                 break;
             case 2:
@@ -255,6 +260,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        re_head_title.setVisibility(View.VISIBLE);
         String uid = SharedPreferencesUtil.getUid(this);
         switch (v.getId()) {
             case R.id.main_home:
@@ -283,6 +289,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     if (ii == 1) {
                         influenceFragment.refreshData();
                     }
+                    re_head_title.setVisibility(View.GONE);
                     tv_head_title.setText("影响力");
                     lvp_main.setCurrentItem(1);
                     setViewIsShow(true, 1);

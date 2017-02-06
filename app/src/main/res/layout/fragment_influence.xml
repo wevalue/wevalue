@@ -4,134 +4,139 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:background="@color/white"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:paddingBottom="5dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="5dp">
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:src="@mipmap/ic_search" />
 
         <LinearLayout
-            android:id="@+id/ll_quanbu_ui"
-            android:layout_width="0dp"
-            android:layout_height="31dp"
-            android:layout_weight="1.2"
-            android:background="@mipmap/influence_xiala"
-            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
             android:orientation="horizontal">
-
             <TextView
-                android:id="@+id/tv_friends"
+                android:id="@+id/tv_head1_title"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_linde_down"
+                android:gravity="center"
                 android:paddingLeft="5dp"
-                android:paddingRight="2dp"
+                android:paddingRight="5dp"
                 android:text="朋友们"
-                android:textColor="@color/black" />
-
-            <ImageView
+                android:textColor="@color/blue_price"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_head_title"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/influence_friends" />
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_marginLeft="10dp"
+                android:text="影响力"
+                android:textColor="@color/blue_pale1"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
 
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/iv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
+            android:src="@mipmap/ic_more" />
+    </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_heat"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/subscribe_item_drag_bg"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_weight="1"
-            android:background="@mipmap/influence_redu"
-            android:drawableRight="@mipmap/influence_heat"
             android:gravity="center"
-            android:paddingRight="15dp"
-            android:text="热度"
-            android:textColor="@color/black" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_price"
+            <TextView
+                android:id="@+id/tv_heat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/influence_heat_n"
+                android:drawablePadding="5dp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:text="热度"
+                android:textColor="@color/black_444" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_weight="1"
-            android:background="@mipmap/influence_redu"
-            android:drawableRight="@mipmap/influence_price"
             android:gravity="center"
-            android:paddingRight="15dp"
-            android:text="价格"
-            android:textColor="@color/black" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_time"
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:drawableLeft="@mipmap/influence_price_n"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="价格"
+                android:textColor="@color/black_444" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_weight="1"
-            android:background="@mipmap/influence_redu"
-            android:drawableRight="@mipmap/influence_time"
             android:gravity="center"
-            android:paddingRight="15dp"
-            android:text="时间"
-            android:textColor="@color/black" />
+            android:orientation="horizontal">
 
-
-        <!---->
-        <!--<LinearLayout-->
-        <!--android:layout_marginLeft="10dp"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@drawable/wz_text_shape_button"-->
-        <!--android:gravity="center"-->
-        <!--android:orientation="horizontal">-->
-
-        <!---->
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-        <!--android:layout_marginLeft="10dp"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@drawable/wz_text_shape_button"-->
-        <!--android:gravity="center"-->
-        <!--android:orientation="horizontal">-->
-
-        <!---->
-
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-        <!--android:layout_marginLeft="10dp"-->
-
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@drawable/wz_text_shape_button"-->
-        <!--android:gravity="center"-->
-        <!--android:orientation="horizontal">-->
-
-        <!---->
-
-        <!--</LinearLayout>-->
-
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/influence_time_n"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="时间"
+                android:textColor="@color/black_444" />
+        </LinearLayout>
     </LinearLayout>
 
     <ProgressBar
 
-        android:layout_gravity="center"
         android:id="@+id/pgb"
-        android:indeterminateDrawable="@drawable/indeterminte_drawable"
-        android:visibility="gone"
         android:layout_width="30dp"
-        android:layout_height="30dp" />
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:indeterminateDrawable="@drawable/indeterminte_drawable"
+        android:visibility="gone" />
 
     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:id="@+id/prsv_ScrollView"

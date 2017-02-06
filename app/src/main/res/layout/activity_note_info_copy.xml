@@ -385,7 +385,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
-                android:drawableLeft="@mipmap/notedetail_pinglun_"
+                android:drawableLeft="@mipmap/notedetail_pinglun"
                 android:gravity="center"
                 android:text="评论"
                 android:textColor="@color/but_text_color"

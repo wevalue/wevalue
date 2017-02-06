@@ -21,6 +21,7 @@
 
     <color name="blue">#54b1f2</color>
     <color name="blue_price">#2a8cff</color>
+    <color name="blue_pale1">#4ab1fe</color>
     <color name="login_text_blue">#54b1f2</color>
     <color name="login_text_blue_2">#9552b2f7</color>
     <color name="ui_line">#eeeeee</color>

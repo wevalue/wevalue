@@ -69,8 +69,8 @@ public class InfluenceAdapter extends BaseAdapter {
     }
 
     private void initDrawable() {
-        nozan = mContext.getResources().getDrawable(R.mipmap.note_praise);
-        iszan = mContext.getResources().getDrawable(R.mipmap.notedetail_hongxin);
+        nozan = mContext.getResources().getDrawable(R.mipmap.note_like_n);
+        iszan = mContext.getResources().getDrawable(R.mipmap.note_like_p);
         iszan.setBounds(0, 0, iszan.getMinimumWidth(), iszan.getMinimumHeight()); //设置边界
         nozan.setBounds(0, 0, nozan.getMinimumWidth(), nozan.getMinimumHeight()); //设置边界
 
@@ -350,14 +350,8 @@ public class InfluenceAdapter extends BaseAdapter {
             return convertView;
         }
 
-        if (mDatas.get(position).getIsfree().equals("1")) {
-            viewHolder.textView.setText("评论");
-            viewHolder.tv_zhuanfa_num.setText(noteEntity.getCommcount());
-        } else {
-            viewHolder.textView.setText("转发");
-            viewHolder.tv_zhuanfa_num.setText(noteEntity.getRepostcount());
-        }
-
+        viewHolder.textView.setText("送给朋友们");
+        viewHolder.tv_zhuanfa_num.setText(noteEntity.getCommcount());
         viewHolder.ll_ZF_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

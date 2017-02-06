@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -53,19 +54,23 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
     private List<NoteBean.NoteEntity> mListData_lunbo;
     private List<NoteBean.NoteEntity> mListData_jiage;
     private int pageindex = 1;
+    //标题
+    private ImageView iv_search,iv_more;
+    private TextView tv_head_title,tv_head1_title;
     private String notezone = "1"; // 1 朋友们  2 影响力
     private String orderstatus = "1";//1倒序   0 正序
     private String ordertype = "0";
-    private TextView tv_friends;
-    private TextView tv_heat;
-    private TextView tv_price;
-    private TextView tv_time;
-    private LinearLayout ll_quanbu_ui;
+    private TextView tv_heat; //热度
+    private TextView tv_price; //价格
+    private TextView tv_time; //时间
     private ProgressBar pgb;
     private boolean isFirstLoad = true;
-    private Drawable drawable;
-    private Drawable drawable1;
-    private Drawable drawable2;
+    private Drawable drawable_heat_p;
+    private Drawable drawable_heat_n;
+    private Drawable drawable_price_p;
+    private Drawable drawable_price_n;
+    private Drawable drawable_time_p;
+    private Drawable drawable_time_n;
     private int i = 0;
     private String getDataTime;
     private String lastClickButton = "tv_influence";
@@ -140,28 +145,42 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
     }
 
     private void initView(View view) {
+        iv_search = (ImageView) view.findViewById(R.id.iv_search);
+        iv_more = (ImageView) view.findViewById(R.id.iv_more);
+        tv_head_title = (TextView) view.findViewById(R.id.tv_head_title);
+        tv_head1_title = (TextView) view.findViewById(R.id.tv_head1_title);
+        tv_head_title.setOnClickListener(this);
+        tv_head1_title.setOnClickListener(this);
+
+        tv_head1_title.setTextColor(getResources().getColor(R.color.blue_price));
+        tv_head1_title.setBackgroundResource(R.drawable.shape_linde_down);
+
+
         pgb = (ProgressBar) view.findViewById(R.id.pgb);
         prsv_ScrollView = (PullToRefreshScrollView) view.findViewById(R.id.prsv_ScrollView);
-        tv_friends = (TextView) view.findViewById(R.id.tv_friends);
         tv_heat = (TextView) view.findViewById(R.id.tv_heat);
         tv_heat.setOnClickListener(this);
         tv_price = (TextView) view.findViewById(R.id.tv_price);
         tv_price.setOnClickListener(this);
         tv_time = (TextView) view.findViewById(R.id.tv_time);
-        ll_quanbu_ui = (LinearLayout) view.findViewById(R.id.ll_quanbu_ui);
-        ll_quanbu_ui.setOnClickListener(this);
         tv_time.setOnClickListener(this);
+
+        drawable_heat_n = getResources().getDrawable(R.mipmap.influence_heat_n);
+        drawable_heat_p = getResources().getDrawable(R.mipmap.influence_heat_p);
+        drawable_price_n = getResources().getDrawable(R.mipmap.influence_price_n);
+        drawable_price_p = getResources().getDrawable(R.mipmap.influence_price_p);
+        drawable_time_n = getResources().getDrawable(R.mipmap.influence_time_n);
+        drawable_time_p = getResources().getDrawable(R.mipmap.influence_time_p);
+
+        drawable_heat_n.setBounds(0, 0, drawable_heat_n.getMinimumWidth(), drawable_heat_n.getMinimumHeight());
+        drawable_heat_p.setBounds(0, 0, drawable_heat_n.getMinimumWidth(), drawable_heat_n.getMinimumHeight());
+        drawable_price_n.setBounds(0, 0, drawable_price_n.getMinimumWidth(), drawable_price_n.getMinimumHeight());
+        drawable_price_p.setBounds(0, 0, drawable_price_p.getMinimumWidth(), drawable_price_p.getMinimumHeight());
+        drawable_time_n.setBounds(0, 0, drawable_time_n.getMinimumWidth(), drawable_time_n.getMinimumHeight());
+        drawable_time_p.setBounds(0, 0, drawable_time_p.getMinimumWidth(), drawable_time_p.getMinimumHeight());
+       // tv_iszan.setCompoundDrawables(iszan, null, null, null);
+
         mHListData = new ArrayList<>();
-//        iv_heat_down = (ImageView) view.findViewById(R.id.iv_heat_down);
-//        iv_heat_down.setOnClickListener(this);
-//        iv_price_up = (ImageView) view.findViewById(R.id.iv_price_up);
-//        iv_price_up.setOnClickListener(this);
-//        iv_price_down = (ImageView) view.findViewById(R.id.iv_price_down);
-//        iv_price_down.setOnClickListener(this);
-//        iv_time_up = (ImageView) view.findViewById(R.id.iv_time_up);
-//        iv_time_up.setOnClickListener(this);
-//        iv_time_down = (ImageView) view.findViewById(R.id.iv_time_down);
-//        iv_time_down.setOnClickListener(this);
         mNoScrollListview = (NoScrollListview) view.findViewById(R.id.mNoScrollListview);
         mNoScrollListview.setFocusable(false);
         mNoScrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -299,159 +318,79 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
     public void onFailure(String content) {
 
     }
+    private void selecedTile(String notezone){
+        this.notezone = notezone;
+        tv_head_title.setTextColor(getResources().getColor(R.color.blue_pale1));
+        tv_head_title.setBackgroundResource(R.color.transparent);
+        tv_head1_title.setTextColor(getResources().getColor(R.color.blue_pale1));
+        tv_head1_title.setBackgroundResource(R.color.transparent);
+    if (notezone.equals("2")){
+        statisticsEvent("tv_influence");
+        tv_head_title.setTextColor(getResources().getColor(R.color.blue_price));
+        tv_head_title.setBackgroundResource(R.drawable.shape_linde_down);
+    }else {
+        statisticsEvent("tv_friend");
+        tv_head1_title.setTextColor(getResources().getColor(R.color.blue_price));
+        tv_head1_title.setBackgroundResource(R.drawable.shape_linde_down);
+    }
+        pgb.setVisibility(View.VISIBLE);
+        pageindex = 1;
+        getDateTime();
+        getNoteList();
+    }
 
+    /**
+     *
+     * @param textView
+     */
+    private void selecedText(TextView textView,String ordertype){
+        this.ordertype = ordertype;
+        tv_heat.setTextColor(getActivity().getResources().getColor(R.color.black_444));
+        tv_price.setTextColor(getActivity().getResources().getColor(R.color.black_444));
+        tv_time.setTextColor(getActivity().getResources().getColor(R.color.black_444));
+        textView.setTextColor(getActivity().getResources().getColor(R.color.blue_price));
+        tv_heat.setCompoundDrawables(drawable_heat_n, null, null, null);
+        tv_price.setCompoundDrawables(drawable_price_n, null, null, null);
+        tv_time.setCompoundDrawables(drawable_time_n, null, null, null);
+        switch (textView.getId()){
+            case R.id.tv_heat :
+                tv_heat.setCompoundDrawables(drawable_heat_p, null, null, null);
+                break;
+            case R.id.tv_price :
+                tv_price.setCompoundDrawables(drawable_price_p, null, null, null);
+                break;
+            case R.id.tv_time :
+                tv_time.setCompoundDrawables(drawable_time_p, null, null, null);
+                break;
+        }
+        i = 1 ;
+        pageindex = 1;
+        pgb.setVisibility(View.VISIBLE);
+        getDateTime();
+        getNoteList();
+
+    }
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch (v.getId()) {//
+            case R.id.tv_head_title: //影响力
+                selecedTile("2");
+                break;
+            case R.id.tv_head1_title://朋友们
+                selecedTile("1");
+                break;
             case R.id.tv_heat:
                 statisticsEvent("tv_heat");
-                i = 1;
-                tv_heat.setTextColor(getActivity().getResources().getColor(R.color.login_text_blue));
-                tv_price.setTextColor(getActivity().getResources().getColor(R.color.black));
-                tv_time.setTextColor(getActivity().getResources().getColor(R.color.black));
-
-                drawable = getResources().getDrawable(R.mipmap.icon_redu_sel);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
-                tv_heat.setCompoundDrawables(null, null, drawable, null);//画在右边
-
-                drawable1 = getResources().getDrawable(R.mipmap.influence_price);
-                drawable1.setBounds(0, 0, drawable1.getMinimumWidth(), drawable1.getMinimumHeight()); //设置边界
-                tv_price.setCompoundDrawables(null, null, drawable1, null);//画在右边
-
-                drawable2 = getResources().getDrawable(R.mipmap.influence_time);
-                drawable2.setBounds(0, 0, drawable2.getMinimumWidth(), drawable2.getMinimumHeight()); //设置边界
-                tv_time.setCompoundDrawables(null, null, drawable2, null);//画在右边
-                ordertype = "1";
-                pageindex = 1;
-//                switch (orderstatus) {
-//                    case "0":
-//                        orderstatus = "1";
-//                        break;
-//                    case "1":
-//                        orderstatus = "0";
-//                        break;
-//                }
-                pgb.setVisibility(View.VISIBLE);
-                getDateTime();
-                getNoteList();
+                selecedText(tv_heat,"1");
                 break;
-//            case R.id.iv_heat_down:
-//                orderstatus = "1";
-//                ordertype = "1";
-//                prsv_ScrollView.setRefreshing(true);
-//                break;
             case R.id.tv_price:
                 statisticsEvent("tv_price");
-                i = 1;
-                tv_price.setTextColor(getActivity().getResources().getColor(R.color.login_text_blue));
-                tv_heat.setTextColor(getActivity().getResources().getColor(R.color.black));
-                tv_time.setTextColor(getActivity().getResources().getColor(R.color.black));
-
-                drawable = getResources().getDrawable(R.mipmap.influence_heat);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
-                tv_heat.setCompoundDrawables(null, null, drawable, null);//画在右边
-
-                drawable1 = getResources().getDrawable(R.mipmap.icon_jiage_sel);
-                drawable1.setBounds(0, 0, drawable1.getMinimumWidth(), drawable1.getMinimumHeight()); //设置边界
-                tv_price.setCompoundDrawables(null, null, drawable1, null);//画在右边
-
-                drawable2 = getResources().getDrawable(R.mipmap.influence_time);
-                drawable2.setBounds(0, 0, drawable2.getMinimumWidth(), drawable2.getMinimumHeight()); //设置边界
-                tv_time.setCompoundDrawables(null, null, drawable2, null);//画在右边
-//                switch (orderstatus) {
-//                    case "0":
-//                        orderstatus = "1";
-//                        break;
-//                    case "1":
-//                        orderstatus = "0";
-//                        break;
-//                }
-                ordertype = "2";
-                pageindex = 1;
-                pgb.setVisibility(View.VISIBLE);
-                getDateTime();
-                getNoteList();
+                selecedText(tv_price,"2");
                 break;
-//            case R.id.iv_price_down:
-//                orderstatus = "1";
-//                ordertype = "2";
-//                prsv_ScrollView.setRefreshing(true);
-//                break;
+
             case R.id.tv_time:
                 statisticsEvent("tv_time");
-                i = 1;
-                tv_time.setTextColor(getActivity().getResources().getColor(R.color.login_text_blue));
-                tv_heat.setTextColor(getActivity().getResources().getColor(R.color.black));
-                tv_price.setTextColor(getActivity().getResources().getColor(R.color.black));
-
-                drawable = getResources().getDrawable(R.mipmap.influence_heat);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
-                tv_heat.setCompoundDrawables(null, null, drawable, null);//画在右边
-
-                drawable1 = getResources().getDrawable(R.mipmap.influence_price);
-                drawable1.setBounds(0, 0, drawable1.getMinimumWidth(), drawable1.getMinimumHeight()); //设置边界
-                tv_price.setCompoundDrawables(null, null, drawable1, null);//画在右边
-
-                drawable2 = getResources().getDrawable(R.mipmap.icon_shijian_sel);
-                drawable2.setBounds(0, 0, drawable2.getMinimumWidth(), drawable2.getMinimumHeight()); //设置边界
-                tv_time.setCompoundDrawables(null, null, drawable2, null);//画在右边
-//                switch (orderstatus) {
-//                    case "0":
-//                        orderstatus = "1";
-//                        break;
-//                    case "1":
-//                        orderstatus = "0";
-//                        break;
-//                }
-                ordertype = "3";
-                pageindex = 1;
-                pgb.setVisibility(View.VISIBLE);
-                getDateTime();
-                getNoteList();
-                break;
-//            case R.id.iv_time_down:
-//                orderstatus = "1";
-//                ordertype = "3";
-//                prsv_ScrollView.setRefreshing(true);
-//                break;
-            case R.id.ll_quanbu_ui:
-
-                if (i == 1) {
-                    tv_heat.setTextColor(getActivity().getResources().getColor(R.color.black));
-                    tv_price.setTextColor(getActivity().getResources().getColor(R.color.black));
-                    tv_time.setTextColor(getActivity().getResources().getColor(R.color.black));
-
-                    drawable = getResources().getDrawable(R.mipmap.influence_heat);
-                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
-                    tv_heat.setCompoundDrawables(null, null, drawable, null);//画在右边
-
-                    drawable1 = getResources().getDrawable(R.mipmap.influence_price);
-                    drawable1.setBounds(0, 0, drawable1.getMinimumWidth(), drawable1.getMinimumHeight()); //设置边界
-                    tv_price.setCompoundDrawables(null, null, drawable1, null);//画在右边
-
-                    drawable2 = getResources().getDrawable(R.mipmap.influence_time);
-                    drawable2.setBounds(0, 0, drawable2.getMinimumWidth(), drawable2.getMinimumHeight()); //设置边界
-                    tv_time.setCompoundDrawables(null, null, drawable2, null);//画在右边
-                    i = 0;
-
-                } else if (i == 0) {
-                    if (tv_friends.getText().toString().equals("影响力")) {
-                        statisticsEvent("tv_friend");
-                        notezone = "1";
-                        tv_friends.setText("朋友们");
-                    } else if (tv_friends.getText().toString().equals("朋友们")) {
-                        statisticsEvent("tv_friend");
-                        notezone = "2";
-                        tv_friends.setText("影响力");
-                        statisticsEvent("tv_influence");
-                    }
-//                PopuUtil.initpopu(getActivity(), ll_quanbu_ui, tv_friends, notezone, this);
-                }
-                ordertype = "0";
-                pgb.setVisibility(View.VISIBLE);
-                pageindex = 1;
-                getDateTime();
-                getNoteList();
+                selecedText(tv_time,"3");
                 break;
         }
     }

@@ -7,30 +7,17 @@
     android:orientation="vertical">
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/re_head_title"
         layout="@layout/head_2"
         android:layout_width="match_parent"
-        android:layout_height="45dp" />
+        android:layout_height="45dp"
+        />
 
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:orientation="vertical">-->
-
-    <!---->
-    <!--</LinearLayout>-->
     <com.wevalue.view.LazyViewPager
         android:id="@+id/lvp_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />
-    <!--<LinearLayout-->
-    <!--android:id="@+id/console_line_bottom"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="48dp"-->
-    <!--android:orientation="horizontal">-->
-    <!--</LinearLayout>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -52,16 +39,16 @@
                 android:checked="true"
                 android:drawableTop="@drawable/tab_home"
                 android:text="世界"
-                android:textSize="14sp"
-                android:textColor="@drawable/tab_text_color" />
+                android:textColor="@drawable/tab_text_color"
+                android:textSize="14sp" />
 
             <RadioButton
                 android:id="@+id/main_pengyouquan"
                 style="@style/main_tab_bottom"
                 android:drawableTop="@drawable/tab_pengyouquan"
                 android:text="影响力"
-                android:textSize="14sp"
-                android:textColor="@drawable/tab_text_color" />
+                android:textColor="@drawable/tab_text_color"
+                android:textSize="14sp" />
 
             <RadioButton
                 android:id="@+id/ll_add_sendnote"
@@ -74,8 +61,8 @@
                 style="@style/main_tab_bottom"
                 android:drawableTop="@drawable/tab_chat"
                 android:text="我们"
-                android:textSize="14sp"
-                android:textColor="@drawable/tab_text_color" />
+                android:textColor="@drawable/tab_text_color"
+                android:textSize="14sp" />
 
 
             <RadioButton
@@ -83,8 +70,8 @@
                 style="@style/main_tab_bottom"
                 android:drawableTop="@drawable/tab_user"
                 android:text="我"
-                android:textSize="14sp"
-                android:textColor="@drawable/tab_text_color" />
+                android:textColor="@drawable/tab_text_color"
+                android:textSize="14sp" />
         </RadioGroup>
 
         <TextView
