@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:id="@+id/prsv_ScrollView"
         android:layout_width="match_parent"
@@ -27,14 +26,18 @@
             <RelativeLayout
                 android:id="@+id/rl_xs"
                 android:layout_width="match_parent"
-                android:layout_height="175dp"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/bianxian"
+                android:layout_margin="3dp"
                 android:orientation="vertical"
                 >
+
                 <com.wevalue.view.LazyViewPager
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/vp_world"
                     />
+
                 <LinearLayout
                     android:id="@+id/ll_viewGroup"
                     android:layout_width="fill_parent"
@@ -62,5 +65,4 @@
                 android:visibility="visible" />
         </LinearLayout>
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
-
 </LinearLayout>

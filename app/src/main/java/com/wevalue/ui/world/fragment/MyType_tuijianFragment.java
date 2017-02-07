@@ -39,13 +39,16 @@ import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.influence.PopClickInterface;
 import com.wevalue.ui.world.adapter.WorldListAdapter;
+import com.wevalue.ui.world.adapter.WorldListGridViewAdapter;
 import com.wevalue.utils.DateTiemUtils;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.PopuUtil;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.LazyViewPager;
+import com.wevalue.view.NoScrollGridView;
 import com.wevalue.view.NoScrollListview;
+import com.wevalue.view.RoundImageView;
 import com.wevalue.youmeng.StatisticsConsts;
 
 import org.json.JSONException;
@@ -105,9 +108,9 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
     private WorldFragment mWorldFragment;
     private NoteRequestBase mNoteRequestBase;
     private int pageindex = 1;
-    private ImageView iv_tuijian_img_1;
-    private ImageView iv_tuijian_img_2;
-    private ImageView iv_tuijian_img_3;
+    private ImageView iv_img1;
+    private ImageView iv_img2;
+    private ImageView iv_img3;
     private String getDataTime;
 //    private ProgressBar pgb;
 
@@ -288,7 +291,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         viewList = new ArrayList<>();
         if (null != mListData_lunbo && mListData_lunbo.size() > 0) {
             for (int i = 0; i < mListData_lunbo.size(); i++) {
-                View view1 = LayoutInflater.from(mContext).inflate(R.layout.item_world_tuijian_copy, null);
+                View view1 = LayoutInflater.from(mContext).inflate(R.layout.item_world_tuijian, null);
                 setViewData(view1, i);
                 viewList.add(view1);
             }
@@ -325,14 +328,69 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
      * 设置viewpager当前页的数据
      */
     private void setViewData(View v, int index) {
-
         if (index == 0) {
             LogUtils.e("轮播  -  setViewData  --" + index);
         }
-        ImageView iv_img = (ImageView) v.findViewById(R.id.iv_img);
-        imgViewSetData("",iv_img);
-    }
+        RoundImageView iv_user_img = (RoundImageView) v.findViewById(R.id.iv_user_img);
+        TextView tv_nickname = (TextView) v.findViewById(R.id.tv_nickname);
+        TextView tv_dengji = (TextView) v.findViewById(R.id.tv_dengji);
+        TextView tv_day = (TextView) v.findViewById(R.id.tv_day);
+        TextView tv_price = (TextView) v.findViewById(R.id.tv_price);
+        TextView tv_income = (TextView) v.findViewById(R.id.tv_income);
+        TextView tv_note_title = (TextView) v.findViewById(R.id.tv_note_title);
+        TextView tv_note_content = (TextView) v.findViewById(R.id.tv_note_content);
 
+        ImageView iv_video_img = (ImageView) v.findViewById(R.id.iv_video_img);
+        ImageView iv_play = (ImageView) v.findViewById(R.id.iv_play);
+        ImageView iv_audio_img = (ImageView) v.findViewById(R.id.iv_audio_img);
+
+        LinearLayout layout_img_layout = (LinearLayout) v.findViewById(R.id.layout_img_layout);
+         iv_img1 = (ImageView) v.findViewById(R.id.iv_img1);
+         iv_img2 = (ImageView) v.findViewById(R.id.iv_img2);
+         iv_img3 = (ImageView) v.findViewById(R.id.iv_img3);
+
+        NoteBean.NoteEntity noteEntity = mListData_lunbo.get(index);
+        imgViewSetData(noteEntity.getUserface(),iv_user_img);
+        tv_nickname.setText(noteEntity.getUsernickname()+"--"+noteEntity.getNotetype());
+        tv_dengji.setText(noteEntity.getUserlevel());
+        tv_day.setText(DateTiemUtils.editTime(noteEntity.getAddtime()));
+        tv_price.setText("¥" + noteEntity.getPaynum());
+        tv_income.setText("¥" + noteEntity.getShouyi());
+
+        tv_note_title.setText(noteEntity.getContent());
+
+        tv_note_content.setVisibility(View.GONE);
+        iv_video_img.setVisibility(View.GONE);
+        iv_play.setVisibility(View.GONE);
+        iv_audio_img.setVisibility(View.GONE);
+        layout_img_layout.setVisibility(View.GONE);
+
+        String noteType = noteEntity.getNotetype();
+        switch (noteType){
+            case "4" : //纯文字
+                tv_note_content.setVisibility(View.VISIBLE);
+                tv_note_content.setText(noteEntity.getContent());
+                break;
+            case "1" : //视频
+                iv_video_img.setVisibility(View.VISIBLE);
+                iv_play.setVisibility(View.VISIBLE);
+                imgViewSetData(noteEntity.getNotevideopic(),iv_video_img);
+                break;
+            case "2" : //音频
+                iv_audio_img.setVisibility(View.VISIBLE);
+                break;
+            case "3" : //图片
+                layout_img_layout.setVisibility(View.VISIBLE);
+                lunboImageviewSetData(noteEntity);
+                break;
+            case "5" : //图片
+                layout_img_layout.setVisibility(View.VISIBLE);
+                tv_note_content.setVisibility(View.VISIBLE);
+                tv_note_content.setText(noteEntity.getContent());
+                //lunboImageviewSetData(noteEntity);
+                break;
+        }
+    }
     /**
      * 给imageview 赋值
      */
@@ -357,33 +415,33 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         LogUtils.e("轮播  -  lunboImageviewSetData");
         switch (noteEntity.getList().size()) {
             case 1:
-                iv_tuijian_img_1.setVisibility(View.VISIBLE);
-                iv_tuijian_img_2.setVisibility(View.INVISIBLE);
-                iv_tuijian_img_3.setVisibility(View.INVISIBLE);
-                imgViewSetData(noteEntity.getList().get(0).getUrl(), iv_tuijian_img_1);
+                iv_img1.setVisibility(View.VISIBLE);
+                iv_img2.setVisibility(View.INVISIBLE);
+                iv_img3.setVisibility(View.INVISIBLE);
+                imgViewSetData(noteEntity.getList().get(0).getUrl(), iv_img1);
                 break;
             case 2:
-                iv_tuijian_img_1.setVisibility(View.VISIBLE);
-                iv_tuijian_img_2.setVisibility(View.VISIBLE);
-                iv_tuijian_img_3.setVisibility(View.INVISIBLE);
-                imgViewSetData(noteEntity.getList().get(0).getUrl(), iv_tuijian_img_1);
-                imgViewSetData(noteEntity.getList().get(1).getUrl(), iv_tuijian_img_2);
+                iv_img1.setVisibility(View.VISIBLE);
+                iv_img2.setVisibility(View.VISIBLE);
+                iv_img3.setVisibility(View.INVISIBLE);
+                imgViewSetData(noteEntity.getList().get(0).getUrl(), iv_img1);
+                imgViewSetData(noteEntity.getList().get(1).getUrl(), iv_img2);
                 break;
             case 3:
-                iv_tuijian_img_1.setVisibility(View.VISIBLE);
-                iv_tuijian_img_2.setVisibility(View.VISIBLE);
-                iv_tuijian_img_3.setVisibility(View.VISIBLE);
-                imgViewSetData(noteEntity.getList().get(0).getUrl(), iv_tuijian_img_1);
-                imgViewSetData(noteEntity.getList().get(1).getUrl(), iv_tuijian_img_2);
-                imgViewSetData(noteEntity.getList().get(2).getUrl(), iv_tuijian_img_3);
+                iv_img1.setVisibility(View.VISIBLE);
+                iv_img2.setVisibility(View.VISIBLE);
+                iv_img3.setVisibility(View.VISIBLE);
+                imgViewSetData(noteEntity.getList().get(0).getUrl(), iv_img1);
+                imgViewSetData(noteEntity.getList().get(1).getUrl(), iv_img2);
+                imgViewSetData(noteEntity.getList().get(2).getUrl(), iv_img3);
                 break;
             default:
-                iv_tuijian_img_1.setVisibility(View.VISIBLE);
-                iv_tuijian_img_2.setVisibility(View.VISIBLE);
-                iv_tuijian_img_3.setVisibility(View.VISIBLE);
-                imgViewSetData(noteEntity.getList().get(0).getUrl(), iv_tuijian_img_1);
-                imgViewSetData(noteEntity.getList().get(1).getUrl(), iv_tuijian_img_2);
-                imgViewSetData(noteEntity.getList().get(2).getUrl(), iv_tuijian_img_3);
+                iv_img1.setVisibility(View.VISIBLE);
+                iv_img2.setVisibility(View.VISIBLE);
+                iv_img3.setVisibility(View.VISIBLE);
+                imgViewSetData(noteEntity.getList().get(0).getUrl(), iv_img1);
+                imgViewSetData(noteEntity.getList().get(1).getUrl(), iv_img2);
+                imgViewSetData(noteEntity.getList().get(2).getUrl(), iv_img3);
                 break;
         }
     }
@@ -433,8 +491,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
                 }
 
             }
-        }, 500);
-
+        }, 3000);
 
         LogUtils.e("轮播   onResume");
     }
