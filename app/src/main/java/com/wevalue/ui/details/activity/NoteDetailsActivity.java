@@ -536,7 +536,7 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                     ShowUtil.showToast(this, "尊：抱歉！发布者不允许此信息分享至其他平台。");
                     return;
                 }
-                if ("1".equals(sharefree)) {
+                if ("1".equals(sharefree)|| noteEntity.userid.equals(SharedPreferencesUtil.getUid(this))) {
                     HashMap map = new HashMap();
                     map.put("noteid", noteId);
                     map.put("repostid", repostid);
