@@ -351,7 +351,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
 
         NoteBean.NoteEntity noteEntity = mListData_lunbo.get(index);
         imgViewSetData(noteEntity.getUserface(),iv_user_img);
-        tv_nickname.setText(noteEntity.getUsernickname()+"--"+noteEntity.getNotetype());
+        tv_nickname.setText(noteEntity.getUsernickname());
         tv_dengji.setText(noteEntity.getUserlevel());
         tv_day.setText(DateTiemUtils.editTime(noteEntity.getAddtime()));
         tv_price.setText("¥" + noteEntity.getPaynum());
@@ -530,7 +530,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
                 mHandler.sendEmptyMessage(1);
             }
         };
-        timer.schedule(timerTask, 2000, 3000);
+        timer.schedule(timerTask, 3000, 3000);
     }
 
     @Override

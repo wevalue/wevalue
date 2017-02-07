@@ -137,7 +137,7 @@ public class WorldListAdapter extends BaseAdapter {
             }
         });
         imgViewSetData(mDatas.get(position).getUserface(), viewHolder.iv_user_img);
-        viewHolder.tv_nickname.setText(noteEntity.getUsernickname()+"-"+noteEntity.getNotetype());
+        viewHolder.tv_nickname.setText(noteEntity.getUsernickname());
         viewHolder.tv_price.setText("¥" + noteEntity.getPaynum());
         viewHolder.tv_income.setText("¥" + noteEntity.getShouyi());
         viewHolder.tv_zhuanfa_num.setText("送给朋友们("+noteEntity.getRepostcount()+")");
