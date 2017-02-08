@@ -828,9 +828,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //					AbSharedUtil.putString(SettingActivity.this, "AppPath", appPath);
                     if (!newVersion.equals(localVersion)) {
                         LogUtils.e("log", "newVersion = " + newVersion + "---localVersion = " + localVersion);
-//						tv_version.setText("有新版本 V" + newVersion + ",当前版本 V"
-//								+ localVersion);
-//						tv_version.setTextColor(Color.RED);
                         // 这里来检测版本是否需要更新
                         UpdateManager mUpdateManager = new UpdateManager(MainActivity.this, newVersion);
                         mUpdateManager.checkUpdateInfo();

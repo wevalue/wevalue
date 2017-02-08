@@ -125,12 +125,10 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
     private TextView tv_head_title;
     private TextView tv_zhuanfa_but;//转发数
     private TextView tv_pinglun_but;//评论数
-    private TextView tv_qingxu_but;// 情绪数
     private TextView tv_zan_but;//点赞数
     private LinearLayout ll_getview_width;
     private LinearLayout ll_ZF_but;
     private LinearLayout ll_PL_but;
-    private LinearLayout ll_QX_but;
     private LinearLayout ll_Zan_but;
     private View prompt_box;
     private PopupWindow promptBoxPopupWindow;
@@ -236,7 +234,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                 screenW = ll_getview_width.getWidth();
                 LogUtils.e("ww=" + screenW);
                 bmpW = (BitmapFactory.decodeResource(getResources(), R.mipmap.hengxian).getWidth());// 获取图片宽度
-                offset = (screenW / 4 - bmpW) / 2;// 计算偏移量
+                offset = (screenW / 3 - bmpW) / 2;// 计算偏移量
                 Matrix matrix = new Matrix();
                 matrix.postTranslate(offset, 0);
                 cursor.setImageMatrix(matrix);// 设置动画初始位置
@@ -269,7 +267,6 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         tv_head_title.setText("转发详情");
         tv_zhuanfa_but = (TextView) findViewById(R.id.tv_zhuanfa_but);
         tv_pinglun_but = (TextView) findViewById(R.id.tv_pinglun_but);
-        tv_qingxu_but = (TextView) findViewById(R.id.tv_qingxu_but);
         tv_zan_but = (TextView) findViewById(R.id.tv_zan_but);
         iv_share_note = (ImageView) findViewById(R.id.iv_share_note);
         iv_share_note.setVisibility(View.VISIBLE);
@@ -282,7 +279,6 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
 
         ll_ZF_but = (LinearLayout) findViewById(R.id.ll_ZF_but);
         ll_PL_but = (LinearLayout) findViewById(R.id.ll_PL_but);
-        ll_QX_but = (LinearLayout) findViewById(R.id.ll_QX_but);
         ll_Zan_but = (LinearLayout) findViewById(R.id.ll_Zan_but);
 
         tv_nickname = (TextView) findViewById(R.id.tv_nickname);
@@ -297,11 +293,11 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         tv_note_content = (TextView) findViewById(R.id.tv_note_content);
         in_audio_video_ui = findViewById(R.id.in_audio_video_ui);
 
+
         iv_video_img.setOnClickListener(this);
         iv_audio_img.setOnClickListener(this);
         iv_video_img.setVisibility(View.GONE);
         iv_audio_img.setVisibility(View.GONE);
-
 
         iv_back.setOnClickListener(this);
         iv_user_img.setOnClickListener(this);
@@ -309,14 +305,12 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
 
         ll_ZF_but.setOnClickListener(this);
         ll_PL_but.setOnClickListener(this);
-        ll_QX_but.setOnClickListener(this);
         ll_Zan_but.setOnClickListener(this);
 
         tv_jubao.setOnClickListener(this);
         tv_zhuanfa_but.setOnClickListener(new RepostNoteDetailActivity.MyOnClickListener(0));
         tv_pinglun_but.setOnClickListener(new RepostNoteDetailActivity.MyOnClickListener(1));
-        tv_qingxu_but.setOnClickListener(new RepostNoteDetailActivity.MyOnClickListener(2));
-        tv_zan_but.setOnClickListener(new RepostNoteDetailActivity.MyOnClickListener(3));
+        tv_zan_but.setOnClickListener(new RepostNoteDetailActivity.MyOnClickListener(2));
 
 
         mListData_ZF = new ArrayList<>();
@@ -439,7 +433,6 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                 case R.id.tv_zhuanfa_but:
                     tv_zhuanfa_but.setTextColor(getResources().getColor(R.color.black));
                     tv_pinglun_but.setTextColor(getResources().getColor(R.color.font_gray));
-                    tv_qingxu_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_zan_but.setTextColor(getResources().getColor(R.color.font_gray));
                     lineAnimation(index);
                     isWho = 1;
@@ -454,7 +447,6 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                 case R.id.tv_pinglun_but:
                     tv_zhuanfa_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_pinglun_but.setTextColor(getResources().getColor(R.color.black));
-                    tv_qingxu_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_zan_but.setTextColor(getResources().getColor(R.color.font_gray));
                     lineAnimation(index);
                     isWho = 2;
@@ -469,7 +461,6 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                 case R.id.tv_qingxu_but:
                     tv_zhuanfa_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_pinglun_but.setTextColor(getResources().getColor(R.color.font_gray));
-                    tv_qingxu_but.setTextColor(getResources().getColor(R.color.black));
                     tv_zan_but.setTextColor(getResources().getColor(R.color.font_gray));
                     lineAnimation(index);
                     isWho = 3;
@@ -484,7 +475,6 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                 case R.id.tv_zan_but:
                     tv_zhuanfa_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_pinglun_but.setTextColor(getResources().getColor(R.color.font_gray));
-                    tv_qingxu_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_zan_but.setTextColor(getResources().getColor(R.color.black));
                     lineAnimation(index);
                     isWho = 4;
@@ -559,17 +549,17 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                     ShowUtil.showToast(this, "对不起,请您先登录");
                 }
                 break;
-            case R.id.ll_QX_but:
-                if (TextUtils.isEmpty(SharedPreferencesUtil.getUid(this))) {
-                    intent = new Intent(this, LoginActivity.class);
-                    startActivity(intent);
-                } else {
-                    intent = new Intent(this, EmoTionActivity.class);
-                    intent.putExtra("noteId", noteId);
-                    intent.putExtra("repostid", repostid);
-                    startActivityForResult(intent, 3);
-                }
-                break;
+//            case R.id.ll_QX_but: //情绪
+//                if (TextUtils.isEmpty(SharedPreferencesUtil.getUid(this))) {
+//                    intent = new Intent(this, LoginActivity.class);
+//                    startActivity(intent);
+//                } else {
+//                    intent = new Intent(this, EmoTionActivity.class);
+//                    intent.putExtra("noteId", noteId);
+//                    intent.putExtra("repostid", repostid);
+//                    startActivityForResult(intent, 3);
+//                }
+//                break;
             case R.id.ll_Zan_but:
                 if (!TextUtils.isEmpty(SharedPreferencesUtil.getUid(this))) {
                     if (noteEntity.getIszan().equals("1")) {//已经点赞
@@ -595,29 +585,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                     mNoteRequestBase.postNoteLike(RepostNoteDetailActivity.this, noteId, repostid, new WZHttpListener() {
                         public void onSuccess(String content, String isUrl) {
                             tv_zan_but.performClick();
-//                            try {
-//                                JSONObject json = new JSONObject(content);
-//                                if (json.getString("result").equals("1")) {
-//                                    ShowUtil.showToast(getApplicationContext(), json.getString("message"));
-//                                    if (json.getString("message").equals("点赞成功！")) {
-//                                        String s = String.valueOf(Integer.parseInt(noteEntity.getZancount()) + 1);
-//                                        noteEntity.setZancount(json.getString("zan"));
-//                                        noteEntity.setIszan("1");
-//                                        tv_iszan.setCompoundDrawables(null, null, iszan, null);
-//                                        tv_zan_but.setText("赞 " + s);
-//                                        LogUtils.e("赞成功", noteEntity.getZancount() + "     " + s);
-//                                    } else if (json.getString("message").equals("取消点赞！")) {
-//                                        String s = String.valueOf(Integer.parseInt(noteEntity.getZancount()) - 1);
-//                                        noteEntity.setZancount(json.getString("zan"));
-//                                        noteEntity.setIszan("0");
-//                                        tv_zan_but.setText("赞 " + s);
-//                                        tv_iszan.setCompoundDrawables(null, null, nozan, null);
-//                                        LogUtils.e("赞取消", s);
-//                                    }
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
+
                         }
 
                         @Override
@@ -670,8 +638,8 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
      * @since JDK 1.7
      */
     private void lineAnimation(int index) {
-        int one = offset * 2 + bmpW;// 页卡1 -> 页卡2 偏移量
-        Animation animation = new TranslateAnimation(one * currIndex, one * index, 0, 0);
+        int one = offset*2 + bmpW;// 页卡1 -> 页卡2 偏移量
+        Animation animation = new TranslateAnimation(one * currIndex, offset+one * index, 0, 0);
         currIndex = index;
         animation.setFillAfter(true);// True:图片停在动画结束位置
         animation.setDuration(300);
@@ -877,7 +845,6 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         tv_zhuanfa_but.setText("转发  " + noteInfoBean.getRepost_Total());
         tv_zan_but.setText("赞  " + noteInfoBean.getZan_Total());
         tv_pinglun_but.setText("评论  " + noteInfoBean.getComment_Total());
-        tv_qingxu_but.setText("情绪  " + noteInfoBean.getMood_Total());
         LogUtils.e("t");
     }
 
@@ -1026,10 +993,6 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                 case 2://评论
                     tv_pinglun_but.performClick();
                     url = RequestPath.GET_NOTECOMMLIST;
-                    break;
-                case 3://情绪d
-                    tv_qingxu_but.performClick();
-                    url = RequestPath.GET_NOTEMOODLIST;
                     break;
                 case 4://点赞
 //                    url = RequestPath.GET_NOTEZANLIST;

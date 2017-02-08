@@ -126,7 +126,6 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
     private TextView tv_head_title;
     private TextView tv_zhuanfa_but;//转发数
     private TextView tv_pinglun_but;//评论数
-    private TextView tv_qingxu_but;// 情绪数
     private TextView tv_zan_but;//点赞数
     private TextView tv_shang_but;//打赏次数
     private LinearLayout ll_getview_width;
@@ -244,12 +243,12 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
             public void onGlobalLayout() {
                 ll_getview_width.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 screenW = ll_getview_width.getWidth();
-                LogUtils.e("ww=" + screenW);
                 bmpW = (BitmapFactory.decodeResource(getResources(), R.mipmap.hengxian).getWidth());// 获取图片宽度
-                offset = (screenW / 5 - bmpW) / 2;// 计算偏移量
+                offset = (screenW / 4 - bmpW) / 4;// 计算偏移量
                 Matrix matrix = new Matrix();
                 matrix.postTranslate(offset, 0);
                 cursor.setImageMatrix(matrix);// 设置动画初始位置
+                LogUtils.e("bmpW=1111----" + bmpW);
                 LogUtils.e("ww=1111----" + screenW);
             }
         });
@@ -279,7 +278,6 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
         tv_head_title.setText("信息详情");
         tv_zhuanfa_but = (TextView) findViewById(R.id.tv_zhuanfa_but);
         tv_pinglun_but = (TextView) findViewById(R.id.tv_pinglun_but);
-        tv_qingxu_but = (TextView) findViewById(R.id.tv_qingxu_but);
         tv_zan_but = (TextView) findViewById(R.id.tv_zan_but);
         tv_shang_but = (TextView) findViewById(R.id.tv_shang_but);
         tv_delete_note = (TextView) findViewById(R.id.tv_delete_note);
@@ -324,9 +322,8 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
         ll_Zan_but.setOnClickListener(this);
         tv_zhuanfa_but.setOnClickListener(new MyOnClickListener(0));
         tv_pinglun_but.setOnClickListener(new MyOnClickListener(1));
-        tv_qingxu_but.setOnClickListener(new MyOnClickListener(2));
-        tv_zan_but.setOnClickListener(new MyOnClickListener(3));
-        tv_shang_but.setOnClickListener(new MyOnClickListener(4));
+        tv_zan_but.setOnClickListener(new MyOnClickListener(2));
+        tv_shang_but.setOnClickListener(new MyOnClickListener(3));
         //隐藏 视频音频 图片 内容 等控件
         in_audio_video_ui.setVisibility(View.GONE);
         iv_video_img.setVisibility(View.GONE);
@@ -434,7 +431,6 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                 case R.id.tv_zhuanfa_but:
                     tv_zhuanfa_but.setTextColor(getResources().getColor(R.color.black));
                     tv_pinglun_but.setTextColor(getResources().getColor(R.color.font_gray));
-                    tv_qingxu_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_zan_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_shang_but.setTextColor(getResources().getColor(R.color.font_gray));
 
@@ -451,7 +447,6 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                 case R.id.tv_pinglun_but:
                     tv_zhuanfa_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_pinglun_but.setTextColor(getResources().getColor(R.color.black));
-                    tv_qingxu_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_zan_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_shang_but.setTextColor(getResources().getColor(R.color.font_gray));
                     lineAnimation(index);
@@ -464,26 +459,10 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                         mNoteRequestBase.getNoteInfoRepostlist(RequestPath.GET_NOTECOMMLIST, noteId, repostid, pagerIndex, NoteDetailsActivity.this);
                     }
                     break;
-                case R.id.tv_qingxu_but:
-                    tv_zhuanfa_but.setTextColor(getResources().getColor(R.color.font_gray));
-                    tv_pinglun_but.setTextColor(getResources().getColor(R.color.font_gray));
-                    tv_qingxu_but.setTextColor(getResources().getColor(R.color.black));
-                    tv_zan_but.setTextColor(getResources().getColor(R.color.font_gray));
-                    tv_shang_but.setTextColor(getResources().getColor(R.color.font_gray));
-                    lineAnimation(index);
-                    isWho = 3;
-                    if (mListData_QX != null && mListData_QX.size() > 0) {
-                        mAdapter.setmDatas(mListData_QX, isWho);
-                        mAdapter.notifyDataSetChanged();
-                    } else {
-                        pagerIndex = 1;
-                        mNoteRequestBase.getNoteInfoRepostlist(RequestPath.GET_NOTEMOODLIST, noteId, repostid, pagerIndex, NoteDetailsActivity.this);
-                    }
-                    break;
+
                 case R.id.tv_zan_but:
                     tv_zhuanfa_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_pinglun_but.setTextColor(getResources().getColor(R.color.font_gray));
-                    tv_qingxu_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_zan_but.setTextColor(getResources().getColor(R.color.black));
                     tv_shang_but.setTextColor(getResources().getColor(R.color.font_gray));
                     lineAnimation(index);
@@ -499,7 +478,6 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                 case R.id.tv_shang_but:
                     tv_zhuanfa_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_pinglun_but.setTextColor(getResources().getColor(R.color.font_gray));
-                    tv_qingxu_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_zan_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_shang_but.setTextColor(getResources().getColor(R.color.black));
                     lineAnimation(index);
@@ -918,7 +896,6 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
         tv_zan_but.setText("赞\n" + noteInfoBean.getZan_Total());
         tv_pinglun_but.setText("评论\n" + noteInfoBean.getComment_Total());
         tv_shang_but.setText("赏\n" + noteInfoBean.getReward_Total());
-        tv_qingxu_but.setText("情绪\n" + noteInfoBean.getMood_Total());
     }
 
     /**
@@ -1141,10 +1118,6 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                 case 2://评论
                     tv_pinglun_but.performClick();
                     url = RequestPath.GET_NOTECOMMLIST;
-                    break;
-                case 3://情绪
-                    tv_qingxu_but.performClick();
-                    url = RequestPath.GET_NOTEMOODLIST;
                     break;
                 case 4://点赞
 //                    url = RequestPath.GET_NOTEZANLIST;

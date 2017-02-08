@@ -29,6 +29,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -93,8 +94,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
    // private TextView tv_is_type; // 发布世界 朋友圈
    // private TextView tv_qingxu;
 
-    private TextView tv_id_xinghao;
-    private TextView tv_id_xinghao_2;
+    private LinearLayout layout_free;
     private ImageView iv_video_img;
     private ImageView iv_paly;
 
@@ -172,11 +172,8 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
         tv_is_yuanchuang = (TextView) findViewById(R.id.tv_is_yuanchuang);
         tv_is_yuanchuang.setTag(false);
         tv_is_shoufei = (TextView) findViewById(R.id.tv_is_shoufei);
-        tv_is_shoufei.setTag(true);
-      //  tv_is_type = (TextView) findViewById(R.id.tv_is_type);
-        //tv_qingxu = (TextView) findViewById(R.id.tv_qingxu);
-        tv_id_xinghao = (TextView) findViewById(R.id.tv_id_xinghao);
-        tv_id_xinghao_2 = (TextView) findViewById(R.id.tv_id_xinghao_2);
+        tv_is_shoufei.setTag(false);
+        layout_free = (LinearLayout) findViewById(R.id.layout_free);
         rgb_isShare = (ImageView) findViewById(R.id.rgb_isShare);
         rgb_isShare.setTag(true);
         et_edit_reci = (EditText) findViewById(R.id.et_edit_reci);
@@ -543,25 +540,25 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id.tv_is_shoufei://收费
-                //tag  1 收费发布世界  2  免费发朋友圈
+                //isFree  false 收费发布世界  true 免费发朋友圈
                 isFree = (boolean) tv_is_shoufei.getTag();
                 if (!isFree) {
+
+                    isFree = true;
+                    tv_is_shoufei.setBackgroundResource(R.mipmap.release_type_2);
+                    tv_is_shoufei.setTag(isFree);
+
+                    tv_is_yuanchuang.setEnabled(false);
+                    tv_choice_tilte.setEnabled(false);
+                    layout_free.setVisibility(View.INVISIBLE);
+                    ll_isTongyi.setVisibility(View.INVISIBLE);
+                } else {
                     isFree = false;
                     tv_is_shoufei.setTag(isFree);
                     tv_is_shoufei.setBackgroundResource(R.mipmap.release_type_1);
-                    tv_is_yuanchuang.setEnabled(false);
-                    tv_choice_tilte.setEnabled(false);
-                    tv_id_xinghao.setVisibility(View.INVISIBLE);
-                    tv_id_xinghao_2.setVisibility(View.INVISIBLE);
-                    ll_isTongyi.setVisibility(View.INVISIBLE);
-                } else {
-                    isFree = true;
-                    tv_is_shoufei.setTag(isFree);
-                    tv_is_shoufei.setBackgroundResource(R.mipmap.release_type_2);
                     tv_is_yuanchuang.setEnabled(true);
                     tv_choice_tilte.setEnabled(true);
-                    tv_id_xinghao.setVisibility(View.VISIBLE);
-                    tv_id_xinghao_2.setVisibility(View.VISIBLE);
+                    layout_free.setVisibility(View.VISIBLE);
                     ll_isTongyi.setVisibility(View.VISIBLE);
                 }
 

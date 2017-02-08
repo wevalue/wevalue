@@ -52,7 +52,8 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
     private InfluenceAdapter mHAdapter;
     private List<NoteBean.NoteEntity> mHListData;
     private List<NoteBean.NoteEntity> mListData_lunbo;
-    private List<NoteBean.NoteEntity> mListData_jiage;
+    //去掉价格  所以 给个初始值 为 size = 0
+    private List<NoteBean.NoteEntity> mListData_jiage = new ArrayList<NoteBean.NoteEntity>();
     private int pageindex = 1;
     //标题
     private ImageView iv_search,iv_more;
@@ -276,7 +277,7 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
         prsv_ScrollView.onRefreshComplete();
         if (noteBean.getResult().equals("1")) {
             mListData_lunbo = noteBean.data_lunbo;
-            mListData_jiage = noteBean.data_jiage;
+           // mListData_jiage = noteBean.data_jiage;
             if (pageindex > 1) {
                 if (noteBean.getData().size() > 0) {
                     mHListData.addAll(noteBean.data);
@@ -296,9 +297,9 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
                     if (mListData_lunbo != null && mListData_lunbo.size() > 0) {
                         mHListData.addAll(mListData_lunbo);
                     }
-                    if (mListData_jiage != null && mListData_jiage.size() > 0) {
-                        mHListData.addAll(mListData_jiage);
-                    }
+//                    if (mListData_jiage != null && mListData_jiage.size() > 0) {
+//                        mHListData.addAll(mListData_jiage);
+//                    }
                 }
 
                 if (noteBean.data != null && noteBean.data.size() > 0) {

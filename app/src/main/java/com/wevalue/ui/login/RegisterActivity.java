@@ -509,18 +509,6 @@ public class RegisterActivity extends BaseActivity implements OnClickListener, W
         map.put("type", "1");
         map.put("phone", tel);
         map.put("password", password);
-//        if (addr.contains("北京") || addr.contains("天津")
-//                || addr.contains("上海") || addr.contains("重庆")
-//                || addr.contains("香港") || addr.contains("澳门")
-//                || addr.contains("台湾"))
-//        {
-//            map.put("userprovince", addrArr[0]);
-//            map.put("usercity", addrArr[0]);
-//        } else {
-//            map.put("userprovince", addrArr[0]);
-//            map.put("usercity", addrArr[1]);
-//        }
-//        map.put("userinfo", jianjie);
         if ("2".equals(isUsertype)) {
             map.put("orgname", zuzhiName);
         }
@@ -539,15 +527,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener, W
         }
         map.put("istrueinfo", istrueinfo);
         NetworkRequest.postRequest(RequestPath.POST_REGUSER, map, this);
-//		Intent intent = news Intent(this,TypeChoiceActivity.class);
-//		intent.putExtra("nickname",nickname);
-//		intent.putExtra("sex",sex);
-//		intent.putExtra("addr",addr);
-//		intent.putExtra("jianjie",jianjie);
-//		intent.putExtra("tel",tel);
-//		intent.putExtra("code",code);
-//		intent.putExtra("password",password);
-//		startActivity(intent);
+
     }
 
     private void getAgreement() {

@@ -14,11 +14,9 @@ public class RequestPath {
 
             /*客户网站域名*/
     public static final String SERVER_PATH = "https://mp.wzbz.cn";
+    /* 测试地址*/
+   // public static final String SERVER_PATH = "http://192.168.9.109";
 
-    /**
-     * 王登  主机地址
-     */
-//    public static final String SERVER_PATH = "http://192.168.0.100:8003";
 
     /*分享到第三方的链接*/
     public static final String SHARE_HTML = SERVER_PATH + "/web/note.html?";

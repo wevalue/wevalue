@@ -40,11 +40,11 @@ import java.util.Map;
  */
 public class UserRegisterActivity extends BaseActivity implements OnClickListener, WZHttpListener {
 
-    private EditText et_tel, et_code;
+    private EditText et_tel, et_code,et_recommend;
     private ImageView iv_back;
     private ImageView iv_isclick_ur;
     private TextView tv_head_title;
-    private TextView tv_head_right;
+    private TextView tv_register;
     private Button but_getcode;
     private String tel;
     private String requestCode;
@@ -101,22 +101,18 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
         iv_isclick_ur = (ImageView) findViewById(R.id.iv_isclick_ur);
         but_getcode = (Button) findViewById(R.id.but_getcode);
         tv_head_title = (TextView) findViewById(R.id.tv_head_title);
-        tv_head_right = (TextView) findViewById(R.id.tv_head_right);
+        tv_register = (TextView) findViewById(R.id.tv_register);
         tv_xieyi = (TextView) findViewById(R.id.tv_xieyi);
-
 
         et_tel = (EditText) findViewById(R.id.et_tel);
         et_code = (EditText) findViewById(R.id.et_code);
+        et_recommend = (EditText) findViewById(R.id.et_recommend);
 
-
+        tv_register.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         tv_xieyi.setOnClickListener(this);
         but_getcode.setOnClickListener(this);
-
-        tv_head_right.setVisibility(View.VISIBLE);
-        tv_head_right.setOnClickListener(this);
         iv_isclick_ur.setOnClickListener(this);
-        tv_head_right.setText("下一步");
         tv_head_title.setText("注册用户");
     }
 
@@ -153,15 +149,15 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
                     sendCode();
                 }
                 break;
-            case R.id.tv_head_right://确定
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.tv_register:
                 if(is_click==1){
                     quedingClick();
                 }else {
                     ShowUtil.showToast(this,"请同意微值协议");
                 }
-                break;
-            case R.id.iv_back:
-                finish();
                 break;
             case R.id.iv_isclick_ur:
                 if(is_click==1){

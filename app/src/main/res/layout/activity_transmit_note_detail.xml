@@ -7,6 +7,9 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
     <include layout="@layout/head" />
+
+   <!--<ScrollView-->
+
     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:id="@+id/prsv_ScrollView"
         android:layout_width="match_parent"
@@ -182,9 +185,7 @@
                 android:layout_height="45dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
-
+                >
                 <LinearLayout
                     android:id="@+id/ll_getview_width"
                     android:layout_width="match_parent"
@@ -212,16 +213,6 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/tv_qingxu_but"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="情绪 0"
-                        android:textColor="@color/font_gray"
-                        android:textSize="14sp" />
-
-                    <TextView
                         android:id="@+id/tv_zan_but"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -239,7 +230,7 @@
                 android:layout_height="1dp"
                 android:background="@color/white"
                 android:scaleType="matrix"
-                android:src="@mipmap/transmitnote_line" />
+                android:src="@mipmap/hengxian" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -256,9 +247,10 @@
                 android:scrollbars="none"
                 android:visibility="visible" />
         </LinearLayout>
-
-
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
+
+ <!--  </ScrollView> -->
 
     <TextView
         android:layout_width="match_parent"
@@ -327,34 +319,6 @@
             android:src="@mipmap/line_we_fgx" />
 
         <LinearLayout
-            android:id="@+id/ll_QX_but"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawablePadding="5dp"
-                android:drawableRight="@mipmap/notedetail_emotion"
-                android:gravity="center"
-                android:text="情绪"
-                android:textColor="@color/but_text_color"
-                android:textSize="14sp" />
-
-
-        </LinearLayout>
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:scaleType="center"
-            android:src="@mipmap/line_we_fgx" />
-
-        <LinearLayout
             android:id="@+id/ll_Zan_but"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -378,6 +342,7 @@
 
 
     </LinearLayout>
+
 
 
 </LinearLayout>

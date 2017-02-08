@@ -172,6 +172,12 @@ public class InfluenceAdapter extends BaseAdapter {
         viewHolder.tv_comment_num.setText(noteEntity.getCommcount());
         viewHolder.tv_zhuanfa_num.setText(noteEntity.getRepostcount());
         viewHolder.tv_praise_num.setText(noteEntity.getZancount());
+        //如果是免费发布的 则隐藏转发 和 价格
+        if (mDatas.get(position).getIsfree().equals("1")){
+            viewHolder.ll_ZF_but.setVisibility(View.INVISIBLE);
+            viewHolder.tv_price.setVisibility(View.INVISIBLE);
+            viewHolder.tv_income.setVisibility(View.INVISIBLE);
+        }
         if ("1".equals(noteEntity.getIszan())) {
             viewHolder.tv_zanAndImg.setCompoundDrawables(iszan, null, null, null);
         } else if (("0").equals(noteEntity.getIszan())) {
@@ -258,9 +264,7 @@ public class InfluenceAdapter extends BaseAdapter {
                         viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.GONE);
 
                     }
-
                     break;
-
             }
 
             if (mDatas.get(position).getRepostid().equals("0")) {
@@ -314,25 +318,7 @@ public class InfluenceAdapter extends BaseAdapter {
                         notifyDataSetChanged();
                         mNoteRequestBase.postNoteLike((Activity) mContext, noteId, mDatas.get(position).getRepostid(), new WZHttpListener() {
                             public void onSuccess(String content, String isUrl) {
-//                                try {
-//                                    JSONObject json = new JSONObject(content);
-//                                    if (json.getString("result").equals("1")) {
-//                                        ShowUtil.showToast(mContext, json.getString("message"));
-//                                        ShowUtil.showToast(mContext, json.getString("message"));
-//                                        if(mDatas.get(position).getIszan().equals("1")){
-//                                            String s = String.valueOf(Integer.parseInt(mDatas.get(position).getZancount()) - 1);
-//                                            mDatas.get(position).setZancount(s);
-//                                            mDatas.get(position).setIszan("0");
-//                                        }else {
-//                                            String s = String.valueOf(Integer.parseInt(mDatas.get(position).getZancount()) + 1);
-//                                            mDatas.get(position).setZancount(s);
-//                                            mDatas.get(position).setIszan("1");
-//                                        }
-//                                        notifyDataSetChanged();
-//                                    }
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
+
                             }
 
                             @Override
@@ -352,28 +338,21 @@ public class InfluenceAdapter extends BaseAdapter {
 
         viewHolder.textView.setText("送给朋友们");
         viewHolder.tv_zhuanfa_num.setText(noteEntity.getCommcount());
+
         viewHolder.ll_ZF_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
-                if (mDatas.get(position).getIsfree().equals("1")) {
-                    intent = new Intent(mContext, CommentActivity.class);
-                    intent.putExtra("noteid", mDatas.get(position).getNoteid());
-                    intent.putExtra("repostid", mDatas.get(position).getRepostid());
-                    mContext.startActivity(intent);
-                } else {
-                    intent = new Intent(mContext, TransmitNoteActivity.class);
-                    intent.putExtra("repostid", mDatas.get(position).getRepostid());
-                    intent.putExtra("noteId", mDatas.get(position).getNoteid());
-                    intent.putExtra("nickname", mDatas.get(position).getUsernickname());
-                    intent.putExtra("imgurl", mDatas.get(position).getUserface());
-                    intent.putExtra("notecontent", mDatas.get(position).getContent());
-                    intent.putExtra("isself", mDatas.get(position).getIsself());
-                    intent.putExtra("noteFee", mDatas.get(position).getIsfree());
-                    intent.putExtra("paynum", mDatas.get(position).getPaynum());
-                    intent.putExtra("repostfrom", "2");
-                    mContext.startActivity(intent);
-                }
+                Intent intent = new Intent(mContext, TransmitNoteActivity.class);
+                intent.putExtra("repostid", mDatas.get(position).getRepostid());
+                intent.putExtra("noteId", mDatas.get(position).getNoteid());
+                intent.putExtra("nickname", mDatas.get(position).getUsernickname());
+                intent.putExtra("imgurl", mDatas.get(position).getUserface());
+                intent.putExtra("notecontent", mDatas.get(position).getContent());
+                intent.putExtra("isself", mDatas.get(position).getIsself());
+                intent.putExtra("noteFee", mDatas.get(position).getIsfree());
+                intent.putExtra("paynum", mDatas.get(position).getPaynum());
+                intent.putExtra("repostfrom", "1");
+                mContext.startActivity(intent);
             }
         });
         return convertView;
