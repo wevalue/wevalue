@@ -128,11 +128,15 @@ public class NetworkRequest {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
+
                 switch (msg.what) {
                     case SUCC:
-                        LogUtils.e("netContent", msg.obj.toString());
-                        wzHttpListener.onSuccess(msg.obj.toString(), url);
-
+                        try {
+                            LogUtils.e("netContent", msg.obj.toString());
+                            wzHttpListener.onSuccess(msg.obj.toString(), url);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         break;
                     case FAIL:
                         wzHttpListener.onFailure(msg.obj.toString());
