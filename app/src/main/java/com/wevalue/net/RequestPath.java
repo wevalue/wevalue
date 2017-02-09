@@ -13,9 +13,9 @@ public class RequestPath {
 //   public static final String SERVER_PATH = "http://59.110.15.120";
 
             /*客户网站域名*/
-    public static final String SERVER_PATH = "https://mp.wzbz.cn";
+    // public static final String SERVER_PATH = "https://mp.wzbz.cn";
     /* 测试地址*/
-    //public static final String SERVER_PATH = "http://192.168.9.117:8080";
+    public static final String SERVER_PATH = "http://192.168.9.117:8080";
     //public static final String SERVER_PATH = "http://192.168.9.117:8080";
 
 

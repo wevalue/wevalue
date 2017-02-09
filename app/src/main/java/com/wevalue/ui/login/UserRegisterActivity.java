@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.wevalue.MainActivity;
 import com.wevalue.R;
 import com.wevalue.base.BaseActivity;
 import com.wevalue.net.RequestPath;
@@ -26,6 +27,7 @@ import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.utils.ButtontimeUtil;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.RegexUtils;
+import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 
 import org.json.JSONException;
@@ -33,6 +35,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import jupush.JpushTagSet;
 
 
 /**
@@ -49,7 +53,7 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
     private String tel;//注册手机号
     private String rtel;//推荐人手机号
     private String requestCode ;//验证码
-    private int is_click =0;//用户是否同意了用户协议
+    private int is_click =1;//用户是否同意了用户协议
 
 
     private View prompt_box;
@@ -264,36 +268,6 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
     }
 
     /**
-     * 点击下一步逻辑处理
-     */
-    private void quedingClick() {
-        if (ButtontimeUtil.isFastDoubleClick()) {  //两秒之内不能重复点击
-            LogUtils.e("log", "  if----");
-            return;
-        } else {
-            if (TextUtils.isEmpty(et_tel.getText().toString().trim()) || !RegexUtils.etPhoneRegex(et_tel.getText().toString().trim())) {
-                ShowUtil.showToast(this, "请输入正确的手机号!");
-                return;
-            } else {
-                if (TextUtils.isEmpty(et_code.getText().toString().trim())) {
-                    ShowUtil.showToast(this, "请输入验证码!");
-                    return;
-                }
-                if (!et_code.getText().toString().trim().equals(requestCode)) {
-                    ShowUtil.showToast(this, "验证码不正确！");
-                    return;
-                }
-                //注册
-                Intent in = new Intent(this, RegisterActivity.class);
-                in.putExtra("code", et_code.getText().toString().trim());
-                in.putExtra("tel", tel);
-                startActivity(in);
-                finish();
-            }
-        }
-    }
-
-    /**
      * 验证码获取结果
      */
     @Override
@@ -301,9 +275,8 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
         try {
             JSONObject obj = new JSONObject(content);
             if (isUrl.contains(RequestPath.POST_QUICKREG_REGUSER)){
-               ShowUtil.showToast(UserRegisterActivity.this,obj.getString("message"));
-                Intent in = new Intent(this, RegisterSuccessActivity.class);
-                startActivity(in);
+                ShowUtil.showToast(UserRegisterActivity.this,obj.getString("message"));
+                quickLogin(content);
             }else if (isUrl.contains(RequestPath.POST_GETCODE)){
                 if (obj.getString("result").equals("1")) {
                     requestCode = obj.getString("data");
@@ -319,6 +292,58 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
         }
     }
 
+    private void quickLogin(String content){
+        try {
+            JSONObject obj = new JSONObject(content);
+            if (obj.getString("result").equals("1")) {
+                ShowUtil.showToast(UserRegisterActivity.this, obj.getString("message"));
+                JSONObject data = obj.getJSONObject("data");
+                SharedPreferencesUtil.setUserToken(getApplicationContext(), data.getString("logintoken"));
+                SharedPreferencesUtil.setUid(getApplicationContext(), data.getString("userid"));
+                SharedPreferencesUtil.setMobile(getApplicationContext(), data.getString("userphone"));
+                SharedPreferencesUtil.setEmail(getApplicationContext(), data.getString("useremail"));
+                SharedPreferencesUtil.setLatitude(getApplicationContext(), data.getString("userlat"));
+                SharedPreferencesUtil.setLongitude(getApplicationContext(), data.getString("userlon"));
+                SharedPreferencesUtil.setNickname(getApplicationContext(), data.getString("usernickname"));
+                SharedPreferencesUtil.setCityName(getApplicationContext(), data.getString("usercity"));
+                SharedPreferencesUtil.setProvinceName(getApplicationContext(), data.getString("userprovince"));
+                SharedPreferencesUtil.setCounty(getApplicationContext(), data.getString("userdistrict"));
+                SharedPreferencesUtil.setZuZzhiname(getApplicationContext(), data.getString("orgname"));
+                SharedPreferencesUtil.setSex(getApplicationContext(), data.getString("usersex"));
+                SharedPreferencesUtil.setQR_code(getApplicationContext(), data.getString("usercode"));
+                SharedPreferencesUtil.setUserInfo(getApplicationContext(), data.getString("userinfo"));
+                SharedPreferencesUtil.setUserleve(getApplicationContext(), data.getString("userlevel"));
+                SharedPreferencesUtil.setUserLevelInt(getApplicationContext(), Integer.parseInt(data.getString("userscore")));
+                SharedPreferencesUtil.setUsertype(getApplicationContext(), data.getString("usertype"));
+                SharedPreferencesUtil.setAvatar(getApplicationContext(), data.getString("userface"));
+                SharedPreferencesUtil.setLoginPswStatus(getApplicationContext(), data.getString("havepwd"));
+                SharedPreferencesUtil.setPayPswStatus(getApplicationContext(), data.getString("havepaypwd"));
+                SharedPreferencesUtil.setPayPswWenTi_1(getApplicationContext(), data.getString("payquestion1"));//密保问题1
+                SharedPreferencesUtil.setPayPswWenTi_2(getApplicationContext(), data.getString("payquestion2"));//密保问题2
+                SharedPreferencesUtil.setUsernumber(getApplicationContext(), data.getString("usernumber"));//微值号
+                SharedPreferencesUtil.setSuiYinCount(getApplicationContext(), data.getString("usermoney"));//保存用户碎银数量
+                SharedPreferencesUtil.setUerAuthentic(getApplicationContext(), data.getString("istrue"));
+                setJupushAlisa(data.getString("userid"));
+                SharedPreferencesUtil.setZhangHao(getApplicationContext(), tel);
+//                Intent intent = new Intent(UserRegisterActivity.this, MainActivity.class);
+//                startActivity(intent);
+                Intent in = new Intent(this, RegisterSuccessActivity.class);
+                startActivity(in);
+                finish();
+            } else {
+                ShowUtil.showToast(UserRegisterActivity.this, obj.getString("message"));
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            ShowUtil.showToast(UserRegisterActivity.this, "服务数据异常，请稍后重试！");
+        }
+    }
+
+    /*设置极光推送的别名 进行个人推送*/
+    private void setJupushAlisa(String usernumber) {
+        JpushTagSet tagSet = new JpushTagSet(this, usernumber);
+        tagSet.setAlias();
+    }
     @Override
     public void onFailure(String content) {
         ShowUtil.showToast(UserRegisterActivity.this, content);

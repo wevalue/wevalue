@@ -315,7 +315,8 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
 
     @Override
     public void onFailure(String content) {
-
+        pgb.setVisibility(View.GONE);
+        prsv_ScrollView.onRefreshComplete();
     }
     private void selecedTile(String notezone){
         this.notezone = notezone;

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -60,9 +61,14 @@ import java.util.Map;
 public class PopuUtil {
     public static PopupWindow promptBoxPopupWindow;
     public static View prompt_box;
-
+    public  Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
     /**
-     * 点击加号
+     * 三个点 更多
      */
     public static void initpopu(final Activity main, ImageView iv) {
         // 空白区域
@@ -84,6 +90,8 @@ public class PopuUtil {
         TextView tv_paihangbang = (TextView) prompt_box.findViewById(R.id.tv_paihangbang);
         //添加好友
         TextView tv_add_haoyou = (TextView) prompt_box.findViewById(R.id.tv_add_haoyou);
+        //邀请好友
+        TextView tv_invitation = (TextView) prompt_box.findViewById(R.id.tv_invitation);
         //帮助与说明
         TextView tv_shuoming = (TextView) prompt_box.findViewById(R.id.tv_shuoming);
         //附近的人
@@ -104,8 +112,19 @@ public class PopuUtil {
             public void onClick(View v) {
                 Intent intent = new Intent(main, FeedbackActivity.class);
                 main.startActivity(intent);
-                promptBoxPopupWindow.dismiss();
+
                 MobclickAgent.onEvent(main, StatisticsConsts.event_more, "feedback");
+            }
+        });
+        //邀请好友
+        tv_invitation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String,String> map = new HashMap<String, String>();
+                map.put("url","www.baidu.com");
+                map.put("message","邀请好友加入微值");
+                promptBoxPopupWindow.dismiss();
+                initShareInvitePopup(main,new Handler(),map);
             }
         });
         //添加频道
@@ -898,6 +917,70 @@ public class PopuUtil {
         }
     }
 
+    /*邀请分享的*/
+    public static void initShareInvitePopup(Activity activity, final Handler handler, HashMap<String, String> map) {
+        String url = "";
+        ImageView iv_sina;//微博分享
+        final ImageView iv_weixin;//朋友圈
+        ImageView iv_weixin_friend;//微信好友
+        ImageView iv_qzone;//空间
+        TextView tv_cancel; //取消按钮
+
+        final String message = map.get("message")==null? "微值价值分享" : map.get("message");
+        final String shareUrl = map.get("url")==null? RequestPath.SHARE_HTML : map.get("url");
+
+        final ShareHelper shareHelper = new ShareHelper(activity, handler);
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.iv_weixin:
+                        shareHelper.initShare(Constants.shareWeixinMoment, shareUrl,message);
+                        promptBoxPopupWindow.dismiss();
+                        break;
+                    case R.id.iv_weixin_friend:
+                        shareHelper.initShare(Constants.shareWeixinFriend, shareUrl,message);
+                        promptBoxPopupWindow.dismiss();
+                        break;
+                    case R.id.iv_qzone:
+                        shareHelper.initShare(Constants.shareQzone, shareUrl,message);
+                        promptBoxPopupWindow.dismiss();
+                        break;
+                    case R.id.iv_sina:
+                        shareHelper.initShare(Constants.shareSina, shareUrl,message);
+                        promptBoxPopupWindow.dismiss();
+                        break;
+                    case R.id.tv_quxiao:
+                        handler.sendEmptyMessage(3);
+                        promptBoxPopupWindow.dismiss();
+                        break;
+                }
+            }
+        };
+        // 空白区域
+        prompt_box = activity.getLayoutInflater().inflate(R.layout.popu_share_item, null);
+        iv_weixin = (ImageView) prompt_box.findViewById(R.id.iv_weixin);
+        iv_weixin_friend = (ImageView) prompt_box.findViewById(R.id.iv_weixin_friend);
+        iv_sina = (ImageView) prompt_box.findViewById(R.id.iv_sina);
+        iv_qzone = (ImageView) prompt_box.findViewById(R.id.iv_qzone);
+        tv_cancel = (TextView) prompt_box.findViewById(R.id.tv_quxiao);
+        tv_cancel.setOnClickListener(onClickListener);
+        iv_weixin.setOnClickListener(onClickListener);
+        iv_weixin_friend.setOnClickListener(onClickListener);
+        iv_sina.setOnClickListener(onClickListener);
+        iv_qzone.setOnClickListener(onClickListener);
+
+        promptBoxPopupWindow = new PopupWindow(prompt_box, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true);
+        promptBoxPopupWindow.setFocusable(true);
+        // 设置弹出动画
+        promptBoxPopupWindow.setAnimationStyle(R.style.ActionSheetDialogStyle);
+        // 设置popupWindow背景图片(只能通过popupWindow提供的返回键返回)
+        ColorDrawable dw = new ColorDrawable(0x32000000);
+        promptBoxPopupWindow.setBackgroundDrawable(dw);
+        promptBoxPopupWindow.setOutsideTouchable(true);
+        promptBoxPopupWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+    }
+
     /*分享的popuwindow*/
     public static void initSharePopup(Activity activity, final Handler handler, HashMap<String, String> map) {
         String url = "";
@@ -913,6 +996,7 @@ public class PopuUtil {
                 url += "&" + a + "=" + b;
             }
         }
+        final String message = map.get("message")==null? "微值价值分享" : map.get("message");
         final String shareUrl = RequestPath.SHARE_HTML + url;
         LogUtils.e("MSSSSS", shareUrl);
         final ShareHelper shareHelper = new ShareHelper(activity, handler);
@@ -921,19 +1005,19 @@ public class PopuUtil {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.iv_weixin:
-                        shareHelper.initShare(Constants.shareWeixinMoment, shareUrl);
+                        shareHelper.initShare(Constants.shareWeixinMoment, shareUrl,message);
                         promptBoxPopupWindow.dismiss();
                         break;
                     case R.id.iv_weixin_friend:
-                        shareHelper.initShare(Constants.shareWeixinFriend, shareUrl);
+                        shareHelper.initShare(Constants.shareWeixinFriend, shareUrl,message);
                         promptBoxPopupWindow.dismiss();
                         break;
                     case R.id.iv_qzone:
-                        shareHelper.initShare(Constants.shareQzone, shareUrl);
+                        shareHelper.initShare(Constants.shareQzone, shareUrl,message);
                         promptBoxPopupWindow.dismiss();
                         break;
                     case R.id.iv_sina:
-                        shareHelper.initShare(Constants.shareSina, shareUrl);
+                        shareHelper.initShare(Constants.shareSina, shareUrl,message);
                         promptBoxPopupWindow.dismiss();
                         break;
                     case R.id.tv_quxiao:

@@ -1,5 +1,6 @@
 package com.wevalue.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wevalue.MainActivity;
 import com.wevalue.R;
 import com.wevalue.base.BaseActivity;
 import com.wevalue.net.RequestPath;
@@ -17,6 +19,7 @@ import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.utils.ButtontimeUtil;
 import com.wevalue.utils.LogUtils;
+import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 
 import org.json.JSONException;
@@ -24,6 +27,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import jupush.JpushTagSet;
 
 /**
  * Created by Administrator on 2016-11-05.
@@ -101,7 +106,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
         tv_head_right.setVisibility(View.VISIBLE);
         tv_head_right.setOnClickListener(this);
         tv_head_right.setText("确定");
-        tv_head_title.setText("找回密码");
+        tv_head_title.setText("手机登录");
     }
 
     /**
@@ -216,18 +221,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                 }
                 break;
             case RequestPath.POST_RESETUSERPWD:
-                try {
-                    JSONObject obj = new JSONObject(content);
-                    if (obj.getString("result").equals("1")) {
-                        ShowUtil.showToast(ForgetPasswordActivity.this, obj.getString("message"));
-                        finish();
-                    } else {
-                        ShowUtil.showToast(ForgetPasswordActivity.this, obj.getString("message"));
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                quickLogin(content);
                 break;
         }
 
@@ -238,4 +232,55 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
         ShowUtil.showToast(ForgetPasswordActivity.this, content);
     }
 
+
+    private void quickLogin(String content){
+        try {
+            JSONObject obj = new JSONObject(content);
+            if (obj.getString("result").equals("1")) {
+                ShowUtil.showToast(ForgetPasswordActivity.this, obj.getString("message"));
+                JSONObject data = obj.getJSONObject("data");
+                SharedPreferencesUtil.setUserToken(getApplicationContext(), data.getString("logintoken"));
+                SharedPreferencesUtil.setUid(getApplicationContext(), data.getString("userid"));
+                SharedPreferencesUtil.setMobile(getApplicationContext(), data.getString("userphone"));
+                SharedPreferencesUtil.setEmail(getApplicationContext(), data.getString("useremail"));
+                SharedPreferencesUtil.setLatitude(getApplicationContext(), data.getString("userlat"));
+                SharedPreferencesUtil.setLongitude(getApplicationContext(), data.getString("userlon"));
+                SharedPreferencesUtil.setNickname(getApplicationContext(), data.getString("usernickname"));
+                SharedPreferencesUtil.setCityName(getApplicationContext(), data.getString("usercity"));
+                SharedPreferencesUtil.setProvinceName(getApplicationContext(), data.getString("userprovince"));
+                SharedPreferencesUtil.setCounty(getApplicationContext(), data.getString("userdistrict"));
+                SharedPreferencesUtil.setZuZzhiname(getApplicationContext(), data.getString("orgname"));
+                SharedPreferencesUtil.setSex(getApplicationContext(), data.getString("usersex"));
+                SharedPreferencesUtil.setQR_code(getApplicationContext(), data.getString("usercode"));
+                SharedPreferencesUtil.setUserInfo(getApplicationContext(), data.getString("userinfo"));
+                SharedPreferencesUtil.setUserleve(getApplicationContext(), data.getString("userlevel"));
+                SharedPreferencesUtil.setUserLevelInt(getApplicationContext(), Integer.parseInt(data.getString("userscore")));
+                SharedPreferencesUtil.setUsertype(getApplicationContext(), data.getString("usertype"));
+                SharedPreferencesUtil.setAvatar(getApplicationContext(), data.getString("userface"));
+                SharedPreferencesUtil.setLoginPswStatus(getApplicationContext(), data.getString("havepwd"));
+                SharedPreferencesUtil.setPayPswStatus(getApplicationContext(), data.getString("havepaypwd"));
+                SharedPreferencesUtil.setPayPswWenTi_1(getApplicationContext(), data.getString("payquestion1"));//密保问题1
+                SharedPreferencesUtil.setPayPswWenTi_2(getApplicationContext(), data.getString("payquestion2"));//密保问题2
+                SharedPreferencesUtil.setUsernumber(getApplicationContext(), data.getString("usernumber"));//微值号
+                SharedPreferencesUtil.setSuiYinCount(getApplicationContext(), data.getString("usermoney"));//保存用户碎银数量
+                SharedPreferencesUtil.setUerAuthentic(getApplicationContext(), data.getString("istrue"));
+                setJupushAlisa(data.getString("userid"));
+                SharedPreferencesUtil.setZhangHao(getApplicationContext(), tel);
+                Intent intent = new Intent(ForgetPasswordActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                ShowUtil.showToast(ForgetPasswordActivity.this, obj.getString("message"));
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            ShowUtil.showToast(ForgetPasswordActivity.this, "服务数据异常，请稍后重试！");
+        }
+    }
+
+    /*设置极光推送的别名 进行个人推送*/
+    private void setJupushAlisa(String usernumber) {
+        JpushTagSet tagSet = new JpushTagSet(this, usernumber);
+        tagSet.setAlias();
+    }
 }

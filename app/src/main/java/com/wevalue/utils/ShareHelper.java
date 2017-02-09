@@ -33,30 +33,18 @@ public class ShareHelper {
         this.mHan = mHan;
     }
 
-    public void initShare(String sharePlatform, String url) {
+    public void initShare(String sharePlatform, String url,String message) {
         switch (sharePlatform) {
-            case Constants.shareSina:
+            case Constants.shareSina: //分享到微博
                 SinaWeibo.ShareParams sp = new SinaWeibo.ShareParams();
-                sp.setText("微值价值分享");
-//                sp.setImagePath("/mnt/sdcard/测试分享的图片.jpg");
-//                sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
-//                sp.setTitleUrl(url); // 标题的超链接
+                sp.setText(message);
                 sp.setUrl(url);
                 Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
                 weibo.authorize();
                 weibo.setPlatformActionListener(new MyActionListener()); // 设置分享事件回调
                 weibo.share(sp);
-//                        Platform.ShareParams sp_sina;
-//                        sp_sina = news Platform.ShareParams();
-//                        sp_sina.setTitle("微值");
-//                        sp_sina.setText("微值" + "\"" + RequestPath.SERVER_PATH + "/web/myfly.aspx?flyjson=\"\""/*+setFlyInfo()+"\""*/);
-//                        Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
-//                        weibo.setPlatformActionListener(news MyActionListener()); // 设置分享事件回调
-//                        // 执行图文分享
-//                        weibo.share(sp_sina);
-
                 break;
-            case Constants.shareWeixinMoment:
+            case Constants.shareWeixinMoment: //分享到微信朋友圈
                 if (intentFilter == null) {
                     initReceiver();
                 }
@@ -66,13 +54,12 @@ public class ShareHelper {
                 WechatMoments.ShareParams sp_weixin = new WechatMoments.ShareParams();
                 sp_weixin.setShareType(Platform.SHARE_WEBPAGE);
                 sp_weixin.setUrl(url);
-//                sp_weixin.setText("微值价值分享");
-                sp_weixin.setTitle("微值价值分享");
+                sp_weixin.setTitle(message);
                 wx.share(sp_weixin);
                 break;
-            case Constants.shareQzone:
+            case Constants.shareQzone://分享qq空间
                 QZone.ShareParams qzonesp = new QZone.ShareParams();
-                qzonesp.setTitle("微值价值分享");
+                qzonesp.setTitle(message);
                 qzonesp.setTitleUrl(url); // 标题的超链接
 //                qzonesp.setText("微值价值分享");
 //                qzonesp.setImageUrl("http://www.someserver.com/测试图片网络地址.jpg");
@@ -86,7 +73,7 @@ public class ShareHelper {
                 qzone.setPlatformActionListener(new MyActionListener()); // 设置分享事件回调
                 qzone.share(qzonesp);
                 break;
-            case Constants.shareWeixinFriend:
+            case Constants.shareWeixinFriend://分享到微信朋友
                 if (intentFilter == null) {
                     initReceiver();
                 }
@@ -103,7 +90,6 @@ public class ShareHelper {
                 break;
         }
     }
-
     /**
      * 分享回调事件
      **/

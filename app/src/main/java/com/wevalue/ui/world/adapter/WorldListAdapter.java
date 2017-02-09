@@ -270,8 +270,8 @@ public class WorldListAdapter extends BaseAdapter {
                 .load(RequestPath.SERVER_PATH + url)
                 .dontAnimate() // 不使用默认动画 解决占位为题
                 //.thumbnail(0.5f) // 用一般大小作为缩略图
-                .placeholder(R.mipmap.default_video)
-                .error(R.mipmap.default_video)
+                .placeholder(default_img)
+                .error(default_img)
                 .crossFade()
                 .into(iv);
     }

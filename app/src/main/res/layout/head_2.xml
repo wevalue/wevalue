@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="@color/white"
+    android:background="@drawable/shape_linde_gray_bg_white_down"
     >
     <ImageView
         android:id="@+id/iv_head_search"
@@ -40,7 +40,7 @@
         android:gravity="center_vertical"
         android:paddingRight="15dp"
         android:text="设置"
-        android:textColor="@color/white"
+        android:textColor="@color/blue_price"
         android:textSize="14sp"
         android:visibility="gone" />
 

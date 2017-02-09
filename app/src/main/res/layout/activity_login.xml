@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:padding="10dp"
-            android:src="@mipmap/me_login_icon_back" />
+            android:src="@mipmap/back" />
 
         <TextView
             android:id="@+id/tv_head_title"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="微值登录"
-            android:textColor="@color/white"
+            android:textColor="@color/blue_price"
             android:textSize="18sp"
             android:visibility="gone" />
 
@@ -82,70 +82,63 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:background="@mipmap/me_login_input"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="账号"
-                    android:textColor="@color/login_text_blue"
-                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/et_tel"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="15dp"
                     android:background="@null"
+                    android:drawableLeft="@mipmap/ic_user"
                     android:hint="请填写手机号/微值号"
+                    android:drawablePadding="15dp"
                     android:maxLength="11"
-                    android:paddingLeft="30dp"
                     android:singleLine="true"
                     android:textColor="@color/login_text_blue_2"
                     android:textColorHint="@color/login_text_blue_2"
                     android:textSize="16sp" />
 
             </LinearLayout>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:background="@color/blue_price"
+                />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="20dp"
-                android:background="@mipmap/me_login_input"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="密码"
-                    android:textColor="@color/login_text_blue"
-                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/et_psw"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="15dp"
                     android:background="@null"
+                    android:drawableLeft="@mipmap/ic_pwd"
+                    android:drawablePadding="15dp"
                     android:hint="请填写登录密码"
                     android:inputType="textPassword"
-                    android:paddingLeft="30dp"
                     android:singleLine="true"
                     android:textColor="@color/login_text_blue_2"
                     android:textColorHint="@color/login_text_blue_2"
                     android:textSize="16sp" />
 
             </LinearLayout>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:background="@color/blue_price"
+                />
             <TextView
                 android:id="@+id/tv_login_but"
                 android:layout_width="match_parent"
@@ -154,6 +147,7 @@
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="40dp"
                 android:background="@mipmap/me_login_btn"
+                android:drawablePadding="15dp"
                 android:gravity="center"
                 android:text="立即登录"
                 android:textColor="@color/white"
@@ -178,7 +172,7 @@
                         android:layout_height="30dp"
                         android:layout_alignParentRight="true"
                         android:gravity="center_vertical|right"
-                        android:text="忘记密码？"
+                        android:text="手机登陆"
                         android:textColor="@color/login_text_blue"
                         android:textSize="14sp" />
 

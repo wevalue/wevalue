@@ -31,12 +31,12 @@
                 android:textSize="36sp" />
 
             <TextView
+                android:id="@+id/tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
                 android:gravity="left"
-                android:text="镖师已将些许碎银放入您的银库，快去传播我和我们在世界中的影响力吧！"
                 android:textColor="@color/text_btn_color"
                 android:textSize="18sp" />
 

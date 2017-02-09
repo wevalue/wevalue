@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/white"
+        android:background="@drawable/shape_linde_gray_bg_white_down"
         android:orientation="horizontal">
 
         <ImageView
