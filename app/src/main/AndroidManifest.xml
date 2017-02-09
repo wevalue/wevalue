@@ -58,6 +58,7 @@
 
     <!-- 蒲公英权限 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 允许程序录制音频 -->
+
     <!-- 可选 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
 
@@ -283,8 +284,6 @@
             android:configChanges="orientation|screenSize" />
 
         <!-- 帖子详情 -->
-        <activity android:name=".ui.details.activity.NoteDetailsActivity" />
-        <!-- 朋友们的帖子详情 -->
         <activity android:name=".ui.details.activity.NoteDetailsActivity" />
 
         <!-- 图片查看界面 -->

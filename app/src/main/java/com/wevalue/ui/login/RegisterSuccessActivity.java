@@ -32,7 +32,7 @@ public class RegisterSuccessActivity extends BaseActivity {
 
     private void initView() {
         String suiyin =  SharedPreferencesUtil.getSuiYinCount(this);
-        content = "再机智也得拼运气，随机碎银￥"+suiyin+"奖励已入库，悄悄去偷窥朋友们的幸（rén）运（pǐn）值吧！";
+        content = "再机智也得拼运气，随机碎银￥"+suiyin+"奖励已入库，邀请好友测幸（rén）运（pǐn）值吧！";
         tv_content = (TextView) findViewById(R.id.tv_content);
         tv_content.setText(content);
         iv_back = (ImageView) findViewById(R.id.iv_back);

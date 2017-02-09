@@ -701,7 +701,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                     break;
             }
         }
-        map.put("title", content);
+        map.put("title", title);
         map.put("content", content);
         map.put("orderno", orderno);
         map.put("spendtype", spendtype);

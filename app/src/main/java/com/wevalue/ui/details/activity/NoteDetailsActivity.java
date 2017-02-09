@@ -938,7 +938,7 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
         notetitle = noteEntity.getTitle();
         if (TextUtils.isEmpty(notetitle))
             notetitle = notecontent;
-        tv_note_title.setText(noteEntity.getTitle());
+        tv_note_title.setText(notetitle);
         tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
         switch (notetype) {
             case "4"://文字
