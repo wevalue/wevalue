@@ -154,13 +154,13 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
 
     @Override
     public void onSuccess(String content, String isUrl) {
+        prsv_ScrollView.onRefreshComplete();
         switch (status) {
             case "3"://打赏内容的处理
                 final RewardBean rewardBean = new Gson().fromJson(content, RewardBean.class);
                 if (rewardBean == null) {
                     return;
                 }
-                prsv_ScrollView.onRefreshComplete();
                 if ("1".equals(rewardBean.getResult())) {
                     tv_quanbu.setText("全部（" + rewardBean.allcount + "）");
                     tv_shijie.setText("世界（" + rewardBean.wordcount + "）");
@@ -213,7 +213,6 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
                 if (noteBean == null) {
                     return;
                 }
-                prsv_ScrollView.onRefreshComplete();
                 if ("1".equals(noteBean.getResult())) {
                     tv_quanbu.setText("全部（" + noteBean.allcount + "）");
                     if (status.equals("2")) {
@@ -268,7 +267,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
 
     @Override
     public void onFailure(String content) {
-
+        prsv_ScrollView.onRefreshComplete();
     }
 
     @Override

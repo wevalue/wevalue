@@ -46,9 +46,7 @@ public class NetworkRequest {
     static String url = "";
     private static final int SUCC = 953;
     private static final int FAIL = 997;
-
     static Platform mPlatform;
-    static String responseString = "";
 
     public NetworkRequest() {
         try {
@@ -104,7 +102,6 @@ public class NetworkRequest {
                 Message message = Message.obtain();
                 try {
                     String str = response.body().string();
-                    LogUtils.e("responsssss", "-0.1--" + response.body().string());
                     LogUtils.e("responsssss_1", "-1--str--" + str);
                     message.what = SUCC;
                     message.obj = Base64Coder.decodeString(str.substring(5, str.length())).replaceAll("#换行#", "\r\n");
@@ -200,8 +197,6 @@ public class NetworkRequest {
                     message.obj = Base64Coder.decodeString(str.substring(5, str.length())).replaceAll("#换行#", "\r\n");
                 } catch (Exception e) {
                     e.printStackTrace();
-//                    message.what = FAIL;
-//                    message.obj = e.toString();
                 }
                 handler.sendMessage(message);
                 if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
@@ -227,8 +222,6 @@ public class NetworkRequest {
         url = url1;
         if (map != null && map.size() > 0) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
-                String a = entry.getKey();
-                String b = entry.getValue();
                 url += "&" + entry.getKey() + "=" + entry.getValue();
             }
         }

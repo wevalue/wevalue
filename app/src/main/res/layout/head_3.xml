@@ -54,12 +54,12 @@
 
         <TextView
             android:id="@+id/tv_send_note"
-            android:layout_width="50dp"
-            android:layout_height="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:padding="6dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:gravity="center"
             android:text="发布"
             android:textColor="@color/blue_price"

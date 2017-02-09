@@ -15,7 +15,7 @@ public class RequestPath {
             /*客户网站域名*/
     // public static final String SERVER_PATH = "https://mp.wzbz.cn";
     /* 测试地址*/
-    public static final String SERVER_PATH = "http://192.168.9.117:8080";
+    public static final String SERVER_PATH = "http://192.168.9.109";
     //public static final String SERVER_PATH = "http://192.168.9.117:8080";
 
 
@@ -335,7 +335,8 @@ public class RequestPath {
     public static final String POST_DELBLACKFRIEND = SERVER_PATH + "/api_3/dbfriends.ashx?method=delblackfriend";
     //登录token延期
     public static final String POST_SETTOKENLONGTIME = SERVER_PATH + "/api_3/dbuser.ashx?method=settokenlongtime";
-
+    //获取启动页图片  lanucher
+    public static final String POST_LANYCHER_IMAGE = SERVER_PATH + "/api_3/dbbase.ashx?method=getuipage";
 
     //需要加密参数的接口
     public static final String[] EncodePath = {POST_QUICKREG_REGUSER,POST_REGUSER, POST_UPDATEUSERPWD, POST_RESETUSERPWD, POST_SETTRUEINFO, POST_VERIFYPAYCODE, POST_PAYMONEY};

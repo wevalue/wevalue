@@ -9,6 +9,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
@@ -91,6 +92,7 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
         realm = Realm.getDefaultInstance();
         currentSeconnd = System.currentTimeMillis();
         imageView = (ImageView) findViewById(R.id.iv_img);
+        lanucherImg();
         getAllChanel();
         mContext = getApplicationContext();
         WeValueApplication.phoneName = android.os.Build.BRAND;
@@ -120,6 +122,12 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(this);
+    }
+    /* 获取启动页图片*/
+    private  void lanucherImg(){
+        HashMap map = new HashMap();
+        map.put("code","weizhi");
+        NetworkRequest.postRequest(RequestPath.POST_LANYCHER_IMAGE, map, this);
     }
 
     @Override
@@ -400,6 +408,24 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                break;
+            case RequestPath.POST_LANYCHER_IMAGE: //获取启动页图片
+                try{
+                    LogUtils.e("IMAGE_URL",content);
+                    JSONObject jsonObject = new JSONObject(content);
+                    String result = jsonObject.getString("result");
+                    if ("1".equals(result)){
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String url = data.getString("uipath");
+
+                        Glide.with(this).load(RequestPath.SERVER_PATH+url).placeholder(R.mipmap.lanucherpic).error(R.mipmap.lanucherpic).centerCrop().into(imageView);
+                    }else {
+                        ShowUtil.showToast(this,jsonObject.getString("message"));
+                    }
+                    }catch (Exception e){
+                    e.printStackTrace();
+                }
+               break;
 //            case RequestPath.GET_GETNOTE:
 //                SharedPreferencesUtil.setContent(this, "tuijian", content);
 //                isGetNoteOk = true;
