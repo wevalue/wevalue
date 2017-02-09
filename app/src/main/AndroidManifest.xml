@@ -285,7 +285,7 @@
         <!-- 帖子详情 -->
         <activity android:name=".ui.details.activity.NoteDetailsActivity" />
         <!-- 朋友们的帖子详情 -->
-        <activity android:name=".ui.details.activity.FriendsNoteDetailsActivity" />
+        <activity android:name=".ui.details.activity.NoteDetailsActivity" />
 
         <!-- 图片查看界面 -->
         <activity

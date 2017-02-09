@@ -19,7 +19,6 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.FriendsNoteDetailsActivity;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
 import com.wevalue.ui.world.activity.ImgShowActivity;
@@ -146,7 +145,7 @@ public class PaymentDetails_DetailsActivity extends BaseActivity implements View
             case R.id.rl_note_content:
 
                 if(noteInfo.getIsfree().equals("1")){
-                    Intent intent = new Intent(this, FriendsNoteDetailsActivity.class);
+                    Intent intent = new Intent(this, NoteDetailsActivity.class);
                     intent.putExtra("noteId", noteInfo.getNoteid());
                     intent.putExtra("repostid", noteInfo.getRepostid());
                     startActivity(intent);

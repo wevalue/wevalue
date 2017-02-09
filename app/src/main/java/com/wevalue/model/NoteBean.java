@@ -117,6 +117,7 @@ public class NoteBean {
         public String repostid;//转发帖子id
         public String userid;//": "ba39301d25d34b4fa20fac7cca3cc523",//发帖人id
         public String notetype;//": "3",//信息类型 1.视频文字2.音乐文字3.图片文字4.纯文字
+        public String title;
         public String content;//": "测试图片文字测试图片文字测试图片文字测试图片文字测试图片文字",//内容
         public String notevideo;//": "",//视频链接
         public String notevideopic;//": ""//视频截图
@@ -276,6 +277,14 @@ public class NoteBean {
 
         public void setNotetype(String notetype) {
             this.notetype = notetype;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
         }
 
         public String getContent() {

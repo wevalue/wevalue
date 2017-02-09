@@ -46,8 +46,9 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
     private TextView tv_head_title;
     private TextView tv_register;
     private Button but_getcode;
-    private String tel;
-    private String requestCode;
+    private String tel;//注册手机号
+    private String rtel;//推荐人手机号
+    private String requestCode ;//验证码
     private int is_click =0;//用户是否同意了用户协议
 
 
@@ -154,7 +155,7 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
                 break;
             case R.id.tv_register:
                 if(is_click==1){
-                    quedingClick();
+                    registerClick();
                 }else {
                     ShowUtil.showToast(this,"请同意微值协议");
                 }
@@ -170,7 +171,6 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
                 break;
             case R.id.tv_xieyi:
                 initpopu(R.layout.wz_popupwindow_prompt_box_2);
-//			promptBox_tv_content.setText(agreement);
                 promptBox_tv_content_1.loadDataWithBaseURL(null, agreement, "text/html", "UTF-8", null);
                 promptBoxPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 0);
                 break;
@@ -231,7 +231,37 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
 
     }
 
+    /**
+     * 点击注册逻辑处理
+     */
+    private void registerClick() {
+        requestCode = "666666";
+        rtel = et_recommend.getText().toString().trim();
+        if (ButtontimeUtil.isFastDoubleClick()) {  //两秒之内不能重复点击
+            LogUtils.e("log", "  if----");
+            return;
+        } else {
+            if (TextUtils.isEmpty(et_tel.getText().toString().trim()) || !RegexUtils.etPhoneRegex(et_tel.getText().toString().trim())) {
+                ShowUtil.showToast(this, "请输入正确的手机号!");
+                return;
+            } else {
+                if (TextUtils.isEmpty(et_code.getText().toString().trim())) {
+                    ShowUtil.showToast(this, "请输入验证码!");
+                    return;
+                }
+                if (!et_code.getText().toString().trim().equals(requestCode)) {
+                    ShowUtil.showToast(this, "验证码不正确！");
+                    return;
+                }
 
+                HashMap map = new HashMap<>();
+                map.put("phone", tel);
+                map.put("rphone", rtel);
+                map.put("code", "weizhi");
+                NetworkRequest.postRequest(RequestPath.POST_QUICKREG_REGUSER, map, this);
+            }
+        }
+    }
 
     /**
      * 点击下一步逻辑处理
@@ -270,13 +300,19 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
     public void onSuccess(String content, String isUrl) {
         try {
             JSONObject obj = new JSONObject(content);
-            if (obj.getString("result").equals("1")) {
-                requestCode = obj.getString("data");
-            } else {
-                but_getcode.setClickable(true);
-                but_getcode.setText("获取验证码");
-                mSendCoedHandler.removeMessages(1);
-                ShowUtil.showToast(UserRegisterActivity.this, obj.getString("message"));
+            if (isUrl.contains(RequestPath.POST_QUICKREG_REGUSER)){
+               ShowUtil.showToast(UserRegisterActivity.this,obj.getString("message"));
+                Intent in = new Intent(this, RegisterSuccessActivity.class);
+                startActivity(in);
+            }else if (isUrl.contains(RequestPath.POST_GETCODE)){
+                if (obj.getString("result").equals("1")) {
+                    requestCode = obj.getString("data");
+                } else {
+                    but_getcode.setClickable(true);
+                    but_getcode.setText("获取验证码");
+                    mSendCoedHandler.removeMessages(1);
+                    ShowUtil.showToast(UserRegisterActivity.this, obj.getString("message"));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -13,6 +13,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
@@ -255,6 +256,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         nozan.setBounds(0, 0, nozan.getMinimumWidth(), nozan.getMinimumHeight()); //设置边界
         tv_transmit_content = (TextView) findViewById(R.id.tv_note_title);
         tv_transmit_content.setTextAppearance(this,R.style.style_note_title_normal);
+        tv_transmit_content.setGravity(Gravity.LEFT);
         web_tuwen = (WebView) findViewById(R.id.web_tuwen);
         tv_is_yuanchuang = (TextView) findViewById(R.id.tv_is_yuanchuang);
         tv_is_reci = (TextView) findViewById(R.id.tv_is_reci);
@@ -639,7 +641,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
      */
     private void lineAnimation(int index) {
         int one = offset*2 + bmpW;// 页卡1 -> 页卡2 偏移量
-        Animation animation = new TranslateAnimation(one * currIndex, offset+one * index, 0, 0);
+        Animation animation = new TranslateAnimation(one * currIndex, one * index, 0, 0);
         currIndex = index;
         animation.setFillAfter(true);// True:图片停在动画结束位置
         animation.setDuration(300);
@@ -919,6 +921,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                 break;
             case "5"://图文混排, web ,转发
                 web_tuwen.setVisibility(View.VISIBLE);
+                tv_note_content.setVisibility(View.GONE);
                 web_tuwen.getSettings().setBlockNetworkImage(false);
                 web_tuwen.getSettings().setLoadsImagesAutomatically(true);
                 //支持js

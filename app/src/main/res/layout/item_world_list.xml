@@ -101,8 +101,8 @@
                     android:id="@+id/tv_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="¥10"
-                    android:textColor="@color/red"
+                    android:text="¥0"
+                    android:textColor="@color/font_gray"
                     android:textSize="14sp" />
 
                 <TextView
@@ -110,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="¥1000"
+                    android:text="¥0"
                     android:textColor="@color/red"
                     android:textSize="14sp" />
             </LinearLayout>

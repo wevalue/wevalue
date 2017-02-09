@@ -18,7 +18,6 @@ import com.wevalue.net.FriendsManage.FriendManageBase;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.FriendsNoteDetailsActivity;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.details.activity.UserDetailsActivity;
 import com.wevalue.ui.we.activity.PushContentActivity;
@@ -250,7 +249,7 @@ public class MessageDetailsAdapter extends BaseAdapter {
                     public void onClick(View v) {
                         LogUtils.e("idghj", position + dataBeanList.get(position).getRepostid() + "--" + dataBeanList.get(position).getNoteid());
                         if ( dataBeanList.get(position).getIsfree().equals("1")){
-                            Intent intent = new Intent(mContext, FriendsNoteDetailsActivity.class);
+                            Intent intent = new Intent(mContext, NoteDetailsActivity.class);
                             intent.putExtra("noteId", dataBeanList.get(position).getNoteid());
                             intent.putExtra("repostid", dataBeanList.get(position).getRepostid());
                             mContext.startActivity(intent);
@@ -288,7 +287,7 @@ public class MessageDetailsAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                         if ( dataBeanList.get(position).getIsfree().equals("1")){
-                            Intent intent = new Intent(mContext, FriendsNoteDetailsActivity.class);
+                            Intent intent = new Intent(mContext, NoteDetailsActivity.class);
                             intent.putExtra("noteId", dataBeanList.get(position).getNoteid());
                             intent.putExtra("repostid", dataBeanList.get(position).getRepostid());
                             mContext.startActivity(intent);
@@ -333,7 +332,7 @@ public class MessageDetailsAdapter extends BaseAdapter {
                     public void onClick(View v) {
 
                         if ( dataBeanList.get(position).getIsfree().equals("1")){
-                            Intent intent = new Intent(mContext, FriendsNoteDetailsActivity.class);
+                            Intent intent = new Intent(mContext, NoteDetailsActivity.class);
                             intent.putExtra("noteId", dataBeanList.get(position).getNoteid());
                             intent.putExtra("repostid", dataBeanList.get(position).getRepostid());
                             mContext.startActivity(intent);
@@ -391,7 +390,7 @@ public class MessageDetailsAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                         if ( dataBeanList.get(position).getIsfree().equals("1")){
-                            Intent intent = new Intent(mContext, FriendsNoteDetailsActivity.class);
+                            Intent intent = new Intent(mContext, NoteDetailsActivity.class);
                             intent.putExtra("noteId", dataBeanList.get(position).getNoteid());
                             intent.putExtra("repostid", dataBeanList.get(position).getRepostid());
                             mContext.startActivity(intent);

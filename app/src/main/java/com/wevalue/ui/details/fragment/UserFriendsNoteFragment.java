@@ -21,7 +21,6 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.FriendsNoteDetailsActivity;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.influence.adapter.FriendsNoteListAdapter;
 import com.wevalue.utils.LogUtils;
@@ -83,7 +82,7 @@ public class UserFriendsNoteFragment extends BaseFragment implements WZHttpListe
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent;
                 if (noteInfo.get(position).getIsfree().equals("1")) {
-                    intent = new Intent(getActivity(), FriendsNoteDetailsActivity.class);
+                    intent = new Intent(getActivity(), NoteDetailsActivity.class);
                     LogUtils.e("----pos--" + position);
                     intent.putExtra("noteId", noteInfo.get(position).getNoteid());
                     intent.putExtra("repostid", noteInfo.get(position).getRepostid());

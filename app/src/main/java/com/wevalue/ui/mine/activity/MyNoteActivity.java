@@ -34,7 +34,7 @@ public class MyNoteActivity extends BaseActivity implements View.OnClickListener
     private MyNoteFragment myNoteFragmentFriend;
     private MyNoteFragment myNoteFragmentAll;
     private MyNoteFragment myNoteFragmentInfWorld;
-    String status;
+    String status; //1 我的发布  2 我的转发  3 我的大赏
     private int bmpW;// 动画图片宽度
     private int offset = 0;// 动画图片偏移量
     private int currIndex = 0;// 当前页卡编号

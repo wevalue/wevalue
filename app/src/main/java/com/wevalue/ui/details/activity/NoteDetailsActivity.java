@@ -21,7 +21,6 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -177,6 +176,7 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
     private int isWho = 1;// 1=转发 ,2 =评论 ,3 =情绪, 4 =赞 = 5= 赏;
     private int pagerIndex = 1;
     private String noteId;
+    private String notetitle;
     private String notecontent;
     private String imgurl;
     private String nickname;
@@ -207,7 +207,7 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note_info_copy);
+        setContentView(R.layout.activity_note_info);
         if (getIntent() != null) {
             repostid = getIntent().getStringExtra("repostid");
             noteId = getIntent().getStringExtra("noteId");
@@ -244,7 +244,7 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                 ll_getview_width.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 screenW = ll_getview_width.getWidth();
                 bmpW = (BitmapFactory.decodeResource(getResources(), R.mipmap.hengxian).getWidth());// 获取图片宽度
-                offset = (screenW / 4 - bmpW) / 4;// 计算偏移量
+                offset = (screenW / 4 - bmpW) / 2;// 计算偏移量
                 Matrix matrix = new Matrix();
                 matrix.postTranslate(offset, 0);
                 cursor.setImageMatrix(matrix);// 设置动画初始位置
@@ -909,10 +909,8 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
         }
         nickname = noteEntity.getUsernickname();
         tv_nickname.setText(noteEntity.getUsernickname());
-        notecontent = noteEntity.getContent();
-        tv_note_title.setText(notecontent);
-        tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
-        if (TextUtils.isEmpty(noteEntity.getHotword())) {
+
+         if (TextUtils.isEmpty(noteEntity.getHotword())) {
             tv_is_reci.setText("");
         } else {
             tv_is_reci.setText("创造热词：" + noteEntity.getHotword());
@@ -936,8 +934,12 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
             tv_delete_note.setText("举报");
         }
         notetype = noteEntity.getNotetype();
-
-
+        notecontent = noteEntity.getContent();
+        notetitle = noteEntity.getTitle();
+        if (TextUtils.isEmpty(notetitle))
+            notetitle = notecontent;
+        tv_note_title.setText(noteEntity.getTitle());
+        tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
         switch (notetype) {
             case "4"://文字
                 if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
@@ -971,7 +973,7 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                 iv_audio_img.setImageResource(R.mipmap.ic_music);
                // tv_audio_long.setText("00:00:00");
                 break;
-            case "3"://图文
+            case "3"://图片
                 nsgv_world_list_gridview.setVisibility(View.VISIBLE);
                 if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
                     mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), NoteDetailsActivity.this/*,mBitmap,bitmapDisplayConfig*/);
@@ -980,15 +982,13 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                 }
                 break;
             case "5"://图文混排
+                tv_note_content.setVisibility(View.GONE);
                 web_tuwen.setVisibility(View.VISIBLE);
                 web_tuwen.getSettings().setBlockNetworkImage(false);
                 web_tuwen.getSettings().setLoadsImagesAutomatically(true);
                 //支持js
                 web_tuwen.getSettings().setJavaScriptEnabled(true);
-
                 web_tuwen.loadUrl(RequestPath.SERVER_PATH + "/site/webcontent.aspx?noteid=" + noteEntity.getNoteid());
-
-
                 break;
         }
 

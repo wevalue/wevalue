@@ -136,34 +136,35 @@ public class WorldListAdapter extends BaseAdapter {
                 mActivity.startActivity(intent);
             }
         });
-        imgViewSetData(mDatas.get(position).getUserface(), viewHolder.iv_user_img);
+
+        imgViewSetData(mDatas.get(position).getUserface(), viewHolder.iv_user_img,R.mipmap.default_head);
         viewHolder.tv_nickname.setText(noteEntity.getUsernickname());
         viewHolder.tv_price.setText("¥" + noteEntity.getPaynum());
         viewHolder.tv_income.setText("¥" + noteEntity.getShouyi());
         viewHolder.tv_zhuanfa_num.setText("送给朋友们("+noteEntity.getRepostcount()+")");
 
         viewHolder.tv_content_content.setVisibility(View.GONE);
-        viewHolder.tv_title.setVisibility(View.GONE);
+
         viewHolder.iv_play.setVisibility(View.GONE);
         viewHolder.iv_video_img.setVisibility(View.GONE);
         viewHolder.iv_audio_img.setVisibility(View.GONE);
         viewHolder.nsgv_world_list_gridview.setVisibility(View.GONE);
-
+        //所有类型的帖子都必须有标题  所以不做限制
+        String title = noteEntity.getTitle();
+        if (TextUtils.isEmpty(title)){
+            title = noteEntity.getContent();
+        }
+        viewHolder.tv_title.setText(title);
         try {
-            final String noteId = noteEntity.getNoteid();
             String notetype = noteEntity.getNotetype();
             switch (notetype) {
                 case "4"://文字
                     if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
                         //如果有图片 那就显示 标题和图片
                         viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
-                        viewHolder.tv_title.setVisibility(View.VISIBLE);
-                        viewHolder.tv_title.setText(noteEntity.getContent());
                         mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
                         viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
                     } else {
-                        viewHolder.tv_title.setVisibility(View.VISIBLE);
-                        viewHolder.tv_title.setText(noteEntity.getContent());
                         viewHolder.tv_content_content.setVisibility(View.VISIBLE);
                         viewHolder.tv_content_content.setText(noteEntity.getContent());
                     }
@@ -186,8 +187,6 @@ public class WorldListAdapter extends BaseAdapter {
                     break;
                 case "3"://图文
                     if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-                        viewHolder.tv_title.setVisibility(View.VISIBLE);
-                        viewHolder.tv_title.setText(noteEntity.getContent());
                         viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
                         mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
                         viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
@@ -197,8 +196,6 @@ public class WorldListAdapter extends BaseAdapter {
                             mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
                             viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
                         }
-                        viewHolder.tv_title.setVisibility(View.VISIBLE);
-                        viewHolder.tv_title.setText(noteEntity.getContent());
                         viewHolder.tv_content_content.setVisibility(View.VISIBLE);
                         viewHolder.tv_content_content.setText(noteEntity.getContent());
                     }
@@ -206,15 +203,11 @@ public class WorldListAdapter extends BaseAdapter {
                 case "5": // 转发 图文混排
                     if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
 //                        int l = noteEntity.getList().size();
-                        viewHolder.tv_title.setVisibility(View.VISIBLE);
-                        viewHolder.tv_title.setText(noteEntity.getContent());
                         viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
                         viewHolder.tv_content_content.setText(noteEntity.getContent());
                         mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
                         viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
                     } else {
-                        viewHolder.tv_title.setVisibility(View.VISIBLE);
-                        viewHolder.tv_title.setText(noteEntity.getContent());
                         viewHolder.tv_content_content.setVisibility(View.VISIBLE);
                         viewHolder.tv_content_content.setText(noteEntity.getContent());
                     }
@@ -272,7 +265,16 @@ public class WorldListAdapter extends BaseAdapter {
 
         return convertView;
     }
-
+    private void imgViewSetData(String url, ImageView iv,int default_img ) {
+        Glide.with(mActivity)
+                .load(RequestPath.SERVER_PATH + url)
+                .dontAnimate() // 不使用默认动画 解决占位为题
+                //.thumbnail(0.5f) // 用一般大小作为缩略图
+                .placeholder(R.mipmap.default_video)
+                .error(R.mipmap.default_video)
+                .crossFade()
+                .into(iv);
+    }
     private void imgViewSetData(String url, ImageView iv) {
         Glide.with(mActivity)
                 .load(RequestPath.SERVER_PATH + url)

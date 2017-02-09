@@ -15,7 +15,8 @@ public class RequestPath {
             /*客户网站域名*/
     public static final String SERVER_PATH = "https://mp.wzbz.cn";
     /* 测试地址*/
-   // public static final String SERVER_PATH = "http://192.168.9.109";
+    //public static final String SERVER_PATH = "http://192.168.9.117:8080";
+    //public static final String SERVER_PATH = "http://192.168.9.117:8080";
 
 
     /*分享到第三方的链接*/
@@ -33,6 +34,10 @@ public class RequestPath {
      * 注册接口
      */
     public static final String POST_REGUSER = SERVER_PATH + "/api_3/dbuser.ashx?method=reguser";
+    /**
+     * 快速注册接口
+     */
+    public static final String POST_QUICKREG_REGUSER = SERVER_PATH + "/api_3/dbuser.ashx?method=quickreg";
     /**
      * 用户名验证
      */
@@ -323,12 +328,15 @@ public class RequestPath {
 
     /*获取用户验证资料*/
     public static final String POST_USERTRUEINFO = SERVER_PATH + "/api_3/dbuser.ashx?method=usertrueinfo";
-    //需要加密参数的接口
-    public static final String[] EncodePath = {POST_REGUSER, POST_UPDATEUSERPWD, POST_RESETUSERPWD, POST_SETTRUEINFO, POST_VERIFYPAYCODE, POST_PAYMONEY};
+
     //拉黑好友
     public static final String POST_BLACKFRIEND = SERVER_PATH + "/api_3/dbfriends.ashx?method=blackfriend";
     //取消拉黑好友
     public static final String POST_DELBLACKFRIEND = SERVER_PATH + "/api_3/dbfriends.ashx?method=delblackfriend";
     //登录token延期
     public static final String POST_SETTOKENLONGTIME = SERVER_PATH + "/api_3/dbuser.ashx?method=settokenlongtime";
+
+
+    //需要加密参数的接口
+    public static final String[] EncodePath = {POST_QUICKREG_REGUSER,POST_REGUSER, POST_UPDATEUSERPWD, POST_RESETUSERPWD, POST_SETTRUEINFO, POST_VERIFYPAYCODE, POST_PAYMONEY};
 }

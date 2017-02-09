@@ -35,6 +35,7 @@ import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.NoScrollGridView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,8 +45,8 @@ public class InfluenceAdapter extends BaseAdapter {
     ViewHolder viewHolder = null;
 
     private List<NoteBean.NoteEntity> mDatas;
-    private List<NoteBean.NoteEntity> mLunBoDatas;
-    private List<NoteBean.NoteEntity> mJiaGeDatas;
+    private List<NoteBean.NoteEntity> mLunBoDatas = new ArrayList<>();
+    private List<NoteBean.NoteEntity> mJiaGeDatas = new ArrayList<>();
     private Context mContext;
     private Activity mActivity;
     private NoteRequestBase mNoteRequestBase;
@@ -63,6 +64,13 @@ public class InfluenceAdapter extends BaseAdapter {
         this.mDatas = mDatas;
         this.mLunBoDatas = mLunBoDatas;
         this.mJiaGeDatas = mJiaGeDatas;
+        this.mContext = mContext;
+        mActivity = (Activity) mContext;
+        initDrawable();
+    }
+
+    public InfluenceAdapter(List<NoteBean.NoteEntity> mDatas, Context mContext) {
+        this.mDatas = mDatas;
         this.mContext = mContext;
         mActivity = (Activity) mContext;
         initDrawable();
@@ -175,8 +183,10 @@ public class InfluenceAdapter extends BaseAdapter {
         //如果是免费发布的 则隐藏转发 和 价格
         if (mDatas.get(position).getIsfree().equals("1")){
             viewHolder.ll_ZF_but.setVisibility(View.INVISIBLE);
-            viewHolder.tv_price.setVisibility(View.INVISIBLE);
-            viewHolder.tv_income.setVisibility(View.INVISIBLE);
+//            viewHolder.tv_price.setVisibility(View.INVISIBLE);
+//            viewHolder.tv_income.setVisibility(View.INVISIBLE);
+        }else {
+            viewHolder.ll_ZF_but.setVisibility(View.VISIBLE);
         }
         if ("1".equals(noteEntity.getIszan())) {
             viewHolder.tv_zanAndImg.setCompoundDrawables(iszan, null, null, null);

@@ -106,7 +106,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
     //是否同意分享
     private ImageView rgb_isShare;
     //发布的是否是免费信息
-    private boolean isFree;
+    private boolean isFree; // 免费 isFree = true  收费  isFree = false
 
     private int isClickType = 0; //1 = 图片 , 2 = 音频; 3 = 视频;
     private static final String PHOTO_FILE_NAME = "wevalue_img.jpg";
@@ -117,9 +117,9 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
 
     private ArrayList<String> mTitleDatas;//標題
     private ArrayList<String> mID; //帖子标签列表
-    private ArrayList<String> mYCDatas;//是否原創
-    private ArrayList<String> mSFDatas;// 是否收費
-    private ArrayList<String> mFWDatas;//範圍
+//    private ArrayList<String> mYCDatas;//是否原創
+//    private ArrayList<String> mSFDatas;// 是否收費
+//    private ArrayList<String> mFWDatas;//範圍
     private ArrayList<String> mQXDatas;//情緒
 
     private int isClickWho;
@@ -403,16 +403,16 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                         tv_choice_tilte.setText(mTitleDatas.get(options1));
                         break;
                     case 2:
-                        tv_is_yuanchuang.setText(mYCDatas.get(options1));
+//                        tv_is_yuanchuang.setText(mYCDatas.get(options1));
                         break;
                     case 3:
-                        tv_is_shoufei.setText(mSFDatas.get(options1));
-                        if (mSFDatas.get(options1).equals("付费")) {
-                            isFree = false;
-                        } else {
-                            isFree = true;
-                        }
-                        tv_is_shoufei.setTag(isFree);
+//                        tv_is_shoufei.setText(mSFDatas.get(options1));
+//                        if (mSFDatas.get(options1).equals("付费")) {
+//                            isFree = false;
+//                        } else {
+//                            isFree = true;
+//                        }
+//                        tv_is_shoufei.setTag(isFree);
                         break;
                     case 4:
                         //tv_is_type.setText(mFWDatas.get(options1));
@@ -430,17 +430,17 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
      **/
     public void initHualunData() {
 
-        mYCDatas = new ArrayList<>();
-        mYCDatas.add("原创");
-        mYCDatas.add("非原创");
-
-        mSFDatas = new ArrayList<>();
-        mSFDatas.add("付费");
-        mSFDatas.add("免费");
-
-        mFWDatas = new ArrayList<>();
-        mFWDatas.add("世界");
-        mFWDatas.add("朋友们");
+//        mYCDatas = new ArrayList<>();
+//        mYCDatas.add("原创");
+//        mYCDatas.add("非原创");
+//
+//        mSFDatas = new ArrayList<>();
+//        mSFDatas.add("付费");
+//        mSFDatas.add("免费");
+//
+//        mFWDatas = new ArrayList<>();
+//        mFWDatas.add("世界");
+//        mFWDatas.add("朋友们");
 
         mQXDatas = new ArrayList<>();
         mQXDatas.add("喜爱");
@@ -486,24 +486,23 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.tv_send_note:
-//                boolean IsShoufi = (boolean) tv_is_shoufei.getTag();
-//                boolean IsShare = (boolean) tv_is_shoufei.getTag();
-//                boolean IsYuan = (boolean) tv_is_yuanchuang.getTag();
-
-
+                tv_send_note.setEnabled(false);
                 if (TextUtils.isEmpty(et_title.getText().toString().trim()) && TextUtils.isEmpty(fileUrl) && MainActivity.mSelectedImage.size() == 0) {
-                    ShowUtil.showToast(ReleaseNoteActivity.this, "发布内容不能为空");
+                    ShowUtil.showToast(ReleaseNoteActivity.this, "发布标题不能为空");
+                    tv_send_note.setEnabled(true);
                     return;
                 }
                 //如果发布的是纯文字 则必须写内容
                 if (isSendType==4)
                 if (TextUtils.isEmpty(et_content.getText().toString().trim()) && TextUtils.isEmpty(fileUrl) && MainActivity.mSelectedImage.size() == 0) {
                     ShowUtil.showToast(ReleaseNoteActivity.this, "发布内容不能为空");
+                    tv_send_note.setEnabled(true);
                     return;
                 }
                 if (!isFree) {
                     if (TextUtils.isEmpty(tv_choice_tilte.getText().toString().trim())) {
                         ShowUtil.showToast(ReleaseNoteActivity.this, "请选择标签");
+                        tv_send_note.setEnabled(true);
                         return;
                     }
                 }
@@ -649,7 +648,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                 return false;
             }
         });
-
+        if (!ReleaseNoteActivity.this.isFinishing())
         mProgressDialog.show();
         imgFileLst = new ArrayList<>();
         LogUtils.e("imgFileLst123", "开始准备文件" + String.valueOf(isSendType));
@@ -679,6 +678,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
         LogUtils.e("imgFileLst123", "开始发送");
         String url = RequestPath.POST_RELEASE;
         String content = et_content.getText().toString().trim();
+        String title = et_title.getText().toString().trim();
         Map<String, Object> map = new HashMap<>();
         map.put("code", RequestPath.CODE);
         map.put("userid", SharedPreferencesUtil.getUid(this));
@@ -701,6 +701,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                     break;
             }
         }
+        map.put("title", content);
         map.put("content", content);
         map.put("orderno", orderno);
         map.put("spendtype", spendtype);
@@ -712,11 +713,12 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
         } else {
             map.put("isself", "1");
         }
-        if (tv_is_shoufei.getText().toString().trim().equals("付费")) {
-            map.put("isfree", "0");
+        //是否收费
+        if (!isFree) {
+            map.put("isfree", "0"); //付费
             map.put("notezone", "0");
         } else {
-            map.put("isfree", "1");
+            map.put("isfree", "1");//免费
             map.put("notezone", "1");
         }
         map.put("hotword", et_edit_reci.getText().toString().trim());

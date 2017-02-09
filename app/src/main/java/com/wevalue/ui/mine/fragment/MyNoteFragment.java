@@ -1,6 +1,5 @@
 package com.wevalue.ui.mine.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,9 +20,8 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.model.RewardBean;
 import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.FriendsNoteDetailsActivity;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
-import com.wevalue.ui.mine.adapter.MyNoteAdapter;
+import com.wevalue.ui.influence.adapter.InfluenceAdapter;
 import com.wevalue.ui.world.adapter.MyRewardAdapter;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.SharedPreferencesUtil;
@@ -39,12 +37,12 @@ import java.util.List;
  */
 
 public class MyNoteFragment extends BaseFragment implements WZHttpListener, View.OnClickListener {
-    private String notezone = "";//发布范围
+    private String notezone = ""; //发布范围 // 全部 -1  // 世界 0  // 朋友1
     private String status = "";//状态
     private int pageindex = 1;
     private List<NoteBean.NoteEntity> mNoteList;
     //我的发布 我的转发适配器
-    private MyNoteAdapter mAdapter;
+    private InfluenceAdapter mAdapter;
     private NoteRequestBase mNoteRequestBase;
     private PullToRefreshScrollView prsv_ScrollView;
     private NoScrollListview mNoScrollListview;
@@ -93,6 +91,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
         super.onResume();
         String delNoteId = SharedPreferencesUtil.getUserDelNoteId(getActivity());
         if (!TextUtils.isEmpty(delNoteId)) {
+            if (mNoteList==null)return;
             for (int i = 0; i < mNoteList.size(); i++) {
                 if (mNoteList.get(i).getNoteid().equals(delNoteId)) {
                     mNoteList.remove(i);
@@ -190,7 +189,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
 
                                     LogUtils.e("---rewardEntities.get(i).getIsfree()-=" + rewardEntities.get(i).getIsfree());
                                     if ("1".equals(rewardEntities.get(i).getIsfree())) {
-                                        Intent intent = new Intent(getActivity(), FriendsNoteDetailsActivity.class);
+                                        Intent intent = new Intent(getActivity(), NoteDetailsActivity.class);
                                         intent.putExtra("noteId", rewardEntities.get(i).getNoteid());
                                         intent.putExtra("repostid", "0");
                                         startActivity(intent);
@@ -239,7 +238,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
                             mAdapter.notifyDataSetChanged();
                         } else {
                             mNoteList = noteBean.getData();
-                            mAdapter = new MyNoteAdapter(mNoteList, getActivity());
+                            mAdapter = new InfluenceAdapter(mNoteList, getActivity());
                             mNoScrollListview.setAdapter(mAdapter);
                             mNoScrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
@@ -247,7 +246,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
                                     Intent intent = null;
                                     if (mNoteList.get(i).getIsfree().equals("1")) {
 
-                                        intent = new Intent(getActivity(), FriendsNoteDetailsActivity.class);
+                                        intent = new Intent(getActivity(), NoteDetailsActivity.class);
                                         intent.putExtra("noteId", mNoteList.get(i).getNoteid());
                                         intent.putExtra("repostid", "0");
                                         startActivity(intent);

@@ -28,11 +28,8 @@
             android:gravity="center"
             android:text="抱歉，信息被抓走了"
             android:textSize="26sp" />
-
-
     </LinearLayout>
-
-
+    <!--<ScrollView-->
     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:id="@+id/prsv_ScrollView"
         android:layout_width="match_parent"
@@ -106,7 +103,7 @@
                             android:layout_marginLeft="15dp"
                             android:layout_toRightOf="@+id/tv_nickname"
                             android:text="甲"
-                            android:textColor="@color/text_black"
+                            android:textColor="@color/blue_price"
                             android:textSize="16sp" />
 
                     </RelativeLayout>
@@ -131,8 +128,9 @@
                         android:id="@+id/tv_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="¥10"
-                        android:textColor="@color/red"
+                        style="@style/style_content_price"
+                        android:textColor="@color/font_gray"
+                        android:text="¥0"
                         android:textSize="14sp" />
 
                     <TextView
@@ -140,80 +138,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="¥1000"
-                        android:textColor="@color/red"
+                        android:text="¥0"
+                        style="@style/style_content_price"
+                        android:textColor="@color/blue_price"
                         android:textSize="14sp" />
                 </LinearLayout>
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_note_content_ui"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="3dp"
-                android:orientation="vertical"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
-
-                <TextView
-                    android:id="@+id/tv_content_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="   "
-                    android:textColor="@color/but_text_color"
-                    android:textSize="16sp"
-                    android:visibility="visible" />
-
-                <LinearLayout
-                    android:id="@+id/ll_imgAndAudioAndVideo_ui"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/tv_img_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="---- "
-                        android:textColor="@color/but_text_color"
-                        android:textSize="16sp" />
-
-                    <include
-
-                        layout="@layout/item_world_tuijian_include_1"
-                        android:id="@+id/in_audio_video_ui"
-                        android:visibility="gone" />
-
-                    <com.wevalue.view.NoScrollGridView
-                        android:id="@+id/nsgv_world_list_gridview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:horizontalSpacing="3dp"
-                        android:listSelector="@color/transparent"
-                        android:numColumns="3"
-                        android:stretchMode="columnWidth"
-                        android:verticalSpacing="3dp"
-                        android:visibility="gone"></com.wevalue.view.NoScrollGridView>
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <WebView
-                android:visibility="gone"
-                android:id="@+id/web_tuwen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="3dp"
-                ></WebView>
-
+            <include layout="@layout/include_note_content" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -245,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:text="阅读：1234"
+                    android:text="阅读：1"
                     android:textColor="@color/but_text_color"
                     android:textSize="14sp" />
 
@@ -275,18 +208,17 @@
 
             </RelativeLayout>
 
-            <TextView
+            <!--<TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/subscribe_item_disabled_stroke" />
+                android:background="@color/subscribe_item_disabled_stroke" />-->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/ll_getview_width"
@@ -300,20 +232,30 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="转发 0"
+                        android:text="送给朋友们 \n0"
                         android:textColor="@color/font_gray"
                         android:textSize="14sp" />
-
+                    <View
+                        android:layout_width="0.1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/blue_price"/>
                     <TextView
                         android:id="@+id/tv_pinglun_but"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.02"
                         android:gravity="center"
-                        android:text="评论 0"
+                        android:text="评论 \n0"
                         android:textColor="@color/font_gray"
                         android:textSize="14sp" />
-
+                    <View
+                        android:layout_width="0.1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/blue_price"/>
                     <TextView
                         android:id="@+id/tv_qingxu_but"
                         android:layout_width="0dp"
@@ -321,68 +263,81 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="情绪 0"
+                        android:visibility="gone"
                         android:textColor="@color/font_gray"
                         android:textSize="14sp" />
-
+                    <View
+                        android:layout_width="0.1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:visibility="gone"
+                        android:background="@color/blue_price"/>
                     <TextView
                         android:id="@+id/tv_zan_but"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="赞 0"
+                        android:text="赞 \n0"
                         android:textColor="@color/font_gray"
                         android:textSize="14sp" />
-
+                    <View
+                        android:layout_width="0.1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/blue_price"/>
                     <TextView
                         android:id="@+id/tv_shang_but"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="赏 0"
+                        android:text="赏 \n0"
                         android:textColor="@color/font_gray"
                         android:textSize="14sp" />
-
                 </LinearLayout>
-
-
             </LinearLayout>
-            <ImageView
-                android:id="@+id/cursor"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@color/white"
-                android:scaleType="matrix"
-                android:src="@mipmap/hengxian" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/cursor"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+
+                    android:background="@color/white"
+                    android:scaleType="matrix"
+                    android:src="@mipmap/hengxian" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/subscribe_item_disabled_stroke" />
 
-
-
-            <com.wevalue.view.NoScrollListview
-                android:id="@+id/mNoScrollListview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:divider="@color/background"
-                android:dividerHeight="0dp"
-                android:listSelector="@color/transparent"
-                android:visibility="visible" />
+                <com.wevalue.view.NoScrollListview
+                    android:id="@+id/mNoScrollListview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:divider="@color/background"
+                    android:dividerHeight="0dp"
+                    android:listSelector="@color/transparent"
+                    android:visibility="visible" />
+            </LinearLayout>
         </LinearLayout>
-
-
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+    <!--</ScrollView>-->
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/ui_line"
-        />
+        android:background="@color/ui_line" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -401,12 +356,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
-                android:drawableRight="@mipmap/note_detail_zhuanfa"
+                android:drawableLeft="@mipmap/note_detail_zhuanfa"
                 android:gravity="center"
-                android:text="转发"
+                android:text="送给朋友们"
                 android:textColor="@color/but_text_color"
                 android:textSize="14sp" />
-
 
         </LinearLayout>
 
@@ -430,7 +384,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
-                android:drawableRight="@mipmap/notedetail_pinglun"
+                android:drawableLeft="@mipmap/notedetail_pinglun"
                 android:gravity="center"
                 android:text="评论"
                 android:textColor="@color/but_text_color"
@@ -451,6 +405,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <TextView
@@ -486,15 +441,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
-                android:drawableRight="@mipmap/note_praise"
+                android:drawableLeft="@mipmap/note_praise"
                 android:gravity="center"
                 android:text="赞"
                 android:textColor="@color/but_text_color"
                 android:textSize="14sp" />
 
         </LinearLayout>
-
     </LinearLayout>
-
-
 </LinearLayout>

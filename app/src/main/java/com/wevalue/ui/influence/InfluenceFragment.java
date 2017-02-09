@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -26,7 +25,6 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.FriendsNoteDetailsActivity;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
 import com.wevalue.ui.influence.adapter.InfluenceAdapter;
@@ -190,7 +188,7 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
                 Intent intent = null;
                 //跳转到转发帖子详情页
                 if (mHListData.get(position).getIsfree().equals("1")) {
-                    intent = new Intent(getActivity(), FriendsNoteDetailsActivity.class);
+                    intent = new Intent(getActivity(), NoteDetailsActivity.class);
                     LogUtils.e("----pos--" + position);
                     intent.putExtra("noteId", mHListData.get(position).getNoteid());
                     intent.putExtra("repostid", mHListData.get(position).getRepostid());

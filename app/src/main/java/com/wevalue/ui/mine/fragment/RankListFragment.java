@@ -20,7 +20,6 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.FriendsNoteDetailsActivity;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.details.activity.UserDetailsActivity;
 import com.wevalue.ui.mine.adapter.EarningRankAdapter;
@@ -185,7 +184,7 @@ public class RankListFragment extends Fragment implements WZHttpListener {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     LogUtils.e("msg", "打赏排行榜");
                     if (mNoteEntityList.get(position).getIsfree().equals("1")) {
-                        Intent intent = new Intent(getActivity(), FriendsNoteDetailsActivity.class);
+                        Intent intent = new Intent(getActivity(), NoteDetailsActivity.class);
                         intent.putExtra("noteId", mNoteEntityList.get(position).getNoteid());
                         intent.putExtra("repostid", mNoteEntityList.get(position).getRepostid());
                         LogUtils.e("msg", mNoteEntityList.get(position).getNoteid() + mNoteEntityList.get(position).getRepostid());
