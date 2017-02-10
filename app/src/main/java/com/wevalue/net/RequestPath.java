@@ -5,23 +5,15 @@ package com.wevalue.net;
  * Created by Administrator on 2016-06-24.
  */
 public class RequestPath {
-    /**
-     * 公司服务器地址
-     */
-//    public static final String SERVER_PATH = "http://139.129.111.47:8003";
-    /*客户ip地址*/
-//   public static final String SERVER_PATH = "http://59.110.15.120";
 
-            /*客户网站域名*/
+     /*客户网站域名*/
     // public static final String SERVER_PATH = "https://mp.wzbz.cn";
-    /* 测试地址*/
+    /* 公司服务器地址 测试地址*/
     public static final String SERVER_PATH = "http://192.168.9.109";
-    //public static final String SERVER_PATH = "http://192.168.9.117:8080";
-
+    // public static final String SERVER_PATH = "http://192.168.9.117:8080";
 
     /*分享到第三方的链接*/
     public static final String SHARE_HTML = SERVER_PATH + "/web/note.html?";
-
 
     /**刘燚  主机地址*/
 //    public static final String  SERVER_PATH="http://192.168.1.103:8002";

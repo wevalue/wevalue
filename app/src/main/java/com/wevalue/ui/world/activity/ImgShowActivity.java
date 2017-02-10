@@ -26,9 +26,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.wevalue.R;
 import com.wevalue.base.BaseActivity;
@@ -50,8 +52,6 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 public class ImgShowActivity extends BaseActivity {
     private TextView tv_img_number;
     private TextView tv_baocun;
-    //    private TextView tv_head_title;
-//    private ImageView iv_back;
     private String[] mImgUrl;
     private List<String> mDatas;
     private List<ImageView> imageViewList;
@@ -250,67 +250,155 @@ public class ImgShowActivity extends BaseActivity {
             imageViewList = new ArrayList<ImageView>();
         }
         imageViewList.clear();
-
+        tv_baocun.setVisibility(View.GONE);
         for (String url : imageList) {
-            final PhotoView imageView = new PhotoView(this);
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
+            LogUtils.e("url=" + url);
             if ("yes".equals(getIntent().getStringExtra("imPreview"))) {
-                LogUtils.e("url=" + url);
-                Glide.with(this)
-                        .load(url)
-//                        .placeholder(R.drawable.pic_lunbo)
-                        .crossFade()
-                        .into(imageView);
+                imPreview(url);
             } else {
-                tv_baocun.setVisibility(View.GONE);
-                imageView.setImageResource(R.drawable.pic_lunbo);
-                imageView.setScaleType(ImageView.ScaleType.CENTER);
-                animaition = (AnimationDrawable) imageView.getDrawable();
-                animaition.setOneShot(false);
-                animaition.start();
-
-                ViewTarget viewTarget = new ViewTarget(imageView) {
-                    @Override
-                    public void onResourceReady(Object resource, GlideAnimation glideAnimation) {
-                        {
-                            animaition.stop();
-                            Drawable drawable ;
-                                drawable = (Drawable) resource;
-                                if (drawable.getMinimumHeight() - drawable.getMinimumWidth() > drawable.getMinimumWidth() * 2) {
-                                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                                    imageView.setImageDrawable(drawable);
-                                    LogUtils.e("---w-00000--");
-                                    tv_baocun.setVisibility(View.VISIBLE);
-                                } else {
-                                    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                                    imageView.setImageDrawable(drawable);
-                                    tv_baocun.setVisibility(View.VISIBLE);
-                                }
-                        }
-                    }
-                };
-
-                Glide.with(this)
-                        .load(RequestPath.SERVER_PATH + url)
-                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                        //.crossFade()
-                        .into(viewTarget);
-                Log.d("IMG","url: "+url);
-            }
-            imageViewList.add(imageView);
-            imageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
-                @Override
-                public void onPhotoTap(View view, float v, float v1) {
-                    finish();
+                if (url.endsWith(".gif")){
+                    setGifImage(url);
+                }else {
+                    setImage(url);
                 }
+            }
 
-            });
         }
         GoodDetailImagePagerAdapter imagePagerAdapter = new GoodDetailImagePagerAdapter(this, imageViewList);
         vp_img_show.setAdapter(imagePagerAdapter);
         vp_img_show.setCurrentItem(index);
     }
+
+    /**
+     * 预览
+     * @param url
+     */
+    private void imPreview(String url) {
+        final PhotoView imageView = new PhotoView(this);
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        imageView.setImageResource(R.drawable.pic_lunbo);
+        imageView.setScaleType(ImageView.ScaleType.CENTER);
+        animaition = (AnimationDrawable) imageView.getDrawable();
+        animaition.setOneShot(false);
+        animaition.start();
+        Glide.with(this)
+                .load(url)
+                .placeholder(R.drawable.loading)
+                .error(R.mipmap.pictures_no)
+                .crossFade()
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        animaition.stop();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        animaition.stop();
+                        return false;
+                    }
+                })
+                .into(imageView);
+        imageViewList.add(imageView);
+        imageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+            @Override
+            public void onPhotoTap(View view, float v, float v1) {
+                finish();
+            }
+
+        });
+    }
+
+    /**
+     * 加载图片
+     * @param url
+     */
+    private void setImage(String url){
+        final PhotoView imageView = new PhotoView(this);
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        imageView.setImageResource(R.drawable.pic_lunbo);
+        imageView.setScaleType(ImageView.ScaleType.CENTER);
+        animaition = (AnimationDrawable) imageView.getDrawable();
+        animaition.setOneShot(false);
+        animaition.start();
+
+        ViewTarget viewTarget = new ViewTarget(imageView) {
+            @Override
+            public void onResourceReady(Object resource, GlideAnimation glideAnimation) {
+                {
+                    animaition.stop();
+                    tv_baocun.setVisibility(View.VISIBLE);
+                    Drawable drawable ;
+                    drawable = (Drawable) resource;
+                    if (drawable.getMinimumHeight() - drawable.getMinimumWidth() > drawable.getMinimumWidth() * 2) {
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        imageView.setImageDrawable(drawable);
+                    } else {
+                        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                        imageView.setImageDrawable(drawable);
+                    }
+                }
+            }
+        };
+
+        Glide.with(this)
+                .load(RequestPath.SERVER_PATH + url)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .error(R.mipmap.pictures_no)
+                //.crossFade()
+                .into(viewTarget);
+        imageViewList.add(imageView);
+        imageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+            @Override
+            public void onPhotoTap(View view, float v, float v1) {
+                finish();
+            }
+
+        });
+    }
+    /**
+     * 加载gif图片
+     * @param url
+     */
+    private  void setGifImage(String url){
+        final ImageView imageView = new ImageView(this);
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        imageView.setImageResource(R.drawable.pic_lunbo);
+        imageView.setScaleType(ImageView.ScaleType.CENTER);
+        animaition = (AnimationDrawable) imageView.getDrawable();
+        animaition.setOneShot(false);
+        animaition.start();
+        Glide.with(this)
+                .load(RequestPath.SERVER_PATH + url)
+                .asGif()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .error(R.mipmap.pictures_no)
+                .listener(new RequestListener<String, GifDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GifDrawable> target, boolean isFirstResource) {
+                        animaition.stop();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GifDrawable resource, String model, Target<GifDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        animaition.stop();
+                        return false;
+                    }
+                })
+                .into(imageView);
+
+        imageViewList.add(imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
 
     /**
      * Title:  GoodDetailImagePagerAdapter<br>

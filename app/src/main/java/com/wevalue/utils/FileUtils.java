@@ -1,6 +1,7 @@
 package com.wevalue.utils;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 
@@ -89,4 +90,17 @@ public class FileUtils {
 		return true;
 	}
 
+	/**
+	 * 获取图片类型
+	 * @param path
+	 * @return
+     */
+	public static String getBitmapType(String path){
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeFile(path, options);
+		String type = options.outMimeType;
+		Log.d("image type -> ", type);
+		return type;
+	}
 }

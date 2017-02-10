@@ -50,6 +50,7 @@ import com.wevalue.ui.world.activity.Play_videoActivity;
 import com.wevalue.ui.world.adapter.NoScrollGridViewAdapter;
 import com.wevalue.utils.ButtontimeUtil;
 import com.wevalue.utils.Constants;
+import com.wevalue.utils.FileUtils;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.PicCompressUtil.Luban;
 import com.wevalue.utils.PicCompressUtil.OnCompressListener;
@@ -1060,11 +1061,14 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
             return;
         }
         File file = new File(MainActivity.mSelectedImage.get(position_2));
+
         LogUtils.e("filesize", String.valueOf(file.length()));
         if (file.length() / 1024 / 1024 < 1) {
             //图片小于1m  则直接上传图片
             Bitmap b = BitmapFactory.decodeFile(MainActivity.mSelectedImage.get(position_2));
-            imgFileLst.add(saveMyBitmap(getSDPath() + "/微值/" + "noteimg" + (position_2 + 1) + ".jpg", b));
+            String imgType = FileUtils.getBitmapType(MainActivity.mSelectedImage.get(position_2));
+            imgType = imgType.substring(imgType.lastIndexOf("/")+1,imgType.length());
+            imgFileLst.add(saveMyBitmap(getSDPath() + "/微值/" + "noteimg" + (position_2 + 1) + "."+imgType, b));
             if (imgFileLst.size() == MainActivity.mSelectedImage.size()) {
                 LogUtils.e("imgFileLst123", "成功压碎图片准备上传" + String.valueOf(imgFileLst.size()));
                 sendNote(null, imgFileLst);
