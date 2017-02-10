@@ -3,10 +3,10 @@
     xmlns:Android="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="@mipmap/main_top"
+    android:background="@color/white"
     android:gravity="center_vertical"
     android:orientation="horizontal">
-
+    <!--android:background="@mipmap/main_top"-->
     <ImageView
         android:id="@+id/tv_back"
         android:layout_width="wrap_content"

@@ -250,8 +250,8 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
     private void initView() {
 
         tv_iszan = (TextView) findViewById(R.id.tv_iszan);
-        nozan = getResources().getDrawable(R.mipmap.note_praise);
-        iszan = getResources().getDrawable(R.mipmap.notedetail_hongxin);
+        nozan = getResources().getDrawable(R.mipmap.note_like_n);
+        iszan = getResources().getDrawable(R.mipmap.note_like_p);
         iszan.setBounds(0, 0, iszan.getMinimumWidth(), iszan.getMinimumHeight()); //设置边界
         nozan.setBounds(0, 0, nozan.getMinimumWidth(), nozan.getMinimumHeight()); //设置边界
         tv_transmit_content = (TextView) findViewById(R.id.tv_note_title);

@@ -21,7 +21,7 @@ import com.wevalue.model.RewardBean;
 import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
-import com.wevalue.ui.influence.adapter.InfluenceAdapter;
+import com.wevalue.ui.influence.adapter.NoteListAdapter;
 import com.wevalue.ui.world.adapter.MyRewardAdapter;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.SharedPreferencesUtil;
@@ -42,7 +42,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
     private int pageindex = 1;
     private List<NoteBean.NoteEntity> mNoteList;
     //我的发布 我的转发适配器
-    private InfluenceAdapter mAdapter;
+    private NoteListAdapter mAdapter;
     private NoteRequestBase mNoteRequestBase;
     private PullToRefreshScrollView prsv_ScrollView;
     private NoScrollListview mNoScrollListview;
@@ -237,7 +237,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
                             mAdapter.notifyDataSetChanged();
                         } else {
                             mNoteList = noteBean.getData();
-                            mAdapter = new InfluenceAdapter(mNoteList, getActivity());
+                            mAdapter = new NoteListAdapter(mNoteList, getActivity());
                             mNoScrollListview.setAdapter(mAdapter);
                             mNoScrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override

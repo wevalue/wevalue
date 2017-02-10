@@ -262,8 +262,8 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
         tv_iszan = (TextView) findViewById(R.id.tv_iszan);
         tv_is_reci = (TextView) findViewById(R.id.tv_is_reci);
         tv_is_yuanchuang = (TextView) findViewById(R.id.tv_is_yuanchuang);
-        nozan = getResources().getDrawable(R.mipmap.note_praise);
-        iszan = getResources().getDrawable(R.mipmap.notedetail_hongxin);
+        nozan = getResources().getDrawable(R.mipmap.note_like_n);
+        iszan = getResources().getDrawable(R.mipmap.note_like_p);
         iszan.setBounds(0, 0, iszan.getMinimumWidth(), iszan.getMinimumHeight()); //设置边界
         nozan.setBounds(0, 0, nozan.getMinimumWidth(), nozan.getMinimumHeight()); //设置边界
         iv_sharenote = (ImageView) findViewById(R.id.iv_share_note);

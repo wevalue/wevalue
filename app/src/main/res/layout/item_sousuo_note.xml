@@ -281,7 +281,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="5dp"
-                    android:drawableRight="@mipmap/note_detail_zhuanfa"
+                    android:drawableRight="@mipmap/note_forward_n"
                     android:text="转发"
                     android:textColor="@color/but_text_color"
                     android:textSize="14sp" />
@@ -315,7 +315,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="5dp"
-                    android:drawableRight="@mipmap/note_praise"
+                    android:drawableRight="@mipmap/note_like_n"
                     android:text="赞"
                     android:textColor="@color/but_text_color"
                     android:textSize="14sp" />

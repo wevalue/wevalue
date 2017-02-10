@@ -20,12 +20,11 @@ import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
-import com.wevalue.ui.details.adapter.UserNoteListAdapter;
+import com.wevalue.ui.influence.adapter.NoteListAdapter;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.NoScrollListview;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +37,7 @@ import java.util.List;
 public class UserTransmitListFragment extends BaseFragment implements WZHttpListener {
     private View view;
     private Context mContext;
-    private UserNoteListAdapter mAdapter;
+    private NoteListAdapter mAdapter;
     private int pageindex = 1;
     private PullToRefreshScrollView prsv_ScrollView;
     private NoScrollListview mNoScrollListview;
@@ -126,7 +125,7 @@ public class UserTransmitListFragment extends BaseFragment implements WZHttpList
 //                        noteInfo.add(2, noteInfo.get(2));
 //                    }
 
-                    mAdapter = new UserNoteListAdapter(noteInfo, getActivity());
+                    mAdapter = new NoteListAdapter(noteInfo, getActivity());
 //                    mAdapter.notifyDataSetChanged();
                     mNoScrollListview.setAdapter(mAdapter);
                 }

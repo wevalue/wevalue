@@ -19,7 +19,7 @@
         android:id="@+id/rl_is_show_tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/subscribe_item_drag_bg"
+        android:background="@color/blue_pale1_1"
         android:orientation="horizontal">
 
         <ImageView

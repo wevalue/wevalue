@@ -34,7 +34,7 @@ import com.wevalue.youmeng.StatisticsConsts;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/** 我的频道
  * Created by Administrator on 2016-07-08.
  */
 public class TypeChoiceActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {

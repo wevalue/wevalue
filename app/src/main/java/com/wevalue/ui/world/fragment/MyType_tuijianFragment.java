@@ -470,9 +470,6 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
             public void run() {
                 if (mItmePosition < 3) {
 
-                    LogUtils.e(" mListData_jiage.size =" + mListData_jiage.size());
-                    LogUtils.e(" mListData_jiage_   22222.size =" + mListData_jiage_2.size());
-
                     if (mListData_jiage != null && mListData_jiage.size() > 0) {
                         mListData_jiage_2.add(mHListData.get(mItmePosition));
                         mHListData.set(mItmePosition, mListData_jiage.get(0));
@@ -675,51 +672,6 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         }
     }
 
-//    @Override
-//    public boolean onDown(MotionEvent arg0) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-//        if (e1 != null && e2 != null) {
-//            try {
-//                if ((e1.getY() - e2.getY() > 100) && Math.abs(velocityY) > 200) {
-//                    LogUtils.e("上滑了");
-//                    mWorldFragment.setUPDON(true);
-//                    return true;
-//                } else if ((e2.getY() - e1.getY() > 100) && Math.abs(velocityY) > 200) {
-//                    LogUtils.e("下滑滑滑了");
-//                    mWorldFragment.setUPDON(false);
-//                    return true;
-//                }
-//            } catch (Exception e) {
-//            }
-//        } else {
-//            LogUtils.e("都是空的");
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public void onLongPress(MotionEvent e) {
-//    }
-//
-//    @Override
-//    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-//                            float distanceY) {
-//        return false;
-//    }
-//
-//    @Override
-//    public void onShowPress(MotionEvent e) {
-//    }
-//
-//    @Override
-//    public boolean onSingleTapUp(MotionEvent e) {
-//        return false;
-//    }
-
     //数据获取成功后  对json进行解析绑定适配器的方法
     private void paserJson(String content) {
         if (content.equals("")) {
@@ -731,14 +683,13 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
 //        pgb.setVisibility(View.GONE);
         if (noteBean.getResult().equals("1")) {
             mListData_lunbo = noteBean.data_lunbo;
-            mListData_jiage = noteBean.data_jiage;
+            //mListData_jiage = noteBean.data_jiage;
             if (mListData_lunbo != null && mListData_lunbo.size() > 0) {
                 if (myViewPagerAdapter == null) {
                     initViewpager();
                 } else {
                     if (viewList.size() == mListData_lunbo.size()) {
                         for (int i = 0; i < mListData_lunbo.size(); i++) {
-
                             setViewData(viewList.get(i), i);
                         }
                     }

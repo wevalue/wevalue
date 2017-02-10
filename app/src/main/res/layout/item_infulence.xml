@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/id_world_itme_ui"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
-
+    <LinearLayout
+        android:id="@+id/layout_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="3dp"
+        android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/ll_head_info"
@@ -51,6 +56,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
@@ -127,14 +133,16 @@
             android:background="@color/white"
             android:orientation="vertical"
             android:paddingLeft="15dp"
-            android:visibility="gone">
+            android:visibility="gone"
+            >
 
             <TextView
                 android:id="@+id/tv_transmit_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="转发100次"
-                android:visibility="gone" />
+                android:visibility="gone"
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -158,35 +166,34 @@
         android:paddingRight="12dp">
 
         <TextView
-            android:id="@+id/tv_content_content"
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="5"
-            android:text=""
+            android:maxLines="2"
             android:textColor="@color/black"
+            android:layout_marginBottom="5dp"
             android:textSize="16sp"
-            android:visibility="gone" />
-
+             />
         <LinearLayout
-            android:id="@+id/ll_imgAndAudioAndVideo_ui"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/tv_title">
 
             <TextView
-                android:id="@+id/tv_img_content"
+                android:id="@+id/tv_content_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
                 android:ellipsize="end"
-                android:lines="5"
-                android:maxLines="2"
+                android:lines="2"
+                android:maxLines="3"
                 android:minLines="2"
-                android:text=""
                 android:textColor="@color/but_text_color"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -194,7 +201,6 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:orientation="vertical">
-
                 <include
                     android:id="@+id/in_audio_video_ui"
                     layout="@layout/item_world_tuijian_include_1"
@@ -220,6 +226,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
@@ -317,13 +324,11 @@
 
             </LinearLayout>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.2dp"
-            android:layout_below="@+id/ll_info_line"
-            android:layout_marginTop="5dp"
-            android:background="@color/font_gray" />
     </LinearLayout>
-
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:layout_below="@+id/ll_info_line"
+        android:background="@color/font_gray" />
 </LinearLayout>

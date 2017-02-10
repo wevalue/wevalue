@@ -270,15 +270,15 @@
         android:scaleType="matrix"
         android:src="@mipmap/myreleaseline" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="5dp" />
-
     <com.wevalue.view.LazyViewPager
         android:id="@+id/lvp_user_xq"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"></com.wevalue.view.LazyViewPager>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="5dp" />
 
 </LinearLayout>
 

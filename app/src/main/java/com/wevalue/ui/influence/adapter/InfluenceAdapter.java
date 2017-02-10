@@ -24,7 +24,6 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.CommentActivity;
 import com.wevalue.ui.details.activity.UserDetailsActivity;
 import com.wevalue.ui.world.activity.ImgShowActivity;
 import com.wevalue.ui.world.activity.TransmitNoteActivity;
@@ -116,6 +115,7 @@ public class InfluenceAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_infulence, null);
             viewHolder = new ViewHolder();
+            viewHolder.layout_bg = (LinearLayout) convertView.findViewById(R.id.layout_bg);
             viewHolder.iv_play = (ImageView) convertView.findViewById(R.id.iv_play);
             viewHolder.tv_nickname = (TextView) convertView.findViewById(R.id.tv_nickname);
             viewHolder.iv_user_img = (ImageView) convertView.findViewById(R.id.iv_user_img);
@@ -128,13 +128,12 @@ public class InfluenceAdapter extends BaseAdapter {
             viewHolder.tv_comment_num = (TextView) convertView.findViewById(R.id.tv_comment_num);
             viewHolder.tv_zhuanfa_num = (TextView) convertView.findViewById(R.id.tv_zhuanfa_num);
             viewHolder.tv_praise_num = (TextView) convertView.findViewById(R.id.tv_praise_num);
+            viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
             viewHolder.tv_content_content = (TextView) convertView.findViewById(R.id.tv_content_content);
-            viewHolder.tv_img_content = (TextView) convertView.findViewById(R.id.tv_img_content);
             viewHolder.tv_zanAndImg = (TextView) convertView.findViewById(R.id.tv_zanAndImg);
             viewHolder.textView = (TextView) convertView.findViewById(R.id.textView);
             viewHolder.in_audio_video_ui = convertView.findViewById(R.id.in_audio_video_ui);
             viewHolder.ll_praise = (LinearLayout) convertView.findViewById(R.id.ll_praise);
-            viewHolder.ll_imgAndAudioAndVideo_ui = (LinearLayout) convertView.findViewById(R.id.ll_imgAndAudioAndVideo_ui);
             viewHolder.nsgv_world_list_gridview = (NoScrollGridView) convertView.findViewById(R.id.nsgv_world_list_gridview);
             viewHolder.rl_zhuan_content_ui = (RelativeLayout) convertView.findViewById(R.id.rl_zhuan_content_ui);
             viewHolder.rl_note_content_ui = (RelativeLayout) convertView.findViewById(R.id.rl_note_content_ui);
@@ -147,14 +146,6 @@ public class InfluenceAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         NoteBean.NoteEntity noteEntity = mDatas.get(position);
-//        String s = noteEntity.toString();
-//        LogUtils.e("NOTEENTITY", s);
-//        String context= "@"+mDatas.get(position).getOldusernickname()+"："+noteEntity.getContent();
-//        SpannableStringBuilder style = news SpannableStringBuilder(context);
-//        style.setSpan(news ForegroundColorSpan(mContext.getResources().getColor(R.color.blue)),
-//                0, mDatas.get(position).getOldusernickname().length()+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//        viewHolder.tv_img_content.setText(style);
-//        viewHolder.tv_content_content.setText(style);
 
         //头像点击事件
         viewHolder.iv_user_img.setOnClickListener(new View.OnClickListener() {
@@ -170,22 +161,26 @@ public class InfluenceAdapter extends BaseAdapter {
         imgViewSetData(mDatas.get(position).getUserface(), viewHolder.iv_user_img);
 
         viewHolder.tv_nickname.setText(noteEntity.getUsernickname());
-
-        viewHolder.tv_img_content.setText(noteEntity.getContent());
+        if (TextUtils.isEmpty(noteEntity.getTitle())) {
+            viewHolder.tv_title.setText(noteEntity.getContent());
+        } else {
+            viewHolder.tv_title.setText(noteEntity.getTitle());
+        }
+        viewHolder.tv_content_content.setVisibility(View.VISIBLE);
+        viewHolder.tv_content_content.setText(noteEntity.getContent());
         viewHolder.tv_dengji.setText(noteEntity.getUserlevel());
         viewHolder.tv_price.setText("¥" + noteEntity.getPaynum());
         viewHolder.tv_income.setText("¥" + noteEntity.getShouyi());
         viewHolder.tv_day.setText(DateTiemUtils.editTime(noteEntity.getAddtime()));
-
         viewHolder.tv_comment_num.setText(noteEntity.getCommcount());
         viewHolder.tv_zhuanfa_num.setText(noteEntity.getRepostcount());
         viewHolder.tv_praise_num.setText(noteEntity.getZancount());
         //如果是免费发布的 则隐藏转发 和 价格
-        if (mDatas.get(position).getIsfree().equals("1")){
+        if (mDatas.get(position).getIsfree().equals("1")) {
             viewHolder.ll_ZF_but.setVisibility(View.INVISIBLE);
 //            viewHolder.tv_price.setVisibility(View.INVISIBLE);
 //            viewHolder.tv_income.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             viewHolder.ll_ZF_but.setVisibility(View.VISIBLE);
         }
         if ("1".equals(noteEntity.getIszan())) {
@@ -199,27 +194,20 @@ public class InfluenceAdapter extends BaseAdapter {
             viewHolder.iv_audio_img.setVisibility(View.GONE);
             viewHolder.iv_play.setVisibility(View.GONE);
             viewHolder.iv_video_img.setVisibility(View.GONE);
+
             switch (notetype) {
                 case "4"://文字
-                    if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-                        viewHolder.tv_content_content.setVisibility(View.GONE);
-                        viewHolder.in_audio_video_ui.setVisibility(View.GONE);
-                        viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
-                        viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
-                        mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
+                    viewHolder.in_audio_video_ui.setVisibility(View.GONE);
+                    viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
+                    mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
 //                        mGirdViewAdapter.notifyDataSetChanged();
-                        viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
-                    } else {
-                        viewHolder.tv_content_content.setVisibility(View.VISIBLE);
-                        viewHolder.tv_content_content.setText(noteEntity.getContent());
-                        viewHolder.tv_img_content.setText(noteEntity.getContent());
-                        viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.GONE);
-                    }
+                    viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
+                    viewHolder.tv_content_content.setVisibility(View.VISIBLE);
+                    viewHolder.tv_content_content.setText(noteEntity.getContent());
                     break;
                 case "1"://视频文
                     viewHolder.tv_content_content.setVisibility(View.GONE);
                     viewHolder.in_audio_video_ui.setVisibility(View.VISIBLE);
-                    viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                     viewHolder.iv_video_img.setVisibility(View.VISIBLE);
                     viewHolder.iv_play.setVisibility(View.VISIBLE);
                     viewHolder.nsgv_world_list_gridview.setVisibility(View.GONE);
@@ -230,20 +218,17 @@ public class InfluenceAdapter extends BaseAdapter {
                     viewHolder.tv_content_content.setVisibility(View.GONE);
                     viewHolder.in_audio_video_ui.setVisibility(View.VISIBLE);
                     viewHolder.iv_audio_img.setVisibility(View.VISIBLE);
-                    viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                     viewHolder.nsgv_world_list_gridview.setVisibility(View.GONE);
                     viewHolder.iv_audio_img.setImageResource(R.mipmap.ic_music);
                     break;
                 case "3"://图文
                     viewHolder.tv_content_content.setVisibility(View.GONE);
                     viewHolder.in_audio_video_ui.setVisibility(View.GONE);
-                    viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                     viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
                     if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
 
                         viewHolder.tv_content_content.setVisibility(View.GONE);
                         viewHolder.in_audio_video_ui.setVisibility(View.GONE);
-                        viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
                         viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
 //                        int l = noteEntity.getList_1().size();
                         mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
@@ -252,34 +237,23 @@ public class InfluenceAdapter extends BaseAdapter {
                     } else {
                         viewHolder.tv_content_content.setVisibility(View.VISIBLE);
                         viewHolder.tv_content_content.setText(noteEntity.getContent());
-                        viewHolder.tv_img_content.setText(noteEntity.getContent());
-                        viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.GONE);
                     }
                     break;
 
                 case "5":
-                    if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-//                        int l = noteEntity.getList().size();
-                        viewHolder.tv_content_content.setVisibility(View.GONE);
-                        viewHolder.in_audio_video_ui.setVisibility(View.GONE);
-                        viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.VISIBLE);
-                        viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
-
-                        mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
-                        viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
-                    } else {
-                        viewHolder.tv_content_content.setVisibility(View.VISIBLE);
-                        viewHolder.tv_content_content.setText(noteEntity.getContent());
-                        viewHolder.tv_img_content.setText(noteEntity.getContent());
-                        viewHolder.ll_imgAndAudioAndVideo_ui.setVisibility(View.GONE);
-
-                    }
+                    viewHolder.tv_content_content.setVisibility(View.VISIBLE);
+                    viewHolder.tv_content_content.setText(noteEntity.getContent());
+                    viewHolder.in_audio_video_ui.setVisibility(View.GONE);
+                    viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
+                    mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
+                    viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
                     break;
             }
-
+            //如果转发id==0 则此信息不是转发的 转发的不显示标题
             if (mDatas.get(position).getRepostid().equals("0")) {
                 viewHolder.ll_transmit_info.setVisibility(View.GONE);
                 viewHolder.rl_note_content_ui.setBackgroundResource(R.color.white);
+                viewHolder.tv_title.setVisibility(View.VISIBLE);
             } else {
                 viewHolder.ll_transmit_info.setVisibility(View.VISIBLE);
                 viewHolder.tv_transmit_num.setText(mDatas.get(position).getRepostcontent());
@@ -288,9 +262,9 @@ public class InfluenceAdapter extends BaseAdapter {
                 SpannableStringBuilder style_2 = new SpannableStringBuilder(context_2);
                 style_2.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.blue)), 0,
                         mDatas.get(position).getOldusernickname().length() + 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                viewHolder.tv_title.setVisibility(View.GONE);
+                viewHolder.tv_content_content.setVisibility(View.VISIBLE);
                 viewHolder.tv_content_content.setText(style_2);
-                viewHolder.tv_img_content.setText(style_2);
-
                 viewHolder.rl_note_content_ui.setBackgroundResource(R.color.background);
             }
 
@@ -365,6 +339,23 @@ public class InfluenceAdapter extends BaseAdapter {
                 mContext.startActivity(intent);
             }
         });
+        // 是否是热门的帖子
+        boolean isHot = false;
+        //一般是前三条
+        if (position<3)
+        for (int i = 0; i < mLunBoDatas.size(); i++) {
+            if (mLunBoDatas.get(i)==noteEntity){
+                isHot = true;
+                break;
+            }
+        }
+        if (isHot){
+            viewHolder.layout_bg.setBackgroundResource(R.mipmap.bianxian);
+        }else {
+            viewHolder.layout_bg.setBackgroundResource(R.color.white);
+        }
+
+        //if (mLunBoDatas.get(noteEntity))
         return convertView;
     }
 
@@ -378,7 +369,7 @@ public class InfluenceAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        LinearLayout ll_info_line;//底部点赞阅读数等信息的布局
+        LinearLayout layout_bg;//整个item布局
         LinearLayout ll_transmit_info;//转发信息的布局
         LinearLayout ll_head_info;//用户信息
         TextView tv_transmit_num;//转发信息的打赏或收益情况
@@ -395,13 +386,12 @@ public class InfluenceAdapter extends BaseAdapter {
         TextView tv_zhuanfa_num;//转发数
         TextView tv_praise_num;//点赞数
         TextView tv_zanAndImg;//赞
-        TextView tv_content_content;//纯文字信息内容
-        TextView tv_img_content;//图文信息内容
+        TextView tv_title;//纯文字信息内容
+        TextView tv_content_content;//图文信息内容
         TextView textView;//转发或者评论 的文字按钮
         View in_audio_video_ui;//视频音频的图片区域;
         NoScrollGridView nsgv_world_list_gridview;//图片列表;
         LinearLayout ll_praise;
-        LinearLayout ll_imgAndAudioAndVideo_ui;
         LinearLayout ll_ZF_but;
         RelativeLayout rl_zhuan_content_ui;
         RelativeLayout rl_note_content_ui;

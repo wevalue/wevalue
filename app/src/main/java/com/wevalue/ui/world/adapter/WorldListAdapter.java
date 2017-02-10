@@ -33,6 +33,7 @@ import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.NoScrollGridView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public class WorldListAdapter extends BaseAdapter {
     ViewHolder viewHolder = null;
     NoteBean.NoteEntity noteEntity;
     private List<NoteBean.NoteEntity> mDatas;
-    private List<NoteBean.NoteEntity> jiageData;
+    private List<NoteBean.NoteEntity> jiageData = new ArrayList<>();
     private Context mContext;
     private Activity mActivity;
     private NoteRequestBase mNoteRequestBase;
@@ -54,7 +55,7 @@ public class WorldListAdapter extends BaseAdapter {
 
     public WorldListAdapter(List<NoteBean.NoteEntity> mDatas, List<NoteBean.NoteEntity> jiageData, Context mContext, String type) {
         this.mDatas = mDatas;
-        this.jiageData = jiageData;
+        //this.jiageData = jiageData;
         this.mContext = mContext;
         mActivity = (Activity) mContext;
         this.mType = type;
@@ -62,8 +63,8 @@ public class WorldListAdapter extends BaseAdapter {
     }
 
     private void initDrawable() {
-        nozan = mContext.getResources().getDrawable(R.mipmap.note_praise);
-        iszan = mContext.getResources().getDrawable(R.mipmap.notedetail_hongxin);
+        nozan = mContext.getResources().getDrawable(R.mipmap.note_like_n);
+        iszan = mContext.getResources().getDrawable(R.mipmap.note_like_p);
         iszan.setBounds(0, 0, iszan.getMinimumWidth(), iszan.getMinimumHeight()); //设置边界
         nozan.setBounds(0, 0, nozan.getMinimumWidth(), nozan.getMinimumHeight()); //设置边界
     }

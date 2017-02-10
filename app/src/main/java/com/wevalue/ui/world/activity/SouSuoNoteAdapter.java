@@ -57,8 +57,8 @@ public class SouSuoNoteAdapter extends BaseAdapter {
 
 
     private void initDrawable() {
-        nozan = mContext.getResources().getDrawable(R.mipmap.note_praise);
-        iszan = mContext.getResources().getDrawable(R.mipmap.notedetail_hongxin);
+        nozan = mContext.getResources().getDrawable(R.mipmap.note_like_n);
+        iszan = mContext.getResources().getDrawable(R.mipmap.note_like_p);
         iszan.setBounds(0, 0, iszan.getMinimumWidth(), iszan.getMinimumHeight()); //设置边界
         nozan.setBounds(0, 0, nozan.getMinimumWidth(), nozan.getMinimumHeight()); //设置边界
     }

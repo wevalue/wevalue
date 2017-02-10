@@ -283,8 +283,7 @@ public class ImgShowActivity extends BaseActivity {
         animaition.start();
         Glide.with(this)
                 .load(url)
-                .placeholder(R.drawable.loading)
-                .error(R.mipmap.pictures_no)
+                .placeholder(R.mipmap.pictures_no)
                 .crossFade()
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
@@ -346,7 +345,7 @@ public class ImgShowActivity extends BaseActivity {
         Glide.with(this)
                 .load(RequestPath.SERVER_PATH + url)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .error(R.mipmap.pictures_no)
+                .placeholder(R.mipmap.pictures_no)
                 //.crossFade()
                 .into(viewTarget);
         imageViewList.add(imageView);
@@ -374,7 +373,7 @@ public class ImgShowActivity extends BaseActivity {
                 .load(RequestPath.SERVER_PATH + url)
                 .asGif()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .error(R.mipmap.pictures_no)
+                .placeholder(R.mipmap.pictures_no)
                 .listener(new RequestListener<String, GifDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GifDrawable> target, boolean isFirstResource) {

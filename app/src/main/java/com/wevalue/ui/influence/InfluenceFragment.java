@@ -28,6 +28,7 @@ import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
 import com.wevalue.ui.influence.adapter.InfluenceAdapter;
+import com.wevalue.ui.influence.adapter.NoteListAdapter;
 import com.wevalue.utils.DateTiemUtils;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.SharedPreferencesUtil;
@@ -295,11 +296,7 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
                     if (mListData_lunbo != null && mListData_lunbo.size() > 0) {
                         mHListData.addAll(mListData_lunbo);
                     }
-//                    if (mListData_jiage != null && mListData_jiage.size() > 0) {
-//                        mHListData.addAll(mListData_jiage);
-//                    }
                 }
-
                 if (noteBean.data != null && noteBean.data.size() > 0) {
                     mHListData.addAll(noteBean.data);
                 }

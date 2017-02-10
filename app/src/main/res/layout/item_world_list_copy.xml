@@ -117,7 +117,7 @@
             android:layout_alignParentTop="true"
             android:text="送给朋友们(0)"
             android:drawablePadding="5dp"
-            android:drawableLeft="@mipmap/note_detail_zhuanfa"
+            android:drawableLeft="@mipmap/note_forward_n"
             android:textColor="@color/font_gray" />
     </LinearLayout>
     <View
