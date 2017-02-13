@@ -133,6 +133,10 @@
         <activity
             android:name=".ui.login.RegisterSuccessActivity"
             android:launchMode="singleTask" />
+        <!-- 选择频道 -->
+        <activity
+            android:name=".ChoiceChannelActivity"
+            android:launchMode="singleTask" />
 
         <!-- 登录 -->
         <activity

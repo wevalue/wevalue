@@ -20,7 +20,7 @@ import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
-import com.wevalue.ui.influence.adapter.NoteListAdapter;
+import com.wevalue.adapter.NoteListAdapter;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;

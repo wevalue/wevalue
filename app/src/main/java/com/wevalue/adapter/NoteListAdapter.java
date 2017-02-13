@@ -1,4 +1,4 @@
-package com.wevalue.ui.influence.adapter;
+package com.wevalue.adapter;
 
 import android.app.Activity;
 import android.content.Context;

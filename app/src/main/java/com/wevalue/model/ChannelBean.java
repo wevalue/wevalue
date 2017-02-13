@@ -16,7 +16,7 @@ public class ChannelBean  {
      public static class  Channel {
          private String id;//": 1,//帖子类型id
          private String classname;//": "推荐",//帖子类型名称
-         private String remark;//": "推荐推荐推荐",//帖子类型备注
+         private String remark;//帖子类型备注
          private String classorder;//": 1//帖子类型排序
 
          public String getId() {

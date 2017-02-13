@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wevalue.ChoiceChannelActivity;
+import com.wevalue.LauncherActivity;
 import com.wevalue.MainActivity;
 import com.wevalue.R;
 import com.wevalue.base.BaseActivity;
@@ -48,10 +50,12 @@ public class GuideActivity extends BaseActivity {
             public void onClick(View v) {
 
                 if (vp_guide_viewpager.getCurrentItem() == imgs.length-1) {
-
-                    Intent intent = new Intent(GuideActivity.this, MainActivity.class);
+                    Intent intent = new Intent(GuideActivity.this, ChoiceChannelActivity.class);
                     startActivity(intent);
                     finish();
+//                    Intent intent = new Intent(GuideActivity.this, MainActivity.class);
+//                    startActivity(intent);
+//                    finish();
                 }
 
             }

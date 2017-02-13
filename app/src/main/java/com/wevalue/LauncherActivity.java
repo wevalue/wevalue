@@ -74,6 +74,7 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
                         intent.putExtra("jpush", jpush);
                         startActivity(intent);
                         finish();
+
                     }
                     break;
             }
@@ -441,6 +442,9 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
         LogUtils.e("alluserlikeerror" + content);
     }
 
+    /**
+     * 获取频道
+     */
     private void getAllChanel() {
         Map<String, String> map = new HashMap<>();
         map.put("code", RequestPath.CODE);

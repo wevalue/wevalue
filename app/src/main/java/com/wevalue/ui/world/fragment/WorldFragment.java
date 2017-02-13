@@ -197,17 +197,17 @@ public class WorldFragment extends BaseFragment implements View.OnClickListener,
         }
     }
 
-    public void setDefaultChannel() {
-        titles = defaultChannel.split(",");
-        MainActivity.isEditChannel = true;
-        switchFragment();
-//        LogUtils.e("resetUI===========先走吗?=================resetUI" + titles.length);
-        pagerAdapter = new TabFragmentAdapter(fragments, getChildFragmentManager(), mContext);
-        pagerAdapter.setTitles_adap(titles);
-        viewPager.setAdapter(pagerAdapter);
-        tablayout.setupWithViewPager(viewPager);
-        tablayout.setTabTextColors(Color.BLACK, getResources().getColor(R.color.blue));
-    }
+//    public void setDefaultChannel() {
+//        titles = defaultChannel.split(",");
+//        MainActivity.isEditChannel = true;
+//        switchFragment();
+////        LogUtils.e("resetUI===========先走吗?=================resetUI" + titles.length);
+//        pagerAdapter = new TabFragmentAdapter(fragments, getChildFragmentManager(), mContext);
+//        pagerAdapter.setTitles_adap(titles);
+//        viewPager.setAdapter(pagerAdapter);
+//        tablayout.setupWithViewPager(viewPager);
+//        tablayout.setTabTextColors(Color.BLACK, getResources().getColor(R.color.blue));
+//    }
 
     @Override
     public void onClick(View v) {

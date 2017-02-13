@@ -22,7 +22,7 @@ import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
-import com.wevalue.ui.influence.adapter.NoteListAdapter;
+import com.wevalue.adapter.NoteListAdapter;
 import com.wevalue.ui.world.adapter.MyRewardAdapter;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.SharedPreferencesUtil;
