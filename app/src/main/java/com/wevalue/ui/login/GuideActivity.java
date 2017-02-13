@@ -27,7 +27,7 @@ public class GuideActivity extends BaseActivity {
 
     private ViewPager vp_guide_viewpager;
     private TextView tv_jinru_weizi;
-    private int[] imgs = {R.mipmap.welcome1, R.mipmap.welcome2, R.mipmap.welcome3, R.mipmap.welcome4, R.mipmap.welcome5};
+    private int[] imgs = {R.mipmap.welcome1, R.mipmap.welcome2, R.mipmap.welcome3, R.mipmap.welcome4};
     private List<ImageView> imageViewList = new ArrayList<>();
 
     @Override
@@ -47,7 +47,7 @@ public class GuideActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                if (vp_guide_viewpager.getCurrentItem() == 4) {
+                if (vp_guide_viewpager.getCurrentItem() == imgs.length-1) {
 
                     Intent intent = new Intent(GuideActivity.this, MainActivity.class);
                     startActivity(intent);

@@ -9,8 +9,8 @@ public class RequestPath {
      /*客户网站域名*/
     // public static final String SERVER_PATH = "https://mp.wzbz.cn";
     /* 公司服务器地址 测试地址*/
-     public static final String SERVER_PATH = "http://192.168.9.109";
-    // public static final String SERVER_PATH = "http://192.168.9.117:8080";
+    public static final String SERVER_PATH = "http://192.168.9.109";
+    //public static final String SERVER_PATH = "http://192.168.9.117:8080";
 
     /*分享到第三方的链接*/
     public static final String SHARE_HTML = SERVER_PATH + "/web/note.html?";

@@ -59,7 +59,7 @@ public class RankingListActivity extends BaseActivity implements View.OnClickLis
      */
     private void initView() {
         tv_head_title = (TextView) findViewById(R.id.tv_head_title);
-        tv_head_title.setText("排行榜");
+        tv_head_title.setText("周排行榜");
         iv_back = (ImageView) findViewById(R.id.iv_back);
         rb_shouyi = (RadioButton) findViewById(R.id.rb_shouyi);
         rb_zhuanfa = (RadioButton) findViewById(R.id.rb_zhuanfa);

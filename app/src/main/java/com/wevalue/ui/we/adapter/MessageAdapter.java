@@ -65,41 +65,21 @@ public class MessageAdapter extends BaseAdapter {
         } else {
             viewHolder = (MessageAdapter.ViewHolder) convertView.getTag();
         }
-        viewHolder.tv_tittle.setText(dataBeanList.get(position).getMesstitle());
-        viewHolder.tv_time.setText(dataBeanList.get(position).getAddtime());
-        viewHolder.tv_content.setText(dataBeanList.get(position).getMesscontent());
-        if (dataBeanList.get(position).getMessstate() == 1) {
+        SiteMessageModel.DataBean msgInfo =  dataBeanList.get(position);
+        viewHolder.tv_tittle.setText(msgInfo.getMesstitle());
+        viewHolder.tv_time.setText(msgInfo.getAddtime());
+        viewHolder.tv_content.setText(msgInfo.getMesscontent());
+
+        if (msgInfo.getMessstate() == 1) {
             viewHolder.tv_red_cycle.setVisibility(View.GONE);//隐藏消息数量显示区域
         } else {
-            if (!TextUtils.isEmpty(dataBeanList.get(position).getThistypenum())) {
-                switch (dataBeanList.get(position).getMesstype()) {
-                    case 1:
-                        MobclickAgent.onEvent(mActivity, StatisticsConsts.event_newMessage, "新的好友");
-                        break;
-                    case 2:
-                        MobclickAgent.onEvent(mActivity, StatisticsConsts.event_newMessage, "新的粉丝");
-                        break;
-                    case 3:
-                        MobclickAgent.onEvent(mActivity, StatisticsConsts.event_newMessage, "新的打赏");
-                        break;
-                    case 4:
-                        MobclickAgent.onEvent(mActivity, StatisticsConsts.event_newMessage, "新的转发");
-                        break;
-                    case 5:
-                        MobclickAgent.onEvent(mActivity, StatisticsConsts.event_newMessage, "新的点赞");
-                        break;
-                    case 6:
-                        MobclickAgent.onEvent(mActivity, StatisticsConsts.event_newMessage, "新的评论");
-                        break;
-                    case 7:
-                        MobclickAgent.onEvent(mActivity, StatisticsConsts.event_newMessage, "系统消息");
-                        break;
-                }
+            if (!TextUtils.isEmpty(msgInfo.getThistypenum())) {
+                MobclickAgent.onEvent(mActivity, StatisticsConsts.event_newMessage, msgInfo.getMesstitle());
                 viewHolder.tv_red_cycle.setVisibility(View.VISIBLE);//显示消息数量的数字
-                viewHolder.tv_red_cycle.setText(dataBeanList.get(position).getThistypenum());
+                viewHolder.tv_red_cycle.setText(msgInfo.getThistypenum());
             }
         }
-        switch (dataBeanList.get(position).getMesstype()) {
+        switch (msgInfo.getMesstype()) {
             case 1:
                 viewHolder.iv_icon.setImageResource(R.mipmap.we_message_newfriend);
                 break;

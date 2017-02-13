@@ -171,7 +171,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
         tv_back = (TextView) findViewById(R.id.tv_back);
         tv_choice_tilte = (TextView) findViewById(R.id.tv_choice_tilte);
         tv_is_yuanchuang = (TextView) findViewById(R.id.tv_is_yuanchuang);
-        tv_is_yuanchuang.setTag(false);
+        tv_is_yuanchuang.setTag(true);
         tv_is_shoufei = (TextView) findViewById(R.id.tv_is_shoufei);
         tv_is_shoufei.setTag(false);
         layout_free = (LinearLayout) findViewById(R.id.layout_free);
@@ -205,6 +205,23 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
             }
         });
         et_title = (EditText) findViewById(R.id.et_title);
+        et_title.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                LogUtils.e("onTextChanged","charSequence = "+charSequence+"---"+i+"--"+i1+"--"+i2);
+                if (charSequence.length()>30)ShowUtil.showToast(ReleaseNoteActivity.this,"标题不能超过30字");
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //LogUtils.e("onTextChanged","charSequence = "+charSequence+"---"+i+"--"+i1+"--"+i2);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         et_content = (EditText) findViewById(R.id.et_content);
         iv_video_img = (ImageView) findViewById(R.id.iv_video_img);
         iv_paly = (ImageView) findViewById(R.id.iv_paly);
@@ -248,7 +265,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        if (charSequence.length() == 300) {
+                        if (charSequence.length() >=30) {
                             ShowUtil.showToast(ReleaseNoteActivity.this, "300字以内");
                         }
                     }
@@ -285,7 +302,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                     }
                 });
                 mMediaPlayer = new MediaPlayer();
-                iv_video_img.setImageResource(R.mipmap.default_head);
+                iv_video_img.setImageResource(R.mipmap.pic_music0);
                 break;
             case 3://图片
                 et_content.setFilters(new InputFilter[]{new InputFilter.LengthFilter(300)});
@@ -508,6 +525,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                     }
                 }
                 if (!ButtontimeUtil.isFastDoubleClick()) {
+                    tv_send_note.setEnabled(true);
                     if (isFree) {
                         //发布免费信息 获取0元的预订单
                         HashMap map = new HashMap();
@@ -689,16 +707,20 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
         if (TextUtils.isEmpty(content)) {
             switch (isSendType) {
                 case 1://视频
-                    content = "视频";
+                  //  content = "视频";
+                    content = "";
                     break;
                 case 2://音频
-                    content = "音乐";
+                   // content = "音乐";
+                    content = "";
                     break;
                 case 3://图片
-                    content = "图片";
+                   // content = "图片";
+                    content = "";
                     break;
                 case 4://图片
-                    content = "图片";
+                   // content = "图片";
+                    content = "";
                     break;
             }
         }

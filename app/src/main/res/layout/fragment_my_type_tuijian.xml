@@ -34,17 +34,16 @@
 
                 <com.wevalue.view.LazyViewPager
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:id="@+id/vp_world"
                     />
 
                 <LinearLayout
                     android:id="@+id/ll_viewGroup"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:gravity="center"
-                    android:paddingRight="15dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="10dp"
                     android:orientation="horizontal" >

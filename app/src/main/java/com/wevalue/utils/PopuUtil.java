@@ -91,7 +91,7 @@ public class PopuUtil {
         //添加好友
         TextView tv_add_haoyou = (TextView) prompt_box.findViewById(R.id.tv_add_haoyou);
         //邀请好友
-        TextView tv_invitation = (TextView) prompt_box.findViewById(R.id.tv_invitation);
+//      TextView tv_invitation = (TextView) prompt_box.findViewById(R.id.tv_invitation);
         //帮助与说明
         TextView tv_shuoming = (TextView) prompt_box.findViewById(R.id.tv_shuoming);
         //附近的人
@@ -117,16 +117,16 @@ public class PopuUtil {
             }
         });
         //邀请好友
-        tv_invitation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HashMap<String,String> map = new HashMap<String, String>();
-                map.put("url","www.baidu.com");
-                map.put("message","邀请好友加入微值");
-                promptBoxPopupWindow.dismiss();
-                initShareInvitePopup(main,new Handler(),map);
-            }
-        });
+//        tv_invitation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                HashMap<String,String> map = new HashMap<String, String>();
+//                map.put("url","www.baidu.com");
+//                map.put("message","邀请好友加入微值");
+//                promptBoxPopupWindow.dismiss();
+//                initShareInvitePopup(main,new Handler(),map);
+//            }
+//        });
         //添加频道
 //        tv_add_channel.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -1218,6 +1218,33 @@ public class PopuUtil {
             }
         });
 
+        promptBoxPopupWindow = new PopupWindow(prompt_box, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true);
+        promptBoxPopupWindow.setFocusable(true);
+        // 设置弹出动画
+        promptBoxPopupWindow.setAnimationStyle(R.style.ActionSheetDialogStyle);
+        // 设置popupWindow背景图片(只能通过popupWindow提供的返回键返回)
+        ColorDrawable dw = new ColorDrawable(0x32000000);
+        promptBoxPopupWindow.setBackgroundDrawable(dw);
+        promptBoxPopupWindow.setOutsideTouchable(true);
+        promptBoxPopupWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+    }
+
+
+    /*邀请好友*/
+    public static void inviteFriends(final Activity activity, final Handler handler, final HashMap<String, String> map) {
+        // 空白区域
+        prompt_box = activity.getLayoutInflater().inflate(R.layout.popu_invite_friends, null);
+        TextView tv_goto = (TextView) prompt_box.findViewById(R.id.tv_goto);
+        tv_goto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                HashMap<String,String> map = new HashMap<String, String>();
+//                map.put("url",shareUrl);
+//                map.put("message",message);
+                promptBoxPopupWindow.dismiss();
+                PopuUtil.initShareInvitePopup(activity,handler,map);
+            }
+        });
         promptBoxPopupWindow = new PopupWindow(prompt_box, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true);
         promptBoxPopupWindow.setFocusable(true);
         // 设置弹出动画

@@ -175,7 +175,7 @@ public class WorldListAdapter extends BaseAdapter {
                     viewHolder.in_audio_video_ui.setVisibility(View.VISIBLE);
                     viewHolder.iv_play.setVisibility(View.VISIBLE);
                     viewHolder.iv_video_img.setVisibility(View.VISIBLE);
-                    viewHolder.tv_title.setText(noteEntity.getContent());
+
                     //viewHolder.iv_play.setImageResource(R.mipmap.note_play);
                     imgViewSetData(mDatas.get(position).getNotevideopic(), viewHolder.iv_video_img);
                     break;
@@ -183,7 +183,6 @@ public class WorldListAdapter extends BaseAdapter {
                     viewHolder.in_audio_video_ui.setVisibility(View.VISIBLE);
                     viewHolder.iv_audio_img.setVisibility(View.VISIBLE);
                     viewHolder.tv_title.setVisibility(View.VISIBLE);
-                    viewHolder.tv_title.setText(noteEntity.getContent());
                     viewHolder.iv_audio_img.setImageResource(R.mipmap.ic_music);
                     break;
                 case "3"://图文
@@ -212,7 +211,6 @@ public class WorldListAdapter extends BaseAdapter {
                         viewHolder.tv_content_content.setVisibility(View.VISIBLE);
                         viewHolder.tv_content_content.setText(noteEntity.getContent());
                     }
-
                     break;
             }
             //点击图片

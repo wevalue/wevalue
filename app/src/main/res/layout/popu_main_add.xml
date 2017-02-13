@@ -9,7 +9,7 @@
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
-        android:background="@mipmap/more_shape"
+        android:background="@drawable/more_shape"
         android:orientation="vertical">
         <TextView
             android:layout_marginTop="10dp"
@@ -115,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/ui_line_2"/>
-        <TextView
+      <!--  <TextView
             android:id="@+id/tv_invitation"
             android:layout_marginTop="0.5dp"
             android:layout_marginBottom="0.5dp"
@@ -133,7 +133,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/ui_line_2"/>
+            android:background="@color/ui_line_2"/>-->
         <TextView
             android:id="@+id/tv_shuoming"
             android:layout_marginTop="0.5dp"

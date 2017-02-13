@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.umeng.analytics.MobclickAgent;
+import com.wevalue.MainActivity;
 import com.wevalue.R;
 import com.wevalue.base.BaseFragment;
 import com.wevalue.model.NoteBean;
@@ -27,13 +28,15 @@ import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
-import com.wevalue.ui.influence.adapter.InfluenceAdapter;
 import com.wevalue.ui.influence.adapter.NoteListAdapter;
+import com.wevalue.ui.world.activity.SearchActivity;
 import com.wevalue.utils.DateTiemUtils;
 import com.wevalue.utils.LogUtils;
+import com.wevalue.utils.PopuUtil;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.NoScrollListview;
+import com.wevalue.youmeng.StatisticsConsts;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,7 +51,7 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
     private Context mContext;
     private NoScrollListview mNoScrollListview;
     private PullToRefreshScrollView prsv_ScrollView;
-    private InfluenceAdapter mHAdapter;
+    private NoteListAdapter mHAdapter;
     private List<NoteBean.NoteEntity> mHListData;
     private List<NoteBean.NoteEntity> mListData_lunbo;
     //去掉价格  所以 给个初始值 为 size = 0
@@ -146,7 +149,9 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
 
     private void initView(View view) {
         iv_search = (ImageView) view.findViewById(R.id.iv_search);
+        iv_search.setOnClickListener(this);
         iv_more = (ImageView) view.findViewById(R.id.iv_more);
+        iv_more.setOnClickListener(this);
         tv_head_title = (TextView) view.findViewById(R.id.tv_head_title);
         tv_head1_title = (TextView) view.findViewById(R.id.tv_head1_title);
         tv_head_title.setOnClickListener(this);
@@ -188,39 +193,18 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 Intent intent = null;
                 //跳转到转发帖子详情页
-                if (mHListData.get(position).getIsfree().equals("1")) {
-                    intent = new Intent(getActivity(), NoteDetailsActivity.class);
-                    LogUtils.e("----pos--" + position);
-                    intent.putExtra("noteId", mHListData.get(position).getNoteid());
-                    intent.putExtra("repostid", mHListData.get(position).getRepostid());
-                    intent.putExtra("repostfrom", "2");
-                    startActivity(intent);
-                } else {
                     if (mHListData.get(position).getRepostid().equals("0")) {
                         intent = new Intent(getActivity(), NoteDetailsActivity.class);
-                        LogUtils.e("----pos--" + position);
                         intent.putExtra("noteId", mHListData.get(position).getNoteid());
                         intent.putExtra("repostid", mHListData.get(position).getRepostid());
                         intent.putExtra("repostfrom", "2");
                         startActivity(intent);
                     } else {
-                        RelativeLayout rl_note_content_ui = (RelativeLayout) view.findViewById(R.id.rl_note_content_ui);
-                        rl_note_content_ui.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(mContext, NoteDetailsActivity.class);
-                                intent.putExtra("noteId", mHListData.get(position).getNoteid());
-                                intent.putExtra("repostid", "0");
-                                intent.putExtra("repostfrom", "2");
-                                mContext.startActivity(intent);
-                            }
-                        });
                         intent = new Intent(mContext, RepostNoteDetailActivity.class);
                         intent.putExtra("noteId", mHListData.get(position).getNoteid());
                         intent.putExtra("repostid", mHListData.get(position).getRepostid());
                         intent.putExtra("repostfrom", "2");
                         mContext.startActivity(intent);
-                    }
                 }
             }
         });
@@ -300,7 +284,7 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
                 if (noteBean.data != null && noteBean.data.size() > 0) {
                     mHListData.addAll(noteBean.data);
                 }
-                mHAdapter = new InfluenceAdapter(mHListData, getActivity(), mListData_lunbo, mListData_jiage);
+                mHAdapter = new NoteListAdapter(mHListData, getActivity(), mListData_lunbo, mListData_jiage);
                 mHAdapter.setOrderType(ordertype);
                 mNoScrollListview.setAdapter(mHAdapter);
 
@@ -375,6 +359,13 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
                 break;
             case R.id.tv_head1_title://朋友们
                 selecedTile("1");
+                break;
+            case R.id.iv_search://搜索
+                MobclickAgent.onEvent(getActivity(), StatisticsConsts.event_search);//友盟统计搜索启动
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+                break;
+            case R.id.iv_more: //更多
+                PopuUtil.initpopu(getActivity(), iv_more);
                 break;
             case R.id.tv_heat:
                 statisticsEvent("tv_heat");

@@ -5,7 +5,9 @@
     android:background="@color/white"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
+
     android:orientation="vertical">
+
     <include layout="@layout/head" />
 
    <!--<ScrollView-->
@@ -140,7 +142,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="原创"
+                    android:visibility="gone"
                     android:textColor="@color/blue"
+
                     android:textSize="14dp" />
 
                 <TextView
@@ -277,7 +281,7 @@
                 android:drawablePadding="5dp"
                 android:drawableRight="@mipmap/note_forward_n"
                 android:gravity="center"
-                android:text="转发"
+                android:text="送给朋友们"
                 android:textColor="@color/but_text_color"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -305,7 +309,6 @@
                 android:text="评论"
                 android:textColor="@color/but_text_color"
                 android:textSize="14sp" />
-
 
         </LinearLayout>
 

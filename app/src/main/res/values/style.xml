@@ -38,7 +38,7 @@
 		<item name="android:textSize">18sp</item>
 		<item name="android:textStyle">bold</item>
 		<item name="android:maxLength">30</item>
-		<item name="android:gravity">center</item>
+		<item name="android:gravity">center_vertical|left</item>
 		<item name="android:textColor">@color/black</item>
 	</style>
 

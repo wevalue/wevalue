@@ -27,7 +27,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_alignParentRight="true"
-            android:background="@color/subscribe_item_drag_bg"
+            android:background="@color/blue_pale1_1"
             android:scaleType="center"
             android:src="@mipmap/btn_fl_fenleitianjia" />
 

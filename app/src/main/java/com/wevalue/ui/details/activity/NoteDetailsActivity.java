@@ -120,7 +120,7 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
     };
     private ImageView iv_back;
     private ImageView cursor;// 动画图片
-    private ImageView iv_sharenote;
+    private ImageView iv_share_note;
     private ImageView iv_play;
     private TextView tv_head_title;
     private TextView tv_zhuanfa_but;//转发数
@@ -130,7 +130,6 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
     private LinearLayout ll_getview_width;
     private LinearLayout ll_ZF_but;
     private LinearLayout ll_PL_but;
-    private LinearLayout ll_QX_but;
     private LinearLayout ll_Zan_but;
     NoteBean noteBean;
     NoteBean.NoteEntity noteEntity;
@@ -191,7 +190,6 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
     //判断该支付是那种支付行为
     private String spendtype = "0";
     private String orderno = "0";
-
     private String sharefree = "0";
     private View view;
     private String paynum;//用户发布帖子时的定价
@@ -266,9 +264,9 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
         iszan = getResources().getDrawable(R.mipmap.note_like_p);
         iszan.setBounds(0, 0, iszan.getMinimumWidth(), iszan.getMinimumHeight()); //设置边界
         nozan.setBounds(0, 0, nozan.getMinimumWidth(), nozan.getMinimumHeight()); //设置边界
-        iv_sharenote = (ImageView) findViewById(R.id.iv_share_note);
-        iv_sharenote.setVisibility(View.VISIBLE);
-        iv_sharenote.setOnClickListener(this);
+        iv_share_note = (ImageView) findViewById(R.id.iv_share_note);
+        iv_share_note.setVisibility(View.VISIBLE);
+        iv_share_note.setOnClickListener(this);
 
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_play = (ImageView) findViewById(R.id.iv_play);
@@ -292,7 +290,6 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
 
         ll_ZF_but = (LinearLayout) findViewById(R.id.ll_ZF_but);
         ll_PL_but = (LinearLayout) findViewById(R.id.ll_PL_but);
-        ll_QX_but = (LinearLayout) findViewById(R.id.ll_QX_but);
         ll_Zan_but = (LinearLayout) findViewById(R.id.ll_Zan_but);
 
 
@@ -318,7 +315,6 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
         tv_delete_note.setOnClickListener(this);
         ll_ZF_but.setOnClickListener(this);
         ll_PL_but.setOnClickListener(this);
-        ll_QX_but.setOnClickListener(this);
         ll_Zan_but.setOnClickListener(this);
         tv_zhuanfa_but.setOnClickListener(new MyOnClickListener(0));
         tv_pinglun_but.setOnClickListener(new MyOnClickListener(1));
@@ -549,6 +545,7 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                 finish();
                 break;
             case R.id.ll_ZF_but:
+
                 if (TextUtils.isEmpty(SharedPreferencesUtil.getUid(this))) {
                     intent = new Intent(NoteDetailsActivity.this, LoginActivity.class);
                     startActivity(intent);
@@ -565,16 +562,6 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                     intent.putExtra("noteid", noteId);
                     intent.putExtra("repostid", repostid);
                     startActivityForResult(intent, 2);
-                }
-                break;
-            case R.id.ll_QX_but:
-                if (TextUtils.isEmpty(SharedPreferencesUtil.getUid(this))) {
-                    intent = new Intent(this, LoginActivity.class);
-                    startActivity(intent);
-                } else {
-                    intent = new Intent(this, EmoTionActivity.class);
-                    intent.putExtra("noteId", noteId);
-                    startActivityForResult(intent, 3);
                 }
                 break;
             case R.id.ll_Zan_but:
@@ -917,9 +904,20 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
         }
         if (noteEntity.getIsself().equals("0")) {
             tv_is_yuanchuang.setText("原创");
+            tv_is_yuanchuang.setVisibility(View.VISIBLE);
         } else {
-            tv_is_yuanchuang.setText("非原创");
+            tv_is_yuanchuang.setText("非原创");//如果非原创 也不显示
+            tv_is_yuanchuang.setVisibility(View.GONE);
         }
+
+        if (noteEntity.isfree.equals("1")){
+            iv_share_note.setVisibility(View.GONE);
+            ll_ZF_but.setVisibility(View.GONE);
+        }else {
+            iv_share_note.setVisibility(View.VISIBLE);
+            ll_ZF_but.setVisibility(View.VISIBLE);
+        }
+
         tv_dengji.setText(noteEntity.getUserlevel());
         tv_price.setText("¥" + noteEntity.getPaynum());
         tv_income.setText("¥" + noteEntity.getShouyi());
@@ -942,22 +940,8 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
         tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
         switch (notetype) {
             case "4"://文字
-                if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-                    nsgv_world_list_gridview.setVisibility(View.VISIBLE);
-                    mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), this);
-                    mGirdViewAdapter.notifyDataSetChanged();
-                    nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
-                } else {
                     tv_note_content.setVisibility(View.VISIBLE);
-                    if (true) {
-                        tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
-                    } else {
-                        SpannableStringBuilder builder = new SpannableStringBuilder(noteEntity.getOldusernickname() + "：" + noteEntity.getContent().replace("#换行#", "\r\n"));
-                        ForegroundColorSpan blueSpan = new ForegroundColorSpan(Color.BLUE);
-                        builder.setSpan(blueSpan, 0, noteEntity.getOldusernickname().length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        tv_note_content.setText(builder);
-                    }
-                }
+                tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
                 break;
             case "1"://视频文
                 in_audio_video_ui.setVisibility(View.VISIBLE);

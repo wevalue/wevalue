@@ -24,7 +24,8 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.CommentActivity;
+import com.wevalue.ui.details.activity.NoteDetailsActivity;
+import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
 import com.wevalue.ui.details.activity.UserDetailsActivity;
 import com.wevalue.ui.world.activity.ImgShowActivity;
 import com.wevalue.ui.world.activity.TransmitNoteActivity;
@@ -110,8 +111,9 @@ public class NoteListAdapter extends BaseAdapter {
         }
 //         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_infulence, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_note_list, null);
             viewHolder = new ViewHolder();
+            viewHolder.layout_bg = (LinearLayout) convertView.findViewById(R.id.layout_bg);
             viewHolder.iv_play = (ImageView) convertView.findViewById(R.id.iv_play);
             viewHolder.tv_nickname = (TextView) convertView.findViewById(R.id.tv_nickname);
             viewHolder.iv_user_img = (ImageView) convertView.findViewById(R.id.iv_user_img);
@@ -131,7 +133,6 @@ public class NoteListAdapter extends BaseAdapter {
             viewHolder.in_audio_video_ui = convertView.findViewById(R.id.in_audio_video_ui);
             viewHolder.ll_praise = (LinearLayout) convertView.findViewById(R.id.ll_praise);
             viewHolder.nsgv_world_list_gridview = (NoScrollGridView) convertView.findViewById(R.id.nsgv_world_list_gridview);
-            viewHolder.rl_zhuan_content_ui = (RelativeLayout) convertView.findViewById(R.id.rl_zhuan_content_ui);
             viewHolder.rl_note_content_ui = (RelativeLayout) convertView.findViewById(R.id.rl_note_content_ui);
             viewHolder.tv_transmit_num = (TextView) convertView.findViewById(R.id.tv_transmit_num);
             viewHolder.ll_transmit_info = (LinearLayout) convertView.findViewById(R.id.ll_transmit_info);
@@ -246,7 +247,8 @@ public class NoteListAdapter extends BaseAdapter {
                     break;
             }
             //如果转发id==0 则此信息不是转发的 转发的不显示标题
-            if (mDatas.get(position).getRepostid().equals("0")) {
+            final String repsotid = mDatas.get(position).getRepostid();
+            if (repsotid.equals("0")) {
                 viewHolder.ll_transmit_info.setVisibility(View.GONE);
                 viewHolder.rl_note_content_ui.setBackgroundResource(R.color.white);
                 viewHolder.tv_title.setVisibility(View.VISIBLE);
@@ -263,7 +265,17 @@ public class NoteListAdapter extends BaseAdapter {
                 viewHolder.tv_content_content.setText(style_2);
                 viewHolder.rl_note_content_ui.setBackgroundResource(R.color.background);
             }
-
+            viewHolder.rl_note_content_ui.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent;
+                    //跳转到帖子详情页
+                    intent = new Intent(mContext, NoteDetailsActivity.class);
+                    intent.putExtra("noteId", mDatas.get(position).getNoteid());
+                    intent.putExtra("repostid", mDatas.get(position).getRepostid());
+                    mContext.startActivity(intent);
+                }
+            });
             viewHolder.nsgv_world_list_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
@@ -277,7 +289,6 @@ public class NoteListAdapter extends BaseAdapter {
                     mActivity.startActivity(intent);
                 }
             });
-
 
             mNoteRequestBase = NoteRequestBase.getNoteRequestBase(mContext);
             viewHolder.ll_praise.setOnClickListener(new View.OnClickListener() {
@@ -335,8 +346,27 @@ public class NoteListAdapter extends BaseAdapter {
                 mContext.startActivity(intent);
             }
         });
+
+
+        // 是否是热门的帖子
+        boolean isHot = false;
+        //一般是前三条
+        if (position<3&&mLunBoDatas!=null)
+            for (int i = 0; i < mLunBoDatas.size(); i++) {
+                if (mLunBoDatas.get(i)==noteEntity){
+                    isHot = true;
+                    break;
+                }
+            }
+        if (isHot){
+            viewHolder.layout_bg.setBackgroundResource(R.mipmap.bianxian);
+        }else {
+            viewHolder.layout_bg.setBackgroundResource(R.color.white);
+        }
+
         return convertView;
     }
+
 
     private void imgViewSetData(String url, ImageView iv) {
         Glide.with(mActivity)
@@ -348,7 +378,7 @@ public class NoteListAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        LinearLayout ll_info_line;//底部点赞阅读数等信息的布局
+        LinearLayout layout_bg;//整个item布局
         LinearLayout ll_transmit_info;//转发信息的布局
         LinearLayout ll_head_info;//用户信息
         TextView tv_transmit_num;//转发信息的打赏或收益情况
@@ -372,7 +402,6 @@ public class NoteListAdapter extends BaseAdapter {
         NoScrollGridView nsgv_world_list_gridview;//图片列表;
         LinearLayout ll_praise;
         LinearLayout ll_ZF_but;
-        RelativeLayout rl_zhuan_content_ui;
         RelativeLayout rl_note_content_ui;
         ImageView iv_play;//播放图标
 

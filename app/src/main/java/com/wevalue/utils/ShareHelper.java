@@ -33,11 +33,20 @@ public class ShareHelper {
         this.mHan = mHan;
     }
 
-    public void initShare(String sharePlatform, String url,String message) {
+    public void initShare(String sharePlatform, String url, String message) {
+        String title = message;
+        String content = message;
+        if (message.contains("|#|")) {
+            int cutting  = message.lastIndexOf("|#|");
+            title = message.substring(0,cutting);
+            content = message.substring(cutting+3,message.length());
+        }
+
         switch (sharePlatform) {
             case Constants.shareSina: //分享到微博
                 SinaWeibo.ShareParams sp = new SinaWeibo.ShareParams();
-                sp.setText(message);
+                sp.setText(title);
+                sp.setTitle(content);
                 sp.setUrl(url);
                 Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
                 weibo.authorize();
@@ -54,22 +63,18 @@ public class ShareHelper {
                 WechatMoments.ShareParams sp_weixin = new WechatMoments.ShareParams();
                 sp_weixin.setShareType(Platform.SHARE_WEBPAGE);
                 sp_weixin.setUrl(url);
-                sp_weixin.setTitle(message);
+                sp_weixin.setText(title);
+                sp_weixin.setTitle(content);
                 wx.share(sp_weixin);
                 break;
             case Constants.shareQzone://分享qq空间
                 QZone.ShareParams qzonesp = new QZone.ShareParams();
-                qzonesp.setTitle(message);
+                qzonesp.setText(title);
+                qzonesp.setTitle(content);
                 qzonesp.setTitleUrl(url); // 标题的超链接
-//                qzonesp.setText("微值价值分享");
-//                qzonesp.setImageUrl("http://www.someserver.com/测试图片网络地址.jpg");
                 qzonesp.setSite("陕西微值辩证科技有限公司");
-//                qzonesp.setSiteUrl("发布分享网站的地址");
                 qzonesp.setSiteUrl(url);
-
                 Platform qzone = ShareSDK.getPlatform(QZone.NAME);
-//                qzone.setPlatformActionListener(news MyActionListener());
-//                qzone.authorize();
                 qzone.setPlatformActionListener(new MyActionListener()); // 设置分享事件回调
                 qzone.share(qzonesp);
                 break;
@@ -79,17 +84,16 @@ public class ShareHelper {
                 }
                 Platform weixin = ShareSDK.getPlatform(context.getApplicationContext(), Wechat.NAME);
                 weixin.setPlatformActionListener(new MyActionListener());
-//                weixin.authorize();
                 Wechat.ShareParams sp_wx_friend = new Wechat.ShareParams();
                 sp_wx_friend.setShareType(Platform.SHARE_WEBPAGE);
                 sp_wx_friend.setUrl(url);
-//                sp_wx_friend.setText("微值价值分享");
-                sp_wx_friend.setTitle("微值价值分享");
-//                sp_1.setImageUrl("http://sweetystory.com/Public/ttwebsite/theme1/style/img/special-1.jpg");
+                sp_wx_friend.setText(title);
+                sp_wx_friend.setTitle(content);
                 weixin.share(sp_wx_friend);
                 break;
         }
     }
+
     /**
      * 分享回调事件
      **/

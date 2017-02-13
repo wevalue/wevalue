@@ -25,7 +25,7 @@ import com.wevalue.utils.SharedPreferencesUtil;
 
 import java.util.HashMap;
 
-/**
+/** 我们
  * Created by Administrator on 2016-06-27.
  */
 public class WeFragment extends BaseFragment implements View.OnClickListener, WZHttpListener {

@@ -40,6 +40,7 @@
                 android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="昵称"
                 android:textColor="@color/blue_pale1"
                 android:textSize="12sp" />

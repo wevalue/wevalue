@@ -1,7 +1,10 @@
 package com.wevalue.ui.world.activity;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -23,6 +26,7 @@ import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.details.activity.UserDetailsActivity;
+import com.wevalue.ui.release.ReleaseNoteActivity;
 import com.wevalue.ui.world.adapter.SousuoAdapter;
 import com.wevalue.ui.world.adapter.Sousuo_zongheAdapter;
 import com.wevalue.utils.LogUtils;
@@ -52,7 +56,7 @@ public class SearchJieguoActivity extends BaseActivity implements View.OnClickLi
     private List<SearchFriendBean.DtfriendBean> dtfriendBeanList;
     SearchFriendBean searchFriendBean;
     String searchContent;
-
+    private ProgressDialog mProgressDialog;
     private PullToRefreshScrollView prsv_ScrollView;
     private int pageindex = 1;
     private int isWho;
@@ -69,6 +73,20 @@ public class SearchJieguoActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void infoView() {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("搜索中...");
+        mProgressDialog.setCanceledOnTouchOutside(false);
+//        mProgressDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+//            @Override
+//            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+//                if (i == KeyEvent.KEYCODE_BACK && mProgressDialog.isShowing()) {
+//                    ShowUtil.showToast(SearchJieguoActivity.this, "信息正在发布，请稍等哒~");
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+        mProgressDialog.show();
         iv_back = (ImageView) findViewById(R.id.iv_back);
         tv_head_title = (TextView) findViewById(R.id.tv_head_title);
         list_sosuo = (NoScrollListview) findViewById(R.id.list_sousuo);
@@ -182,6 +200,7 @@ public class SearchJieguoActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onSuccess(String content, String isUrl) {
         prsv_ScrollView.onRefreshComplete();
+        mProgressDialog.dismiss();
         Gson gson = new Gson();
         switch (isUrl) {
             case RequestPath.GET_ADDFRIENDBYSEARCH:
@@ -284,6 +303,7 @@ public class SearchJieguoActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onFailure(String content) {
+        mProgressDialog.dismiss();
         prsv_ScrollView.onRefreshComplete();
 
     }

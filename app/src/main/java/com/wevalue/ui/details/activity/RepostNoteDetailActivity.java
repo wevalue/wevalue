@@ -138,6 +138,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
     ImageView iv_user_img;//用户头像
     ImageView iv_video_img;//视频音频 图片
     ImageView iv_audio_img;//视频音频 图片
+    private ImageView iv_play;
     String iv_video_and_audio_url;
     TextView tv_nickname;//昵称
     TextView tv_dengji;//等级
@@ -191,7 +192,6 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
 
     private WebView web_tuwen;
 
-    private TextView tv_aitei_who;
     private TextView tv_jubao;
     private String repostfrom = "3";
 
@@ -262,7 +262,6 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         tv_is_reci = (TextView) findViewById(R.id.tv_is_reci);
         iv_back = (ImageView) findViewById(R.id.iv_back);
         tv_head_title = (TextView) findViewById(R.id.tv_head_title);
-        tv_aitei_who = (TextView) findViewById(R.id.tv_aitei_who);
         tv_jubao = (TextView) findViewById(R.id.tv_jubao);
 
         ll_getview_width = (LinearLayout) findViewById(R.id.ll_getview_width);
@@ -285,6 +284,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
 
         tv_nickname = (TextView) findViewById(R.id.tv_nickname);
         iv_user_img = (ImageView) findViewById(R.id.iv_user_img);
+        iv_play = (ImageView) findViewById(R.id.iv_play);
         iv_video_img = (ImageView) findViewById(R.id.iv_video_img);
         iv_audio_img = (ImageView) findViewById(R.id.iv_audio_img);
         tv_dengji = (TextView) findViewById(R.id.tv_dengji);
@@ -298,6 +298,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
 
         iv_video_img.setOnClickListener(this);
         iv_audio_img.setOnClickListener(this);
+        iv_play.setVisibility(View.GONE);
         iv_video_img.setVisibility(View.GONE);
         iv_audio_img.setVisibility(View.GONE);
 
@@ -551,17 +552,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                     ShowUtil.showToast(this, "对不起,请您先登录");
                 }
                 break;
-//            case R.id.ll_QX_but: //情绪
-//                if (TextUtils.isEmpty(SharedPreferencesUtil.getUid(this))) {
-//                    intent = new Intent(this, LoginActivity.class);
-//                    startActivity(intent);
-//                } else {
-//                    intent = new Intent(this, EmoTionActivity.class);
-//                    intent.putExtra("noteId", noteId);
-//                    intent.putExtra("repostid", repostid);
-//                    startActivityForResult(intent, 3);
-//                }
-//                break;
+
             case R.id.ll_Zan_but:
                 if (!TextUtils.isEmpty(SharedPreferencesUtil.getUid(this))) {
                     if (noteEntity.getIszan().equals("1")) {//已经点赞
@@ -868,60 +859,55 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         }
         if (noteEntity.getIsself().equals("0")) {
             tv_is_yuanchuang.setText("原创");
+            tv_is_yuanchuang.setVisibility(View.VISIBLE);
         } else {
-            tv_is_yuanchuang.setText("非原创");
+            tv_is_yuanchuang.setText("非原创");//如果非原创 也不显示
+            tv_is_yuanchuang.setVisibility(View.GONE);
         }
+        if (noteEntity.isfree.equals("1")){
+            iv_share_note.setVisibility(View.GONE);
+            ll_ZF_but.setVisibility(View.GONE);
+        }else {
+            iv_share_note.setVisibility(View.VISIBLE);
+            ll_ZF_but.setVisibility(View.VISIBLE);
+        }
+
+        nsgv_world_list_gridview.setVisibility(View.GONE);
+        iv_play.setVisibility(View.GONE);
+        in_audio_video_ui.setVisibility(View.GONE);
+        web_tuwen.setVisibility(View.GONE);
 
         tv_price.setText("¥" + noteEntity.getPaynum());
         tv_income.setText("¥" + noteEntity.getShouyi());
         tv_day.setText(DateTiemUtils.editTime(noteEntity.getAddtime()));
         tv_read_num.setText("阅读：" + noteEntity.getClickcount());
         notetype = noteEntity.getNotetype();
+
         switch (notetype) {
             case "4"://文字
-                if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-                    in_audio_video_ui.setVisibility(View.GONE);
-                    nsgv_world_list_gridview.setVisibility(View.VISIBLE);
-                    mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), this);
-                    mGirdViewAdapter.notifyDataSetChanged();
-                    nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
-                } else {
-                    if (true) {
-                        tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
-                    } else {
-                        SpannableStringBuilder builder = new SpannableStringBuilder(noteEntity.getOldusernickname() + "：" + noteEntity.getContent().replace("#换行#", "\r\n"));
-                        ForegroundColorSpan blueSpan = new ForegroundColorSpan(Color.BLUE);
-                        builder.setSpan(blueSpan, 0, noteEntity.getOldusernickname().length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        tv_note_content.setText(builder);
-                    }
-                }
-
+                tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
                 break;
             case "1"://视频文
                 in_audio_video_ui.setVisibility(View.VISIBLE);
-                nsgv_world_list_gridview.setVisibility(View.GONE);
                 iv_video_img.setVisibility(View.VISIBLE);
+                iv_play.setVisibility(View.VISIBLE);
                 imgViewSetData(noteEntity.getNotevideopic(), iv_video_img);
                 break;
             case "2"://音频文
                 in_audio_video_ui.setVisibility(View.VISIBLE);
-                nsgv_world_list_gridview.setVisibility(View.GONE);
                 iv_audio_img.setVisibility(View.VISIBLE);
                 iv_audio_img.setImageResource(R.mipmap.ic_music);
                 break;
             case "3"://图文
-                in_audio_video_ui.setVisibility(View.GONE);
                 nsgv_world_list_gridview.setVisibility(View.VISIBLE);
-
                 if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
                     mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), RepostNoteDetailActivity.this/*,mBitmap,bitmapDisplayConfig*/);
                     mGirdViewAdapter.notifyDataSetChanged();
                     nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
                 }
                 break;
-            case "5"://图文混排, web ,转发
+            case "5"://图文混排, web
                 web_tuwen.setVisibility(View.VISIBLE);
-                tv_note_content.setVisibility(View.GONE);
                 web_tuwen.getSettings().setBlockNetworkImage(false);
                 web_tuwen.getSettings().setLoadsImagesAutomatically(true);
                 //支持js
@@ -929,13 +915,11 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                 web_tuwen.loadUrl(RequestPath.SERVER_PATH + "/site/webcontent.aspx?noteid=" + noteEntity.getNoteid());
                 break;
         }
-
-
         String context_2 = "@" + noteEntity.getOldusernickname() + "：" + noteEntity.getContent();
         SpannableStringBuilder style_2 = new SpannableStringBuilder(context_2);
         style_2.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.blue)), 0,
                 noteEntity.getOldusernickname().length() + 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tv_note_content.setText(style_2);
+        tv_note_content.setVisibility(View.VISIBLE);
         tv_note_content.setText(style_2);
 
         nsgv_world_list_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

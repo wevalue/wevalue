@@ -89,10 +89,10 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
         //不显示系统的标题栏
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_launcher);
-        realm = Realm.getDefaultInstance();
-        currentSeconnd = System.currentTimeMillis();
         imageView = (ImageView) findViewById(R.id.iv_img);
         lanucherImg();
+        realm = Realm.getDefaultInstance();
+        currentSeconnd = System.currentTimeMillis();
         getAllChanel();
         mContext = getApplicationContext();
         WeValueApplication.phoneName = android.os.Build.BRAND;

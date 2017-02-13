@@ -8,7 +8,7 @@
         android:id="@+id/vp_guide_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/welcome5">
+        android:background="@mipmap/welcome4">
 
     </android.support.v4.view.ViewPager>
 

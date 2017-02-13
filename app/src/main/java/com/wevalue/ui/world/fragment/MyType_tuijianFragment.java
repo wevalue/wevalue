@@ -75,7 +75,6 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
     private long mExitTime = 0;
     private int mViewpagerIndex = 0;
     private TextView[] imageViews = null;//小圆点
-    private RelativeLayout rl_xs;
     public boolean isContinue = true;
     private PullToRefreshScrollView prsv_ScrollView;
     private NoScrollListview mNoScrollListview;
@@ -205,7 +204,6 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
      */
     private void initView() {
         LogUtils.e("轮播  -  initView");
-        rl_xs = (RelativeLayout) view.findViewById(R.id.rl_xs);
         prsv_ScrollView = (PullToRefreshScrollView) view.findViewById(R.id.prsv_ScrollView);
         mNoScrollListview = (NoScrollListview) view.findViewById(R.id.mNoScrollListview);
         mNoScrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -280,13 +278,13 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
             return;
         }
         vp_world = (LazyViewPager) view.findViewById(R.id.vp_world);
-        ViewGroup.LayoutParams ls = vp_world.getLayoutParams();
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        // 当inJustDecodeBounds设为true时,不会加载图片仅获取图片尺寸信息
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(), R.mipmap.bianxian, options);
-        ls.height = options.outHeight;
-        vp_world.setLayoutParams(ls);
+//        ViewGroup.LayoutParams ls = vp_world.getLayoutParams();
+//        BitmapFactory.Options options = new BitmapFactory.Options();
+//        // 当inJustDecodeBounds设为true时,不会加载图片仅获取图片尺寸信息
+//        options.inJustDecodeBounds = true;
+//        BitmapFactory.decodeResource(getResources(), R.mipmap.bianxian, options);
+//        ls.height = options.outHeight;
+        //vp_world.setLayoutParams(ls);
         ViewGroup group = (ViewGroup) view.findViewById(R.id.ll_viewGroup);
         viewList = new ArrayList<>();
         if (null != mListData_lunbo && mListData_lunbo.size() > 0) {
@@ -356,9 +354,12 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         tv_day.setText(DateTiemUtils.editTime(noteEntity.getAddtime()));
         tv_price.setText("¥" + noteEntity.getPaynum());
         tv_income.setText("¥" + noteEntity.getShouyi());
-
-        tv_note_title.setText(noteEntity.getContent());
-
+        String title = noteEntity.getTitle();
+        if (TextUtils.isEmpty(title)){
+            tv_note_title.setText(noteEntity.getContent());
+        }else {
+            tv_note_title.setText(title);
+        }
         tv_note_content.setVisibility(View.GONE);
         iv_video_img.setVisibility(View.GONE);
         iv_play.setVisibility(View.GONE);

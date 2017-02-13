@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
+/** 我的许愿
  * Created by xuhua on 2016/8/23.
  */
 public class MyWishActivity extends BaseActivity implements View.OnClickListener, WZHttpListener {

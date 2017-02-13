@@ -69,7 +69,7 @@ public class JpushTagSet {
      */
     private void setStyleBasic() {
         BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(activity);
-        builder.statusBarDrawable = R.mipmap.wevalue_icon;
+        builder.statusBarDrawable = R.mipmap.logo;
         builder.notificationFlags = Notification.FLAG_AUTO_CANCEL;  //设置为点击后自动消失
         builder.notificationDefaults = Notification.DEFAULT_SOUND;  //设置为铃声（ Notification.DEFAULT_SOUND）或者震动（ Notification.DEFAULT_VIBRATE）
         JPushInterface.setPushNotificationBuilder(1, builder);
@@ -82,7 +82,7 @@ public class JpushTagSet {
      */
     public void setStyleCustom() {
         CustomPushNotificationBuilder builder = new CustomPushNotificationBuilder(activity.getApplicationContext(), R.layout.customer_notitfication_layout, R.id.icon, R.id.title, R.id.text);
-        builder.layoutIconDrawable = R.mipmap.wevalue_icon;
+        builder.layoutIconDrawable = R.mipmap.logo;
         builder.developerArg0 = "developerArg2";
         JPushInterface.setPushNotificationBuilder(2, builder);
 //        Toast.makeText(activity.getApplicationContext(), "Custom Builder - 2", Toast.LENGTH_SHORT).show();

@@ -1,12 +1,16 @@
 package com.wevalue.ui.we.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,6 +26,7 @@ import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.we.activity.MeassageActivity;
 import com.wevalue.ui.we.adapter.MessageAdapter;
 import com.wevalue.utils.LogUtils;
+import com.wevalue.utils.PopuUtil;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.youmeng.StatisticsConsts;
 
@@ -42,6 +47,8 @@ public class We_MessageFragment extends Fragment implements WZHttpListener {
     SiteMessageModel messageModel;
     List<SiteMessageModel.DataBean> dataBeanList;
     WeFragment weFragment ;
+    Context mContext;
+    View convertView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_friendsmessage, null);
@@ -56,10 +63,52 @@ public class We_MessageFragment extends Fragment implements WZHttpListener {
         weFragment.initWeInfo();
     }
     private void initView(View view) {
+        mContext = getContext();
         pgb = (ProgressBar) view.findViewById(R.id.pgb);
         messageList = (ListView) view.findViewById(R.id.ll_messagelist);
         initMessageData();
+        initHeadView();
     }
+    private void initHeadView() {
+        View convertView = LayoutInflater.from(mContext).inflate(R.layout.itemmessage, null);
+        ImageView iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
+        TextView tv_tittle = (TextView) convertView.findViewById(R.id.tv_tittle);
+        TextView tv_content = (TextView) convertView.findViewById(R.id.tv_content);
+        TextView tv_time = (TextView) convertView.findViewById(R.id.tv_time);
+        tv_time.setVisibility(View.GONE);
+        TextView tv_red_cycle = (TextView) convertView.findViewById(R.id.tv_red_cycle);
+        tv_red_cycle.setVisibility(View.GONE);
+        iv_icon.setImageResource(R.mipmap.we_message_invite_friends);
+        tv_tittle.setText("邀请好友");
+        tv_content.setText("让美好阅读的初心接力下去");
+        messageList.addHeaderView(convertView);
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initFriends();
+            }
+        });
+    }
+   private void  initFriends(){
+       String url = RequestPath.SERVER_PATH+"/web/invite.html";
+       String content = "好朋友就会玩一样的爱屁屁|#|我发现了个新世界，邀请你一起来看！";
+
+       SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Shared.sx",Context.MODE_PRIVATE);
+       boolean ishared = sharedPreferences.getBoolean("iShared",false);
+       HashMap<String,String> map = new HashMap<String, String>();
+       map.put("url",url);
+       map.put("message",content);
+
+       if (ishared){
+           PopuUtil.initShareInvitePopup(getActivity(),new Handler(),map);
+       }else {
+           SharedPreferences.Editor edit = sharedPreferences.edit();
+           edit.putBoolean("iShared",true);
+           edit.commit();
+           PopuUtil.inviteFriends(getActivity(),new Handler(),map);
+       }
+   }
+
     @Override
     public void onSuccess(String content, String isUrl) {
         LogUtils.e("isUrl",content);
@@ -73,35 +122,14 @@ public class We_MessageFragment extends Fragment implements WZHttpListener {
             messageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    SiteMessageModel.DataBean  data  =  dataBeanList.get((int) parent.getAdapter().getItemId(position));
                     TextView tv_red_cycle = (TextView) view.findViewById(R.id.tv_red_cycle);
                     tv_red_cycle.setVisibility(View.GONE);
                     weFragment.initWeInfo();
                     Intent intent = new Intent(getActivity(), MeassageActivity.class);
-                    intent.putExtra("messageType", dataBeanList.get(position).getMesstype() + "");
+                    intent.putExtra("messageType", data.getMesstype() + "");
                     startActivity(intent);
-                    switch (dataBeanList.get(position).getMesstype()) {
-                        case 1:
-                            MobclickAgent.onEvent(getActivity(), StatisticsConsts.event_newMessageOpen, "打开新的好友");
-                            break;
-                        case 2:
-                            MobclickAgent.onEvent(getActivity(), StatisticsConsts.event_newMessageOpen, "打开新的粉丝");
-                            break;
-                        case 3:
-                            MobclickAgent.onEvent(getActivity(), StatisticsConsts.event_newMessageOpen, "打开新的打赏");
-                            break;
-                        case 4:
-                            MobclickAgent.onEvent(getActivity(), StatisticsConsts.event_newMessageOpen, "打开新的转发");
-                            break;
-                        case 5:
-                            MobclickAgent.onEvent(getActivity(), StatisticsConsts.event_newMessageOpen, "打开新的点赞");
-                            break;
-                        case 6:
-                            MobclickAgent.onEvent(getActivity(), StatisticsConsts.event_newMessageOpen, "打开新的评论");
-                            break;
-                        case 7:
-                            MobclickAgent.onEvent(getActivity(), StatisticsConsts.event_newMessageOpen, "打开系统消息");
-                            break;
-                    }
+                    MobclickAgent.onEvent(getActivity(), StatisticsConsts.event_newMessageOpen, "打开"+data.getMesstitle());
                 }
             });
         }
