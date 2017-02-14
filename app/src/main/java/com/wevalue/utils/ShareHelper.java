@@ -38,8 +38,8 @@ public class ShareHelper {
         String content = message;
         if (message.contains("|#|")) {
             int cutting  = message.lastIndexOf("|#|");
-            title = message.substring(0,cutting);
-            content = message.substring(cutting+3,message.length());
+            content = message.substring(0,cutting);
+            title = message.substring(cutting+3,message.length());
         }
 
         switch (sharePlatform) {

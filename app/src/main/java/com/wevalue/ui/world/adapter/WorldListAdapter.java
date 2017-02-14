@@ -41,7 +41,7 @@ import java.util.List;
  */
 public class WorldListAdapter extends BaseAdapter {
     ViewHolder viewHolder = null;
-    NoteBean.NoteEntity noteEntity;
+
     private List<NoteBean.NoteEntity> mDatas;
     private List<NoteBean.NoteEntity> jiageData = new ArrayList<>();
     private Context mContext;
@@ -55,7 +55,7 @@ public class WorldListAdapter extends BaseAdapter {
 
     public WorldListAdapter(List<NoteBean.NoteEntity> mDatas, List<NoteBean.NoteEntity> jiageData, Context mContext, String type) {
         this.mDatas = mDatas;
-        //this.jiageData = jiageData;
+        this.jiageData = jiageData;
         this.mContext = mContext;
         mActivity = (Activity) mContext;
         this.mType = type;
@@ -97,6 +97,7 @@ public class WorldListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_world_list_copy, null);
             viewHolder = new ViewHolder();
+            viewHolder.id_world_itme_ui = (LinearLayout) convertView.findViewById(R.id.id_world_itme_ui);
             viewHolder.tv_content_content = (TextView) convertView.findViewById(R.id.tv_content_content);
             viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
             viewHolder.tv_nickname = (TextView) convertView.findViewById(R.id.tv_nickname);
@@ -113,7 +114,7 @@ public class WorldListAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        noteEntity = mDatas.get(position);
+        NoteBean.NoteEntity noteEntity = mDatas.get(position);
 
         //头像点击事件
         viewHolder.iv_user_img.setOnClickListener(new View.OnClickListener() {
@@ -261,7 +262,26 @@ public class WorldListAdapter extends BaseAdapter {
                 mContext.startActivity(intent);
             }
         });
-
+//        前三个是价格或者热门 要显示彩条  （此功能未完成）
+//        if (mType.equals("tuijian")){
+//
+//        }else {
+//            // 是否是热门的帖子
+//            boolean isHot = false;
+//            //一般是前三条
+//            if (position<3&&jiageData!=null&&jiageData.size()>0)
+//                for (int i = 0; i < jiageData.size(); i++) {
+//                    if (jiageData.get(i)==noteEntity){
+//                        isHot = true;
+//                        break;
+//                    }
+//                }
+//            if (isHot){
+//                viewHolder.id_world_itme_ui.setBackgroundResource(R.mipmap.bianxian);
+//            }else {
+//                viewHolder.id_world_itme_ui.setBackgroundResource(R.color.transparent);
+//            }
+//        }
         return convertView;
     }
     private void imgViewSetData(String url, ImageView iv,int default_img ) {
@@ -286,6 +306,7 @@ public class WorldListAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
+        LinearLayout id_world_itme_ui;//item背景
         TextView tv_title;//标题
         TextView tv_content_content;//纯文字信息内容
         TextView tv_price;//单价

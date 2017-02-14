@@ -92,8 +92,8 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
 
     private EditText et_title;  //发布标题
     private EditText et_content;  //发布内容
-   // private TextView tv_is_type; // 发布世界 朋友圈
-   // private TextView tv_qingxu;
+    // private TextView tv_is_type; // 发布世界 朋友圈
+    // private TextView tv_qingxu;
 
     private LinearLayout layout_free;
     private ImageView iv_video_img;
@@ -118,7 +118,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
 
     private ArrayList<String> mTitleDatas;//標題
     private ArrayList<String> mID; //帖子标签列表
-//    private ArrayList<String> mYCDatas;//是否原創
+    //    private ArrayList<String> mYCDatas;//是否原創
 //    private ArrayList<String> mSFDatas;// 是否收費
 //    private ArrayList<String> mFWDatas;//範圍
     private ArrayList<String> mQXDatas;//情緒
@@ -208,18 +208,24 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
         et_title.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                LogUtils.e("onTextChanged","charSequence = "+charSequence+"---"+i+"--"+i1+"--"+i2);
-                if (charSequence.length()>30)ShowUtil.showToast(ReleaseNoteActivity.this,"标题不能超过30字");
+                //LogUtils.e("beforeTextChanged","charSequence = "+charSequence+"---"+i+"--"+i1+"--"+i2);
+//                if (et_title.getText().length() ==30){
+//                    ShowUtil.showToast(ReleaseNoteActivity.this, "标题不能超过30字");
+//                }
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //LogUtils.e("onTextChanged","charSequence = "+charSequence+"---"+i+"--"+i1+"--"+i2);
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                LogUtils.e("afterTextChanged","editable = "+editable.length()+" ----"+editable.toString());
+                if (editable.length()==30){
+                    ShowUtil.showToast(ReleaseNoteActivity.this, "标题不能超过30字");
+                }
             }
         });
         et_content = (EditText) findViewById(R.id.et_content);
@@ -265,7 +271,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        if (charSequence.length() >=30) {
+                        if (charSequence.length() >= 300) {
                             ShowUtil.showToast(ReleaseNoteActivity.this, "300字以内");
                         }
                     }
@@ -511,12 +517,12 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                     return;
                 }
                 //如果发布的是纯文字 则必须写内容
-                if (isSendType==4)
-                if (TextUtils.isEmpty(et_content.getText().toString().trim()) && TextUtils.isEmpty(fileUrl) && MainActivity.mSelectedImage.size() == 0) {
-                    ShowUtil.showToast(ReleaseNoteActivity.this, "发布内容不能为空");
-                    tv_send_note.setEnabled(true);
-                    return;
-                }
+                if (isSendType == 4)
+                    if (TextUtils.isEmpty(et_content.getText().toString().trim()) && TextUtils.isEmpty(fileUrl) && MainActivity.mSelectedImage.size() == 0) {
+                        ShowUtil.showToast(ReleaseNoteActivity.this, "发布内容不能为空");
+                        tv_send_note.setEnabled(true);
+                        return;
+                    }
                 if (!isFree) {
                     if (TextUtils.isEmpty(tv_choice_tilte.getText().toString().trim())) {
                         ShowUtil.showToast(ReleaseNoteActivity.this, "请选择标签");
@@ -548,10 +554,10 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                 pvOptions.show();
                 break;
             case R.id.tv_is_yuanchuang://原创
-              boolean isYuan = (boolean) tv_is_yuanchuang.getTag();
-                if (isYuan){
+                boolean isYuan = (boolean) tv_is_yuanchuang.getTag();
+                if (isYuan) {
                     tv_is_yuanchuang.setBackgroundResource(R.mipmap.original_1);
-                }else {
+                } else {
                     tv_is_yuanchuang.setBackgroundResource(R.mipmap.original_2);
                 }
                 tv_is_yuanchuang.setTag(!isYuan);
@@ -668,7 +674,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
             }
         });
         if (!ReleaseNoteActivity.this.isFinishing())
-        mProgressDialog.show();
+            mProgressDialog.show();
         imgFileLst = new ArrayList<>();
         LogUtils.e("imgFileLst123", "开始准备文件" + String.valueOf(isSendType));
         switch (isSendType) {
@@ -707,19 +713,19 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
         if (TextUtils.isEmpty(content)) {
             switch (isSendType) {
                 case 1://视频
-                  //  content = "视频";
+                    //  content = "视频";
                     content = "";
                     break;
                 case 2://音频
-                   // content = "音乐";
+                    // content = "音乐";
                     content = "";
                     break;
                 case 3://图片
-                   // content = "图片";
+                    // content = "图片";
                     content = "";
                     break;
                 case 4://图片
-                   // content = "图片";
+                    // content = "图片";
                     content = "";
                     break;
             }
@@ -745,8 +751,8 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
             map.put("notezone", "1");
         }
         map.put("hotword", et_edit_reci.getText().toString().trim());
-       // map.put("notemood", tv_qingxu.getText().toString().trim()); //去掉情绪
-        String isShare = (boolean)rgb_isShare.getTag()? "0" : "1";
+        // map.put("notemood", tv_qingxu.getText().toString().trim()); //去掉情绪
+        String isShare = (boolean) rgb_isShare.getTag() ? "0" : "1";
         map.put("isshare", isShare);
         map.put("paynum", money);
         if (videoFile != null) {
@@ -1089,8 +1095,8 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
             //图片小于1m  则直接上传图片
             Bitmap b = BitmapFactory.decodeFile(MainActivity.mSelectedImage.get(position_2));
             String imgType = FileUtils.getBitmapType(MainActivity.mSelectedImage.get(position_2));
-            imgType = imgType.substring(imgType.lastIndexOf("/")+1,imgType.length());
-            imgFileLst.add(saveMyBitmap(getSDPath() + "/微值/" + "noteimg" + (position_2 + 1) + "."+imgType, b));
+            imgType = imgType.substring(imgType.lastIndexOf("/") + 1, imgType.length());
+            imgFileLst.add(saveMyBitmap(getSDPath() + "/微值/" + "noteimg" + (position_2 + 1) + "." + imgType, b));
             if (imgFileLst.size() == MainActivity.mSelectedImage.size()) {
                 LogUtils.e("imgFileLst123", "成功压碎图片准备上传" + String.valueOf(imgFileLst.size()));
                 sendNote(null, imgFileLst);

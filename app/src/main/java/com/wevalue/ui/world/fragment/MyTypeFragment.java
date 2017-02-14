@@ -305,11 +305,6 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
                     if (pageindex > 1) {
                         if (noteBean.getData().size() > 0) {
                             mHListData.addAll(noteBean.data);
-//                            if (mListData_jiage != null && mListData_jiage.size() > 2) {
-//                                mHListData.add(0, mListData_jiage.get(0));
-//                                mHListData.add(1, mListData_jiage.get(1));
-//                                mHListData.add(2, mListData_jiage.get(2));
-//                            }
                             mHAdapter.setmDatas(mHListData);
                             mHAdapter.notifyDataSetChanged();
                         } else {
@@ -318,21 +313,17 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
                     } else {
                         if (!MainActivity.isEditChannel && mHAdapter != null && mHListData != null && mHListData.size() > 0) {
                             mHListData = noteBean.getData();
-                            if (mListData_jiage != null && mListData_jiage.size() > 2) {
-                                mHListData.add(0, mListData_jiage.get(0));
-                                mHListData.add(1, mListData_jiage.get(1));
-                                mHListData.add(2, mListData_jiage.get(2));
+                            if (mListData_jiage != null&&mListData_jiage.size()>0 ) {
+                                removeRepeat(mHListData,mListData_jiage);
+                                mHListData.addAll(0,getJiage(mListData_jiage));
                             }
                             mHAdapter.setmDatas(mHListData);
-                            LogUtils.e("mHlistDatas.size = " + mHListData.size());
-                            LogUtils.e("noteBean.getData()= " + noteBean.getData().size());
                             mHAdapter.notifyDataSetChanged();
                         } else {
                             mHListData = noteBean.getData();
-                            if (mListData_jiage != null && mListData_jiage.size() > 2) {
-                                mHListData.add(0, mListData_jiage.get(0));
-                                mHListData.add(1, mListData_jiage.get(1));
-                                mHListData.add(2, mListData_jiage.get(2));
+                            if (mListData_jiage != null ) {
+                                removeRepeat(mHListData,mListData_jiage);
+                                mHListData.addAll(0,getJiage(mListData_jiage));
                             }
                             mHAdapter = new WorldListAdapter(mHListData, mListData_jiage, mainActivity, "nnn");
                             mHAdapter.notifyDataSetChanged();
@@ -348,6 +339,26 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
 
     @Override
     public void onFailure(String content) {
+    }
+    //只显示前三个
+    private List<NoteBean.NoteEntity> getJiage(List<NoteBean.NoteEntity> mListData_jiage){
+        if (mListData_jiage!=null&&mListData_jiage.size()>0)
+        if (mListData_jiage.size()>3){
+            mListData_jiage.remove(mListData_jiage.size()-1);
+            getJiage(mListData_jiage);
+        }
+        return mListData_jiage;
+    }
+
+    private List<NoteBean.NoteEntity> removeRepeat(List<NoteBean.NoteEntity> mHListData,List<NoteBean.NoteEntity> mListData_jiage){
+        if (mListData_jiage==null&&mListData_jiage.size()>0){
+            if (mHListData!=null&&mHListData.size()>0){
+                for (int i = 0; i <mListData_jiage.size() ; i++) {
+                    mHListData.remove(mListData_jiage.get(i));
+                }
+            }
+        }
+        return mHListData;
     }
 
     //从帖子的标签类型获取帖子标签类型的ID

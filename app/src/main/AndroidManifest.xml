@@ -91,7 +91,7 @@
             android:value="587c98093eae2534d0001da5" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="华为应用市场" />
+            android:value="自主渠道" />
 
         <!-- 首页 -->
         <activity

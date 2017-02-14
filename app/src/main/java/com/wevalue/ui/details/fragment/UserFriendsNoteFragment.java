@@ -81,19 +81,10 @@ public class UserFriendsNoteFragment extends BaseFragment implements WZHttpListe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent;
-                if (noteInfo.get(position).getIsfree().equals("1")) {
                     intent = new Intent(getActivity(), NoteDetailsActivity.class);
-                    LogUtils.e("----pos--" + position);
                     intent.putExtra("noteId", noteInfo.get(position).getNoteid());
                     intent.putExtra("repostid", noteInfo.get(position).getRepostid());
                     startActivity(intent);
-                } else {
-                    intent = new Intent(getActivity(), NoteDetailsActivity.class);
-                    LogUtils.e("----pos--" + position);
-                    intent.putExtra("noteId", noteInfo.get(position).getNoteid());
-                    intent.putExtra("repostid", noteInfo.get(position).getRepostid());
-                    startActivity(intent);
-                }
             }
         });
         prsv_ScrollView.setMode(PullToRefreshBase.Mode.BOTH);

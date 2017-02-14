@@ -201,7 +201,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="转发 0"
+                        android:text="送给朋友们 0"
                         android:textColor="@color/font_gray"
                         android:textSize="14sp" />
 

@@ -461,20 +461,6 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                         mNoteRequestBase.getNoteInfoRepostlist(RequestPath.GET_NOTECOMMLIST, noteId, repostid, pagerIndex, RepostNoteDetailActivity.this);
                     }
                     break;
-                case R.id.tv_qingxu_but:
-                    tv_zhuanfa_but.setTextColor(getResources().getColor(R.color.font_gray));
-                    tv_pinglun_but.setTextColor(getResources().getColor(R.color.font_gray));
-                    tv_zan_but.setTextColor(getResources().getColor(R.color.font_gray));
-                    lineAnimation(index);
-                    isWho = 3;
-                    if (mListData_QX != null && mListData_QX.size() > 0) {
-                        mAdapter.setmDatas(mListData_QX, isWho);
-                        mAdapter.notifyDataSetChanged();
-                    } else {
-                        pagerIndex = 1;
-                        mNoteRequestBase.getNoteInfoRepostlist(RequestPath.GET_NOTEMOODLIST, noteId, repostid, pagerIndex, RepostNoteDetailActivity.this);
-                    }
-                    break;
                 case R.id.tv_zan_but:
                     tv_zhuanfa_but.setTextColor(getResources().getColor(R.color.font_gray));
                     tv_pinglun_but.setTextColor(getResources().getColor(R.color.font_gray));
@@ -835,7 +821,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                 break;
 
         }
-        tv_zhuanfa_but.setText("转发  " + noteInfoBean.getRepost_Total());
+        tv_zhuanfa_but.setText("送给朋友们  " + noteInfoBean.getRepost_Total());
         tv_zan_but.setText("赞  " + noteInfoBean.getZan_Total());
         tv_pinglun_but.setText("评论  " + noteInfoBean.getComment_Total());
         LogUtils.e("t");

@@ -272,7 +272,7 @@ public class NoteListAdapter extends BaseAdapter {
                     //跳转到帖子详情页
                     intent = new Intent(mContext, NoteDetailsActivity.class);
                     intent.putExtra("noteId", mDatas.get(position).getNoteid());
-                    intent.putExtra("repostid", mDatas.get(position).getRepostid());
+                    intent.putExtra("repostid", "0");
                     mContext.startActivity(intent);
                 }
             });
@@ -328,8 +328,6 @@ public class NoteListAdapter extends BaseAdapter {
         }
 
         viewHolder.textView.setText("送给朋友们");
-        viewHolder.tv_zhuanfa_num.setText(noteEntity.getCommcount());
-
         viewHolder.ll_ZF_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

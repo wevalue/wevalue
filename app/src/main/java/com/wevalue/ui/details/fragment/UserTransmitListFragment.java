@@ -21,6 +21,7 @@ import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.adapter.NoteListAdapter;
+import com.wevalue.utils.ActivityUtils;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
@@ -62,10 +63,7 @@ public class UserTransmitListFragment extends BaseFragment implements WZHttpList
         mNoScrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), NoteDetailsActivity.class);
-                intent.putExtra("noteId", noteInfo.get(position).getNoteid());
-                intent.putExtra("repostid", "0");
-                startActivity(intent);
+                ActivityUtils.gotoNoteDetails(getActivity(),noteInfo.get(position),"3");
             }
         });
         queryData();

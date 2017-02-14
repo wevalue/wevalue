@@ -28,6 +28,7 @@ import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
 import com.wevalue.adapter.NoteListAdapter;
 import com.wevalue.ui.world.activity.SearchActivity;
+import com.wevalue.utils.ActivityUtils;
 import com.wevalue.utils.DateTiemUtils;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.PopuUtil;
@@ -191,19 +192,7 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 Intent intent = null;
                 //跳转到转发帖子详情页
-                    if (mHListData.get(position).getRepostid().equals("0")) {
-                        intent = new Intent(getActivity(), NoteDetailsActivity.class);
-                        intent.putExtra("noteId", mHListData.get(position).getNoteid());
-                        intent.putExtra("repostid", mHListData.get(position).getRepostid());
-                        intent.putExtra("repostfrom", "2");
-                        startActivity(intent);
-                    } else {
-                        intent = new Intent(mContext, RepostNoteDetailActivity.class);
-                        intent.putExtra("noteId", mHListData.get(position).getNoteid());
-                        intent.putExtra("repostid", mHListData.get(position).getRepostid());
-                        intent.putExtra("repostfrom", "2");
-                        mContext.startActivity(intent);
-                }
+                ActivityUtils.gotoNoteDetails(getActivity(),mHListData.get(position),"2");
             }
         });
         mNoScrollListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -314,7 +303,11 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
     }
         pgb.setVisibility(View.VISIBLE);
         pageindex = 1;
+        //获取时间
         getDateTime();
+        //恢复选择的 ordertype
+        selecedText(null,"0");
+        //获取数据
         getNoteList();
     }
 
@@ -323,14 +316,17 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
      * @param textView
      */
     private void selecedText(TextView textView,String ordertype){
+        //恢复默认样式
         this.ordertype = ordertype;
         tv_heat.setTextColor(getActivity().getResources().getColor(R.color.black_444));
         tv_price.setTextColor(getActivity().getResources().getColor(R.color.black_444));
         tv_time.setTextColor(getActivity().getResources().getColor(R.color.black_444));
-        textView.setTextColor(getActivity().getResources().getColor(R.color.blue_price));
         tv_heat.setCompoundDrawables(drawable_heat_n, null, null, null);
         tv_price.setCompoundDrawables(drawable_price_n, null, null, null);
         tv_time.setCompoundDrawables(drawable_time_n, null, null, null);
+        //设置选中样式
+        if (textView==null)return;
+        textView.setTextColor(getActivity().getResources().getColor(R.color.blue_price));
         switch (textView.getId()){
             case R.id.tv_heat :
                 tv_heat.setCompoundDrawables(drawable_heat_p, null, null, null);
@@ -382,8 +378,6 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
     }
 
     private void getNoteList() {
-        LogUtils.e("notezone", notezone);
-        LogUtils.e("orderstatus", orderstatus);
         HashMap map = new HashMap();
         map.put("code", RequestPath.CODE);
         map.put("userid", SharedPreferencesUtil.getUid(mContext));
@@ -394,8 +388,6 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
         map.put("deviceid", SharedPreferencesUtil.getDeviceid(mContext));
         map.put("orderstatus", orderstatus);
         map.put("requesttime", getDataTime);
-        LogUtils.e("notezone", notezone);
-        LogUtils.e("notezoneorderstatus", orderstatus);
         NetworkRequest.getRequest(RequestPath.GET_INFLUENCENOTES, map, InfluenceFragment.this);
     }
 

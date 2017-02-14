@@ -182,7 +182,7 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
     private String userid;
     private String repostid;
     private String isself;
-    private String noteFee;
+    private String noteFee="1";
     Drawable iszan;
     Drawable nozan;
     private TextView tv_iszan;
@@ -217,7 +217,6 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
         }
         mNoteRequestBase = NoteRequestBase.getNoteRequestBase(this);
         initView();
-        InitImageView();
         mNoteRequestBase.getNoteInfo(noteId, repostid, this);
         mNoteRequestBase.getNoteInfoRepostlist(RequestPath.GET_NOTEREPOSTLIST, noteId, repostid, pagerIndex, this);
     }
@@ -242,7 +241,12 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                 ll_getview_width.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 screenW = ll_getview_width.getWidth();
                 bmpW = (BitmapFactory.decodeResource(getResources(), R.mipmap.hengxian).getWidth());// 获取图片宽度
-                offset = (screenW / 4 - bmpW) / 2;// 计算偏移量
+                //免费的隐藏了送给朋友们 所以只有三个选项了
+                if (noteFee.equals("1")){
+                    offset = (screenW / 3 - bmpW) / 2;// 计算偏移量
+                }else {
+                    offset = (screenW / 4 - bmpW) / 2;// 计算偏移量
+                }
                 Matrix matrix = new Matrix();
                 matrix.postTranslate(offset, 0);
                 cursor.setImageMatrix(matrix);// 设置动画初始位置
@@ -659,6 +663,8 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
      * @since JDK 1.7
      */
     private void lineAnimation(int index) {
+        if (noteFee.equals("1"))
+            index--;
         int one = offset * 2 + bmpW;// 页卡1 -> 页卡2 偏移量
         Animation animation = new TranslateAnimation(one * currIndex, one * index, 0, 0);
         currIndex = index;
@@ -718,6 +724,7 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                 if (noteBean == null) {
                     return;
                 }
+                InitImageView();
                 if (noteBean.getResult().equals("1") && noteBean.getData().size() > 0) {
                     noteEntity = noteBean.getData().get(0);
                     iv_video_and_audio_url = noteEntity.getNotevideo();
@@ -911,9 +918,11 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
         }
 
         if (noteEntity.isfree.equals("1")){
+            tv_zhuanfa_but.setVisibility(View.GONE);
             iv_share_note.setVisibility(View.GONE);
             ll_ZF_but.setVisibility(View.GONE);
         }else {
+            tv_zhuanfa_but.setVisibility(View.VISIBLE);
             iv_share_note.setVisibility(View.VISIBLE);
             ll_ZF_but.setVisibility(View.VISIBLE);
         }
