@@ -58,6 +58,8 @@ public class WebActivity extends BaseActivity{
             tv_head_title.setText("获奖用户名单");
         }else if(isWho==5){
             tv_head_title.setText("用户协议");
+        }else if(isWho==6){
+            tv_head_title.setText("费用说明");
         }
         String url = getIntent().getStringExtra("url");
         getGradeInfo(url);

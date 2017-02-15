@@ -27,6 +27,7 @@ public class AboutWeValueActivity extends BaseActivity implements View.OnClickLi
     private TextView tv_head_title, tv_banbenhao;
     private RelativeLayout rl_bangzhu;
     private RelativeLayout rl_xieyi;
+    private RelativeLayout rl_cost_statement;
     private String localVersion;
 
 
@@ -65,10 +66,12 @@ public class AboutWeValueActivity extends BaseActivity implements View.OnClickLi
 
         rl_bangzhu = (RelativeLayout) findViewById(R.id.rl_bangzhu);
         rl_xieyi = (RelativeLayout) findViewById(R.id.rl_xieyi);
+        rl_cost_statement = (RelativeLayout) findViewById(R.id.rl_cost_statement);
 
 
         iv_back.setOnClickListener(this);
         rl_xieyi.setOnClickListener(this);
+        rl_cost_statement.setOnClickListener(this);
         rl_bangzhu.setOnClickListener(this);
     }
 
@@ -93,6 +96,12 @@ public class AboutWeValueActivity extends BaseActivity implements View.OnClickLi
                 in.putExtra("isWho", 5);
                 startActivity(in);
             break;
+            case R.id.rl_cost_statement:
+                in = new Intent(this, WebActivity.class);
+                in.putExtra("url", RequestPath.GET_COST_STATEMENT);
+                in.putExtra("isWho", 6);
+                startActivity(in);
+                break;
 
         }
     }

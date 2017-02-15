@@ -62,7 +62,7 @@ public class ChannelGridViewAdapter extends ArrayAdapter<ChannelBean.Channel> {
                 boolean isCheck = view.getTag() == null ? false : (boolean) view.getTag();
                 if (!isCheck) {
                     view.setTag(true);
-                    channels.add(channel.getTypename());
+                    channels.add(1,channel.getTypename());
                     view.setBackgroundResource(R.drawable.iv_channel_text_p);
                 } else {
                     view.setTag(false);

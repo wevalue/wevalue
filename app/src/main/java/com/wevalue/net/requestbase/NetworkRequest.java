@@ -68,11 +68,11 @@ public class NetworkRequest {
                 switch (msg.what) {
                     case SUCC:
                         LogUtils.e("netContentget", msg.obj.toString());
-                        wzHttpListener.onSuccess(msg.obj.toString(), url);
+                        wzHttpListener.onSuccess(msg.obj.toString().replace("请填写userid","登录已过期，请重新登录"), url);
                         break;
                     case FAIL:
                         LogUtils.e("netContentget", msg.obj.toString());
-                        wzHttpListener.onFailure(msg.obj.toString());
+                        wzHttpListener.onFailure(msg.obj.toString().replace("请填写userid","登录已过期，请重新登录"));
                         break;
                 }
             }

@@ -13,9 +13,9 @@
 
        <ImageView
            android:id="@+id/iv_12"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:src="@mipmap/banben_logo"
+           android:layout_width="90dp"
+           android:layout_height="90dp"
+           android:src="@mipmap/ic_logo"
            android:layout_centerHorizontal="true"
            android:layout_marginTop="60dp"
            />
@@ -27,7 +27,7 @@
            android:layout_centerHorizontal="true"
            android:layout_marginTop="10dp"
            android:textSize="16sp"
-           android:text="你好"
+           android:text="1.0.0"
            android:textColor="@color/gray_text"
            />
 
@@ -108,7 +108,39 @@
                    />
 
            </RelativeLayout>
+           <RelativeLayout
+               android:id="@+id/rl_cost_statement"
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               >
+               <TextView
+                   android:layout_height="wrap_content"
+                   android:layout_width="100dp"
+                   android:layout_centerVertical="true"
+                   android:layout_marginLeft="15dp"
+                   android:text="费用说明"
+                   android:textColor="@color/black"
+                   android:textSize="16sp"
+                   />
 
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentRight="true"
+                   android:layout_centerVertical="true"
+                   android:layout_marginRight="15dp"
+                   android:src="@mipmap/arrows_left_2"/>
+
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_alignParentBottom="true"
+                   android:layout_height="0.5dp"
+                   android:background="@color/ui_line"
+                   android:layout_marginRight="15dp"
+                   android:layout_marginLeft="15dp"
+                   />
+
+           </RelativeLayout>
        </LinearLayout>
 
        <TextView

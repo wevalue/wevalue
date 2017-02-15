@@ -6,11 +6,11 @@ package com.wevalue.net;
  */
 public class RequestPath {
 
-     /*客户网站域名*/
-    // public static final String SERVER_PATH = "https://mp.wzbz.cn";
+    /*客户网站域名*/
+     public static final String SERVER_PATH = "https://mp.wzbz.cn";
     /* 公司服务器地址 测试地址*/
-     //public static final String SERVER_PATH = "http://192.168.9.109";
-    public static final String SERVER_PATH = "http://192.168.9.117:8080";
+    //public static final String SERVER_PATH = "http://192.168.9.109";
+    //public static final String SERVER_PATH = "http://192.168.9.117:8080";
 
     /*分享到第三方的链接*/
     public static final String SHARE_HTML = SERVER_PATH + "/web/note.html?";
@@ -106,6 +106,10 @@ public class RequestPath {
      * 获取微值协议
      */
     public static final String GET_GETAGREEMENT = SERVER_PATH + "/api_3/dbbase.ashx?method=weizhiregister";
+    /**
+     * 获取微值费用说明 statement
+     */
+    public static final String GET_COST_STATEMENT = SERVER_PATH + "/api_3/dbbase.ashx?method=weizhirate";
 
     /**
      * 获取等级升级规则
@@ -331,5 +335,5 @@ public class RequestPath {
     public static final String POST_LANYCHER_IMAGE = SERVER_PATH + "/api_3/dbbase.ashx?method=getuipage";
 
     //需要加密参数的接口
-    public static final String[] EncodePath = {POST_QUICKREG_REGUSER,POST_REGUSER, POST_UPDATEUSERPWD, POST_RESETUSERPWD, POST_SETTRUEINFO, POST_VERIFYPAYCODE, POST_PAYMONEY};
+    public static final String[] EncodePath = {POST_QUICKREG_REGUSER, POST_REGUSER, POST_UPDATEUSERPWD, POST_RESETUSERPWD, POST_SETTRUEINFO, POST_VERIFYPAYCODE, POST_PAYMONEY};
 }
