@@ -502,6 +502,7 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
     @Override
     public void onClick(View v) {
         Intent intent = null;
+        if (noteEntity==null)return;
         switch (v.getId()) {
             //分享的方法
             case R.id.iv_share_note:

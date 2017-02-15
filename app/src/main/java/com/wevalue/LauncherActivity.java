@@ -74,7 +74,6 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
                         intent.putExtra("jpush", jpush);
                         startActivity(intent);
                         finish();
-
                     }
                     break;
             }
@@ -114,7 +113,6 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
                 isAllCityOk = true;
             }
         }
-
         handler.sendEmptyMessage(LUNCHTIMER);
         getUserInfoData();
     }

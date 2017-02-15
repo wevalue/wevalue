@@ -269,19 +269,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener, WZ
             String appPath = data.getString("apppath");
             LogUtils.e("log", "newVersion = " + newVersion + "---localVersion = " + localVersion + "---apppath =" + appPath);
             SharedPreferencesUtil.setApppath(SettingActivity.this, RequestPath.SERVER_PATH + appPath);
-//					AbSharedUtil.putString(SettingActivity.this, "AppPath", appPath);
             if (!newVersion.equals(localVersion)) {
                 LogUtils.e("log", "newVersion = " + newVersion + "---localVersion = " + localVersion);
-//						tv_version.setText("有新版本 V" + newVersion + ",当前版本 V"
-//								+ localVersion);
-//						tv_version.setTextColor(Color.RED);
                 // 这里来检测版本是否需要更新
-                UpdateManager mUpdateManager = new UpdateManager(
-                        SettingActivity.this, newVersion);
+                UpdateManager mUpdateManager = new UpdateManager(SettingActivity.this, newVersion,"0");
                 mUpdateManager.checkUpdateInfo();
             } else {
-//						tv_version.setText("已是最新版本,当前版本 V" + localVersion);
-//						tv_version.setTextColor(Color.GRAY);
+
             }
         } catch (Exception e) {
             e.printStackTrace();

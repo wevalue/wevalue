@@ -21,6 +21,7 @@ import com.wevalue.net.RequestPath;
 import com.wevalue.ui.details.activity.UserDetailsActivity;
 import com.wevalue.ui.world.activity.ImgShowActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,6 +43,7 @@ public class NoteDetailsZambiaAdapter extends BaseAdapter {
 
     public NoteDetailsZambiaAdapter(Context context, List<NoteInfoBean.NoteInfoEntity> list, ReplyCommentInterface mInterface) {
         mDatas = list;
+        if (list==null)mDatas = new ArrayList<>();
         mContext = context;
         this.mInterface = mInterface;
     }

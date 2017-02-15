@@ -1,5 +1,6 @@
 package com.wevalue.utils;
 
+import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.Context;
@@ -29,7 +30,7 @@ import java.net.URL;
 
 public class UpdateManager {
 
-    private Context mContext;
+    private Activity mContext;
 
     // 返回的安装包url
 
@@ -54,7 +55,7 @@ public class UpdateManager {
 
     private boolean interceptFlag = false;
 
-    private String localVersion, serverVersion;
+    private String localVersion, serverVersion,isfoucs;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -74,9 +75,10 @@ public class UpdateManager {
         ;
     };
 
-    public UpdateManager(Context context, String serverVersion) {
+    public UpdateManager(Activity context, String serverVersion, String isfoucs) {
         this.mContext = context;
         this.serverVersion = serverVersion;
+        this.isfoucs = isfoucs;
     }
 
     // 外部接口让主Activity调用
@@ -113,8 +115,11 @@ public class UpdateManager {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 setLoadVersion();
+                if (isfoucs.equals("1")){
+                    dialog.dismiss();
+                    mContext.finish();
+                }
 
-                dialog.dismiss();
             }
         });
         noticeDialog = builder.create();

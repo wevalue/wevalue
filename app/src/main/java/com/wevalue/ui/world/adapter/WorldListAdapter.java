@@ -155,6 +155,8 @@ public class WorldListAdapter extends BaseAdapter {
         String title = noteEntity.getTitle();
         if (TextUtils.isEmpty(title)){
             title = noteEntity.getContent();
+            if (title.length()>17)
+                title = title.substring(0,17)+".....";
         }
         viewHolder.tv_title.setText(title);
         try {
@@ -192,11 +194,6 @@ public class WorldListAdapter extends BaseAdapter {
                         mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
                         viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
                     } else {
-                        if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-                            viewHolder.nsgv_world_list_gridview.setVisibility(View.VISIBLE);
-                            mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), mActivity/*,mBitmap,bitmapDisplayConfig*/);
-                            viewHolder.nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
-                        }
                         viewHolder.tv_content_content.setVisibility(View.VISIBLE);
                         viewHolder.tv_content_content.setText(noteEntity.getContent());
                     }

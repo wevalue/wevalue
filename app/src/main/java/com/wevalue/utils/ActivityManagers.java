@@ -31,7 +31,7 @@ public class ActivityManagers {
     }
 
     //将当前Activity推入栈中
-    public void pushActivity(Activity activity) {
+    public static void pushActivity(Activity activity) {
 
 //		LogUtils.i(TAG, "push an activity");
         if (activityStack == null) {
@@ -104,13 +104,22 @@ public class ActivityManagers {
     }
 
     //退出其他的activity
-    public void popOtherActivities() {
+    public  void popOtherActivities() {
         if (null != activityStack) {
             for (Activity activity : activityStack) {
                 if (!activity.getClass().getName().equals(currentAct)) {
                     LogUtils.d("popAllActivities-->", activity.getClass().getName());
                     activity.finish();
                 }
+            }
+        }
+    }
+
+    //退出其他的activity
+    public static void exitActivities() {
+        if (null != activityStack) {
+            for (Activity activity : activityStack) {
+                    activity.finish();
             }
         }
     }

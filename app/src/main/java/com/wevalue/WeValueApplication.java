@@ -6,13 +6,12 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 
 import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.exception.DbException;
+import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.wevalue.model.Area;
 import com.wevalue.model.City;
@@ -61,13 +60,17 @@ public class WeValueApplication extends Application implements WZHttpListener {
     public void onCreate() {
         super.onCreate();
         applicationContext = this;
-
         okhttpRequest = new NetworkRequest();
         //设置友盟统计场景
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
         MobclickAgent.setDebugMode(true);
         MobclickAgent.openActivityDurationTrack(false);
         getDeviceInfo(this);
+        //捕获异常 用友盟发送
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
+        crashHandler.sendCrashReportsToServer(this);
+
         /*初始化relam数据库*/
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder().build();
@@ -80,6 +83,7 @@ public class WeValueApplication extends Application implements WZHttpListener {
 
         instance = this;
         phoneName = android.os.Build.MODEL;
+
         if (TextUtils.isEmpty(SharedPreferencesUtil.getIsFristStart(this))) {
             SharedPreferencesUtil.setUserlike(this, "推荐,视频,地区");
             SharedPreferencesUtil.setLastCity(this, "地区");

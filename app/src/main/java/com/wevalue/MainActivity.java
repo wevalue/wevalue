@@ -222,8 +222,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         jianCeBanBen();
         InitAppVersion();
-
-
     }
 
     public void setViewIsShow(boolean isShow, int index) {
@@ -823,17 +821,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     JSONObject data = object.getJSONObject("data");
                     newVersion = data.getString("versionnum");
                     String appPath = data.getString("apppath");
+                    String isfoucs = data.getString("isfoucs");//是否轻质更新
                     LogUtils.e("log", "newVersion = " + newVersion + "---localVersion = " + localVersion + "---apppath =" + appPath);
                     SharedPreferencesUtil.setApppath(MainActivity.this, RequestPath.SERVER_PATH + appPath);
-//					AbSharedUtil.putString(SettingActivity.this, "AppPath", appPath);
                     if (!newVersion.equals(localVersion)) {
                         LogUtils.e("log", "newVersion = " + newVersion + "---localVersion = " + localVersion);
                         // 这里来检测版本是否需要更新
-                        UpdateManager mUpdateManager = new UpdateManager(MainActivity.this, newVersion);
+                        UpdateManager mUpdateManager = new UpdateManager(MainActivity.this, newVersion,isfoucs);
                         mUpdateManager.checkUpdateInfo();
                     } else {
-//						tv_version.setText("已是最新版本,当前版本 V" + localVersion);
-//						tv_version.setTextColor(Color.GRAY);
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
