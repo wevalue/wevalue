@@ -76,7 +76,7 @@
                             android:id="@+id/tv_nickname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="昵称"
+                            android:text=""
                             android:textColor="@color/text_black"
                             android:textSize="16sp" />
 
@@ -86,7 +86,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
                             android:layout_toRightOf="@+id/tv_nickname"
-                            android:text="甲"
+                            android:text=""
                             android:textColor="@color/text_black"
                             android:textSize="16sp" />
 
@@ -97,7 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="  月  日"
+                        android:text=""
                         android:textColor="@color/but_text_color"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -141,19 +141,18 @@
                     android:id="@+id/tv_is_yuanchuang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="原创"
+                    android:text=""
                     android:visibility="gone"
                     android:textColor="@color/blue"
-
+                    android:layout_marginRight="15dp"
                     android:textSize="14dp" />
 
                 <TextView
                     android:id="@+id/tv_is_reci"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:layout_toRightOf="@+id/tv_is_yuanchuang"
-                    android:text="创造热词：热词内容"
+                    android:text=""
                     android:textColor="@color/blue"
                     android:textSize="14dp" />
 
@@ -162,7 +161,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:text="阅读：0"
+                    android:text=""
                     android:textColor="@color/but_text_color"
                     android:textSize="14sp" />
 

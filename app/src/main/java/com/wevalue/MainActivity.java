@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -144,6 +145,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //            main_jiaoyou.performClick();
 //        }
         handleJpushMessage();
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
     }
 
     @Override
@@ -327,13 +337,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 if (TextUtils.isEmpty(uid)) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 } else {
-                    PopuUtil.initpopu(this);
+                    PopuUtil.initpopu(this, listener);
                 }
                 setCheckedStatus(ll_add_sendnote);
                 break;
         }
     }
-
+    PopupWindow.OnDismissListener listener = new PopupWindow.OnDismissListener(){
+        @Override
+        public void onDismiss() {
+            int index = lvp_main.getCurrentItem();
+            setViewIsShow(true,index);
+        }
+    };
     //
     private void setCheckedStatus(RadioButton rb) {
         int i = lvp_main.getCurrentItem();
@@ -508,7 +524,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     // 所需的全部权限
-    static final String[] PERMISSIONS = new String[]{Manifest.permission.RECORD_AUDIO,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    static final String[] PERMISSIONS = new String[]{Manifest.permission.RECORD_AUDIO,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION};
     private PermissionsChecker mPermissionsChecker; // 权限检测器
     private static final int REQUEST_CODE = 0; // 请求码
 
@@ -519,6 +535,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int index = lvp_main.getCurrentItem();
+        setViewIsShow(true, index);
         // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
         if (requestCode == REQUEST_CODE && resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
 //            finish();

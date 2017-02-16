@@ -124,15 +124,15 @@ public class CrashHandler implements UncaughtExceptionHandler {
         }
         final String msg = ex.getLocalizedMessage();
         // 使用Toast来显示异常信息
-        new Thread() {
-            @Override
-            public void run() {
-                // Toast 显示需要出现在一个线程的消息队列中
-                Looper.prepare();
-                Toast.makeText(mContext, "微值出现错误，我们尽快修改...", Toast.LENGTH_SHORT).show();
-                Looper.loop();
-            }
-        }.start();
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                // Toast 显示需要出现在一个线程的消息队列中
+//                Looper.prepare();
+//               // Toast.makeText(mContext, "微值出现错误，我们尽快修改...", Toast.LENGTH_SHORT).show();
+//                Looper.loop();
+//            }
+//        }.start();
         // 收集设备信息
         collectCrashDeviceInfo(mContext);
         // 使用友盟SDK将错误报告保存到文件中，待下次应用程序重启时上传log

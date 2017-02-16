@@ -52,6 +52,7 @@ import com.wevalue.utils.Constants;
 import com.wevalue.utils.DateTiemUtils;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.PopuUtil;
+import com.wevalue.utils.ShareHelper;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.NoScrollGridView;
@@ -89,7 +90,7 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                     if ("1".equals(sharefree)) {
                         return;
                     }
-                    if (!shareMap.get("spendtype").equals(Constants.suiyinpay)) {
+                    if (!Constants.suiyinpay.equals(shareMap.get("spendtype"))) {
                         HashMap map = new HashMap();
                         map.put("code", RequestPath.CODE);
                         map.put("userid", SharedPreferencesUtil.getUid(RepostNoteDetailActivity.this));
@@ -400,6 +401,9 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                 HashMap shareMap = new HashMap();
                 shareMap.put("noteid", noteId);
                 shareMap.put("repostid", repostid);
+                shareMap.put("title", ShareHelper.getTitle(noteEntity.getTitle()));
+                shareMap.put("content", ShareHelper.getTitle(noteEntity.getContent()));
+                shareMap.put("imgUrl", noteEntity.getUserface());
                 PopuUtil.initSharePopup(this, mHandler, shareMap);
 
                 break;
@@ -592,10 +596,13 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                     ShowUtil.showToast(this, "尊：抱歉！发布者不允许此信息分享至其他平台。");
                     return;
                 }
+                shareMap = new HashMap();
+                shareMap.put("noteid", noteId);
+                shareMap.put("repostid", repostid);
+                shareMap.put("title", ShareHelper.getTitle(noteEntity.getTitle()));
+                shareMap.put("content", ShareHelper.getTitle(noteEntity.getContent()));
+                shareMap.put("imgUrl", noteEntity.getUserface());
                 if ("1".equals(sharefree)) {
-                    HashMap shareMap = new HashMap();
-                    shareMap.put("noteid", noteId);
-                    shareMap.put("repostid", repostid);
                     PopuUtil.initSharePopup(this, mHandler, shareMap);
                     return;
                 } else {
@@ -841,7 +848,12 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         if (TextUtils.isEmpty(noteEntity.getHotword())) {
             tv_is_reci.setText("");
         } else {
-            tv_is_reci.setText("创造热词：" + noteEntity.getHotword());
+            //创造热词 改为 热词 并且给 热词修改颜色为灰色 font_gray
+            String context_1 = "热词：" + noteEntity.getHotword();
+            SpannableStringBuilder style_1 = new SpannableStringBuilder(context_1);
+            style_1.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.font_gray)), 0,
+                    "热词：".length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            tv_is_reci.setText(style_1);
         }
         if (noteEntity.getIsself().equals("0")) {
             tv_is_yuanchuang.setText("原创");
@@ -868,10 +880,20 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
         tv_day.setText(DateTiemUtils.editTime(noteEntity.getAddtime()));
         tv_read_num.setText("阅读：" + noteEntity.getClickcount());
         notetype = noteEntity.getNotetype();
-
+        //处理转发内容加 @作者：
+        String context_1 = "@" + noteEntity.getOldusernickname()+  "：" + noteEntity.getContent();
+        SpannableStringBuilder style_1 = new SpannableStringBuilder(context_1);
+        style_1.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.blue)), 0,
+                noteEntity.getOldusernickname().length() + 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tv_note_content.setVisibility(View.VISIBLE);
+        tv_note_content.setText(style_1);
         switch (notetype) {
             case "4"://文字
-                tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
+                if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
+                    mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), RepostNoteDetailActivity.this);
+                    mGirdViewAdapter.notifyDataSetChanged();
+                    nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
+                }
                 break;
             case "1"://视频文
                 in_audio_video_ui.setVisibility(View.VISIBLE);
@@ -898,15 +920,18 @@ public class RepostNoteDetailActivity extends BaseActivity implements View.OnCli
                 web_tuwen.getSettings().setLoadsImagesAutomatically(true);
                 //支持js
                 web_tuwen.getSettings().setJavaScriptEnabled(true);
-                web_tuwen.loadUrl(RequestPath.SERVER_PATH + "/site/webcontent.aspx?noteid=" + noteEntity.getNoteid());
+                String url = RequestPath.SERVER_WEB_PATH + "/site/webcontent.aspx?noteid=" + noteEntity.getNoteid();
+                web_tuwen.loadUrl(url);
+                String context_2 = "@" + noteEntity.getOldusernickname()+  "：" ;
+                SpannableStringBuilder style_2 = new SpannableStringBuilder(context_2);
+                style_2.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.blue)), 0,
+                        noteEntity.getOldusernickname().length() + 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tv_note_content.setVisibility(View.VISIBLE);
+                tv_note_content.setText(style_2);
+
                 break;
         }
-        String context_2 = "@" + noteEntity.getOldusernickname() + "：" + noteEntity.getContent();
-        SpannableStringBuilder style_2 = new SpannableStringBuilder(context_2);
-        style_2.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.blue)), 0,
-                noteEntity.getOldusernickname().length() + 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tv_note_content.setVisibility(View.VISIBLE);
-        tv_note_content.setText(style_2);
+
 
         nsgv_world_list_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,9 @@ import com.wevalue.model.NearbyEntity;
 import com.wevalue.net.FriendsManage.FriendManagerInterface;
 import com.wevalue.net.RequestPath;
 import com.wevalue.ui.details.activity.UserDetailsActivity;
+import com.wevalue.ui.login.LoginActivity;
 import com.wevalue.utils.PopuUtil;
+import com.wevalue.utils.SharedPreferencesUtil;
 
 import java.util.List;
 
@@ -170,6 +173,7 @@ public class NearbyAdapter extends BaseAdapter {
         viewHolder.tv_add_focus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!checkLogin())return;
                 PopuUtil.initManageFriend((Activity) context, "加关注", friendManagerInterface, nearbyUser.getUserid());
 //                nearbyUserList.get(position).setIsfocus("1");
 //                notifyDataSetChanged();
@@ -182,6 +186,7 @@ public class NearbyAdapter extends BaseAdapter {
                 if ("已申请".equals(finalViewHolder.tv_add_friends.getText().toString())) {
                     return;
                 }
+                if (!checkLogin())return;
                 PopuUtil.initManageFriend((Activity) context, "加好友", friendManagerInterface, nearbyUser.getUserid());
 //                nearbyUserList.get(position).setIsfriend("2");
             }
@@ -202,7 +207,14 @@ public class NearbyAdapter extends BaseAdapter {
         viewHolder.tv_catagory.setVisibility(View.GONE);
         return convertView;
     }
-
+    private boolean checkLogin(){
+        String uid = SharedPreferencesUtil.getUid(context);
+        if (TextUtils.isEmpty(uid)) {
+            context.startActivity(new Intent(context, LoginActivity.class));
+            return false;
+        }
+        return true;
+    }
     class ViewHolder {
         LinearLayout ll_rootview;
         TextView tv_name, distance, tv_add_focus, tv_add_friends;

@@ -50,6 +50,7 @@ import com.wevalue.utils.Constants;
 import com.wevalue.utils.DateTiemUtils;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.PopuUtil;
+import com.wevalue.utils.ShareHelper;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.NoScrollGridView;
@@ -68,56 +69,7 @@ import java.util.List;
  * 帖子详情
  */
 public class NoteDetailsActivity extends BaseActivity implements WZHttpListener, View.OnClickListener, PayInterface {
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 1:
-                    ShowUtil.showToast(NoteDetailsActivity.this, "分享成功!");
-                    if ("1".equals(sharefree)) {            //免费分享时不调用接口
-//                        ShowUtil.showToast(NoteDetailsActivity.this, "return!");
-                        return;
-                    }
-                    bindShareSucc(shareMap);
-                    break;
-                case 2:
-                    ShowUtil.showToast(NoteDetailsActivity.this, "分享失败!");
-                    if ("1".equals(sharefree)) {
-                        return;
-                    }
-                    if (!shareMap.get("spendtype").equals(Constants.suiyinpay)) {
-                        HashMap map = new HashMap();
-                        map.put("code", RequestPath.CODE);
-                        map.put("userid", SharedPreferencesUtil.getUid(NoteDetailsActivity.this));
-                        map.put("money", shareMap.get("money"));
-                        map.put("paytype", shareMap.get("paytype"));
-                        map.put("spendtype", shareMap.get("spendtype"));
-                        map.put("orderno", shareMap.get("orderno"));
-                        refundMoney(map);
-                    }
-                    break;
-                case 3:
-                    ShowUtil.showToast(NoteDetailsActivity.this, "取消分享!");
-                    if ("1".equals(sharefree)) {
-                        return;
-                    }
-                    if (!shareMap.get("spendtype").equals(Constants.suiyinpay)) {
-                        HashMap map = new HashMap();
-                        map.put("code", RequestPath.CODE);
-                        map.put("userid", SharedPreferencesUtil.getUid(NoteDetailsActivity.this));
-                        map.put("money", shareMap.get("money"));
-                        map.put("paytype", shareMap.get("paytype"));
-                        map.put("spendtype", shareMap.get("spendtype"));
-                        map.put("orderno", shareMap.get("orderno"));
-                        refundMoney(map);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
+
     private ImageView iv_back;
     private ImageView cursor;// 动画图片
     private ImageView iv_share_note;
@@ -201,7 +153,58 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
     private WebView web_tuwen;
     private int isDelete = 0;//  1=自己的帖子,显示删除, 2 = 别人的帖子,显示举报
     private String repostfrom = "3";
-
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    ShowUtil.showToast(NoteDetailsActivity.this, "分享成功!");
+                    if ("1".equals(sharefree)) {            //免费分享时不调用接口
+//                        ShowUtil.showToast(NoteDetailsActivity.this, "return!");
+                        return;
+                    }
+                    bindShareSucc(shareMap);
+                    break;
+                case 2:
+                    ShowUtil.showToast(NoteDetailsActivity.this, "分享失败!");
+                    if ("1".equals(sharefree)) {
+                        return;
+                    }
+                    if (noteEntity.userid.equals(SharedPreferencesUtil.getUid(NoteDetailsActivity.this)))return;
+                    if (!shareMap.get("spendtype").equals(Constants.suiyinpay)) {
+                        HashMap map = new HashMap();
+                        map.put("code", RequestPath.CODE);
+                        map.put("userid", SharedPreferencesUtil.getUid(NoteDetailsActivity.this));
+                        map.put("money", shareMap.get("money"));
+                        map.put("paytype", shareMap.get("paytype"));
+                        map.put("spendtype", shareMap.get("spendtype"));
+                        map.put("orderno", shareMap.get("orderno"));
+                        refundMoney(map);
+                    }
+                    break;
+                case 3:
+                    ShowUtil.showToast(NoteDetailsActivity.this, "取消分享!");
+                    if ("1".equals(sharefree)) {
+                        return;
+                    }
+                    if (noteEntity.userid.equals(SharedPreferencesUtil.getUid(NoteDetailsActivity.this)))return;
+                    if (!Constants.suiyinpay.equals(shareMap.get("spendtype"))) {
+                        HashMap map = new HashMap();
+                        map.put("code", RequestPath.CODE);
+                        map.put("userid", SharedPreferencesUtil.getUid(NoteDetailsActivity.this));
+                        map.put("money", shareMap.get("money"));
+                        map.put("paytype", shareMap.get("paytype"));
+                        map.put("spendtype", shareMap.get("spendtype"));
+                        map.put("orderno", shareMap.get("orderno"));
+                        refundMoney(map);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -515,11 +518,14 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                     ShowUtil.showToast(this, "尊：抱歉！发布者不允许此信息分享至其他平台。");
                     return;
                 }
+                shareMap = new HashMap();
+                shareMap.put("noteid", noteId);
+                shareMap.put("repostid", repostid);
+                shareMap.put("title", ShareHelper.getTitle(noteEntity.getTitle()));
+                shareMap.put("content", ShareHelper.getTitle(noteEntity.getContent()));
+                shareMap.put("imgUrl", noteEntity.getUserface());
                 if ("1".equals(sharefree)|| noteEntity.userid.equals(SharedPreferencesUtil.getUid(this))) {
-                    HashMap map = new HashMap();
-                    map.put("noteid", noteId);
-                    map.put("repostid", repostid);
-                    PopuUtil.initSharePopup(this, mHandler, map);
+                    PopuUtil.initSharePopup(this, mHandler, shareMap);
                     return;
                 } else {
                     HashMap map = new HashMap();
@@ -649,7 +655,7 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
 
     private void starPlayAct() {
         Intent intent = new Intent(NoteDetailsActivity.this, Play_videoActivity.class);
-        intent.putExtra("url", RequestPath.SERVER_PATH + iv_video_and_audio_url);
+        intent.putExtra("url", RequestPath.SERVER_WEB_PATH + iv_video_and_audio_url);
         intent.putExtra("mediatype", notetype);
         LogUtils.e("图片被点击");
         startActivity(intent);
@@ -908,7 +914,12 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
          if (TextUtils.isEmpty(noteEntity.getHotword())) {
             tv_is_reci.setText("");
         } else {
-            tv_is_reci.setText("创造热词：" + noteEntity.getHotword());
+             //创造热词 改为 热词 并且给 热词修改颜色为灰色 font_gray
+             String context_1 = "热词：" + noteEntity.getHotword();
+             SpannableStringBuilder style_1 = new SpannableStringBuilder(context_1);
+             style_1.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.font_gray)), 0,
+                     "热词：".length() , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            tv_is_reci.setText(style_1);
         }
         if (noteEntity.getIsself().equals("0")) {
             tv_is_yuanchuang.setText("原创");
@@ -951,7 +962,13 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
         switch (notetype) {
             case "4"://文字
                     tv_note_content.setVisibility(View.VISIBLE);
-                tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
+                    tv_note_content.setText(noteEntity.getContent().replace("#换行#", "\r\n"));
+                if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
+                    nsgv_world_list_gridview.setVisibility(View.VISIBLE);
+                    mGirdViewAdapter = new WorldListGridViewAdapter(noteEntity.getList_1(), NoteDetailsActivity.this/*,mBitmap,bitmapDisplayConfig*/);
+                    mGirdViewAdapter.notifyDataSetChanged();
+                    nsgv_world_list_gridview.setAdapter(mGirdViewAdapter);
+                }
                 break;
             case "1"://视频文
                 in_audio_video_ui.setVisibility(View.VISIBLE);
@@ -980,9 +997,12 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                 web_tuwen.setVisibility(View.VISIBLE);
                 web_tuwen.getSettings().setBlockNetworkImage(false);
                 web_tuwen.getSettings().setLoadsImagesAutomatically(true);
+                web_tuwen.getSettings().setDomStorageEnabled(true);
                 //支持js
                 web_tuwen.getSettings().setJavaScriptEnabled(true);
-                web_tuwen.loadUrl(RequestPath.SERVER_PATH + "/site/webcontent.aspx?noteid=" + noteEntity.getNoteid());
+                String url = RequestPath.SERVER_WEB_PATH + "/site/webcontent.aspx?noteid=" + noteEntity.getNoteid();
+                web_tuwen.loadUrl(url);
+                LogUtils.e("url",url);
                 break;
         }
 
@@ -1073,6 +1093,9 @@ public class NoteDetailsActivity extends BaseActivity implements WZHttpListener,
                 HashMap shareMap = new HashMap();
                 shareMap.put("noteid", noteId);
                 shareMap.put("repostid", repostid);
+                shareMap.put("title", ShareHelper.getTitle(noteEntity.getTitle()));
+                shareMap.put("content", ShareHelper.getTitle(noteEntity.getContent()));
+                shareMap.put("imgUrl", noteEntity.getUserface());
                 PopuUtil.initSharePopup(this, mHandler, shareMap);
                 break;
         }

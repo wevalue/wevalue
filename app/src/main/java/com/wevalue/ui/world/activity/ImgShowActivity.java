@@ -51,7 +51,6 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class ImgShowActivity extends BaseActivity {
     private TextView tv_img_number;
-    private TextView tv_baocun;
     private String[] mImgUrl;
     private List<String> mDatas;
     private List<ImageView> imageViewList;
@@ -72,31 +71,12 @@ public class ImgShowActivity extends BaseActivity {
 
     private void initView() {
         vp_img_show = (PhotoViewPager) findViewById(R.id.vp_img_show);
-//        tv_head_title = (TextView) findViewById(R.id.tv_head_title);
-//        tv_head_title.setText("图片详情");
-//        iv_back = (ImageView) findViewById(R.id.iv_back);
         tv_img_number = (TextView) findViewById(R.id.tv_img_number);
 
         iv_donghua = (ImageView) findViewById(R.id.iv_donghua);
 
         animaition = (AnimationDrawable) iv_donghua.getDrawable();
         animaition.setOneShot(false);
-
-        tv_baocun = (TextView) findViewById(R.id.tv_baocun);
-        tv_baocun.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                new Thread(){
-                    @Override
-                    public void run() {
-                        super.run();
-                        saveImgViewDrawable();
-                    }
-                }.start();
-
-            }
-        });
         index = getIntent().getIntExtra("index", -1);
         if ("yes".equals(getIntent().getStringExtra("imPreview"))) {
             tv_img_number.setVisibility(View.GONE);
@@ -126,7 +106,7 @@ public class ImgShowActivity extends BaseActivity {
 
 
     }
-
+    //保存图片
     public void saveImgViewDrawable() {
         Drawable drawable = imageViewList.get(vp_img_show.getCurrentItem()).getDrawable();
 
@@ -250,7 +230,6 @@ public class ImgShowActivity extends BaseActivity {
             imageViewList = new ArrayList<ImageView>();
         }
         imageViewList.clear();
-        tv_baocun.setVisibility(View.GONE);
         for (String url : imageList) {
             LogUtils.e("url=" + url);
             if ("yes".equals(getIntent().getStringExtra("imPreview"))) {
@@ -328,7 +307,6 @@ public class ImgShowActivity extends BaseActivity {
             public void onResourceReady(Object resource, GlideAnimation glideAnimation) {
                 {
                     animaition.stop();
-                    tv_baocun.setVisibility(View.VISIBLE);
                     Drawable drawable ;
                     drawable = (Drawable) resource;
                     if (drawable.getMinimumHeight() - drawable.getMinimumWidth() > drawable.getMinimumWidth() * 2) {
@@ -343,7 +321,7 @@ public class ImgShowActivity extends BaseActivity {
         };
 
         Glide.with(this)
-                .load(RequestPath.SERVER_PATH + url)
+                .load(RequestPath.SERVER_WEB_PATH + url)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.mipmap.pictures_no)
                 //.crossFade()
@@ -370,7 +348,7 @@ public class ImgShowActivity extends BaseActivity {
         animaition.setOneShot(false);
         animaition.start();
         Glide.with(this)
-                .load(RequestPath.SERVER_PATH + url)
+                .load(RequestPath.SERVER_WEB_PATH + url)
                 .asGif()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.mipmap.pictures_no)

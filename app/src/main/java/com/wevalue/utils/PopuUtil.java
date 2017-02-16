@@ -271,7 +271,7 @@ public class PopuUtil {
     /**
      * 发布信息popu
      */
-    public static void initpopu(final MainActivity main) {
+    public static void initpopu(final MainActivity main,PopupWindow.OnDismissListener onDismissListener) {
         // 空白区域
         prompt_box = main.getLayoutInflater().inflate(R.layout.popu_send_note, null);
         LinearLayout ll_send_video = (LinearLayout) prompt_box.findViewById(R.id.ll_send_video);
@@ -349,6 +349,7 @@ public class PopuUtil {
 
         promptBoxPopupWindow = new PopupWindow(prompt_box, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true);
         promptBoxPopupWindow.setFocusable(true);
+        promptBoxPopupWindow.setOnDismissListener(onDismissListener);
         // 设置弹出动画
         promptBoxPopupWindow.setAnimationStyle(R.style.ActionSheetDialogStyle);
         // 设置popupWindow背景图片(只能通过popupWindow提供的返回键返回)
@@ -981,43 +982,37 @@ public class PopuUtil {
         promptBoxPopupWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
     }
 
-    /*分享的popuwindow*/
-    public static void initSharePopup(Activity activity, final Handler handler, HashMap<String, String> map) {
-        String url = "";
+    /*分享帖子的popuwindow*/
+    public static void initSharePopup(Activity activity, final Handler handler, final HashMap<String, String> map) {
         ImageView iv_sina;//微博分享
         final ImageView iv_weixin;//朋友圈
         ImageView iv_weixin_friend;//微信好友
         ImageView iv_qzone;//空间
         TextView tv_cancel; //取消按钮
-        if (map != null && map.size() > 0) {
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                String a = entry.getKey();
-                String b = entry.getValue();
-                url += "&" + a + "=" + b;
-            }
-        }
-        final String message = map.get("message")==null? "微值价值分享" : map.get("message");
-        final String shareUrl = RequestPath.SHARE_HTML + url;
-        LogUtils.e("MSSSSS", shareUrl);
+        String noteid = map.get("noteid");
+        String repostid = map.get("repostid");
+        final String shareUrl = RequestPath.SHARE_HTML + "noteid="+noteid+"&repostid="+repostid;
+        map.put("url",shareUrl);
+        map.put("imgUrl",RequestPath.SERVER_PATH+map.get("imgUrl"));
         final ShareHelper shareHelper = new ShareHelper(activity, handler);
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.iv_weixin:
-                        shareHelper.initShare(Constants.shareWeixinMoment, shareUrl,message);
+                        shareHelper.initShare(Constants.shareWeixinMoment, map);
                         promptBoxPopupWindow.dismiss();
                         break;
                     case R.id.iv_weixin_friend:
-                        shareHelper.initShare(Constants.shareWeixinFriend, shareUrl,message);
+                        shareHelper.initShare(Constants.shareWeixinFriend, map);
                         promptBoxPopupWindow.dismiss();
                         break;
                     case R.id.iv_qzone:
-                        shareHelper.initShare(Constants.shareQzone, shareUrl,message);
+                        shareHelper.initShare(Constants.shareQzone, map);
                         promptBoxPopupWindow.dismiss();
                         break;
                     case R.id.iv_sina:
-                        shareHelper.initShare(Constants.shareSina, shareUrl,message);
+                        shareHelper.initShare(Constants.shareSina, map);
                         promptBoxPopupWindow.dismiss();
                         break;
                     case R.id.tv_quxiao:

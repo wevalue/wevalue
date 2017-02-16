@@ -13,6 +13,7 @@ import com.wevalue.model.ChannelBean;
 import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.SharedPreferencesUtil;
+import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.NoScrollGridView;
 
 import java.util.List;
@@ -58,6 +59,10 @@ public class ChoiceChannelActivity extends BaseActivity implements View.OnClickL
     public void getChannel() {
         Gson gson = new Gson();
         channelBean = gson.fromJson(SharedPreferencesUtil.getAllChannel(this), ChannelBean.class);
+       if (channelBean==null){
+           ShowUtil.showToast(this,"连接不到网络，请退出重试.");
+           return;
+       }
         List<ChannelBean.Channel> channels = channelBean.getData();
         if (channelBean.getData().size() > 3) {
             channels.remove(channels.get(0));

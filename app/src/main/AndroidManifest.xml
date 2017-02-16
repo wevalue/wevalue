@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wevalue"
-    android:versionCode="2"
-    android:versionName="1.1.1">
-
+    android:versionCode="1"
+    android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="16"></uses-sdk>
     <permission
         android:name="com.wevalue.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
@@ -74,30 +74,6 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
 
-        <!-- 百度地图所需的service -->
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" />
-        <!-- 百度地图key -->
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="QASB4zfLiCgwePlylTF7sSu5SEd8DRyY" />
-        <meta-data
-            android:name="PGYER_APPID"
-            android:value="c08a6a8dd2ee7c9b3f5bcbf917061189" />
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="587c98093eae2534d0001da5" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="自主渠道" />
-
-        <!-- 首页 -->
-        <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <!-- 启动页 -->
         <activity android:name=".LauncherActivity">
             <intent-filter>
@@ -106,6 +82,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 首页 -->
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
 
         <!-- 引导页 -->
         <activity
@@ -244,26 +226,10 @@
             android:name=".ui.mine.activity.MyNoteActivity"
             android:launchMode="singleTop" />
 
-        <!-- 我的转发 -->
-        <!--
-            <activity
-            android:name=".ui.mine.activity.MyTransmitActivity"
-            android:launchMode="singleTask" />
-        -->
-        <!-- 我的打赏 -->
-        <!--
-            <activity
-            android:name=".ui.mine.activity.MyRewardActivity"
-            android:launchMode="singleTask" />
-        -->
-
-
         <!-- 碎银明细  和 权限明细 -->
         <activity
             android:name=".ui.mine.activity.WebActivity"
             android:launchMode="singleTask" />
-
-        <!-- 城市切换 -->
 
 
         <!-- 获取音频视频 -->
@@ -378,6 +344,23 @@
             android:name=".ui.mine.activity.BuyPermissionActivity"
             android:launchMode="singleTask" />
 
+
+        <!--推送内容-->
+        <activity android:name=".ui.we.activity.PushContentActivity" />
+        <!--认证-->
+        <activity
+            android:name=".ui.login.RenZhengZhongActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".PermissionsActivity" />
+        <activity android:name=".ui.details.activity.DragPhotoActivity" />
+        <!--用户举报-->
+        <activity android:name=".ui.details.activity.UserReportActivity"></activity>
+
+
+
+
+        <!-- 配置信息; -->
+
         <!-- &lt;!&ndash; For test only 测试的主程序 &ndash;&gt; -->
         <!-- <activity -->
         <!-- android:name="jupush.RenameActivity" -->
@@ -392,12 +375,9 @@
         <!-- android:exported="false"> -->
         <!-- <intent-filter> -->
         <!-- <action android:name="jpush.testAction" /> -->
-
-
         <!-- <category android:name="jpush.testCategory" /> -->
         <!-- </intent-filter> -->
         <!-- </activity> -->
-
 
         <!-- Rich push 核心功能 since 2.0.6 -->
         <activity android:name="cn.jpush.android.ui.PopWinActivity" />
@@ -413,7 +393,6 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="com.wevalue" />
-                g
             </intent-filter>
         </activity>
         <!-- Required  SDK核心功能 -->
@@ -500,6 +479,11 @@
             android:value="6194f9a1b89403697b961b62" /> <!-- </>值来自开发者平台取得的AppKey -->
 
         <activity android:name=".ui.details.activity.RepostNoteDetailActivity" />
+        <!-- 调用新浪原生SDK，需要注册的回调activity -->
+        <intent-filter>
+            <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
 
         <!-- 分享的activity -->
         <activity
@@ -530,28 +514,45 @@
                 <data android:scheme="wxeb128aba017ef3b9" />
             </intent-filter>
         </activity>
+        <!--微信支付-->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--支付宝-->
         <activity
             android:name=".ui.payment.alipay.ALiPayActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".ui.mine.activity.WithdrawActivity" />
+        <!--提现-->
+        <activity android:name=".ui.mine.activity.WithdrawActivity"
+            android:launchMode="singleTop"/>
+        <!--微信登陆-->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".ui.mine.activity.AvatarActivity" />
-        <activity android:name=".ui.we.activity.PushContentActivity" />
-        <activity
-            android:name=".ui.login.RenZhengZhongActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".PermissionsActivity" />
-        <activity android:name=".ui.details.activity.DragPhotoActivity" />
-        <activity android:name=".ui.details.activity.UserReportActivity"></activity>
+        <!-- 百度地图所需的service -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+        <!-- 百度地图key -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="QASB4zfLiCgwePlylTF7sSu5SEd8DRyY" />
+        <meta-data
+            android:name="PGYER_APPID"
+            android:value="c08a6a8dd2ee7c9b3f5bcbf917061189" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="587c98093eae2534d0001da5" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="自主" />
+
     </application>
 
 </manifest>

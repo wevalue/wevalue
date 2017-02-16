@@ -143,14 +143,7 @@ public class MySuiYinActivity extends BaseActivity implements View.OnClickListen
                         }).show();
                 break;
             case R.id.tv_withdraw:
-//                String userlev = SharedPreferencesUtil.getUserleve(this);
                 int userLevel = SharedPreferencesUtil.getUserUserLevelInt(this);
-//                for (int i = 0; i < 9; i++) {
-//                    if (level[i].equals(userlev)) {
-//                        userLevel = i;
-//                        break;
-//                    }
-//                }
                 LogUtils.e("userLevel", userLevel + "");
                 if (userLevel < 4) {
                     ShowUtil.showToast(this, "尊，用户等级达到己级才可以提现，邀请朋友们一起来传播价值吧。");

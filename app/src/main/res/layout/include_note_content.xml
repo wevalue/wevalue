@@ -18,17 +18,14 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
+        android:layout_marginBottom="15dp"
         android:background="@color/font_gray" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
         android:orientation="vertical">
-
         <TextView
             android:id="@+id/tv_note_content"
             style="@style/style_note_content"
@@ -53,14 +50,12 @@
             android:verticalSpacing="3dp"
             android:visibility="gone"></com.wevalue.view.NoScrollGridView>
     </LinearLayout>
-
     <WebView
         android:id="@+id/web_tuwen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="3dp"
         android:background="@color/white"
         android:visibility="gone"></WebView>
 </LinearLayout>

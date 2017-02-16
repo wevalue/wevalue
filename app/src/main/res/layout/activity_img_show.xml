@@ -40,19 +40,5 @@
             android:text="未得到数据..."
             android:textColor="@color/white"
             android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tv_baocun"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40dp"
-            android:layout_marginLeft="15dp"
-            android:drawableLeft="@mipmap/icon_baocun"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            />
-
     </RelativeLayout>
 </LinearLayout>

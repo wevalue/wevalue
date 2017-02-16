@@ -174,6 +174,7 @@ public class PersonInfoFragment extends BaseFragment implements View.OnClickList
             Glide.with(getActivity())
                     .load(RequestPath.SERVER_PATH + SharedPreferencesUtil.getAvatar(getActivity()))
                     .placeholder(R.mipmap.default_head)
+                    .dontAnimate()
                     .into(iv_user_photo);
             tv_nickname.setText(SharedPreferencesUtil.getNickname(getActivity()));
             tv_user_info.setText(SharedPreferencesUtil.getUserInfo(getActivity()));

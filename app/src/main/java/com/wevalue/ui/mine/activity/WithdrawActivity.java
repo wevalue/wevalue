@@ -73,13 +73,6 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
             ShowUtil.showToast(this, "请输入金额");
             return;
         }
-//        String userlev = SharedPreferencesUtil.getUserleve(this);
-//        for (int i = 0; i < 9; i++) {
-//            if (level[i].equals(userlev)) {
-//                userLevel = i;
-//                break;
-//            }
-//        }
         int userLevel = SharedPreferencesUtil.getUserUserLevelInt(this);
         double userCanWithDraw = Double.parseDouble(SharedPreferencesUtil.getUserCanWithDraw(this));
         double userMoney = Double.parseDouble(SharedPreferencesUtil.getSuiYinCount(this));
@@ -93,10 +86,6 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
             ShowUtil.showToast(this, "留些许碎银吧，用户等级达到丙级可以自由提现，加油！");
             return;
         }
-//        if (userSuiYin - Double.parseDouble(money) < 0) {
-//            ShowUtil.showToast(this, "提现金额不能大于碎银数量哦！");
-//            return;
-//        }
         truename = et_truename.getText().toString().trim();
         if (TextUtils.isEmpty(truename)) {
             Toast.makeText(this, "请输入您的真实姓名", Toast.LENGTH_SHORT).show();
@@ -143,6 +132,6 @@ public class WithdrawActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void payFail(String failString) {
-
+        ShowUtil.showToast(this, "提现申请失败！"+failString);
     }
 }

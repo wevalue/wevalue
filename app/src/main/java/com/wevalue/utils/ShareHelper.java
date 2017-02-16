@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.text.TextUtils;
 
 import java.util.HashMap;
@@ -37,16 +38,16 @@ public class ShareHelper {
         String title = message;
         String content = message;
         if (message.contains("|#|")) {
-            int cutting  = message.lastIndexOf("|#|");
-            content = message.substring(0,cutting);
-            title = message.substring(cutting+3,message.length());
+            int cutting = message.lastIndexOf("|#|");
+            content = message.substring(0, cutting);
+            title = message.substring(cutting + 3, message.length());
         }
 
         switch (sharePlatform) {
             case Constants.shareSina: //分享到微博
                 SinaWeibo.ShareParams sp = new SinaWeibo.ShareParams();
-                sp.setText(title);
-                sp.setTitle(content);
+                sp.setText(content + "\r\n\t"
+                        + title + "\n\t" + url);
                 sp.setUrl(url);
                 Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
                 weibo.authorize();
@@ -94,26 +95,114 @@ public class ShareHelper {
         }
     }
 
+    public void initShare(String sharePlatform, HashMap<String, String> map) {
+        String url = map.get("url");
+        String title = map.get("title");
+        String content = map.get("content");
+        String imgUrl = map.get("imgUrl");
+        switch (sharePlatform) {
+            case Constants.shareSina: //分享到微博
+                SinaWeibo.ShareParams sp = new SinaWeibo.ShareParams();
+                sp.setText(content + "\r\n\t"
+                        + title + "\n\t" + url);
+                //sp.setUrl(url);
+                //sp.setImageUrl(imgUrl);
+                Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+                weibo.authorize();
+                weibo.setPlatformActionListener(new MyActionListener()); // 设置分享事件回调
+                weibo.share(sp);
+                break;
+            case Constants.shareWeixinMoment: //分享到微信朋友圈
+                if (intentFilter == null) {
+                    initReceiver();
+                }
+                Platform wx = ShareSDK.getPlatform(context.getApplicationContext(), WechatMoments.NAME);
+                wx.setPlatformActionListener(new MyActionListener());
+                WechatMoments.ShareParams sp_weixin = new WechatMoments.ShareParams();
+                sp_weixin.setShareType(Platform.SHARE_WEBPAGE);
+                sp_weixin.setUrl(url);
+                sp_weixin.setText(content);
+                sp_weixin.setTitle(title);
+                sp_weixin.setImageUrl(imgUrl);
+                wx.share(sp_weixin);
+                break;
+            case Constants.shareQzone://分享qq空间
+                QZone.ShareParams qzonesp = new QZone.ShareParams();
+                qzonesp.setText(content);
+                qzonesp.setTitle(title);
+                qzonesp.setTitleUrl(url); // 标题的超链接
+                qzonesp.setSite("陕西微值辩证科技有限公司");
+                qzonesp.setSiteUrl(url);
+                qzonesp.setImageUrl(imgUrl);
+                Platform qzone = ShareSDK.getPlatform(QZone.NAME);
+                qzone.setPlatformActionListener(new MyActionListener()); // 设置分享事件回调
+                qzone.share(qzonesp);
+                break;
+            case Constants.shareWeixinFriend://分享到微信朋友
+                if (intentFilter == null) {
+                    initReceiver();
+                }
+                Platform weixin = ShareSDK.getPlatform(context.getApplicationContext(), Wechat.NAME);
+                weixin.setPlatformActionListener(new MyActionListener());
+                Wechat.ShareParams sp_wx_friend = new Wechat.ShareParams();
+                sp_wx_friend.setShareType(Platform.SHARE_WEBPAGE);
+                sp_wx_friend.setUrl(url);
+                sp_wx_friend.setText(content);
+                sp_wx_friend.setTitle(title);
+                 sp_wx_friend.setImageUrl(imgUrl);
+                weixin.share(sp_wx_friend);
+                break;
+        }
+    }
+
+    public static int contentLength = 23;
+    public static int titleLength = 23; //默认为99 则不限制标题
+
+    public static String getContent(String content) {
+        if (TextUtils.isEmpty(content)) {
+            return "免费看收费的内容";
+        } else {
+            if (content.length() > contentLength)
+                content = content.substring(0, contentLength) + "...";
+            return content;
+        }
+    }
+
+    public static String getTitle(String title) {
+        if (TextUtils.isEmpty(title)) {
+            return "微值—价值分享";
+        } else {
+            if (title.length() > titleLength)
+                title = title.substring(0, titleLength) + "...";
+            return title;
+        }
+    }
+
     /**
      * 分享回调事件
      **/
     public class MyActionListener implements PlatformActionListener {
         @Override
         public void onError(Platform arg0, int arg1, Throwable arg2) {
+            arg2.printStackTrace();
             LogUtils.e("log", "---onError---Throwable--" + arg2.getMessage().toString());
-            mHan.sendEmptyMessage(2);
+            mHan.sendEmptyMessageAtTime(2, SystemClock.uptimeMillis()+2000);
+            //ShowUtil.showToast(context, "分享失败");
         }
 
         @Override
         public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
             LogUtils.e("log", "---onComplete-----");
-            mHan.sendEmptyMessage(1);
+            mHan.sendEmptyMessageAtTime(1, SystemClock.uptimeMillis()+2000);
+            //ShowUtil.showToast(context, "分享成功");
         }
 
         @Override
         public void onCancel(Platform arg0, int arg1) {
             LogUtils.e("log", "---onCancel-----");
             mHan.sendEmptyMessage(3);
+            mHan.sendEmptyMessageAtTime(3, SystemClock.uptimeMillis()+2000);
+            // ShowUtil.showToast(context, "取消分享");
         }
     }
 

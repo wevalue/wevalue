@@ -65,7 +65,7 @@ public class WorldListGridViewAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
         Glide.with(mContext)
-                .load(RequestPath.SERVER_PATH+mDatas.get(position).getUrl())
+                .load(RequestPath.SERVER_WEB_PATH+mDatas.get(position).getUrl())
                 .crossFade()
                 .into(viewHolder.iv_gridview_item);
         return convertView;

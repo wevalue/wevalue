@@ -64,7 +64,7 @@ public class GuideActivity extends BaseActivity {
         for (int i = 0; i < imgs.length; i++) {
             ImageView imageView = new ImageView(this);
             imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setImageResource(imgs[i]);
             imageViewList.add(imageView);
         }

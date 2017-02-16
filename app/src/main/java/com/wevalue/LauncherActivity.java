@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
@@ -50,7 +51,6 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
     ImageView imageView;
     long currentSeconnd;
     private Realm realm;
-    private static final int LUNCHTIMER = 897;
     private static final int LUNCHACTIVITY = 569;
     private boolean isAllCityOk = false, isHotCityOk = false, isGetTypeOk = false, isGetNoteOk = true;
     private String jpush;  //极光推送标签
@@ -60,9 +60,6 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case LUNCHTIMER:
-                    launchTimerTask();
-                    break;
                 case LUNCHACTIVITY:
                     if (TextUtils.isEmpty(SharedPreferencesUtil.getIsFristStart(LauncherActivity.this))) {
                         Intent intent = new Intent(LauncherActivity.this, GuideActivity.class);
@@ -113,8 +110,8 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
                 isAllCityOk = true;
             }
         }
-        handler.sendEmptyMessage(LUNCHTIMER);
         getUserInfoData();
+        handler.sendEmptyMessageAtTime(LUNCHACTIVITY, SystemClock.uptimeMillis()+2500);
     }
 
     @Override
@@ -371,9 +368,6 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
                     if (obj.getString("result").equals("1")) {
                         SharedPreferencesUtil.setHotCity(LauncherActivity.this, content);
                         isHotCityOk = true;
-//                        if (isAllCityOk && isGetNoteOk && isGetTypeOk && isHotCityOk) {
-//                            handler.sendEmptyMessage(LUNCHTIMER);
-//                        }
                         LogUtils.e("content = " + SharedPreferencesUtil.getHotCity(LauncherActivity.this));
                     } else {
                         ShowUtil.showToast(LauncherActivity.this, obj.getString("message"));
@@ -400,9 +394,6 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
                         JSONArray jsonArray = jsonObject.getJSONArray("data");
                         saveTypeToRealm(jsonArray);
                         isGetTypeOk = true;
-//                        if (isAllCityOk && isGetNoteOk && isGetTypeOk && isHotCityOk) {
-//                            handler.sendEmptyMessage(LUNCHTIMER);
-//                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -416,8 +407,7 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
                     if ("1".equals(result)){
                         JSONObject data = jsonObject.getJSONObject("data");
                         String url = data.getString("uipath");
-
-                        Glide.with(this).load(RequestPath.SERVER_PATH+url).placeholder(R.mipmap.lanucherpic).error(R.mipmap.lanucherpic).centerCrop().into(imageView);
+                        Glide.with(this).load(RequestPath.SERVER_PATH+url).placeholder(R.mipmap.lanucherpic).centerCrop().into(imageView);
                     }else {
                         ShowUtil.showToast(this,jsonObject.getString("message"));
                     }
@@ -425,13 +415,6 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
                     e.printStackTrace();
                 }
                break;
-//            case RequestPath.GET_GETNOTE:
-//                SharedPreferencesUtil.setContent(this, "tuijian", content);
-//                isGetNoteOk = true;
-//                if (isAllCityOk && isGetNoteOk && isGetTypeOk && isHotCityOk) {
-//                    handler.sendEmptyMessage(LUNCHTIMER);
-//                }
-//                break;
         }
     }
 
@@ -465,21 +448,6 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
                 realm.createOrUpdateAllFromJson(Channels.class, jsonarray);
             }
         });
-    }
-
-    public void launchTimerTask() {
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                handler.sendEmptyMessage(LUNCHACTIVITY);
-            }
-        };
-        if (System.currentTimeMillis() - currentSeconnd < 2450) {
-            timer.schedule(timerTask, 2500 - (System.currentTimeMillis() - currentSeconnd));
-        } else {
-            handler.sendEmptyMessage(LUNCHACTIVITY);
-        }
     }
 
     /*获取最新token*/

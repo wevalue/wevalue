@@ -196,7 +196,7 @@ public class PaymentDetails_DetailsActivity extends BaseActivity implements View
         map.put("userid", SharedPreferencesUtil.getUid(this));
         map.put("orderno", orderno);
         map.put("ordertype", ordertype);
-        NetworkRequest.postRequest(RequestPath.POST_PENDISTINFO, map, this);
+        NetworkRequest.getRequest(RequestPath.POST_PENDISTINFO, map, this);
     }
 
 

@@ -1,6 +1,7 @@
 package com.wevalue.ui.world.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bumptech.glide.Glide;
+import com.wevalue.MainActivity;
 import com.wevalue.R;
 import com.wevalue.base.BaseActivity;
 import com.wevalue.net.RequestPath;
@@ -19,6 +21,7 @@ import com.wevalue.net.payment.PayInterface;
 import com.wevalue.net.payment.PaymentBase;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
+import com.wevalue.ui.login.LoginActivity;
 import com.wevalue.utils.Constants;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.PopuUtil;
@@ -64,7 +67,7 @@ public class TransmitNoteActivity extends BaseActivity implements View.OnClickLi
     private String paynum;//发布视频时支付的价格
     private ProgressDialog mProgressDialog;
     private String repostfrom = "3";
-
+    private String uid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,7 @@ public class TransmitNoteActivity extends BaseActivity implements View.OnClickLi
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage("正在转发信息...");
         mProgressDialog.setCanceledOnTouchOutside(false);
+        uid = SharedPreferencesUtil.getUid(this);
         initView();
         initHualunData();
         if (getIntent() != null) {
@@ -94,6 +98,16 @@ public class TransmitNoteActivity extends BaseActivity implements View.OnClickLi
         } else {
             noteId = "1";
         }
+        if (TextUtils.isEmpty(uid)) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     private void imgViewSetData(String url, ImageView iv) {

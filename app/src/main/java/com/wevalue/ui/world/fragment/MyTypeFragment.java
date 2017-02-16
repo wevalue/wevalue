@@ -221,6 +221,7 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
         realm = Realm.getDefaultInstance();
         RealmUtils realmUtils = new RealmUtils();
         try {
+            if (realm==null)return;
             noteclas = realmUtils.loadChanelByName(realm, noteclas).getId();
         } catch (Exception e) {
             e.printStackTrace();

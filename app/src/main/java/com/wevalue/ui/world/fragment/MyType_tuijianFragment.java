@@ -37,6 +37,7 @@ import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailsActivity;
+import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
 import com.wevalue.ui.influence.PopClickInterface;
 import com.wevalue.ui.world.adapter.WorldListAdapter;
 import com.wevalue.ui.world.adapter.WorldListGridViewAdapter;
@@ -369,8 +370,14 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         String noteType = noteEntity.getNotetype();
         switch (noteType){
             case "4" : //纯文字
-                tv_note_content.setVisibility(View.VISIBLE);
-                tv_note_content.setText(noteEntity.getContent());
+                //如果有图片则显示图片和标题 否则显示内容
+                if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
+                    layout_img_layout.setVisibility(View.VISIBLE);
+                    lunboImageviewSetData(noteEntity);
+                }else {
+                    tv_note_content.setVisibility(View.VISIBLE);
+                    tv_note_content.setText(noteEntity.getContent());
+                }
                 break;
             case "1" : //视频
                 iv_video_img.setVisibility(View.VISIBLE);
@@ -381,14 +388,23 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
                 iv_audio_img.setVisibility(View.VISIBLE);
                 break;
             case "3" : //图片
-                layout_img_layout.setVisibility(View.VISIBLE);
-                lunboImageviewSetData(noteEntity);
+                //如果有图片则显示图片和标题 否则显示内容
+                if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
+                    lunboImageviewSetData(noteEntity);
+                    layout_img_layout.setVisibility(View.VISIBLE);
+                }else {
+                    tv_note_content.setVisibility(View.VISIBLE);
+                    tv_note_content.setText(noteEntity.getContent());
+                }
                 break;
-            case "5" : //图片
-                layout_img_layout.setVisibility(View.VISIBLE);
-                tv_note_content.setVisibility(View.VISIBLE);
-                tv_note_content.setText(noteEntity.getContent());
-                //lunboImageviewSetData(noteEntity);
+            case "5" : //图文
+                if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
+                    layout_img_layout.setVisibility(View.VISIBLE);
+                    lunboImageviewSetData(noteEntity);
+                }else {
+                    tv_note_content.setVisibility(View.VISIBLE);
+                    tv_note_content.setText(noteEntity.getContent());
+                }
                 break;
         }
     }
@@ -402,7 +418,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
             return;
         }
         Glide.with(getActivity())
-                .load(RequestPath.SERVER_PATH + url)
+                .load(RequestPath.SERVER_WEB_PATH + url)
                 .placeholder(R.mipmap.default_head)
                 .error(R.mipmap.default_head)
                 .crossFade()

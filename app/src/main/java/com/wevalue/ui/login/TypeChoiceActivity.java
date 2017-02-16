@@ -119,13 +119,13 @@ public class TypeChoiceActivity extends BaseActivity implements View.OnClickList
                             if (otherChannelList.get(j).getTypename().equals(name)) {
                                 if (name.equals("推荐")) {
                                     userChannelList.add(0, otherChannelList.get(j));
-                                } else {
-                                    if (name.equals("视频")) {
-                                        userChannelList.add(1, otherChannelList.get(j));
-                                    } else {
-                                        userChannelList.add(otherChannelList.get(j));
-                                    }
-
+                                }else {
+//                                    if (name.equals("视频")) {
+//                                        userChannelList.add(1, otherChannelList.get(j));
+//                                    } else {
+//                                        userChannelList.add(otherChannelList.get(j));
+//                                    }
+                                    userChannelList.add(otherChannelList.get(j));
                                 }
                                 otherChannelList.remove(j);
                                 break;
