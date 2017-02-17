@@ -343,7 +343,7 @@ public class ImgShowActivity extends BaseActivity {
         final ImageView imageView = new ImageView(this);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         imageView.setImageResource(R.drawable.pic_lunbo);
-        imageView.setScaleType(ImageView.ScaleType.CENTER);
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         animaition = (AnimationDrawable) imageView.getDrawable();
         animaition.setOneShot(false);
         animaition.start();
