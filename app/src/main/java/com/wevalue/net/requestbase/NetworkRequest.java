@@ -67,11 +67,9 @@ public class NetworkRequest {
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case SUCC:
-                        LogUtils.e("netContentget", msg.obj.toString());
                         wzHttpListener.onSuccess(msg.obj.toString().replace("请填写userid","登录已过期，请重新登录"), url);
                         break;
                     case FAIL:
-                        LogUtils.e("netContentget", msg.obj.toString());
                         wzHttpListener.onFailure(msg.obj.toString().replace("请填写userid","登录已过期，请重新登录"));
                         break;
                 }
@@ -102,7 +100,7 @@ public class NetworkRequest {
                 Message message = Message.obtain();
                 try {
                     String str = response.body().string();
-                    LogUtils.e("responsssss_1", "-1--str--" + str);
+                    LogUtils.e("onResponse", "-onResponse-" + str);
                     message.what = SUCC;
                     message.obj = Base64Coder.decodeString(str.substring(5, str.length())).replaceAll("#换行#", "\r\n");
                 } catch (Exception e) {
@@ -125,7 +123,6 @@ public class NetworkRequest {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-
                 switch (msg.what) {
                     case SUCC:
                         try {
@@ -193,6 +190,7 @@ public class NetworkRequest {
                 Message message = Message.obtain();
                 String str = response.body().string();
                 try {
+                    LogUtils.e("onResponse", "-onResponse-" + str);
                     message.what = SUCC;
                     message.obj = Base64Coder.decodeString(str.substring(5, str.length())).replaceAll("#换行#", "\r\n");
                 } catch (Exception e) {

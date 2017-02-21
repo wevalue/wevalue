@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wevalue"
     android:versionCode="1"
-    android:versionName="1.0">
+    android:versionName="1.0.1">
     <uses-sdk android:minSdkVersion="16"></uses-sdk>
     <permission
         android:name="com.wevalue.permission.JPUSH_MESSAGE"
@@ -550,7 +550,7 @@
             android:value="587c98093eae2534d0001da5" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="自主" />
+            android:value="${UMENG_CHANNEL_VALUE}" />
 
     </application>
 

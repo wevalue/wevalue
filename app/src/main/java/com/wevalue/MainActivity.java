@@ -842,7 +842,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     String isfoucs = data.getString("isfoucs");//是否轻质更新
                     LogUtils.e("log", "newVersion = " + newVersion + "---localVersion = " + localVersion + "---apppath =" + appPath);
                     SharedPreferencesUtil.setApppath(MainActivity.this, RequestPath.SERVER_PATH + appPath);
-                    if (!newVersion.equals(localVersion)) {
+                    int localVersions = getIntFromString(localVersion);
+                    int newVersions = getIntFromString(newVersion);
+                    if (newVersions>localVersions) {
                         LogUtils.e("log", "newVersion = " + newVersion + "---localVersion = " + localVersion);
                         // 这里来检测版本是否需要更新
                         UpdateManager mUpdateManager = new UpdateManager(MainActivity.this, newVersion,isfoucs);
@@ -860,6 +862,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             }
         });
+    }
+
+    private int getIntFromString(String versionName){
+        int  result = 0;
+        String intString = "0";
+        if (versionName.contains(".")) {
+            String[] versionNames = versionName.split("\\.");
+            if (versionNames.length==2){
+                intString+=versionNames[0];
+                intString+=versionNames[1];
+                result = Integer.parseInt(intString)*10;
+            }else if (versionNames.length==3){
+                intString+=versionNames[0];
+                intString+=versionNames[1];
+                intString+=versionNames[2];
+                result = Integer.parseInt(intString);
+            }
+        }else {
+            intString+=versionName;
+            result = Integer.parseInt(intString);
+        }
+        return result;
     }
 
     /*我们小圆点的展示和隐藏方法*/
@@ -945,42 +969,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (mMessageReceiver != null) {
             unregisterReceiver(mMessageReceiver);
         }
-    }
-
-    private void getUserInfoData() {
-        String uid = SharedPreferencesUtil.getUid(this);
-        if (TextUtils.isEmpty(uid)) {
-            return;
-        }
-        Map<String, Object> map = new HashMap<>();
-        map.put("code", RequestPath.CODE);
-        map.put("userid", uid);
-        map.put("logintoken", SharedPreferencesUtil.getUserToken(this));
-        LogUtils.e("token!!!", SharedPreferencesUtil.getUserToken(this));
-        NetworkRequest.postRequest(RequestPath.POST_SETTOKENLONGTIME, map, new WZHttpListener() {
-            @Override
-            public void onSuccess(String content, String isUrl) {
-                //1.用户状态正常 3.用户禁用 4.用户删除 5 登录过期
-                try {
-                    JSONObject obj = new JSONObject(content);
-                    if (obj.getString("result").equals("3") || obj.getString("result").equals("4")) {
-                        SharedPreferencesUtil.clearSharedPreferencesInfo(WeValueApplication.applicationContext, "UserInfo");
-                    } else if (obj.getString("result").equals("5")) {
-                        ShowUtil.showToast(MainActivity.this, "登录已经过期，请重新登录！");
-                        SharedPreferencesUtil.clearSharedPreferencesInfo(WeValueApplication.applicationContext, "UserInfo");
-                    } else if (obj.getString("result").equals("1")) {
-                        SharedPreferencesUtil.setUserToken(MainActivity.this, obj.optString("data"));
-                        LogUtils.e("token!!!", obj.optString("data"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(String content) {
-                ShowUtil.showToast(MainActivity.this, "网络开小差了，请检查网络稍后再试...");
-            }
-        });
     }
 }
