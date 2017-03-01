@@ -178,51 +178,18 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
         rgb_isShare = (ImageView) findViewById(R.id.rgb_isShare);
         rgb_isShare.setTag(true);
         et_edit_reci = (EditText) findViewById(R.id.et_edit_reci);
-        et_edit_reci.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String s = et_edit_reci.getText().toString();
-                if (s.contains("\'")) {
-                    et_edit_reci.setText(s.replace("\'", ""));
-                }
-                if (s.contains("\"")) {
-                    et_edit_reci.setText(s.replace("\"", ""));
-                }
-                if (s.contains("\\")) {
-                    et_edit_reci.setText(s.replace("\\", ""));
-
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+        et_edit_reci.addTextChangedListener(reciTextWatcher);
         et_title = (EditText) findViewById(R.id.et_title);
         et_title.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //LogUtils.e("beforeTextChanged","charSequence = "+charSequence+"---"+i+"--"+i1+"--"+i2);
-//                if (et_title.getText().length() ==30){
-//                    ShowUtil.showToast(ReleaseNoteActivity.this, "标题不能超过30字");
-//                }
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //LogUtils.e("onTextChanged","charSequence = "+charSequence+"---"+i+"--"+i1+"--"+i2);
-
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
-                LogUtils.e("afterTextChanged","editable = "+editable.length()+" ----"+editable.toString());
                 if (editable.length()==30){
                     ShowUtil.showToast(ReleaseNoteActivity.this, "标题不能超过30字");
                 }
@@ -261,105 +228,80 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                 media.setDataSource(fileUrl);
                 Bitmap video_img_bitmap = media.getFrameAtTime();
                 iv_video_img.setImageBitmap(video_img_bitmap);
-                et_content.setFilters(new InputFilter[]{new InputFilter.LengthFilter(300)});
-                et_content.setHint("说点什么…（300字以内）");
-                et_content.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        if (charSequence.length() >= 300) {
-                            ShowUtil.showToast(ReleaseNoteActivity.this, "300字以内");
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-
-                    }
-                });
-                LogUtils.e("fileUrl = " + fileUrl);
+                setFilters(et_content,300);
                 rl_videoAndAudio.setVisibility(View.VISIBLE);
                 break;
             case 2://音频
                 fileUrl = getIntent().getStringExtra("fileUrl");
                 rl_videoAndAudio.setVisibility(View.VISIBLE);
-                et_content.setFilters(new InputFilter[]{new InputFilter.LengthFilter(300)});
-                et_content.setHint("说点什么…（300字以内）");
-                et_content.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        if (charSequence.length() == 300) {
-                            ShowUtil.showToast(ReleaseNoteActivity.this, "300字以内");
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-
-                    }
-                });
+                setFilters(et_content,300);
                 mMediaPlayer = new MediaPlayer();
                 iv_video_img.setImageResource(R.mipmap.pic_music0);
                 break;
             case 3://图片
-                et_content.setFilters(new InputFilter[]{new InputFilter.LengthFilter(300)});
-                et_content.setHint("说点什么…（300字以内）");
-                et_content.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        if (charSequence.length() == 300) {
-                            ShowUtil.showToast(ReleaseNoteActivity.this, "300字以内");
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-
-                    }
-                });
+                setFilters(et_content,300);
                 initGridViewData();
                 break;
             case 4://文字
-
-                et_content.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2000)});
-                et_content.setHint("说点什么…（2000字以内）");
-                et_content.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        if (charSequence.length() == 2000) {
-                            ShowUtil.showToast(ReleaseNoteActivity.this, "2000字以内");
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-
-                    }
-                });
+                setFilters(et_content,6000);
                 initGridViewData();
                 //如果发表文字 则隐藏加号  加号在nsgv_send_note_gridview里面写着
                 nsgv_send_note_gridview.setVisibility(View.GONE);
                 break;
         }
+    }
+    private TextWatcher reciTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String s = et_edit_reci.getText().toString();
+            if (s.contains("\'")) {
+                et_edit_reci.setText(s.replace("\'", ""));
+            }
+            if (s.contains("\"")) {
+                et_edit_reci.setText(s.replace("\"", ""));
+            }
+            if (s.contains("\\")) {
+                et_edit_reci.setText(s.replace("\\", ""));
+
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+    /**
+     * EditText 限制提示
+     * @param editText
+     * @param length
+     */
+    private void setFilters(EditText editText, final int length){
+        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(length)});
+        editText.setHint("说点什么…（"+length+"字以内）");
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() >= length) {
+                    ShowUtil.showToast(ReleaseNoteActivity.this, length+"字以内");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override

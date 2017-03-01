@@ -358,7 +358,7 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
 
         switch (isUrl) {
             case RequestPath.GET_GETALLCITY:
-//                SharedPreferencesUtil.setAllCity(this, content);
+                SharedPreferencesUtil.setAllCity(this, content);
                 this.content = content;
                 initCityData();
                 break;
@@ -378,16 +378,6 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
                 break;
             //把所有的频道信息保存到本地
             case RequestPath.GET_GETNOTETYPE:
-                LogUtils.e("alluserlike", content);
-                String userLikeCity = SharedPreferencesUtil.getUserLikeCity(LauncherActivity.this);
-                if (!TextUtils.isEmpty(userLikeCity)) {
-                    //如果用户选择了喜好的城市 则把频道信息中的城市名字替换为喜好的城市名
-                    content = content.replaceAll("地区", userLikeCity);
-                }
-                SharedPreferencesUtil.setAllChannel(this, content);
-//                Gson gson = news Gson();
-//                ChannelBean channelBean = gson.fromJson(content, ChannelBean.class);
-//                LogUtils.e("realm", channelBean.getData().get(1).getId());
                 try {
                     JSONObject jsonObject = new JSONObject(content);
                     if (jsonObject.getString("result").equals("1")) {
@@ -400,20 +390,7 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
                 }
                 break;
             case RequestPath.POST_LANYCHER_IMAGE: //获取启动页图片
-                try{
-                    LogUtils.e("IMAGE_URL",content);
-                    JSONObject jsonObject = new JSONObject(content);
-                    String result = jsonObject.getString("result");
-                    if ("1".equals(result)){
-                        JSONObject data = jsonObject.getJSONObject("data");
-                        String url = data.getString("uipath");
-                        Glide.with(this).load(RequestPath.SERVER_PATH+url).placeholder(R.mipmap.lanucherpic).centerCrop().into(imageView);
-                    }else {
-                        ShowUtil.showToast(this,jsonObject.getString("message"));
-                    }
-                    }catch (Exception e){
-                    e.printStackTrace();
-                }
+                showImg(content);
                break;
         }
     }
@@ -421,6 +398,27 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
     @Override
     public void onFailure(String content) {
         LogUtils.e("alluserlikeerror" + content);
+    }
+
+    /**
+     * 显示启动页图片
+     * @param content
+     */
+    private void showImg(String content){
+        try{
+            LogUtils.e("IMAGE_URL",content);
+            JSONObject jsonObject = new JSONObject(content);
+            String result = jsonObject.getString("result");
+            if ("1".equals(result)){
+                JSONObject data = jsonObject.getJSONObject("data");
+                String url = data.getString("uipath");
+                Glide.with(this).load(RequestPath.SERVER_PATH+url).placeholder(R.mipmap.lanucherpic).centerCrop().into(imageView);
+            }else {
+                ShowUtil.showToast(this,jsonObject.getString("message"));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -433,10 +431,7 @@ public class LauncherActivity extends BaseActivity implements WZHttpListener {
     }
 
     /**
-     * Title: launchTimerTask<br>
-     * Description: 启动页定时器<br>
-     * Depend : TODO <br>
-     *
+     * 保存频道数据
      * @Modified by
      * @Version
      * @since JDK 1.7

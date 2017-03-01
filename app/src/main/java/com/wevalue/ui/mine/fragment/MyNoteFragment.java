@@ -1,5 +1,7 @@
 package com.wevalue.ui.mine.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -66,16 +68,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
     private TextView tv_quanbu;
     private TextView tv_shijie;
     private TextView tv_pengyoumen;
-
-
-//    @SuppressLint("ValidFragment")
-//    public MyNoteFragment(TextView tv_quanbu, TextView tv_shijie, TextView tv_pengyoumen) {
-//        this.tv_quanbu = tv_quanbu;
-//        this.tv_shijie = tv_shijie;
-//        this.tv_pengyoumen = tv_pengyoumen;
-//
-//    }
-
+    private Activity context;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -90,7 +83,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
     @Override
     public void onResume() {
         super.onResume();
-        String delNoteId = SharedPreferencesUtil.getUserDelNoteId(getActivity());
+        String delNoteId = SharedPreferencesUtil.getUserDelNoteId(context);
         if (!TextUtils.isEmpty(delNoteId)) {
             if (mNoteList==null)return;
             for (int i = 0; i < mNoteList.size(); i++) {
@@ -98,7 +91,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
                     mNoteList.remove(i);
                     mAdapter.setmDatas(mNoteList);
                     mAdapter.notifyDataSetChanged();
-                    SharedPreferencesUtil.setUserDelNoteId(getActivity(), "");
+                    SharedPreferencesUtil.setUserDelNoteId(context, "");
                     tv_quanbu.setText("全部（" + mNoteList.size() + "）");
                     break;
                 }
@@ -109,21 +102,22 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle bundle = getArguments();
-        mNoteRequestBase = NoteRequestBase.getNoteRequestBase(getActivity());
+        mNoteRequestBase = NoteRequestBase.getNoteRequestBase(context);
         notezone = bundle.getString("notezone");
         status = bundle.getString("status");
         if (!notezone.equals("0")) {
             asyncTask.execute();
         }
         view = inflater.inflate(R.layout.fragment_mynote, null);
+        context = getActivity();
         initView();
         return view;
     }
 
     private void initView() {
-        tv_quanbu = (TextView) getActivity().getWindow().getDecorView().getRootView().findViewById(R.id.tv_influence);
-        tv_shijie = (TextView) getActivity().getWindow().getDecorView().getRootView().findViewById(R.id.tv_world);
-        tv_pengyoumen = (TextView) getActivity().getWindow().getDecorView().getRootView().findViewById(R.id.tv_friends);
+        tv_quanbu = (TextView) context.getWindow().getDecorView().getRootView().findViewById(R.id.tv_influence);
+        tv_shijie = (TextView) context.getWindow().getDecorView().getRootView().findViewById(R.id.tv_world);
+        tv_pengyoumen = (TextView) context.getWindow().getDecorView().getRootView().findViewById(R.id.tv_friends);
 
 
         mNoScrollListview = (NoScrollListview) view.findViewById(R.id.mNoScrollListview);
@@ -173,7 +167,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
                             adapter.notifyDataSetChanged();
                         } else {
                             pageindex--;
-                            ShowUtil.showToast(getActivity(), "没有更多数据了");
+                            ShowUtil.showToast(context, "没有更多数据了");
                         }
                     } else if (pageindex == 1) {
                         if (adapter != null && rewardEntities != null && rewardEntities.size() > 0) {
@@ -182,14 +176,14 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
                             adapter.notifyDataSetChanged();
                         } else {
                             rewardEntities = rewardBean.getData();
-                            adapter = new MyRewardAdapter(getActivity(), rewardEntities);
+                            adapter = new MyRewardAdapter(context, rewardEntities);
                             mNoScrollListview.setAdapter(adapter);
                             mNoScrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                     //跳转到帖子详情页 或转发详情页
 
-                                    Intent intent = new Intent(getActivity(), NoteDetailsActivity.class);
+                                    Intent intent = new Intent(context, NoteDetailsActivity.class);
                                     intent.putExtra("noteId", rewardEntities.get(i).getNoteid());
                                     intent.putExtra("repostid", "0");
                                     startActivity(intent);
@@ -222,7 +216,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
                             mAdapter.notifyDataSetChanged();
                         } else {
                             pageindex--;
-                            ShowUtil.showToast(getActivity(), "没有更多数据了");
+                            ShowUtil.showToast(context, "没有更多数据了");
                         }
                     } else if (pageindex == 1) {
                         if (mAdapter != null && mNoteList != null && mNoteList.size() > 0) {
@@ -231,7 +225,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
                             mAdapter.notifyDataSetChanged();
                         } else {
                             mNoteList = noteBean.getData();
-                            mAdapter = new NoteListAdapter(mNoteList, getActivity());
+                            mAdapter = new NoteListAdapter(mNoteList, context);
                             mNoScrollListview.setAdapter(mAdapter);
                             mNoScrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
@@ -239,12 +233,12 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
                                     Intent intent = null;
                                     //跳转到转发帖子详情页
                                     if (mNoteList.get(i).getRepostid().equals("0")) {
-                                        intent = new Intent(getActivity(), NoteDetailsActivity.class);
+                                        intent = new Intent(context, NoteDetailsActivity.class);
                                         intent.putExtra("noteId", mNoteList.get(i).getNoteid());
                                         intent.putExtra("repostid", mNoteList.get(i).getRepostid());
                                         startActivity(intent);
                                     } else {
-                                        intent = new Intent(getActivity(), RepostNoteDetailActivity.class);
+                                        intent = new Intent(context, RepostNoteDetailActivity.class);
                                         intent.putExtra("noteId", mNoteList.get(i).getNoteid());
                                         intent.putExtra("repostid", mNoteList.get(i).getRepostid());
                                         startActivity(intent);

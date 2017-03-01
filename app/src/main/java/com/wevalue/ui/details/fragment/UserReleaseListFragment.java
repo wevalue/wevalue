@@ -63,6 +63,7 @@ public class UserReleaseListFragment extends BaseFragment implements WZHttpListe
         mNoScrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (noteInfo==null)return;
                 Intent intent = new Intent(getActivity(), NoteDetailsActivity.class);
                 intent.putExtra("noteId", noteInfo.get(position).getNoteid());
                 intent.putExtra("repostid", noteInfo.get(position).getRepostid());

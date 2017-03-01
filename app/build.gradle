@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'wevalue'
             keyPassword 'wevalue'
-            storeFile file('/Users/huiwen/Desktop/wevalue_android/wevalue.jks')
+            storeFile file('E:/GitHub/wevalue/wevalue.jks')
             storePassword 'wevalue'
         }
     }
@@ -23,7 +23,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
-        versionName "1.01"
+        versionName "1.0.1"
         ndk {
             abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
         }
@@ -46,6 +46,88 @@ android {
         main {
             jniLibs.srcDirs = ['libs']
         }
+    }
+    //批量多渠道打包
+    productFlavors {
+        zizhu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "自主"]
+        }
+        yybao {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "应用宝"]
+        }
+        zs360 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "360手机助手"]
+        }
+        mi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "小米"]
+        }
+        huawei {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "华为"]
+        }
+        baidu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "百度手机助手"]
+        }
+        wdj {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "豌豆荚阿里应用pp助手"]
+        }
+        opop {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "OPPO"]
+        }
+        vivo {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "VIVO"]
+        }
+        liqu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "历趣"]
+        }
+        yyhui {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "应用汇"]
+        }
+        mmy {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "木蚂蚁"]
+        }
+        itools {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "iTools"]
+        }
+        sanx {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "三星"]
+        }
+        soug {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "搜狗"]
+        }
+        kuch {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "酷传"]
+        }
+        meizu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "魅族"]
+        }
+        leshi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "乐视"]
+        }
+        lianxinag {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "联想"]
+        }
+        kuan {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "酷安"]
+        }
+        yunju {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "云聚"]
+        }
+        chuzi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "锤子"]
+        }
+        coolpad {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "酷派"]
+        }
+        jinli {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "金立"]
+        }
+        anzhi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "安智"]
+        }
+        dianxin{
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "电信"]
+        }
+
     }
 }
 
@@ -73,7 +155,7 @@ dependencies {
     //    compile files('libs/pgyer_sdk_2.4.5.jar')
     compile project(path: ':pickerview')
     compile 'com.github.bumptech.glide:glide:3.7.0'
-   // compile 'com.github.chrisbanes.photoview:library:1.2.4'
+    // compile 'com.github.chrisbanes.photoview:library:1.2.4'
     compile files('libs/umeng-analytics-v6.0.8.jar')
     compile 'com.jiechic.library:xUtils:2.6.14'
     compile files('libs/okhttp-2.1.0.jar')

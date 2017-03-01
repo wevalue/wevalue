@@ -46,6 +46,11 @@ public class MyNoteActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState != null) {
+            String FRAGMENTS_TAG = "android:support:fragments";
+            // remove掉保存的Fragment`
+            savedInstanceState.remove(FRAGMENTS_TAG);
+        }
         setContentView(R.layout.activity_mynote);
         status = getIntent().getStringExtra("status");
         initView();
