@@ -160,7 +160,7 @@ public class WorldListAdapter extends BaseAdapter {
         }
         viewHolder.tv_title.setText(title);
         try {
-            String notetype = noteEntity.getNotetype();
+            final String notetype = noteEntity.getNotetype();
             switch (notetype) {
                 case "4"://文字
                     if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
@@ -215,14 +215,23 @@ public class WorldListAdapter extends BaseAdapter {
             viewHolder.nsgv_world_list_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
-                    String[] url = new String[mDatas.get(position).getList().size()];
-                    for (int i = 0; i < mDatas.get(position).getList().size(); i++) {
-                        url[i] = mDatas.get(position).getList().get(i).getUrl();
+                    if (notetype.equals("5")){//如果是图文 直接跳转详情界面
+                        Intent intent = null;
+                        //跳转到转发帖子详情页
+                        intent = new Intent(mContext, NoteDetailsActivity.class);
+                        intent.putExtra("noteId", mDatas.get(position).getNoteid());
+                        intent.putExtra("repostid", "0");
+                        mContext.startActivity(intent);
+                    }else {
+                        String[] url = new String[mDatas.get(position).getList().size()];
+                        for (int i = 0; i < mDatas.get(position).getList().size(); i++) {
+                            url[i] = mDatas.get(position).getList().get(i).getUrl();
+                        }
+                        Intent intent = new Intent(mActivity, ImgShowActivity.class);
+                        intent.putExtra("index", index);
+                        intent.putExtra("imgUrl", url);
+                        mActivity.startActivity(intent);
                     }
-                    Intent intent = new Intent(mActivity, ImgShowActivity.class);
-                    intent.putExtra("index", index);
-                    intent.putExtra("imgUrl", url);
-                    mActivity.startActivity(intent);
                 }
             });
             mNoteRequestBase = NoteRequestBase.getNoteRequestBase(mContext);
