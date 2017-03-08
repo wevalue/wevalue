@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.wevalue.model.NoteBean;
-import com.wevalue.ui.details.activity.NoteDetailsActivity;
-import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
+import com.wevalue.ui.details.activity.NoteDetailActivity;
 
 /**
  * Created by Administrator on 2017/2/14.
@@ -21,13 +20,13 @@ public class ActivityUtils {
     public static  void gotoNoteDetails(Activity activity, NoteBean.NoteEntity noteEntity,String repostfrom){
         Intent intent = null;
         if (noteEntity.getRepostid().equals("0")) {
-            intent = new Intent(activity, NoteDetailsActivity.class);
+            intent = new Intent(activity, NoteDetailActivity.class);
             intent.putExtra("noteId", noteEntity.getNoteid());
             intent.putExtra("repostid", "0");
             intent.putExtra("repostfrom", repostfrom);
             activity.startActivity(intent);
         } else {
-            intent = new Intent(activity, RepostNoteDetailActivity.class);
+            intent = new Intent(activity, NoteDetailActivity.class);
             intent.putExtra("noteId", noteEntity.getNoteid());
             intent.putExtra("repostid", noteEntity.getRepostid());
             intent.putExtra("repostfrom", repostfrom);

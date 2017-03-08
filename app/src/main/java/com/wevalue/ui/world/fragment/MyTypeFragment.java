@@ -27,7 +27,7 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.NoteDetailsActivity;
+import com.wevalue.ui.details.activity.NoteDetailActivity;
 import com.wevalue.ui.world.activity.ShiftCityActivity;
 import com.wevalue.ui.world.adapter.WorldListAdapter;
 import com.wevalue.utils.DateTiemUtils;
@@ -152,7 +152,7 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
         mNoScrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), NoteDetailsActivity.class);
+                Intent intent = new Intent(getActivity(), NoteDetailActivity.class);
                 intent.putExtra("noteId", mHListData.get(position).getNoteid());
                 intent.putExtra("notevideopic", mHListData.get(position).getNotevideopic());
                 intent.putExtra("notevide", mHListData.get(position).getNotevideo());

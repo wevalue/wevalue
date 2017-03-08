@@ -21,7 +21,7 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.NoteDetailsActivity;
+import com.wevalue.ui.details.activity.NoteDetailActivity;
 import com.wevalue.ui.details.activity.UserDetailsActivity;
 import com.wevalue.ui.world.adapter.WorldListGridViewAdapter;
 import com.wevalue.utils.DateTiemUtils;
@@ -304,7 +304,7 @@ public class SouSuoNoteAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, NoteDetailsActivity.class);
+                Intent intent = new Intent(mContext, NoteDetailActivity.class);
                 LogUtils.e("----pos--" + position);
                 intent.putExtra("noteId", mDatas.get(position).getNoteid());
                 intent.putExtra("repostid", mDatas.get(position).getRepostid());

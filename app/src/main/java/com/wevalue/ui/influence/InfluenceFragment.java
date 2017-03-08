@@ -24,8 +24,6 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.NoteDetailsActivity;
-import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
 import com.wevalue.adapter.NoteListAdapter;
 import com.wevalue.ui.world.activity.SearchActivity;
 import com.wevalue.utils.ActivityUtils;

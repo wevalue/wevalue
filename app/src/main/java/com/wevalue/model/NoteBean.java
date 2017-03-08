@@ -109,10 +109,22 @@ public class NoteBean {
     }
 
     public static class NoteEntity {
-        private String outstate;//提现的状态
+        /**因为是分费模式 所以当帖子被多次转发的情况下
+         * 每次转发 都会生成新的转发id:  repostid
+         * 所以这个帖子就产生了多个关系人 分别是 ：
+         *           1作者  2上一个人  ，3当前拥有人
+         * 作者信息  firstuserid
+         * 上一个人  olduserid
+         * 当前     noteid
+         * **/
+        public String firstuserid;//": "",//作者id
+        public String firstnoteid;//": "",//原帖信息id
+
         private String olduserid;//原帖人id
         private String oldusernickname;//原帖人姓名
         private String olduserface;//原帖人头像
+
+        private String outstate;//提现的状态
         public String noteid;//": "2",//信息id
         public String repostid;//转发帖子id
         public String userid;//": "ba39301d25d34b4fa20fac7cca3cc523",//发帖人id
@@ -121,7 +133,7 @@ public class NoteBean {
         public String content;//": "测试图片文字测试图片文字测试图片文字测试图片文字测试图片文字",//内容
         public String notevideo;//": "",//视频链接
         public String notevideopic;//": ""//视频截图
-        public String clickcount;//": "123",//点击量
+        public String clickcount;//": "123",//点击量  阅读数
         public String hotword;//": "测试",//关键字
         public String isself;//": "0",//0原创 1非原创
         public String isfree;//": "0",//0付费 1免费
@@ -129,8 +141,7 @@ public class NoteBean {
         public String notezone;//": "0",//发布范围 0世界 1朋友
         public String notemood;//": "开心",//情绪
         public String isshare;//": "0",//分享至其他 0允许 1不允许
-        public String firstnoteid;//": "",//原信息id
-        public String firstuserid;//": "",//原发信息人id
+
         public String repostcount;//": "0",//转发量
         public String zancount;//": "3",//点赞量
         public String rewardcount;//": "26",//打赏总金额

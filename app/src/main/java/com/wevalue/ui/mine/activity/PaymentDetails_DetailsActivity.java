@@ -19,8 +19,7 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.NoteDetailsActivity;
-import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
+import com.wevalue.ui.details.activity.NoteDetailActivity;
 import com.wevalue.ui.world.activity.ImgShowActivity;
 import com.wevalue.ui.world.adapter.WorldListGridViewAdapter;
 import com.wevalue.utils.Constants;
@@ -145,20 +144,20 @@ public class PaymentDetails_DetailsActivity extends BaseActivity implements View
             case R.id.rl_note_content:
 
                 if(noteInfo.getIsfree().equals("1")){
-                    Intent intent = new Intent(this, NoteDetailsActivity.class);
+                    Intent intent = new Intent(this, NoteDetailActivity.class);
                     intent.putExtra("noteId", noteInfo.getNoteid());
                     intent.putExtra("repostid", noteInfo.getRepostid());
                     startActivity(intent);
                 }else {
 
-                    Intent intent = new Intent(this, NoteDetailsActivity.class);
+                    Intent intent = new Intent(this, NoteDetailActivity.class);
                     intent.putExtra("noteId", noteInfo.getNoteid());
                     intent.putExtra("repostid", noteInfo.getRepostid());
                     startActivity(intent);
                 }
                 break;
             case R.id.ll_transmit_info:
-                Intent intent1 = new Intent(this, RepostNoteDetailActivity.class);
+                Intent intent1 = new Intent(this, NoteDetailActivity.class);
                 intent1.putExtra("noteId", noteInfo.getNoteid());
                 intent1.putExtra("repostid", noteInfo.getRepostid());
                 startActivity(intent1);

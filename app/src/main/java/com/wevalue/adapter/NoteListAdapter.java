@@ -24,8 +24,7 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.NoteDetailsActivity;
-import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
+import com.wevalue.ui.details.activity.NoteDetailActivity;
 import com.wevalue.ui.details.activity.UserDetailsActivity;
 import com.wevalue.ui.world.activity.ImgShowActivity;
 import com.wevalue.ui.world.activity.TransmitNoteActivity;
@@ -270,7 +269,7 @@ public class NoteListAdapter extends BaseAdapter {
                 public void onClick(View view) {
                     Intent intent;
                     //跳转到帖子详情页
-                    intent = new Intent(mContext, NoteDetailsActivity.class);
+                    intent = new Intent(mContext, NoteDetailActivity.class);
                     intent.putExtra("noteId", mDatas.get(position).getNoteid());
                     intent.putExtra("repostid", "0");
                     mContext.startActivity(intent);

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -36,18 +34,15 @@ import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.NoteDetailsActivity;
-import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
+import com.wevalue.ui.details.activity.NoteDetailActivity;
 import com.wevalue.ui.influence.PopClickInterface;
 import com.wevalue.ui.world.adapter.WorldListAdapter;
-import com.wevalue.ui.world.adapter.WorldListGridViewAdapter;
 import com.wevalue.utils.DateTiemUtils;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.PopuUtil;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.LazyViewPager;
-import com.wevalue.view.NoScrollGridView;
 import com.wevalue.view.NoScrollListview;
 import com.wevalue.view.RoundImageView;
 import com.wevalue.youmeng.StatisticsConsts;
@@ -211,7 +206,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mItmePosition = position;
-                Intent intent = new Intent(getActivity(), NoteDetailsActivity.class);
+                Intent intent = new Intent(getActivity(), NoteDetailActivity.class);
                 intent.putExtra("noteId", mHListData.get(position).getNoteid());
                 intent.putExtra("repostid", mHListData.get(position).getRepostid());
                 intent.putExtra("repostfrom", "1");
@@ -646,7 +641,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
                 public void onClick(View v) {
                     LogUtils.e("被点击了了--" + position % viewList.size());
                     clickIndex = position % viewList.size();
-                    Intent intent = new Intent(getActivity(), NoteDetailsActivity.class);
+                    Intent intent = new Intent(getActivity(), NoteDetailActivity.class);
                     intent.putExtra("noteId", mListData_lunbo.get(clickIndex).getNoteid());
                     intent.putExtra("repostid", mListData_lunbo.get(clickIndex).getRepostid());
                     LogUtils.e("repostcontent", mListData_lunbo.get(clickIndex).getRepostid());

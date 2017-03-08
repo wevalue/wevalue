@@ -50,11 +50,7 @@ public class PlayActivity extends BaseActivity implements View.OnClickListener,S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-
         initView();
-//        getFile();
-
-
     }
 
     private void initView() {

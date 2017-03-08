@@ -44,7 +44,10 @@ public class BaseActivity extends FragmentActivity {
 //		overridePendingTransition(R.anim.activity_open,R.anim.retain);  //启动动画
 
     }
-
+    public <T> T find(int resID) {
+        T view = (T)findViewById(resID);
+        return view;
+    }
     private void setTranslucentStatus(boolean b) throws JSONException {
         // TODO Auto-generated method stub
         Window win = getWindow();

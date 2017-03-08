@@ -21,7 +21,7 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.NoteDetailsActivity;
+import com.wevalue.ui.details.activity.NoteDetailActivity;
 import com.wevalue.adapter.NoteListAdapter;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.SharedPreferencesUtil;
@@ -81,7 +81,7 @@ public class UserFriendsNoteFragment extends BaseFragment implements WZHttpListe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent;
-                    intent = new Intent(getActivity(), NoteDetailsActivity.class);
+                    intent = new Intent(getActivity(), NoteDetailActivity.class);
                     intent.putExtra("noteId", noteInfo.get(position).getNoteid());
                     intent.putExtra("repostid", noteInfo.get(position).getRepostid());
                     startActivity(intent);

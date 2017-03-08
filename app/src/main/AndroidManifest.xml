@@ -253,7 +253,8 @@
             android:configChanges="orientation|screenSize" />
 
         <!-- 帖子详情 -->
-        <activity android:name=".ui.details.activity.NoteDetailsActivity" />
+        <activity android:name=".ui.details.activity.NoteDetailActivity" />
+        <activity android:name=".ui.details.activity.NoteDetailActivity" />
 
         <!-- 图片查看界面 -->
         <activity
@@ -477,7 +478,7 @@
             android:name="JPUSH_APPKEY"
             android:value="6194f9a1b89403697b961b62" /> <!-- </>值来自开发者平台取得的AppKey -->
 
-        <activity android:name=".ui.details.activity.RepostNoteDetailActivity" />
+        <activity android:name=".ui.details.activity.RepostNoteDetailActivitys" />
         <!-- 调用新浪原生SDK，需要注册的回调activity -->
         <intent-filter>
             <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />

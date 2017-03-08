@@ -1,10 +1,8 @@
 package com.wevalue.ui.world.activity;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -24,9 +22,8 @@ import com.wevalue.net.FriendsManage.FriendManagerInterface;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.NoteDetailsActivity;
+import com.wevalue.ui.details.activity.NoteDetailActivity;
 import com.wevalue.ui.details.activity.UserDetailsActivity;
-import com.wevalue.ui.release.ReleaseNoteActivity;
 import com.wevalue.ui.world.adapter.SousuoAdapter;
 import com.wevalue.ui.world.adapter.Sousuo_zongheAdapter;
 import com.wevalue.utils.LogUtils;
@@ -102,7 +99,7 @@ public class SearchJieguoActivity extends BaseActivity implements View.OnClickLi
                     intent.putExtra("detailuserid", dtfriendBeanList.get(i).getUserid());
                     startActivity(intent);
                 } else if (isWho == 2) {
-                    Intent intent = new Intent(SearchJieguoActivity.this, NoteDetailsActivity.class);
+                    Intent intent = new Intent(SearchJieguoActivity.this, NoteDetailActivity.class);
                     LogUtils.e("----pos--" + i);
                     intent.putExtra("noteId", noteEntityList.get(i).getNoteid());
                     intent.putExtra("repostid", noteEntityList.get(i).getRepostid());
@@ -113,7 +110,7 @@ public class SearchJieguoActivity extends BaseActivity implements View.OnClickLi
                         intent.putExtra("detailuserid", dtfriendBeanList.get(i).getUserid());
                         startActivity(intent);
                     } else  {
-                        Intent intent = new Intent(SearchJieguoActivity.this, NoteDetailsActivity.class);
+                        Intent intent = new Intent(SearchJieguoActivity.this, NoteDetailActivity.class);
                         LogUtils.e("----pos--" + i);
                         intent.putExtra("noteId", dtfriendBeanList.get(i).getNoteid());
                         intent.putExtra("repostid", dtfriendBeanList.get(i).getRepostid());

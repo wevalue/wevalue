@@ -1,7 +1,6 @@
 package com.wevalue.ui.mine.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,8 +21,7 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.model.RewardBean;
 import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.NoteDetailsActivity;
-import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
+import com.wevalue.ui.details.activity.NoteDetailActivity;
 import com.wevalue.adapter.NoteListAdapter;
 import com.wevalue.ui.world.adapter.MyRewardAdapter;
 import com.wevalue.utils.LogUtils;
@@ -183,7 +181,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                     //跳转到帖子详情页 或转发详情页
 
-                                    Intent intent = new Intent(context, NoteDetailsActivity.class);
+                                    Intent intent = new Intent(context, NoteDetailActivity.class);
                                     intent.putExtra("noteId", rewardEntities.get(i).getNoteid());
                                     intent.putExtra("repostid", "0");
                                     startActivity(intent);
@@ -233,12 +231,12 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
                                     Intent intent = null;
                                     //跳转到转发帖子详情页
                                     if (mNoteList.get(i).getRepostid().equals("0")) {
-                                        intent = new Intent(context, NoteDetailsActivity.class);
+                                        intent = new Intent(context, NoteDetailActivity.class);
                                         intent.putExtra("noteId", mNoteList.get(i).getNoteid());
                                         intent.putExtra("repostid", mNoteList.get(i).getRepostid());
                                         startActivity(intent);
                                     } else {
-                                        intent = new Intent(context, RepostNoteDetailActivity.class);
+                                        intent = new Intent(context, NoteDetailActivity.class);
                                         intent.putExtra("noteId", mNoteList.get(i).getNoteid());
                                         intent.putExtra("repostid", mNoteList.get(i).getRepostid());
                                         startActivity(intent);

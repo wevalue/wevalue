@@ -1,7 +1,6 @@
 package com.wevalue.ui.details.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import com.wevalue.model.NoteBean;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.NoteDetailsActivity;
 import com.wevalue.adapter.NoteListAdapter;
 import com.wevalue.utils.ActivityUtils;
 import com.wevalue.utils.LogUtils;

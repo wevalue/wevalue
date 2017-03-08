@@ -22,7 +22,8 @@ import com.wevalue.net.FriendsManage.FriendManagerInterface;
 import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
+
+import com.wevalue.ui.details.activity.NoteDetailActivity;
 import com.wevalue.ui.details.activity.UserDetailsActivity;
 import com.wevalue.ui.login.LoginActivity;
 import com.wevalue.ui.world.activity.ImgShowActivity;
@@ -33,9 +34,6 @@ import com.wevalue.utils.PopuUtil;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.NoScrollGridView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -268,7 +266,7 @@ public class Sousuo_zongheAdapter extends BaseAdapter {
                     public void onClick(View v) {
                         Intent intent = null;
                         //跳转到转发帖子详情页
-                        intent = new Intent(mContext, RepostNoteDetailActivity.class);
+                        intent = new Intent(mContext, NoteDetailActivity.class);
                         intent.putExtra("noteId", mDatas.get(position).getNoteid());
                         intent.putExtra("repostid", mDatas.get(position).getRepostid());
                         mContext.startActivity(intent);

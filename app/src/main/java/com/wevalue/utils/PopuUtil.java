@@ -1250,4 +1250,24 @@ public class PopuUtil {
         promptBoxPopupWindow.setOutsideTouchable(true);
         promptBoxPopupWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
     }
+
+
+    /*加载覆盖层 加载数据时先显示覆盖层*/
+    public static void showLoading(final Activity activity) {
+        // 空白区域
+        prompt_box = new View(activity);
+        promptBoxPopupWindow = new PopupWindow(prompt_box, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true);
+        promptBoxPopupWindow.setFocusable(true);
+        // 设置弹出动画
+       // promptBoxPopupWindow.setAnimationStyle(R.style.ActionSheetDialogStyle);
+        // 设置popupWindow背景图片(只能通过popupWindow提供的返回键返回)
+        ColorDrawable dw = new ColorDrawable(0x32000000);
+        promptBoxPopupWindow.setBackgroundDrawable(dw);
+        promptBoxPopupWindow.setOutsideTouchable(true);
+       // promptBoxPopupWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+    }
+    public static void closeLoading(){
+        if (promptBoxPopupWindow!=null)
+            promptBoxPopupWindow.dismiss();
+    }
 }

@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -20,17 +19,11 @@ import com.wevalue.R;
 import com.wevalue.model.NoteBean;
 import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.RequestPath;
-import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.activity.NoteDetailsActivity;
-import com.wevalue.ui.details.activity.RepostNoteDetailActivity;
+import com.wevalue.ui.details.activity.NoteDetailActivity;
 import com.wevalue.ui.details.activity.UserDetailsActivity;
 import com.wevalue.ui.world.activity.ImgShowActivity;
 import com.wevalue.ui.world.activity.TransmitNoteActivity;
-import com.wevalue.utils.ButtontimeUtil;
-import com.wevalue.utils.DateTiemUtils;
 import com.wevalue.utils.LogUtils;
-import com.wevalue.utils.SharedPreferencesUtil;
-import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.NoScrollGridView;
 
 import java.util.ArrayList;
@@ -218,7 +211,7 @@ public class WorldListAdapter extends BaseAdapter {
                     if (notetype.equals("5")){//如果是图文 直接跳转详情界面
                         Intent intent = null;
                         //跳转到转发帖子详情页
-                        intent = new Intent(mContext, NoteDetailsActivity.class);
+                        intent = new Intent(mContext, NoteDetailActivity.class);
                         intent.putExtra("noteId", mDatas.get(position).getNoteid());
                         intent.putExtra("repostid", "0");
                         mContext.startActivity(intent);
@@ -241,7 +234,7 @@ public class WorldListAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     Intent intent = null;
                     //跳转到转发帖子详情页
-                    intent = new Intent(mContext, NoteDetailsActivity.class);
+                    intent = new Intent(mContext, NoteDetailActivity.class);
                     intent.putExtra("noteId", mDatas.get(position).getNoteid());
                     intent.putExtra("repostid", "0");
                     mContext.startActivity(intent);
