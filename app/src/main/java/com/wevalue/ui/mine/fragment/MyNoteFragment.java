@@ -41,7 +41,6 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
     private String notezone = ""; //发布范围 // 全部 -1  // 世界 0  // 朋友1
     private String status = "";//状态
     private int pageindex = 1;
-    private List<NoteBean.NoteEntity> mNoteList;
     //我的发布 我的转发适配器
     private NoteListAdapter mAdapter;
     private NoteRequestBase mNoteRequestBase;
@@ -83,17 +82,7 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
         super.onResume();
         String delNoteId = SharedPreferencesUtil.getUserDelNoteId(context);
         if (!TextUtils.isEmpty(delNoteId)) {
-            if (mNoteList==null)return;
-            for (int i = 0; i < mNoteList.size(); i++) {
-                if (mNoteList.get(i).getNoteid().equals(delNoteId)) {
-                    mNoteList.remove(i);
-                    mAdapter.setmDatas(mNoteList);
-                    mAdapter.notifyDataSetChanged();
-                    SharedPreferencesUtil.setUserDelNoteId(context, "");
-                    tv_quanbu.setText("全部（" + mNoteList.size() + "）");
-                    break;
-                }
-            }
+
         }
     }
 
@@ -157,7 +146,8 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
                 if ("1".equals(rewardBean.getResult())) {
                     tv_quanbu.setText("全部（" + rewardBean.allcount + "）");
                     tv_shijie.setText("世界（" + rewardBean.wordcount + "）");
-                    tv_pengyoumen.setText("朋友们（" + rewardBean.friendcount + "）");
+                    //朋友 改成 圈子 了
+                    tv_pengyoumen.setText("圈子（" + rewardBean.friendcount + "）");
                     if (pageindex > 1) {
                         if (rewardEntities != null && rewardEntities.size() > 0 && rewardBean.getData().size() != 0) {
                             rewardEntities.addAll(rewardBean.getData());
@@ -206,39 +196,39 @@ public class MyNoteFragment extends BaseFragment implements WZHttpListener, View
                     } else {
                         tv_shijie.setText("世界（" + noteBean.wordcount + "）");
                     }
-                    tv_pengyoumen.setText("朋友们（" + noteBean.friendcount + "）");
+                    //朋友 改成 圈子 了
+                    tv_pengyoumen.setText("圈子（" + noteBean.friendcount + "）");
                     if (pageindex > 1) {
-                        if (mNoteList != null && mNoteList.size() > 0 && noteBean.data.size() != 0) {
-                            mNoteList.addAll(noteBean.data);
-                            mAdapter.setmDatas(mNoteList);
+                        if ( noteBean.data.size() != 0) {
+                            mAdapter.setmDatas(noteBean.data);
                             mAdapter.notifyDataSetChanged();
                         } else {
                             pageindex--;
                             ShowUtil.showToast(context, "没有更多数据了");
                         }
                     } else if (pageindex == 1) {
-                        if (mAdapter != null && mNoteList != null && mNoteList.size() > 0) {
-                            mNoteList = noteBean.getData();
-                            mAdapter.setmDatas(mNoteList);
+                        if (mAdapter != null && noteBean != null ) {
+                            mAdapter.clear();
+                            mAdapter.setmDatas(noteBean.getData());
                             mAdapter.notifyDataSetChanged();
                         } else {
-                            mNoteList = noteBean.getData();
-                            mAdapter = new NoteListAdapter(mNoteList, context);
+                            mAdapter = new NoteListAdapter(noteBean.getData(), context);
                             mNoScrollListview.setAdapter(mAdapter);
                             mNoScrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                     Intent intent = null;
                                     //跳转到转发帖子详情页
-                                    if (mNoteList.get(i).getRepostid().equals("0")) {
+                                  NoteBean.NoteEntity noteEntity = (NoteBean.NoteEntity) adapterView.getAdapter().getItem(i);
+                                    if (noteEntity.getRepostid().equals("0")) {
                                         intent = new Intent(context, NoteDetailActivity.class);
-                                        intent.putExtra("noteId", mNoteList.get(i).getNoteid());
-                                        intent.putExtra("repostid", mNoteList.get(i).getRepostid());
+                                        intent.putExtra("noteId", noteEntity.getNoteid());
+                                        intent.putExtra("repostid", noteEntity.getRepostid());
                                         startActivity(intent);
                                     } else {
                                         intent = new Intent(context, NoteDetailActivity.class);
-                                        intent.putExtra("noteId", mNoteList.get(i).getNoteid());
-                                        intent.putExtra("repostid", mNoteList.get(i).getRepostid());
+                                        intent.putExtra("noteId", noteEntity.getNoteid());
+                                        intent.putExtra("repostid", noteEntity.getRepostid());
                                         startActivity(intent);
                                     }
                                 }

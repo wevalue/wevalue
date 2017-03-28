@@ -7,14 +7,14 @@
     android:orientation="vertical" >
 
     <include layout="@layout/head" />
-    <ListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/lv_nearby"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:dividerHeight="0.5dp"
         android:focusable="false"
         android:divider="@color/ui_line"
         >
-    </ListView>
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
 </LinearLayout>

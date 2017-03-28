@@ -96,21 +96,6 @@ public class MeassageActivity extends BaseActivity implements WZHttpListener, Vi
             dataBeanList = messageModel.getSitemesslist();
             messageDetailsAdapter = new MessageDetailsAdapter(this, dataBeanList, messageType);
             ll_message.setAdapter(messageDetailsAdapter);
-//            ll_message.setOnItemClickListener(news AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    Intent intent = null;
-//                    if (dataBeanList.get(position).getMesstype() == 7) {
-//                        //消息界面
-////                        intent = news Intent(MeassageActivity.this, UserDetailsActivity.class);
-//                    } else {
-//                        intent = news Intent(MeassageActivity.this, UserDetailsActivity.class);
-//                        intent.putExtra("detailuserid", dataBeanList.get(position).getFromuserid());
-////                        SharedPreferencesUtil.setDetailUserid(MeassageActivity.this, dataBeanList.get(position).getFromuserid());
-//                    }
-//                    startActivity(intent);
-//                }
-//            });
         }
     }
 

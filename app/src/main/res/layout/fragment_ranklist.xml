@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/prsv_ScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,22 +17,6 @@
         android:scrollbars="none"
         android:smoothScrollbar="true">
 
-        <LinearLayout
-            android:id="@+id/ll_xs"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <com.wevalue.view.NoScrollListview
-                android:id="@+id/mNoScrollListview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:divider="@color/ui_line"
-                android:dividerHeight="1dp"
-                android:listSelector="@color/transparent"
-                android:scrollbars="none"
-                android:visibility="visible" />
-        </LinearLayout>
-    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
 </LinearLayout>

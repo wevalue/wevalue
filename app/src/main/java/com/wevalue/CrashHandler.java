@@ -31,6 +31,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -107,8 +108,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
                 LogUtils.e(TAG, "Error : ", e);
             }
             ActivityManagers.exitActivities();
-//            android.os.Process.killProcess(android.os.Process.myPid());
-//            System.exit(1);
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(0);
         }
     }
 
@@ -123,6 +124,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             return false;
         }
         final String msg = ex.getLocalizedMessage();
+        Log.e("Error",msg);
         // 使用Toast来显示异常信息
 //        new Thread() {
 //            @Override

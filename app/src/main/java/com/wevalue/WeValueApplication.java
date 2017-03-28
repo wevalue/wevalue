@@ -23,8 +23,6 @@ public class WeValueApplication extends Application implements WZHttpListener {
     public static Context applicationContext;
     public static String phoneName;
     private static WeValueApplication instance;
-    private long shangyichi;
-    private long dierchi;
     private DbUtils dbUtils;
     private String content;
     NetworkRequest okhttpRequest;
@@ -57,19 +55,6 @@ public class WeValueApplication extends Application implements WZHttpListener {
         instance = this;
         phoneName = android.os.Build.MODEL;
 
-        if (TextUtils.isEmpty(SharedPreferencesUtil.getIsFristStart(this))) {
-            SharedPreferencesUtil.setUserlike(this, "推荐,视频,地区");
-            SharedPreferencesUtil.setLastCity(this, "地区");
-        }
-        shangyichi = SharedPreferencesUtil.getGetAddrTime(this);
-        if (shangyichi == -1) {
-            shangyichi = System.currentTimeMillis();
-        } else {
-            dierchi = System.currentTimeMillis();
-            if (dierchi - shangyichi > 86400 * 1000) {
-                SharedPreferencesUtil.setGetAddrTime(this, dierchi);
-            }
-        }
         //存储唯一安装标识码
         InstallIdUtil idUtil = new InstallIdUtil(getApplicationContext());
         SharedPreferencesUtil.setDeviceid(getApplicationContext(), idUtil.getsID());

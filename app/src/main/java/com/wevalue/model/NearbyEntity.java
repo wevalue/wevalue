@@ -50,6 +50,14 @@ public class NearbyEntity {
         public String userlevel;//用户的等级
         public String isfans;//用户是否为本人粉丝
         public String userinfo;//用户个人简介信息
+        private String userv;//": 是否是大V  0不是 ，1 是
+
+        public String getUserv() {
+            return userv;
+        }
+        public void setUserv(String userv) {
+            this.userv = userv;
+        }
 
         public String getUserinfo() {
             return userinfo;

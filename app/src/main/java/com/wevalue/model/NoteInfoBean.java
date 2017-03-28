@@ -83,18 +83,20 @@ public class NoteInfoBean {
     public static class NoteInfoEntity {
 
         //*****转发列表  数据结构*****
-        public String repostid;//": 1,//转发id
         public String noteid;//": 1,//信息id
+        public String repostid;//": 1,//转发id
         public String repostcontent;//": "我就要转发",//转发内容
-        public String userid;//": "6bf8beb898f5476392b9f547cb019f10",//用户id
         public String reposttime;//": "2016-08-03 17:34"//转发时间
 
+        public String userid;//": "6bf8beb898f5476392b9f547cb019f10",//用户id
         public String usernickname;//;": "WeValue ",
         public String userface;//;": "/upload/userface/201608221353300848.jpg",
         public String userlevel;//": "癸"
 
         //******信息评论列表 数据结构*********
         public String commid;//": "24",//评论id
+        public String commentid;//2832,  //这两个id 都是一样的 为什么？ 我也不知道  可能是因为ios的名字冲突了 所以又新加了一个名字
+
         public String commcontent;//": "我回复直接评论1,这是回复内容",//评论内容
         public String commuserid;//": "6bf8beb898f5476392b9f547cb019f10",//评论人id
         public String commuser;//": "DB",//评论人昵称
@@ -105,6 +107,8 @@ public class NoteInfoBean {
         public String replyface;//": "/upload/userface/201608031630530466.jpg",//被评论用户头像
         public String replycommid;//": "19"//被评论的 评论id
         public String commimg;//": 评论的图片
+        public List<NoteInfoBean.NoteInfoEntity> replycomm; //回复集合
+        public String zannums;//": 赞的数量
 
         //******信息情绪列表 数据结构*********
         public String moodid;//": 1,//情绪id
@@ -121,6 +125,29 @@ public class NoteInfoBean {
         public String rewardmoney;//": 5,
         public String rewardtime;//": "2016-08-03 17:36"
 
+        public List<NoteInfoEntity> getReplycomm() {
+            return replycomm;
+        }
+
+        public void setReplycomm(List<NoteInfoEntity> replycomm) {
+            this.replycomm = replycomm;
+        }
+
+        public String getCommentid() {
+            return commentid;
+        }
+
+        public void setCommentid(String commentid) {
+            this.commentid = commentid;
+        }
+
+        public void setZannums(String zannums) {
+            this.zannums = zannums;
+        }
+
+        public String getZannums() {
+            return zannums;
+        }
 
         public String getCommimg() {
             return commimg;

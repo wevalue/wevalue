@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_f5"
     android:orientation="vertical" >
+
     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:id="@+id/prsv_ScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:cacheColorHint="#00000000"
+        android:cacheColorHint="@color/gray_f5"
         android:dividerHeight="0dip"
         android:fadingEdge="none"
         android:fastScrollEnabled="false"
@@ -21,37 +23,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-
-
-            <RelativeLayout
-                android:id="@+id/rl_xs"
+            <com.wevalue.view.CarouselView
+                android:id="@+id/carouselView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/bianxian"
-                android:layout_margin="3dp"
-                android:orientation="vertical"
-                >
-
-                <com.wevalue.view.LazyViewPager
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:id="@+id/vp_world"
-                    />
-
-                <LinearLayout
-                    android:id="@+id/ll_viewGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:gravity="center"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="10dp"
-                    android:orientation="horizontal" >
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
+                android:layout_height="160dp"/>
             <com.wevalue.view.NoScrollListview
                 android:id="@+id/mNoScrollListview"
                 android:layout_width="match_parent"

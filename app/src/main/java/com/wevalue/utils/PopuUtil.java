@@ -3,7 +3,6 @@ package com.wevalue.utils;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Message;
@@ -11,17 +10,16 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,31 +27,33 @@ import com.jungly.gridpasswordview.GridPasswordView;
 import com.umeng.analytics.MobclickAgent;
 import com.wevalue.MainActivity;
 import com.wevalue.R;
-import com.wevalue.WeValueApplication;
 import com.wevalue.net.FriendsManage.FriendManagerInterface;
 import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.payment.PayInterface;
 import com.wevalue.net.payment.PaymentBase;
+import com.wevalue.net.payment.PaymentBase1;
+import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.add.activity.AddFriendsActivity;
 import com.wevalue.ui.add.activity.AddFromNearbyActivity;
-import com.wevalue.ui.add.activity.CaptureActivity;
 import com.wevalue.ui.add.activity.RankingListActivity;
 import com.wevalue.ui.influence.PopClickInterface;
 import com.wevalue.ui.login.LoginActivity;
-import com.wevalue.ui.login.TypeChoiceActivity;
+import com.wevalue.ui.mine.activity.AccountInfoActivity;
 import com.wevalue.ui.mine.activity.FeedbackActivity;
 import com.wevalue.ui.mine.activity.SetPayPswActivity;
 import com.wevalue.ui.mine.activity.WebActivity;
 import com.wevalue.ui.release.ReleaseNoteActivity;
 import com.wevalue.youmeng.StatisticsConsts;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2016-08-01.
@@ -61,12 +61,13 @@ import java.util.Map;
 public class PopuUtil {
     public static PopupWindow promptBoxPopupWindow;
     public static View prompt_box;
-    public  Handler handler = new Handler(){
+    public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
         }
     };
+
     /**
      * 三个点 更多
      */
@@ -86,7 +87,7 @@ public class PopuUtil {
 //        TextView tv_saoyisao = (TextView) prompt_box.findViewById(R.id.tv_saoyisao);
         //意见反馈
         TextView tv_feedback = (TextView) prompt_box.findViewById(R.id.tv_feedback);
-       //排行榜
+        //排行榜
         TextView tv_paihangbang = (TextView) prompt_box.findViewById(R.id.tv_paihangbang);
         //添加好友
         TextView tv_add_haoyou = (TextView) prompt_box.findViewById(R.id.tv_add_haoyou);
@@ -112,7 +113,7 @@ public class PopuUtil {
             public void onClick(View v) {
                 Intent intent = new Intent(main, FeedbackActivity.class);
                 main.startActivity(intent);
-
+                promptBoxPopupWindow.dismiss();
                 MobclickAgent.onEvent(main, StatisticsConsts.event_more, "feedback");
             }
         });
@@ -190,7 +191,7 @@ public class PopuUtil {
             }
 
         });
-        //帮助与说明
+        //帮助与说明jcvideoplayer-lib
         tv_shuoming.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,60 +219,10 @@ public class PopuUtil {
         promptBoxPopupWindow.showAsDropDown(iv);
     }
 
-    //点击影响力
-    public static void initpopu(Activity activity, final LinearLayout ll_quanbu_ui, final TextView tv, String position, final PopClickInterface popuInterface) {
-        prompt_box = activity.getLayoutInflater().inflate(R.layout.popu_yingxiangli, null);
-
-        final TextView tv_yxl = (TextView) prompt_box.findViewById(R.id.tv_yxl);
-        final TextView tv_pym = (TextView) prompt_box.findViewById(R.id.tv_pym);
-        if (Integer.parseInt(position) == 2) {
-            tv_yxl.setTextColor(activity.getResources().getColor(R.color.login_text_blue));
-            tv_pym.setTextColor(Color.BLACK);
-        } else if (Integer.parseInt(position) == 1) {
-            tv_pym.setTextColor(activity.getResources().getColor(R.color.login_text_blue));
-            tv_yxl.setTextColor(Color.BLACK);
-        }
-        prompt_box.setOnClickListener(new View.OnClickListener() {
-            // 空白区域
-            @Override
-            public void onClick(View v) {
-                promptBoxPopupWindow.dismiss();
-            }
-        });
-
-        //选择了影响力
-        tv_yxl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv.setText("影响力");
-                popuInterface.onClickOk("影响力");
-                promptBoxPopupWindow.dismiss();
-            }
-        });
-        //选择了朋友们
-        tv_pym.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv.setText("朋友们");
-                popuInterface.onClickOk("朋友们");
-                promptBoxPopupWindow.dismiss();
-            }
-        });
-        promptBoxPopupWindow = new PopupWindow(prompt_box, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true);
-        promptBoxPopupWindow.setFocusable(true);
-        // 设置弹出动画
-        promptBoxPopupWindow.setAnimationStyle(R.style.ActionSheetDialogStyle);
-        // 设置popupWindow背景图片(只能通过popupWindow提供的返回键返回)
-        ColorDrawable dw = new ColorDrawable(0x32000000);
-        promptBoxPopupWindow.setBackgroundDrawable(dw);
-        promptBoxPopupWindow.setOutsideTouchable(true);
-        promptBoxPopupWindow.showAsDropDown(ll_quanbu_ui);
-    }
-
     /**
      * 发布信息popu
      */
-    public static void initpopu(final MainActivity main,PopupWindow.OnDismissListener onDismissListener) {
+    public static void initpopu(final MainActivity main, PopupWindow.OnDismissListener onDismissListener) {
         // 空白区域
         prompt_box = main.getLayoutInflater().inflate(R.layout.popu_send_note, null);
         LinearLayout ll_send_video = (LinearLayout) prompt_box.findViewById(R.id.ll_send_video);
@@ -335,7 +286,7 @@ public class PopuUtil {
             public void onClick(View v) {
                 Intent intent = new Intent(main, ReleaseNoteActivity.class);
                 intent.putExtra("isSendType", 4);
-                main.startActivity(intent);
+                main.startActivityForResult(intent,10);
                 promptBoxPopupWindow.dismiss();
             }
         });
@@ -346,7 +297,6 @@ public class PopuUtil {
                 promptBoxPopupWindow.dismiss();
             }
         });
-
         promptBoxPopupWindow = new PopupWindow(prompt_box, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true);
         promptBoxPopupWindow.setFocusable(true);
         promptBoxPopupWindow.setOnDismissListener(onDismissListener);
@@ -359,42 +309,6 @@ public class PopuUtil {
         promptBoxPopupWindow.showAtLocation(main.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
 
     }
-
-    /**
-     * 密保问题弹出框
-     */
-    public static void initpopu(Activity main, final TextView tv, final List<String> list, final EditText daan) {
-
-        // 空白区域
-        prompt_box = main.getLayoutInflater().inflate(R.layout.popu_pay_wsd, null);
-
-        ListView lv_poup_wenti_list = (ListView) prompt_box.findViewById(R.id.lv_poup_wenti_list);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(main, R.layout.item_popu_wenti_list, R.id.tv_wenti_name, list);
-        lv_poup_wenti_list.setAdapter(adapter);
-
-        lv_poup_wenti_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                tv.setText(list.get(position));
-                daan.setVisibility(View.VISIBLE);
-                promptBoxPopupWindow.dismiss();
-            }
-        });
-
-
-        promptBoxPopupWindow = new PopupWindow(prompt_box, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        promptBoxPopupWindow.setFocusable(true);
-        // 设置弹出动画
-        promptBoxPopupWindow.setAnimationStyle(R.style.ActionSheetDialogStyle);
-        // 设置popupWindow背景图片(只能通过popupWindow提供的返回键返回)
-        ColorDrawable dw = new ColorDrawable(0x32000000);
-        promptBoxPopupWindow.setBackgroundDrawable(dw);
-        promptBoxPopupWindow.setOutsideTouchable(true);
-
-        promptBoxPopupWindow.showAsDropDown(tv);
-    }
-
 
     /**
      * 退出登录popu
@@ -448,6 +362,7 @@ public class PopuUtil {
 
         promptBoxPopupWindow.showAtLocation(main.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
     }
+
 
     /**
      * 支付的popupWindow
@@ -886,36 +801,7 @@ public class PopuUtil {
     长按不喜欢的popuwindow
     * */
     public static void initDislikePopuwindow(Activity activity, final PopClickInterface popuInterface, AdapterView<?> parent, int position) {
-        prompt_box = activity.getLayoutInflater().inflate(R.layout.popu_dislike, null);
-        View pagerView = activity.getWindow().getDecorView().getRootView().findViewById(R.id.vp_world);
-        ImageView iv_dislike = (ImageView) prompt_box.findViewById(R.id.iv_dislike);
-        prompt_box.setOnClickListener(new View.OnClickListener() {
-            // 空白区域
-            @Override
-            public void onClick(View v) {
-                promptBoxPopupWindow.dismiss();
-            }
-        });
-        iv_dislike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popuInterface.onClickOk("");
-                promptBoxPopupWindow.dismiss();
-            }
-        });
-        promptBoxPopupWindow = new PopupWindow(prompt_box, parent.getChildAt(position).getWidth(), parent.getChildAt(position).getHeight(), true);
-        promptBoxPopupWindow.setFocusable(true);
-        // 设置弹出动画
-        promptBoxPopupWindow.setAnimationStyle(R.style.ActionSheetDialogStyle);
-        // 设置popupWindow背景图片(只能通过popupWindow提供的返回键返回)
-        ColorDrawable dw = new ColorDrawable(0x32000000);
-        promptBoxPopupWindow.setBackgroundDrawable(dw);
-        promptBoxPopupWindow.setOutsideTouchable(true);
-        if (position != 0) {
-            promptBoxPopupWindow.showAsDropDown(parent.getChildAt(position - 1));
-        } else {
-            promptBoxPopupWindow.showAsDropDown(pagerView);
-        }
+
     }
 
     /*邀请分享的*/
@@ -927,8 +813,8 @@ public class PopuUtil {
         ImageView iv_qzone;//空间
         TextView tv_cancel; //取消按钮
 
-        final String message = map.get("message")==null? "微值价值分享" : map.get("message");
-        final String shareUrl = map.get("url")==null? RequestPath.SHARE_HTML : map.get("url");
+        final String message = map.get("message") == null ? "微值价值分享" : map.get("message");
+        final String shareUrl = map.get("url") == null ? RequestPath.SHARE_HTML : map.get("url");
 
         final ShareHelper shareHelper = new ShareHelper(activity, handler);
         View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -936,19 +822,19 @@ public class PopuUtil {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.iv_weixin:
-                        shareHelper.initShare(Constants.shareWeixinMoment, shareUrl,message);
+                        shareHelper.initShare(Constants.shareWeixinMoment, shareUrl, message);
                         promptBoxPopupWindow.dismiss();
                         break;
                     case R.id.iv_weixin_friend:
-                        shareHelper.initShare(Constants.shareWeixinFriend, shareUrl,message);
+                        shareHelper.initShare(Constants.shareWeixinFriend, shareUrl, message);
                         promptBoxPopupWindow.dismiss();
                         break;
                     case R.id.iv_qzone:
-                        shareHelper.initShare(Constants.shareQzone, shareUrl,message);
+                        shareHelper.initShare(Constants.shareQzone, shareUrl, message);
                         promptBoxPopupWindow.dismiss();
                         break;
                     case R.id.iv_sina:
-                        shareHelper.initShare(Constants.shareSina, shareUrl,message);
+                        shareHelper.initShare(Constants.shareSina, shareUrl, message);
                         promptBoxPopupWindow.dismiss();
                         break;
                     case R.id.tv_quxiao:
@@ -991,9 +877,9 @@ public class PopuUtil {
         TextView tv_cancel; //取消按钮
         String noteid = map.get("noteid");
         String repostid = map.get("repostid");
-        final String shareUrl = RequestPath.SHARE_HTML + "noteid="+noteid+"&repostid="+repostid;
-        map.put("url",shareUrl);
-        map.put("imgUrl",RequestPath.SERVER_PATH+map.get("imgUrl"));
+        final String shareUrl = RequestPath.SHARE_HTML + "noteid=" + noteid + "&repostid=" + repostid;
+        map.put("url", shareUrl);
+        map.put("imgUrl", RequestPath.SERVER_PATH + map.get("imgUrl"));
         final ShareHelper shareHelper = new ShareHelper(activity, handler);
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -1186,14 +1072,6 @@ public class PopuUtil {
             }
         });
 
-//        prompt_box.setOnClickListener(news View.OnClickListener() {
-//            // 空白区域
-//            @Override
-//            public void onClick(View v) {
-//                promptBoxPopupWindow.dismiss();
-//            }
-//        });
-
         tv_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1237,7 +1115,7 @@ public class PopuUtil {
 //                map.put("url",shareUrl);
 //                map.put("message",message);
                 promptBoxPopupWindow.dismiss();
-                PopuUtil.initShareInvitePopup(activity,handler,map);
+                PopuUtil.initShareInvitePopup(activity, handler, map);
             }
         });
         promptBoxPopupWindow = new PopupWindow(prompt_box, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true);
@@ -1251,23 +1129,364 @@ public class PopuUtil {
         promptBoxPopupWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
     }
 
+    private static TextView lastCheck;
+    private static TextView nowCheck;
 
-    /*加载覆盖层 加载数据时先显示覆盖层*/
-    public static void showLoading(final Activity activity) {
-        // 空白区域
-        prompt_box = new View(activity);
+    private static Double getDouble(String d) {
+        try {
+            Double dou = Double.parseDouble(d);
+            return dou;
+        } catch (Exception e) {
+            new Throwable("字符串转换异常" + d + "不能转换成 Double");
+            return 0.0;
+        }
+    }
+
+    /*自定义金额 支付*/
+    public static void initPayfom(final Activity activity, final HashMap<String, String> hashMap, final PayInterface payInterface) {
+        if (hashMap == null || hashMap.isEmpty()) return;
+        final String paytype = hashMap.get("paytype"); //支付行为  打赏 转发 分享。。。
+        final String spendtype = hashMap.get("spendtype"); //支付方式，碎银 微信 支付宝。
+        final String money = hashMap.get("money");
+        //设置默认碎银支付
+        PaymentBase1.setSpendtype(spendtype);
+        final String mSuiyin = SharedPreferencesUtil.getSuiYinCount(activity);
+
+        prompt_box = activity.getLayoutInflater().inflate(R.layout.popu_invite_payfom1, null);
+        final RelativeLayout layout_set_money = (RelativeLayout) prompt_box.findViewById(R.id.layout_set_money);
+        final LinearLayout layout_1 = (LinearLayout) prompt_box.findViewById(R.id.layout_1);
+        final LinearLayout layout_2 = (LinearLayout) prompt_box.findViewById(R.id.layout_2);
+        final ImageView iv_close = (ImageView) prompt_box.findViewById(R.id.iv_close);
+        final TextView tv_paytype = (TextView) prompt_box.findViewById(R.id.tv_paytype);
+        final TextView tv_onepay = (TextView) prompt_box.findViewById(R.id.tv_onepay);
+        final TextView tv_money = (TextView) prompt_box.findViewById(R.id.tv_money);
+        tv_onepay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //去开启免密支付界面
+                Intent intent = new Intent(activity,AccountInfoActivity.class);
+                activity.startActivity(intent);
+            }
+        });
+        switch (paytype) {
+            case Constants.dasahng:
+                tv_paytype.setText("打赏支付");
+                layout_2.setVisibility(View.VISIBLE);
+                layout_1.setVisibility(View.GONE);
+                break;
+            case Constants.release:
+                tv_paytype.setText("发布定价");
+                layout_2.setVisibility(View.VISIBLE);
+                layout_1.setVisibility(View.GONE);
+                break;
+
+            case Constants.transmit:
+                tv_paytype.setText("转发支付");
+                layout_1.setVisibility(View.VISIBLE);
+                layout_2.setVisibility(View.GONE);
+                tv_money.setText("￥" + money);
+                break;
+            case Constants.share:
+                tv_paytype.setText("分享支付");
+                layout_1.setVisibility(View.VISIBLE);
+                layout_2.setVisibility(View.GONE);
+                tv_money.setText("￥" + money);
+                break;
+            case Constants.withdraw:
+                tv_paytype.setText("提现");
+                layout_1.setVisibility(View.VISIBLE);
+                layout_2.setVisibility(View.GONE);
+                tv_money.setText("￥" + money);
+                break;
+            case Constants.charge:
+                tv_paytype.setText("充值");
+                layout_1.setVisibility(View.VISIBLE);
+                layout_2.setVisibility(View.GONE);
+                tv_money.setText("￥" + money);
+                break;
+            default:
+                tv_paytype.setText("支付");
+                layout_1.setVisibility(View.VISIBLE);
+                layout_2.setVisibility(View.GONE);
+                tv_money.setText("￥" + money);
+                break;
+        }
+        final EditText et_money = (EditText) prompt_box.findViewById(R.id.et_money);
+        final RadioButton rd_paytype = (RadioButton) prompt_box.findViewById(R.id.rd_paytype);
+        LinearLayout layout_paytype = (LinearLayout) prompt_box.findViewById(R.id.layout_paytype);
+        final Button submit = (Button) prompt_box.findViewById(R.id.submit);
+        final ArrayList<View> list = new ArrayList<>();
+        list.add(prompt_box.findViewById(R.id.tv_text1));
+        list.add(prompt_box.findViewById(R.id.tv_text2));
+        list.add(prompt_box.findViewById(R.id.tv_text3));
+        list.add(prompt_box.findViewById(R.id.tv_text4));
+        list.add(prompt_box.findViewById(R.id.tv_text5));
+        list.add(prompt_box.findViewById(R.id.tv_text6));
+        //设置默认选中 2元
+        nowCheck = (TextView) list.get(1);
+        nowCheck.setBackgroundResource(R.drawable.shape_round10_frame_full_blue);
+        nowCheck.setTextColor(activity.getResources().getColor(R.color.white));
+        lastCheck = nowCheck;
+        //监听选中点击
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (lastCheck != null) {
+                    lastCheck.setBackgroundResource(R.drawable.shape_round10_frame_blue);
+                    lastCheck.setTextColor(activity.getResources().getColor(R.color.main_color));
+                }
+                nowCheck = (TextView) view;
+                nowCheck.setBackgroundResource(R.drawable.shape_round10_frame_full_blue);
+                nowCheck.setTextColor(activity.getResources().getColor(R.color.white));
+                lastCheck = nowCheck;
+                //如果是碎银支付则 判断碎银是否充足
+                if (spendtype.equals(Constants.suiyinpay)) {
+                    String text = et_money.getText().toString();
+                    if (TextUtils.isEmpty(text)) {
+                        text = nowCheck.getText().toString();
+                        text = text.replace("元", "");
+                    }
+                    if (getDouble(text) > getDouble(mSuiyin)) {
+                        submit.setText("碎银不足，请充值");
+                    } else {
+                        submit.setText("确定");
+                    }
+                }
+            }
+        };
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setOnClickListener(listener);
+        }
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String submitText = submit.getText().toString();
+                if (!submitText.contains("确定")) {
+                    ShowUtil.showToast(activity, "去充值，或者换个支付方式");
+                    //Intent intent = new Intent(activity,)
+                    return;
+                }
+                String money = hashMap.get("money");
+                // 如果传进来的 money 不等于空则 放进集合
+                if (money != null && !"".equals(money)) {
+                    hashMap.put("money", money);
+                } else {
+                    //优先取输入框的值
+                    money = et_money.getText().toString();
+                    if (!TextUtils.isEmpty(money)) {
+                        hashMap.put("money", money);
+                    } else {
+                        money = nowCheck.getText().toString();
+                        money = money.replace("元", "");
+                        hashMap.put("money", money);
+                    }
+                }
+                PaymentBase1 paymentBase1 = new PaymentBase1(activity, payInterface, hashMap);
+                paymentBase1.initOrderInfo();
+                promptBoxPopupWindow.dismiss();
+            }
+        });
+        et_money.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //如果是碎银支付则 判断碎银是否充足
+                String text = charSequence.toString();
+                if (TextUtils.isEmpty(text)) {
+                    text = nowCheck.getText().toString();
+                    text = text.replace("元", "");
+                }
+                if (spendtype.equals(Constants.suiyinpay)) {
+                    if (getDouble(text) > getDouble(mSuiyin)) {
+                        submit.setText("碎银不足，请充值");
+                    } else {
+                        submit.setText("确定");
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                promptBoxPopupWindow.dismiss();
+            }
+        });
+        //第一层添加监听事件防止 出发下面的点击事件
+        layout_set_money.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
+        /**第二个layout  选择支付方式**/
+        final LinearLayout layout_chose_paytype = (LinearLayout) prompt_box.findViewById(R.id.layout_chose_paytype);
+        final TextView tv_return = (TextView) prompt_box.findViewById(R.id.tv_return);
+        final LinearLayout layout_suiyin = (LinearLayout) prompt_box.findViewById(R.id.layout_suiyin);
+        final LinearLayout layout_zhifubao = (LinearLayout) prompt_box.findViewById(R.id.layout_zhifubao);
+        final LinearLayout layout_wx = (LinearLayout) prompt_box.findViewById(R.id.layout_wx);
+
+        final RadioButton rb_suiyin = (RadioButton) prompt_box.findViewById(R.id.rb_suiyin);
+        final RadioButton rb_zhifubao = (RadioButton) prompt_box.findViewById(R.id.rb_zhifubao);
+        final RadioButton rb_wx = (RadioButton) prompt_box.findViewById(R.id.rb_wx);
+        if (paytype.equals(Constants.charge) || paytype.equals(Constants.withdraw)) {
+            layout_suiyin.setVisibility(View.GONE);
+            rb_wx.setChecked(true);
+        } else {
+            layout_suiyin.setVisibility(View.VISIBLE);
+            rb_suiyin.setChecked(true);
+        }
+
+        View.OnClickListener listen = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.layout_suiyin:
+                        rb_suiyin.setChecked(true);
+                        rb_zhifubao.setChecked(false);
+                        rb_wx.setChecked(false);
+                        rd_paytype.setText("碎银");
+                        PaymentBase1.setSpendtype(Constants.suiyinpay);
+
+                        break;
+                    case R.id.layout_zhifubao:
+                        rb_suiyin.setChecked(false);
+                        rb_zhifubao.setChecked(true);
+                        rb_wx.setChecked(false);
+                        rd_paytype.setText("支付宝");
+                        PaymentBase1.setSpendtype(Constants.alipay);
+                        break;
+                    case R.id.layout_wx:
+                        rb_suiyin.setChecked(false);
+                        rb_zhifubao.setChecked(false);
+                        rb_wx.setChecked(true);
+                        rd_paytype.setText("微信");
+                        PaymentBase1.setSpendtype(Constants.weixinpay);
+                        break;
+                }
+                layout_set_money.setVisibility(View.VISIBLE);
+                //如果是碎银支付则 判断碎银是否充足
+                if (spendtype.equals(Constants.suiyinpay)) {
+                    String text = nowCheck.getText().toString();
+                    text = text.replace("元", "");
+                    if (getDouble(text) > getDouble(mSuiyin)) {
+                        submit.setText("碎银不足，请充值");
+                    } else {
+                        submit.setText("确定");
+                    }
+                } else {
+                    submit.setText("确定");
+                }
+            }
+        };
+        layout_paytype.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                layout_set_money.setVisibility(View.INVISIBLE);
+            }
+        });
+        tv_return.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                layout_set_money.setVisibility(View.VISIBLE);
+            }
+        });
+        layout_suiyin.setOnClickListener(listen);
+        layout_zhifubao.setOnClickListener(listen);
+        layout_wx.setOnClickListener(listen);
         promptBoxPopupWindow = new PopupWindow(prompt_box, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, true);
         promptBoxPopupWindow.setFocusable(true);
         // 设置弹出动画
-       // promptBoxPopupWindow.setAnimationStyle(R.style.ActionSheetDialogStyle);
+        promptBoxPopupWindow.setAnimationStyle(R.style.ActionSheetDialogStyle);
         // 设置popupWindow背景图片(只能通过popupWindow提供的返回键返回)
         ColorDrawable dw = new ColorDrawable(0x32000000);
         promptBoxPopupWindow.setBackgroundDrawable(dw);
         promptBoxPopupWindow.setOutsideTouchable(true);
-       // promptBoxPopupWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+        promptBoxPopupWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
     }
-    public static void closeLoading(){
-        if (promptBoxPopupWindow!=null)
-            promptBoxPopupWindow.dismiss();
+
+    //输入密码
+    public static void initPassWord(final Activity activity, final PaymentBase1 paymentBase1) {
+        prompt_box = activity.getLayoutInflater().inflate(R.layout.layout_password, null);
+        final GridPasswordView gridPasswordView = (GridPasswordView) prompt_box.findViewById(R.id.gpv_normal);
+        final TextView tv_close = (TextView) prompt_box.findViewById(R.id.tv_close);
+        final TextView tv_fpwd = (TextView) prompt_box.findViewById(R.id.tv_fpwd);
+        tv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                promptBoxPopupWindow.dismiss();
+            }
+        });
+        tv_fpwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, SetPayPswActivity.class);
+                intent.putExtra("isSet", "modify");
+                activity.startActivity(intent);
+                promptBoxPopupWindow.dismiss();
+            }
+        });
+        gridPasswordView.setOnPasswordChangedListener(new GridPasswordView.OnPasswordChangedListener() {
+            @Override
+            public void onTextChanged(String psw) {
+                if (psw.length() == 6) {
+                    HashMap map = new HashMap();
+                    map.put("code", RequestPath.CODE);
+                    String userid = SharedPreferencesUtil.getUid(activity);
+                    map.put("userid", userid);
+                    map.put("userpaypwd", psw);
+                    NetworkRequest.postRequest(RequestPath.POST_VERIFYPAYCODE, map, new WZHttpListener() {
+                        @Override
+                        public void onSuccess(String content, String isUrl) {
+                            try {
+                                JSONObject object = new JSONObject(content);
+                                String result = object.getString("result");
+                                String message = object.getString("message");
+                                if ("1".equals(result)) {
+                                    paymentBase1.obtainOrderInfo();
+                                    promptBoxPopupWindow.dismiss();
+                                } else {
+                                    ShowUtil.showToast(activity, message);
+                                    gridPasswordView.clearPassword();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(String content) {
+
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onInputFinish(String psw) {
+
+            }
+        });
+        promptBoxPopupWindow = new PopupWindow(prompt_box, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, true);
+        promptBoxPopupWindow.setFocusable(true);
+        // 设置弹出动画
+        promptBoxPopupWindow.setAnimationStyle(R.style.ActionSheetDialogStyle);
+        // 设置popupWindow背景图片(只能通过popupWindow提供的返回键返回)
+        ColorDrawable dw = new ColorDrawable(0x32000000);
+        promptBoxPopupWindow.setBackgroundDrawable(dw);
+        promptBoxPopupWindow.setOutsideTouchable(true);
+
+        promptBoxPopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        promptBoxPopupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        promptBoxPopupWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
     }
+
 }

@@ -9,7 +9,7 @@ public class NoteBean {
     public String result;//": 1,
     public String message;//": "",
     public List<NoteEntity> data;//": [{
-    public List<NoteEntity> data_lunbo;//": [{
+    public List<CarouselBean> data_lunbo;//": [{
     public List<NoteEntity> data_jiage;//": [{
     private List<UserBean> user;
     private List<UserBean> userinfo;
@@ -92,11 +92,11 @@ public class NoteBean {
         this.data = data;
     }
 
-    public List<NoteEntity> getData_lunbo() {
+    public List<CarouselBean> getData_lunbo() {
         return data_lunbo;
     }
 
-    public void setData_lunbo(List<NoteEntity> data_lunbo) {
+    public void setData_lunbo(List<CarouselBean> data_lunbo) {
         this.data_lunbo = data_lunbo;
     }
 
@@ -118,6 +118,7 @@ public class NoteBean {
          * 当前     noteid
          * **/
         public String firstuserid;//": "",//作者id
+        public String usernumber;//": "",//作者id
         public String firstnoteid;//": "",//原帖信息id
 
         private String olduserid;//原帖人id
@@ -161,6 +162,21 @@ public class NoteBean {
         private String sharefree;//用户分享是否超过72小时
         private String commcount;//": "0",//发帖/转发信息评论量
         private String moodcount;//": "0",//发帖/转发信息情绪量
+        private String userv;//": 是否是大V  0不是 ，1 是
+        public String getUserv() {
+            return userv;
+        }
+        public void setUserv(String userv) {
+            this.userv = userv;
+        }
+
+        public String getUsernumber() {
+            return usernumber;
+        }
+
+        public void setUsernumber(String usernumber) {
+            this.usernumber = usernumber;
+        }
 
         public String getCommcount() {
             return commcount;
@@ -506,7 +522,14 @@ public class NoteBean {
         private String usernumber;
         private String userremark;
         private String isblack;
+        private String userv;//": 是否是大V  0不是 ，1 是
 
+        public String getUserv() {
+            return userv;
+        }
+        public void setUserv(String userv) {
+            this.userv = userv;
+        }
         public String getIsblack() {
             return isblack;
         }

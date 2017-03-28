@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
 android {
+
     signingConfigs {
         config {
             keyAlias 'wevalue'
@@ -20,7 +21,8 @@ android {
     }
     defaultConfig {
         applicationId "com.wevalue"
-        minSdkVersion 15
+        minSdkVersion 16
+        multiDexEnabled true
         targetSdkVersion 23
         versionCode 1
         versionName "1.0.1"
@@ -127,17 +129,17 @@ android {
         dianxin{
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "电信"]
         }
-
+        dt{
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "DT"]
+        }
     }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    //    testCompile 'junit:junit:4.12'
     compile files('libs/BaiduLBS_Android.jar')
     compile 'com.google.code.gson:gson:2.7'
-    //    compile 'com.yalantis:starwarstiles:0.1.0'
-    compile project(path: ':base_library_pullToRefresh_chenyoca')
+    compile project(path: ':library_pullToRefresh')
     compile project(path: ':photoview_library')
     compile project(path: ':WXLikeVideoRecorderLib')
     compile 'com.android.support:design:23.0.1'
@@ -154,11 +156,21 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.6'
     //    compile files('libs/pgyer_sdk_2.4.5.jar')
     compile project(path: ':pickerview')
+
+
+    //图片加载库
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    //推荐使用独立的图片处理库  对图片进行裁剪、模糊、滤镜等处理：
+    compile 'jp.wasabeef:glide-transformations:2.0.0'
+
     // compile 'com.github.chrisbanes.photoview:library:1.2.4'
     compile files('libs/umeng-analytics-v6.0.8.jar')
     compile 'com.jiechic.library:xUtils:2.6.14'
     compile files('libs/okhttp-2.1.0.jar')
     compile files('libs/okio-1.0.0.jar')
+    //视频播放器
+    compile project(path: ':jcvideoplayer-lib')
+    //圆形图片
+    compile 'com.makeramen:roundedimageview:2.2.1'
 }
 

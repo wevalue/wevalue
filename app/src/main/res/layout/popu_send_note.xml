@@ -4,18 +4,29 @@
     android:layout_height="match_parent"
     android:background="@color/touming_white"
     android:orientation="vertical">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/iv_send_quxiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="20dp"
+            android:src="@mipmap/icon_guanbi" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv_nong_li_nian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:text="丙申猴年"
+            android:visibility="invisible"
             android:textSize="18sp" />
         <TextView
             android:id="@+id/tv_day_popu"
@@ -47,9 +58,9 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:gravity="center">
 
         <TextView
@@ -61,9 +72,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|bottom"
+        android:paddingBottom="20dp"
         android:orientation="horizontal">
 
         <TextView
@@ -86,7 +97,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#fe6749"
                 android:text="视频" />
 
         </LinearLayout>
@@ -112,8 +124,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="音乐" />
+                android:layout_marginTop="10dp"
+                android:textColor="#01CFC6"
+                android:text="音频" />
 
         </LinearLayout>
 
@@ -137,7 +150,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#ffa103"
                 android:text="图片" />
 
         </LinearLayout>
@@ -162,7 +176,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#00b7ee"
                 android:text="文字" />
 
         </LinearLayout>
@@ -175,17 +190,14 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/iv_send_quxiao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="50dp"
-            android:src="@mipmap/icon_guanbi" />
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:text="登录mp.wzbz.cn发布更丰富的内容"
+        android:textColor="@color/black_99"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="35dp"
+        android:gravity="center"
+        android:textSize="16sp"/>
 
 </LinearLayout>

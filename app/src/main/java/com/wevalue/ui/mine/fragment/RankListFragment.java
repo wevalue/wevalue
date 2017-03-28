@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.ScrollView;
 
 import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.wevalue.R;
 import com.wevalue.model.EarningsRankModel;
@@ -46,23 +48,10 @@ public class RankListFragment extends Fragment implements WZHttpListener {
     private NoteBean mNoteBean;
     private List<NoteBean.NoteEntity> mNoteEntityList;
     private NoteRankAdapter mWorldListAdapter;
-    private PullToRefreshScrollView prsv_ScrollView;
-    private NoScrollListview mNoScrollListview;
+    private PullToRefreshListView prsv_ScrollView;
+    private ListView mNoScrollListview;
     View view;
     private String notezone;//帖子发布的范围
-
-
-    AsyncTask asyncTask = new AsyncTask() {
-        @Override
-        protected Object doInBackground(Object[] params) {
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-    };
 
 
     @Override
@@ -71,40 +60,27 @@ public class RankListFragment extends Fragment implements WZHttpListener {
         LogUtils.e("cccc", "onCreateView");
         rankType = bundle.getString("rankType");
         notezone = bundle.getString("notezone");
-//        if (!notezone.equals("0")) {
-//            asyncTask.execute();
-//        }
         view = inflater.inflate(R.layout.fragment_ranklist, null);
         initView();
         return view;
     }
 
     private void initView() {
-        prsv_ScrollView = (PullToRefreshScrollView) view.findViewById(R.id.prsv_ScrollView);
-        mNoScrollListview = (NoScrollListview) view.findViewById(R.id.mNoScrollListview);
+        prsv_ScrollView = (PullToRefreshListView) view.findViewById(R.id.prsv_ScrollView);
+        mNoScrollListview = prsv_ScrollView.getRefreshableView();
         mNoScrollListview.setFocusable(false);
-        prsv_ScrollView.setMode(PullToRefreshBase.Mode.DISABLED);
-        prsv_ScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
+        prsv_ScrollView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+        prsv_ScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 queryData();
             }
 
             @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 
             }
         });
-
-
-//        news Thread(){
-//            @Override
-//            public void run() {
-//                super.run();
-//
-//
-//            }
-//        }.start();
         new Handler().post(new Runnable() {
             @Override
             public void run() {
@@ -166,7 +142,6 @@ public class RankListFragment extends Fragment implements WZHttpListener {
                     LogUtils.e("msg", "收益排行榜");
                     Intent intent = new Intent(getActivity(), UserDetailsActivity.class);
                     intent.putExtra("detailuserid", mBeanList.get(position).getUserid());
-//                    SharedPreferencesUtil.setDetailUserid(getActivity(), mBeanList.get(position).getUserid());
                     startActivity(intent);
                 }
             });
@@ -183,20 +158,15 @@ public class RankListFragment extends Fragment implements WZHttpListener {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     LogUtils.e("msg", "打赏排行榜");
-                    if (mNoteEntityList.get(position).getIsfree().equals("1")) {
+                    try{
+                        NoteBean.NoteEntity noteEntity = (NoteBean.NoteEntity) parent.getAdapter().getItem(position);
                         Intent intent = new Intent(getActivity(), NoteDetailActivity.class);
-                        intent.putExtra("noteId", mNoteEntityList.get(position).getNoteid());
-                        intent.putExtra("repostid", mNoteEntityList.get(position).getRepostid());
-                        LogUtils.e("msg", mNoteEntityList.get(position).getNoteid() + mNoteEntityList.get(position).getRepostid());
+                        intent.putExtra("noteId", noteEntity.getNoteid());
+                        intent.putExtra("repostid", noteEntity.getRepostid());
                         startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(getActivity(), NoteDetailActivity.class);
-                        intent.putExtra("noteId", mNoteEntityList.get(position).getNoteid());
-                        intent.putExtra("repostid", mNoteEntityList.get(position).getRepostid());
-                        LogUtils.e("msg", mNoteEntityList.get(position).getNoteid() + mNoteEntityList.get(position).getRepostid());
-                        startActivity(intent);
-                    }
+                    }catch (Exception e){
 
+                    }
                 }
             });
         } else {

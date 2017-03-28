@@ -21,7 +21,7 @@ public class ButtontimeUtil {
     public static boolean isFastDoubleClick() {
         long time = System.currentTimeMillis();
         long timeD = time - lastClickTime;
-        if ( 0 < timeD && timeD < 2000) {
+        if ( 0 < timeD && timeD < 1300) {
             return true;   
         }   
         lastClickTime = time;   

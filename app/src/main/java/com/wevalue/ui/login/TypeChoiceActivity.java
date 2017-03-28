@@ -34,7 +34,8 @@ import com.wevalue.youmeng.StatisticsConsts;
 import java.util.ArrayList;
 import java.util.List;
 
-/** 我的频道
+/**
+ * 我的频道
  * Created by Administrator on 2016-07-08.
  */
 public class TypeChoiceActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
@@ -104,50 +105,29 @@ public class TypeChoiceActivity extends BaseActivity implements View.OnClickList
      * 初始化数据
      */
     private void initData() {
+        //获取所有的 频道类型
         Gson gson = new Gson();
         ChannelBean channelBean = gson.fromJson(SharedPreferencesUtil.getAllChannel(this), ChannelBean.class);
         if (channelBean != null && channelBean.getResult() != null && channelBean.getResult().equals("1")) {
             if (channelBean.getData() != null) {
                 otherChannelList = channelBean.getData();
                 userChannelList = new ArrayList<>();
+                //获取用户之前选择的频道
                 String userLike = SharedPreferencesUtil.getUserlike(this);
+                String[] typeArray = {"全部", "热门"};
                 if (!TextUtils.isEmpty(userLike)) {
-                    String[] typeArray = userLike.split(",");
-                    for (int i = 0; i < typeArray.length; i++) {
-                        String name = typeArray[i];
-                        for (int j = 0; j < otherChannelList.size(); j++) {
-                            if (otherChannelList.get(j).getTypename().equals(name)) {
-                                if (name.equals("推荐")) {
-                                    userChannelList.add(0, otherChannelList.get(j));
-                                }else {
-//                                    if (name.equals("视频")) {
-//                                        userChannelList.add(1, otherChannelList.get(j));
-//                                    } else {
-//                                        userChannelList.add(otherChannelList.get(j));
-//                                    }
-                                    userChannelList.add(otherChannelList.get(j));
-                                }
-                                otherChannelList.remove(j);
-                                break;
-                            }
+                    typeArray = userLike.split(",");
+                }
+                //去掉频道中用户已选择的 频道 和 生成用户已选择的频道
+                for (int i = 0; i < typeArray.length; i++) {
+                    String name = typeArray[i];
+                    for (int j = 0; j < otherChannelList.size(); j++) {
+                        ChannelBean.Channel channel = otherChannelList.get(j);
+                        if (channel.getTypename().equals(name)) {
+                            userChannelList.add(channel);
+                            otherChannelList.remove(j);
+                            break;
                         }
-                    }
-                } else {
-                    String[] typeArray = {"推荐", "视频", "地区", "搞笑", "财经", "体育", "星座"};
-                    for (int i = 0; i < typeArray.length; i++) {
-                        String name = typeArray[i];
-                        for (int j = 0; j < otherChannelList.size(); j++) {
-                            if (otherChannelList.get(j).getTypename().equals(name)) {
-                                if (name.equals("推荐")) {
-                                    userChannelList.add(0, otherChannelList.get(j));
-                                } else {
-                                    userChannelList.add(otherChannelList.get(j));
-                                }
-                                otherChannelList.remove(j);
-                                break;
-                            }
-                        }
-
                     }
                 }
 

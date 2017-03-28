@@ -24,6 +24,7 @@ import com.wevalue.ui.mine.activity.MyInfoActivity;
 import com.wevalue.ui.mine.activity.MyNoteActivity;
 import com.wevalue.ui.mine.activity.RankActivity;
 import com.wevalue.ui.mine.activity.WalletActivity;
+import com.wevalue.utils.ImageUitls;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
@@ -37,6 +38,7 @@ import java.util.Map;
 import jupush.JpushTagSet;
 
 /**
+ * 我
  * Created by Administrator on 2016-06-27.
  */
 public class PersonInfoFragment extends BaseFragment implements View.OnClickListener, WZHttpListener {
@@ -45,7 +47,7 @@ public class PersonInfoFragment extends BaseFragment implements View.OnClickList
     private Context mContext;
     private TextView tv_denglu;
     private TextView tv_wevalue_number;
-    private ImageView iv_arrow_right, iv_user_photo;
+    private ImageView iv_arrow_right, iv_user_photo, iv_user_v;
     private TextView tv_user_info, tv_nickname;
     private TextView tv_dengji, tv_sex;
     private LinearLayout ll_denglu_status;//登录状态
@@ -115,6 +117,7 @@ public class PersonInfoFragment extends BaseFragment implements View.OnClickList
      */
     private void initView() {
         iv_user_photo = (ImageView) view.findViewById(R.id.iv_user_photo);
+        iv_user_v = (ImageView) view.findViewById(R.id.iv_user_v);
 
         tv_user_info = (TextView) view.findViewById(R.id.tv_user_info);
         tv_nickname = (TextView) view.findViewById(R.id.tv_nickname);
@@ -171,11 +174,11 @@ public class PersonInfoFragment extends BaseFragment implements View.OnClickList
             getUserInfoData();
             // 图片的下载
             iv_user_photo.setVisibility(View.VISIBLE);
-            Glide.with(getActivity())
-                    .load(RequestPath.SERVER_PATH + SharedPreferencesUtil.getAvatar(getActivity()))
-                    .placeholder(R.mipmap.default_head)
-                    .dontAnimate()
-                    .into(iv_user_photo);
+            if ("1".equals(SharedPreferencesUtil.getUserv(getActivity())))
+                iv_user_v.setVisibility(View.VISIBLE);
+            else iv_user_v.setVisibility(View.INVISIBLE);
+            ImageUitls.setHead(RequestPath.SERVER_PATH + SharedPreferencesUtil.getAvatar(getActivity()), iv_user_photo);
+
             tv_nickname.setText(SharedPreferencesUtil.getNickname(getActivity()));
             tv_user_info.setText(SharedPreferencesUtil.getUserInfo(getActivity()));
             tv_dengji.setText(SharedPreferencesUtil.getUserleve(getActivity()));
@@ -243,6 +246,7 @@ public class PersonInfoFragment extends BaseFragment implements View.OnClickList
             JSONObject obj = new JSONObject(content);
             if (obj.getString("result").equals("1")) {
                 JSONObject data = obj.getJSONObject("data");
+                SharedPreferencesUtil.setUserv(mContext, data.getString("userv"));
                 SharedPreferencesUtil.setZuZzhiname(mContext, data.getString("orgname"));
                 SharedPreferencesUtil.setUid(mContext, data.getString("userid"));
                 SharedPreferencesUtil.setMobile(mContext, data.getString("userphone"));
@@ -281,11 +285,11 @@ public class PersonInfoFragment extends BaseFragment implements View.OnClickList
                 ShowUtil.showToast(mContext, "抱歉，该用户已删除。");
                 SharedPreferencesUtil.clearSharedPreferencesInfo(WeValueApplication.applicationContext, "UserInfo");
                 setIsLoginStatus();
-            } else if (obj.getString("result").equals("5")){
+            } else if (obj.getString("result").equals("5")) {
                 ShowUtil.showToast(mContext, obj.getString("message"));
                 SharedPreferencesUtil.clearSharedPreferencesInfo(WeValueApplication.applicationContext, "UserInfo");
                 setIsLoginStatus();
-            }else {
+            } else {
                 ShowUtil.showToast(mContext, obj.getString("message"));
             }
         } catch (JSONException e) {

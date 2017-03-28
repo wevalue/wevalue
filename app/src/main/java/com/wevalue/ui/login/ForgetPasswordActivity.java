@@ -31,6 +31,7 @@ import java.util.Map;
 import jupush.JpushTagSet;
 
 /**
+ * 忘记登录密码
  * Created by Administrator on 2016-11-05.
  */
 

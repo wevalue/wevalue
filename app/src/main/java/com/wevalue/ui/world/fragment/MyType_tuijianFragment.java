@@ -2,13 +2,11 @@ package com.wevalue.ui.world.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.os.Parcelable;
-import android.support.v4.view.PagerAdapter;
 import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -16,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -27,24 +24,27 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.umeng.analytics.MobclickAgent;
 import com.wevalue.MainActivity;
 import com.wevalue.R;
-import com.wevalue.WeValueApplication;
 import com.wevalue.base.BaseFragment;
+import com.wevalue.model.CarouselBean;
 import com.wevalue.model.NoteBean;
 import com.wevalue.net.Interfacerequest.NoteRequestBase;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailActivity;
+import com.wevalue.ui.details.activity.UserDetailsActivity;
 import com.wevalue.ui.influence.PopClickInterface;
-import com.wevalue.ui.world.adapter.WorldListAdapter;
+import com.wevalue.ui.mine.activity.FeedbackActivity;
+import com.wevalue.ui.mine.activity.WebActivity;
+import com.wevalue.ui.world.adapter.WorldListAdapters;
 import com.wevalue.utils.DateTiemUtils;
+import com.wevalue.utils.ImageUitls;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.PopuUtil;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
-import com.wevalue.view.LazyViewPager;
+import com.wevalue.view.CarouselView;
 import com.wevalue.view.NoScrollListview;
-import com.wevalue.view.RoundImageView;
 import com.wevalue.youmeng.StatisticsConsts;
 
 import org.json.JSONException;
@@ -57,45 +57,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by lt on 2015/12/14.
  */
-public class MyType_tuijianFragment extends BaseFragment implements WZHttpListener {
+public class MyType_tuijianFragment extends BaseFragment implements WZHttpListener, CarouselView.CarouselLinster {
     private View view;
     private Context mContext;
     private ArrayList<View> viewList;
-    private MyViewPagerAdapter myViewPagerAdapter;
-    private LazyViewPager vp_world;
+    private CarouselView carouselView;
     private long mExitTime = 0;
     private int mViewpagerIndex = 0;
     private TextView[] imageViews = null;//小圆点
     public boolean isContinue = true;
     private PullToRefreshScrollView prsv_ScrollView;
     private NoScrollListview mNoScrollListview;
-    private WorldListAdapter mHAdapter;
+    private WorldListAdapters mHAdapter;
     private List<NoteBean.NoteEntity> mHListData;
-    private List<NoteBean.NoteEntity> mListData_lunbo;
+    private List<CarouselBean> mListData_lunbo;
     private List<NoteBean.NoteEntity> mListData_jiage;
     private List<NoteBean.NoteEntity> mListData_jiage_2 = new ArrayList<>();
     private int viewIndex = -1;
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 1:
-                    if (mViewpagerIndex == viewList.size()) {
-                        mViewpagerIndex = 0;
-                    } else {
-                        mViewpagerIndex++;
-                    }
-                    vp_world.setCurrentItem(mViewpagerIndex);
-                    break;
-            }
-        }
-    };
+
     private int clickIndex;
     private int mItmePosition = 100;
     private Timer timer;
@@ -107,8 +90,9 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
     private ImageView iv_img2;
     private ImageView iv_img3;
     private String getDataTime;
+    private  String noteClass = "3";
 //    private ProgressBar pgb;
-
+public ProgressDialog loadingDialog ;
     public MyType_tuijianFragment() {
 
     }
@@ -127,6 +111,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         if (isVisibleToUser) {
 
         } else {
+
         }
     }
 
@@ -139,17 +124,18 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         String date = dff.format(new Date());
         getDataTime = String.valueOf(DateTiemUtils.dateToTime(date));
 
-        LogUtils.e("单前时间=" + getDataTime);
         return getDataTime;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mContext = WeValueApplication.applicationContext;
+        mContext = getContext();
         mainActivity = (MainActivity) this.getActivity();
         mNoteRequestBase = NoteRequestBase.getNoteRequestBase(getActivity());
+        loadingDialog = new ProgressDialog(getActivity());
+        loadingDialog.setMessage("请稍候...");
         view = LayoutInflater.from(mContext).inflate(R.layout.fragment_my_type_tuijian, null);
-        LogUtils.e("viewIndex =onCreateView= " + viewIndex);
+
         //根据父窗体getActivity()为fragment设置手势识别
 //        gesture = news GestureDetector(this.getActivity(), this);
 //        MainActivity.MyOnTouchListener myOnTouchListener = news MainActivity.MyOnTouchListener() {
@@ -163,12 +149,12 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         initView();
         String tuijianJson = SharedPreferencesUtil.getContent(getActivity(), "tuijian");
         if (TextUtils.isEmpty(tuijianJson)) {
-            mNoteRequestBase.getNoteListData(getDateTime(), String.valueOf(pageindex), "1", "1", "", SharedPreferencesUtil.getDeviceid(getActivity()), MyType_tuijianFragment.this);
+            loadingDialog.show();
+            mNoteRequestBase.getNoteListData(getDateTime(), String.valueOf(pageindex), "1", noteClass, "", SharedPreferencesUtil.getDeviceid(getActivity()), MyType_tuijianFragment.this);
         } else {
             paserJson(tuijianJson);
-            mNoteRequestBase.getNoteListData(getDateTime(), String.valueOf(pageindex), "1", "1", "", SharedPreferencesUtil.getDeviceid(getActivity()), MyType_tuijianFragment.this);
+            mNoteRequestBase.getNoteListData(getDateTime(), String.valueOf(pageindex), "1", noteClass, "", SharedPreferencesUtil.getDeviceid(getActivity()), MyType_tuijianFragment.this);
         }
-        LogUtils.e("轮播  onCreateView");
         return view;
     }
 
@@ -178,17 +164,13 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         if (prsv_ScrollView == null) {
             return;
         }
-//        vp_world.setFocusable(true);
-//        vp_world.setFocusableInTouchMode(true);
-//        vp_world.requestFocus();
         ScrollView scrollView = prsv_ScrollView.getRefreshableView();
         scrollView.smoothScrollTo(0, 0);
-//        pgb.setVisibility(View.VISIBLE);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 mNoteRequestBase.getNoteListData(getDateTime(), String.valueOf(pageindex),
-                        "1", "1", "", SharedPreferencesUtil.getDeviceid(getActivity()),
+                        "1", noteClass, "", SharedPreferencesUtil.getDeviceid(getActivity()),
                         MyType_tuijianFragment.this);
             }
         }, 300);
@@ -200,6 +182,8 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
      */
     private void initView() {
         LogUtils.e("轮播  -  initView");
+        //轮播图
+        carouselView = (CarouselView) view.findViewById(R.id.carouselView);
         prsv_ScrollView = (PullToRefreshScrollView) view.findViewById(R.id.prsv_ScrollView);
         mNoScrollListview = (NoScrollListview) view.findViewById(R.id.mNoScrollListview);
         mNoScrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -232,13 +216,13 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
 
                         HashMap countMap = new HashMap();
                         countMap.put("contenttag", "tuijian");
-                        countMap.put("hotword",mHListData.get(position).getHotword());
-                        if (mHListData.get(position).getIsself().equals("0")){
-                            countMap.put("isOrigin","yuanchaung");
-                        }else {
-                            countMap.put("isOrigin","feiyuanchaung");
+                        countMap.put("hotword", mHListData.get(position).getHotword());
+                        if (mHListData.get(position).getIsself().equals("0")) {
+                            countMap.put("isOrigin", "yuanchaung");
+                        } else {
+                            countMap.put("isOrigin", "feiyuanchaung");
                         }
-                        countMap.put("moodcount",mHListData.get(position).getMoodcount());
+                        countMap.put("moodcount", mHListData.get(position).getMoodcount());
                         MobclickAgent.onEvent(mContext, StatisticsConsts.event_dislike, countMap);
                         mHListData.remove(position);
                     }
@@ -253,7 +237,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
             public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
 //                下拉
                 pageindex = 1;
-                mNoteRequestBase.getNoteListData(getDateTime(), String.valueOf(pageindex), "1", "1", "", SharedPreferencesUtil.getDeviceid(getActivity()), MyType_tuijianFragment.this);
+                mNoteRequestBase.getNoteListData(getDateTime(), String.valueOf(pageindex), "1", noteClass, "", SharedPreferencesUtil.getDeviceid(getActivity()), MyType_tuijianFragment.this);
             }
 
             @Override
@@ -261,148 +245,11 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
                 LogUtils.e("log", "onPullUp");
 //                上拉
                 pageindex++;
-                mNoteRequestBase.getNoteListData(getDataTime, String.valueOf(pageindex), "1", "1", "", SharedPreferencesUtil.getDeviceid(getActivity()), MyType_tuijianFragment.this);
+                mNoteRequestBase.getNoteListData(getDataTime, String.valueOf(pageindex), "1", noteClass, "", SharedPreferencesUtil.getDeviceid(getActivity()), MyType_tuijianFragment.this);
             }
         });
     }
 
-    /**
-     * 初始化Viewpager
-     */
-    private void initViewpager() {
-        if (null == getActivity()) {
-            return;
-        }
-        vp_world = (LazyViewPager) view.findViewById(R.id.vp_world);
-//        ViewGroup.LayoutParams ls = vp_world.getLayoutParams();
-//        BitmapFactory.Options options = new BitmapFactory.Options();
-//        // 当inJustDecodeBounds设为true时,不会加载图片仅获取图片尺寸信息
-//        options.inJustDecodeBounds = true;
-//        BitmapFactory.decodeResource(getResources(), R.mipmap.bianxian, options);
-//        ls.height = options.outHeight;
-        //vp_world.setLayoutParams(ls);
-        ViewGroup group = (ViewGroup) view.findViewById(R.id.ll_viewGroup);
-        viewList = new ArrayList<>();
-        if (null != mListData_lunbo && mListData_lunbo.size() > 0) {
-            for (int i = 0; i < mListData_lunbo.size(); i++) {
-                View view1 = LayoutInflater.from(mContext).inflate(R.layout.item_world_tuijian, null);
-                setViewData(view1, i);
-                viewList.add(view1);
-            }
-        }
-        if (null == timer && null != mListData_lunbo && mListData_lunbo.size() > 1) {//如果定时器没有打开  就开始定时功能
-            launchTimerTask();
-        }
-        // 初始化小圆点
-        imageViews = new TextView[viewList.size()];
-        for (int i = 0; i < viewList.size(); i++) {
-            TextView iv = new TextView(getActivity());
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(15, 15);
-            params.setMargins(5, 0, 5, 0);
-            iv.setLayoutParams(params);
-            imageViews[i] = iv;
-            if (i == 0) {
-                imageViews[i].setBackgroundResource(R.drawable.wz_text_yuandian_lan);
-            } else {
-                imageViews[i].setBackgroundResource(R.drawable.wz_text_yuandian_bai);
-            }
-            group.addView(imageViews[i]);
-        }
-        if (myViewPagerAdapter == null) {
-            myViewPagerAdapter = new MyViewPagerAdapter();
-        }
-        vp_world.setAdapter(myViewPagerAdapter);
-        vp_world.setOnPageChangeListener(new GuidePageChangeListener());
-        vp_world.setCurrentItem(mViewpagerIndex);
-        vp_world.setOffscreenPageLimit(0);
-    }
-
-    /**
-     * 设置viewpager当前页的数据
-     */
-    private void setViewData(View v, int index) {
-        if (index == 0) {
-            LogUtils.e("轮播  -  setViewData  --" + index);
-        }
-        RoundImageView iv_user_img = (RoundImageView) v.findViewById(R.id.iv_user_img);
-        TextView tv_nickname = (TextView) v.findViewById(R.id.tv_nickname);
-        TextView tv_dengji = (TextView) v.findViewById(R.id.tv_dengji);
-        TextView tv_day = (TextView) v.findViewById(R.id.tv_day);
-        TextView tv_price = (TextView) v.findViewById(R.id.tv_price);
-        TextView tv_income = (TextView) v.findViewById(R.id.tv_income);
-        TextView tv_note_title = (TextView) v.findViewById(R.id.tv_note_title);
-        TextView tv_note_content = (TextView) v.findViewById(R.id.tv_note_content);
-
-        ImageView iv_video_img = (ImageView) v.findViewById(R.id.iv_video_img);
-        ImageView iv_play = (ImageView) v.findViewById(R.id.iv_play);
-        ImageView iv_audio_img = (ImageView) v.findViewById(R.id.iv_audio_img);
-
-        LinearLayout layout_img_layout = (LinearLayout) v.findViewById(R.id.layout_img_layout);
-         iv_img1 = (ImageView) v.findViewById(R.id.iv_img1);
-         iv_img2 = (ImageView) v.findViewById(R.id.iv_img2);
-         iv_img3 = (ImageView) v.findViewById(R.id.iv_img3);
-
-        NoteBean.NoteEntity noteEntity = mListData_lunbo.get(index);
-        imgViewSetData(noteEntity.getUserface(),iv_user_img);
-        tv_nickname.setText(noteEntity.getUsernickname());
-        tv_dengji.setText(noteEntity.getUserlevel());
-        tv_day.setText(DateTiemUtils.editTime(noteEntity.getAddtime()));
-        tv_price.setText("¥" + noteEntity.getPaynum());
-        tv_income.setText("¥" + noteEntity.getShouyi());
-        String title = noteEntity.getTitle();
-        if (TextUtils.isEmpty(title)){
-            tv_note_title.setText(noteEntity.getContent());
-        }else {
-            tv_note_title.setText(title);
-        }
-        tv_note_content.setVisibility(View.GONE);
-        iv_video_img.setVisibility(View.GONE);
-        iv_play.setVisibility(View.GONE);
-        iv_audio_img.setVisibility(View.GONE);
-        layout_img_layout.setVisibility(View.GONE);
-
-        String noteType = noteEntity.getNotetype();
-        switch (noteType){
-            case "4" : //纯文字
-                //如果有图片则显示图片和标题 否则显示内容
-                if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-                    layout_img_layout.setVisibility(View.VISIBLE);
-                    lunboImageviewSetData(noteEntity);
-                }else {
-                    tv_note_content.setVisibility(View.VISIBLE);
-                    tv_note_content.setText(noteEntity.getContent());
-                }
-                break;
-            case "1" : //视频
-                iv_video_img.setVisibility(View.VISIBLE);
-                iv_play.setVisibility(View.VISIBLE);
-                imgViewSetData(noteEntity.getNotevideopic(),iv_video_img);
-                break;
-            case "2" : //音频
-                iv_audio_img.setVisibility(View.VISIBLE);
-                break;
-            case "3" : //图片
-                //如果有图片则显示图片和标题 否则显示内容
-                if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-                    lunboImageviewSetData(noteEntity);
-                    layout_img_layout.setVisibility(View.VISIBLE);
-                }else {
-                    tv_note_content.setVisibility(View.VISIBLE);
-                    tv_note_content.setText(noteEntity.getContent());
-                }
-                break;
-            case "5" : //图文
-                if (noteEntity.getList_1() != null && noteEntity.getList_1().size() > 0) {
-                    layout_img_layout.setVisibility(View.VISIBLE);
-                    lunboImageviewSetData(noteEntity);
-                }else {
-                    tv_note_content.setVisibility(View.VISIBLE);
-                    tv_note_content.setText(noteEntity.getContent());
-                }
-                break;
-        }
-    }
     /**
      * 给imageview 赋值
      */
@@ -420,43 +267,6 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
                 .into(iv);
     }
 
-    /**
-     * 给图片类型的帖子的imageview 赋值
-     */
-    private void lunboImageviewSetData(NoteBean.NoteEntity noteEntity) {
-        LogUtils.e("轮播  -  lunboImageviewSetData");
-        switch (noteEntity.getList().size()) {
-            case 1:
-                iv_img1.setVisibility(View.VISIBLE);
-                iv_img2.setVisibility(View.INVISIBLE);
-                iv_img3.setVisibility(View.INVISIBLE);
-                imgViewSetData(noteEntity.getList().get(0).getUrl(), iv_img1);
-                break;
-            case 2:
-                iv_img1.setVisibility(View.VISIBLE);
-                iv_img2.setVisibility(View.VISIBLE);
-                iv_img3.setVisibility(View.INVISIBLE);
-                imgViewSetData(noteEntity.getList().get(0).getUrl(), iv_img1);
-                imgViewSetData(noteEntity.getList().get(1).getUrl(), iv_img2);
-                break;
-            case 3:
-                iv_img1.setVisibility(View.VISIBLE);
-                iv_img2.setVisibility(View.VISIBLE);
-                iv_img3.setVisibility(View.VISIBLE);
-                imgViewSetData(noteEntity.getList().get(0).getUrl(), iv_img1);
-                imgViewSetData(noteEntity.getList().get(1).getUrl(), iv_img2);
-                imgViewSetData(noteEntity.getList().get(2).getUrl(), iv_img3);
-                break;
-            default:
-                iv_img1.setVisibility(View.VISIBLE);
-                iv_img2.setVisibility(View.VISIBLE);
-                iv_img3.setVisibility(View.VISIBLE);
-                imgViewSetData(noteEntity.getList().get(0).getUrl(), iv_img1);
-                imgViewSetData(noteEntity.getList().get(1).getUrl(), iv_img2);
-                imgViewSetData(noteEntity.getList().get(2).getUrl(), iv_img3);
-                break;
-        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -469,81 +279,27 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         }
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
-        if (vp_world != null && timer == null) {
-//            launchTimerTask();
-            LogUtils.e("轮播  ---------- onResume");
-        }
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mItmePosition < 3) {
-
-                    if (mListData_jiage != null && mListData_jiage.size() > 0) {
-                        mListData_jiage_2.add(mHListData.get(mItmePosition));
-                        mHListData.set(mItmePosition, mListData_jiage.get(0));
-                        mListData_jiage.remove(0);
-                        mItmePosition = 100;
-                    } else {
-                        if (mListData_jiage_2 != null && mListData_jiage_2.size() > 0) {
-                            mListData_jiage.add(mHListData.get(mItmePosition));
-                            mHListData.set(mItmePosition, mListData_jiage_2.get(0));
-                            mListData_jiage_2.remove(0);
-                            mItmePosition = 100;
-                        }
-
-                    }
-                    mHAdapter.notifyDataSetChanged();
-                }
-
-            }
-        }, 3000);
-
-        LogUtils.e("轮播   onResume");
+        if (carouselView != null)
+            carouselView.startCarousel();
+        LogUtils.e("TuiJian", "onResume");
     }
 
 
     @Override
     public void onPause() {
         super.onPause();
-//        if (timer != null) {
-//            timer.cancel();
-//            timer = null;
-//        }
-        LogUtils.e("轮播   onPause");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-//        if (timer != null) {
-//            timer.cancel();
-//            timer = null;
-//        }
-        LogUtils.e("轮播   onStop");
-
-    }
-
-    /**
-     * 定时器
-     */
-    public void launchTimerTask() {
-//        LogUtils.e("轮播  -  launchTimerTask");
-        timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                mHandler.sendEmptyMessage(1);
-            }
-        };
-        timer.schedule(timerTask, 3000, 3000);
+        if (carouselView != null)
+            carouselView.stopCarousel();
+        LogUtils.e("TuiJian", "onPause");
     }
 
     @Override
     public void onSuccess(String content, String isUrl) {
+        if (loadingDialog.isShowing()) loadingDialog.dismiss();
+        prsv_ScrollView.onRefreshComplete();
         switch (isUrl) {
             case RequestPath.GET_GETNOTE:
                 //调用解析json的方法
@@ -568,120 +324,13 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
 
     @Override
     public void onFailure(String content) {
-
+        prsv_ScrollView.onRefreshComplete();
+        if (loadingDialog.isShowing()) loadingDialog.dismiss();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        isPause = true;
-        LogUtils.e("轮播  -  onDestroy");
-    }
-
-    /**
-     * Title:  GuidePageChangeListener<br>
-     * Description: TODO  viewpager侧滑事件监听<br>
-     *
-     * @author xuzhuchao
-     * @since JDK 1.7
-     */
-    private final class GuidePageChangeListener implements LazyViewPager.OnPageChangeListener {
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-        }
-
-        @Override
-        public void onPageSelected(int arg0) {
-            mViewpagerIndex = arg0;
-//            if (mViewpagerIndex==viewList.size())
-            for (int i = 0; i < imageViews.length; i++) {
-                imageViews[arg0 % mListData_lunbo.size()].setBackgroundResource(R.drawable.wz_text_yuandian_lan);
-                if (arg0 % mListData_lunbo.size() != i) {
-                    imageViews[i].setBackgroundResource(R.drawable.wz_text_yuandian_bai);
-                }
-            }
-        }
-    }
-
-    /**
-     * Title: MyViewPagerAdapter<br>
-     * Description: TODO Viewpager适配器<br>
-     *
-     * @author xuzhuchao
-     * @since JDK 1.7
-     */
-    private class MyViewPagerAdapter extends PagerAdapter {
-        public MyViewPagerAdapter() {
-        }
-
-        @Override
-        public void destroyItem(View arg0, int arg1, Object arg2) {
-//            ((LazyViewPager) arg0).removeView(viewList.get(arg1 % viewList.size()));
-        }
-
-        @Override
-        public void finishUpdate(View arg0) {
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, final int position) {
-            if (viewList.get(position % viewList.size()).getParent() != null) {
-                ((LazyViewPager) viewList.get(position % viewList.size()).getParent()).removeView(viewList.get(position % viewList.size()));
-            }
-//            ((LazyViewPager) container).addView(viewList.get(position % viewList.size()), 0);4
-            container.addView(viewList.get(position));
-            View v = viewList.get(position % viewList.size());
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    LogUtils.e("被点击了了--" + position % viewList.size());
-                    clickIndex = position % viewList.size();
-                    Intent intent = new Intent(getActivity(), NoteDetailActivity.class);
-                    intent.putExtra("noteId", mListData_lunbo.get(clickIndex).getNoteid());
-                    intent.putExtra("repostid", mListData_lunbo.get(clickIndex).getRepostid());
-                    LogUtils.e("repostcontent", mListData_lunbo.get(clickIndex).getRepostid());
-                    intent.putExtra("repostfrom", "1");
-                    startActivity(intent);
-                }
-            });
-            return viewList.get(position % viewList.size());
-        }
-
-        @Override
-        public int getCount() {
-            return viewList.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            return arg0 == arg1;
-        }
-
-        @Override
-        public void restoreState(Parcelable arg0, ClassLoader arg1) {
-
-        }
-
-        @Override
-        public Parcelable saveState() {
-            return null;
-        }
-
-        @Override
-        public void startUpdate(View arg0) {
-
-        }
-
-        @Override
-        public void finishUpdate(ViewGroup container) {
-
-            super.finishUpdate(container);
-        }
     }
 
     //数据获取成功后  对json进行解析绑定适配器的方法
@@ -691,33 +340,14 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
         }
         Gson gson = new Gson();
         NoteBean noteBean = gson.fromJson(content, NoteBean.class);
-        prsv_ScrollView.onRefreshComplete();
-//        pgb.setVisibility(View.GONE);
         if (noteBean.getResult().equals("1")) {
             mListData_lunbo = noteBean.data_lunbo;
-            //mListData_jiage = noteBean.data_jiage;
-            if (mListData_lunbo != null && mListData_lunbo.size() > 0) {
-                if (myViewPagerAdapter == null) {
-                    initViewpager();
-                } else {
-                    if (viewList.size() == mListData_lunbo.size()) {
-                        for (int i = 0; i < mListData_lunbo.size(); i++) {
-                            setViewData(viewList.get(i), i);
-                        }
-                    }
-
-                    myViewPagerAdapter.notifyDataSetChanged();
-                }
-                LogUtils.e("轮播  -  if (vp_world==null)");
-            } else {
-//                if (myViewPagerAdapter == null) {
-//                    myViewPagerAdapter.notifyDataSetChanged();
-//                }
-            }
+            carouselView.init(getActivity(), mListData_lunbo);
+            carouselView.setCarouselLinster(this);
+            carouselView.startCarousel();
             if (pageindex > 1) {
                 if (noteBean.getData().size() > 0) {
                     mHListData.addAll(noteBean.data);
-
                     mHAdapter.setmDatas(mHListData);
                     mHAdapter.notifyDataSetChanged();
                 } else {
@@ -759,13 +389,64 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
                         }
 
                     }
-                    mHAdapter = new WorldListAdapter(mHListData, mListData_jiage, mainActivity, "tuijian");
+                    mHAdapter = new WorldListAdapters(mHListData, mListData_jiage, mainActivity, "tuijian");
                     mHAdapter.notifyDataSetChanged();
                     mNoScrollListview.setAdapter(mHAdapter);
                 }
             }
         } else {
             LogUtils.e("轮播  -  onSuccess   else {");
+        }
+    }
+
+    //轮播图 具体View的实现方法
+    @Override
+    public View instantiateView(CarouselBean date, ViewGroup container, int position) {
+        final CarouselBean carouselBean = (CarouselBean) date;
+
+        View view = LayoutInflater.from(mContext).inflate(R.layout.view_carousel_item,null);
+        ImageView imageView = (ImageView) view.findViewById(R.id.iv_img);
+        TextView tv_text = (TextView) view.findViewById(R.id.tv_text);
+        tv_text.setText(carouselBean.getLunbotitle());
+        ImageUitls.setImg(carouselBean.getLunboimage(), imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String type = carouselBean.getLunbotype();
+                String data = carouselBean.getLunbourl();
+                startActByType(type,data);
+            }
+        });
+        return view;
+    }
+
+    public void startActByType(String type, String data) {
+        Intent in = new Intent();
+        switch (type) {
+            case "0"://跳web界面
+                in.setClass(getContext(), WebActivity.class);
+                in.putExtra("url", data);
+                in.putExtra("isWho", -1);
+                startActivity(in);
+                break;
+            case "1":
+                ((MainActivity)getActivity()).showView(2);
+                break;
+            case "2":
+                in.setClass(getContext(), UserDetailsActivity.class);
+                in.putExtra("detailuserid",data);
+                startActivity(in);
+                break;
+            case "3":
+                in.setClass(getContext(), NoteDetailActivity.class);
+                in.putExtra("noteId",data);
+                in.putExtra("repostid","0");
+                startActivity(in);
+                break;
+            case "4":
+                in.setClass(getContext(), FeedbackActivity.class);
+                startActivity(in);
+                break;
         }
     }
 }

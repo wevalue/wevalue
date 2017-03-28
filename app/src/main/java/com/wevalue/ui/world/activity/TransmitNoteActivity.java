@@ -1,12 +1,14 @@
 package com.wevalue.ui.world.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -124,12 +126,12 @@ public class TransmitNoteActivity extends BaseActivity implements View.OnClickLi
             case R.id.tv_shijie:
                 if ("0".equals(noteFee)) {
                     //收费帖子
-                    if (tv_shijie.getText().toString().equals("朋友们")) {
-                        tv_shijie.setText("影响力");
+                    if (tv_shijie.getText().toString().equals("圈子")) {
+                        tv_shijie.setText("关注");
                         isfree = "0";
                         notezone = "2";
                     } else {
-                        tv_shijie.setText("朋友们");
+                        tv_shijie.setText("圈子");
                         isfree = "1";
                         notezone = "1";
                     }
@@ -144,12 +146,19 @@ public class TransmitNoteActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.tv_send_note:
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //强制隐藏键盘
                 if (noteFee.equals("0")) {
                     //信息为收费信息  则执行支付流程
-                    HashMap map = new HashMap();
-                    map.put("money", paynum);
-                    map.put("paytype", Constants.transmit);
-                    PopuUtil.initPayPopu(this, this, map);
+//                    HashMap map = new HashMap();
+//                    map.put("money", paynum);
+//                    map.put("paytype", Constants.transmit);
+//                    PopuUtil.initPayPopu(this, this, map);
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put("paytype", Constants.transmit);
+                    hashMap.put("spendtype", Constants.suiyinpay);
+                    hashMap.put("money", paynum);//
+                    PopuUtil.initPayfom(this, hashMap, this);
                 } else if (noteFee.equals("1")) {
                     //转发免费帖子   获取0元的预订单
                     HashMap map = new HashMap();
@@ -242,10 +251,6 @@ public class TransmitNoteActivity extends BaseActivity implements View.OnClickLi
     //转发帖子的方法
     private void transmitNote() {
         String repostcontent = ed_zhuanfa_content.getText().toString();
-//        if (repostcontent.isEmpty()) {
-//            ShowUtil.showToast(this, "说点什么吧...");
-//            return;
-//        }
         HashMap<String, Object> map = new HashMap<>();
         map.put("code", RequestPath.CODE);
         map.put("noteid", noteId);
@@ -272,10 +277,8 @@ public class TransmitNoteActivity extends BaseActivity implements View.OnClickLi
             JSONObject json = new JSONObject(content);
             if (json.getString("result").equals("1")) {
                 ShowUtil.showToast(this, json.getString("message"));
-//                Intent intent = news Intent();
                 setResult(RESULT_OK);
                 mProgressDialog.dismiss();
-
                 finish();
             } else {
                 ShowUtil.showToast(this, content);

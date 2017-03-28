@@ -17,7 +17,7 @@
             android:layout_marginLeft="15dp"
             android:gravity="center_vertical"
             android:text="取消"
-            android:textColor="@color/blue_price" />
+            android:textColor="@color/black_40" />
 
         <ImageView
             android:id="@+id/iv_back"
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="发布信息"
-                android:textColor="@color/blue_price"
+                android:textColor="@color/black_40"
                 android:textSize="18sp" />
 
             <TextView
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="昵称"
-                android:textColor="@color/blue_price"
+                android:textColor="@color/black_40"
                 android:textSize="12sp" />
 
         </LinearLayout>
@@ -55,14 +55,18 @@
         <TextView
             android:id="@+id/tv_send_note"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:gravity="center"
             android:text="发布"
-            android:textColor="@color/blue_price"
+            android:background="@drawable/shape_round10_frame_full_blue"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
     </RelativeLayout>

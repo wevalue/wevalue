@@ -15,9 +15,10 @@
     <TextView
         android:id="@+id/tv_jinru_weizi"
         android:layout_width="220dp"
-        android:layout_height="70dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="35dp" />
+        android:gravity="center"
+        android:layout_marginBottom="50dp" />
 
 </RelativeLayout>

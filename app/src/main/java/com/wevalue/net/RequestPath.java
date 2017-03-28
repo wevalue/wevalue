@@ -7,20 +7,20 @@ package com.wevalue.net;
 public class RequestPath {
 
     /*公司服务器地址 测试地址*/
-    public static final String SERVER_PATH = "https://mp.wzbz.cn";
-    //public static final String SERVER_PATH = "http://192.168.9.109";
+    // public static final String SERVER_PATH = "https://mp.wzbz.cn";
+    //public static final String SERVER_PATH = "https://192.168.9.109";
     //public static final String SERVER_PATH = "http://192.168.9.117:8080";
+     public static final String SERVER_PATH = "https://api.wzbz.cn";
 
     //web帖子的连接 有的机型 https 打不开网页
-     public static final String SERVER_WEB_PATH = "http://mp.wzbz.cn";
+    // public static final String SERVER_WEB_PATH = "http://mp.wzbz.cn";
     //public static final String SERVER_WEB_PATH = "http://192.168.9.109";
     //public static final String SERVER_WEB_PATH = "http://192.168.9.117:8080";
+    public static final String SERVER_WEB_PATH = "http://api.wzbz.cn";
 
     /*分享到第三方的链接*/
-    public static final String SHARE_HTML = SERVER_PATH + "/web/note.html?";
+    public static final String SHARE_HTML = SERVER_WEB_PATH + "/web/note.html?";
 
-    /**刘燚  主机地址*/
-    //  public static final String  SERVER_PATH="http://192.168.1.103:8002";
 
     /**
      * code
@@ -178,7 +178,9 @@ public class RequestPath {
     /**
      * 获取帖子 评论列表
      */
-    public static final String GET_NOTECOMMLIST = SERVER_PATH + "/api_3/dbsocial.ashx?method=notecommlist";
+    //public static final String GET_NOTECOMMLIST = SERVER_PATH + "/api_3/dbsocial.ashx?method=notecommlist";
+    //新的评论列表接口
+    public static final String GET_NOTECOMMLIST = SERVER_PATH + "/api_3/dbsocial.ashx?method=noterepostcommlist";
 
     /**
      * 获取帖子 情绪 列表
@@ -337,6 +339,12 @@ public class RequestPath {
     public static final String POST_SETTOKENLONGTIME = SERVER_PATH + "/api_3/dbuser.ashx?method=settokenlongtime";
     //获取启动页图片  lanucher
     public static final String POST_LANYCHER_IMAGE = SERVER_PATH + "/api_3/dbbase.ashx?method=getuipage";
+    //开启免密支付接口
+    public static final String POST_OPENONEPAY = SERVER_PATH + "/api_3/dbuser.ashx?method=onepay";
+    //查询免密支付接口
+    public static final String POST_CHECKONEPAY = SERVER_PATH + "/api_3/dbuser.ashx?method=getOnePayMoney ";
+    //点赞接口
+    public static final String POST_ZAN = SERVER_PATH + "/api_3/dbsocial.ashx?method=payzan";
 
     //需要加密参数的接口
     public static final String[] EncodePath = {POST_QUICKREG_REGUSER, POST_REGUSER, POST_UPDATEUSERPWD, POST_RESETUSERPWD, POST_SETTRUEINFO, POST_VERIFYPAYCODE, POST_PAYMONEY};

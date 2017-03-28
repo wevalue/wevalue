@@ -1,9 +1,14 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.NoActionBar">
-       <item name="android:windowBackground">@color/white</item>
+    <style name="AppTheme" parent="android:Theme.Light.NoTitleBar">
+       <!--<item name="android:windowBackground">@color/white</item>-->
         <!--<item name="android:windowFullscreen">true</item>-->
+    </style>
+    <!-- Base application theme. -->
+    <style name="launcherTheme" parent="android:Theme.Light.NoTitleBar">
+      <item name="android:windowBackground">@color/white</item>
+       <item name="android:windowFullscreen">true</item>
     </style>
     <!-- 底部菜单. -->
     <style name="main_tab_bottom">
@@ -34,7 +39,10 @@
         <item name="android:layout_weight">1.0</item>
     </style>
 
-
+    <style name="act_dialog" parent="Theme.AppCompat.Dialog">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
     <!-- dialog -->
     <style name="ActionSheetDialogStyle" parent="@android:style/Theme.Dialog">
@@ -66,5 +74,30 @@
         <item name="android:windowExitAnimation">@anim/wz_slide_out</item>
     </style>
 
-
+    <!--自定义dialog背景全透明无边框theme -->
+    <style name="customDialog" parent="android:style/Theme.Dialog">
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否去除标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+    <!--自定义加载progressdialog -->
+    <style name="progressDialog" parent="android:style/Theme.Dialog">
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否去除标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
 </resources>

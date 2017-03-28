@@ -30,6 +30,7 @@ import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailActivity;
 import com.wevalue.ui.world.activity.ShiftCityActivity;
 import com.wevalue.ui.world.adapter.WorldListAdapter;
+import com.wevalue.ui.world.adapter.WorldListAdapters;
 import com.wevalue.utils.DateTiemUtils;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.RealmUtils;
@@ -53,7 +54,7 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
     private Context mContext;
     private PullToRefreshScrollView prsv_ScrollView;
     private NoScrollListview mNoScrollListview;
-    private WorldListAdapter mHAdapter;
+    private WorldListAdapters mHAdapter;
     private List<NoteBean.NoteEntity> mHListData;
     private List<NoteBean.NoteEntity> mListData_jiage;
     //帖子的标签
@@ -99,7 +100,7 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
         super.setUserVisibleHint(isVisibleToUser);
         mNoteRequestBase = NoteRequestBase.getNoteRequestBase(WeValueApplication.applicationContext);
         if (isVisibleToUser) {
-            if (getActivity() != null && isFirstLoad) {
+            if (getActivity() != null) {
                 if (mNoteRequestBase == null) {
                     mNoteRequestBase = NoteRequestBase.getNoteRequestBase(getActivity());
                 }
@@ -116,19 +117,6 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
     @Override
     public void onResume() {
         super.onResume();
-        if (!isFirstLoad && noteclas.equals("3")) {
-            String userlike = SharedPreferencesUtil.getUserLikeCity(getActivity());
-            if (TextUtils.isEmpty(userlike)) {
-                userlike = SharedPreferencesUtil.getLocationCity(getActivity());
-            }
-            if (TextUtils.isEmpty(userlike)) {
-                userlike = ("北京");
-            }
-            if (userlike.equals("地区")) {
-                userlike = "北京";
-            }
-            tv_cityname.setText("当前城市：" + userlike);
-        }
     }
 
     @Override
@@ -161,77 +149,32 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
                 startActivity(intent);
             }
         });
-        //长按添加不喜欢功能
-//        mNoScrollListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id) {
-//                PopuUtil.initDislikePopuwindow(getActivity(), new PopClickInterface() {
-//                    @Override
-//                    public void onClickOk(String content) {
-//                        mHAdapter.notifyDataSetChanged();
-//                        HashMap map = new HashMap();
-//                        map.put("code", RequestPath.CODE);
-//                        map.put("userid", SharedPreferencesUtil.getUid(getActivity()));
-//                        map.put("deviceid", SharedPreferencesUtil.getDeviceid(getActivity()));
-//                        LogUtils.e("deviceid", SharedPreferencesUtil.getDeviceid(getActivity()));
-//                        map.put("noteid", mHListData.get(position).getNoteid());
-//                        LogUtils.e("taaaa", SharedPreferencesUtil.getUid(getActivity()));
-//                        NetworkRequest.postRequest(RequestPath.POST_HIDENOTE, map, MyTypeFragment.this);
-//                        HashMap countMap = new HashMap();
-//                        countMap.put("contenttag", noteclas);
-//                        countMap.put("hotword", mHListData.get(position).getHotword());
-//                        if (mHListData.get(position).getIsself().equals("0")) {
-//                            countMap.put("isOrigin", "yuanchaung");
-//                        } else {
-//                            countMap.put("isOrigin", "feiyuanchaung");
-//                        }
-//                        countMap.put("moodcount", mHListData.get(position).getMoodcount());
-//                        MobclickAgent.onEvent(mContext, StatisticsConsts.event_dislike, countMap);
-//                        mHListData.remove(position);
-//                    }
-//                }, parent, position);
-//                return true;
-//            }
-//        });
+
         prsv_ScrollView.setMode(PullToRefreshBase.Mode.BOTH);
         prsv_ScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
             //下拉刷新
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 pageindex = 1;
-                if (TextUtils.isEmpty(cityName)) {
-                    mNoteRequestBase.getNoteListData(getDateTime(), String.valueOf(pageindex), noteclas, "", SharedPreferencesUtil.getDeviceid(getActivity()), MyTypeFragment.this);
-                } else {
-                    mNoteRequestBase.getNoteListDataForCity(getDateTime(), String.valueOf(pageindex), noteclas, cityName, SharedPreferencesUtil.getDeviceid(getActivity()), MyTypeFragment.this);
-                }
+                mNoteRequestBase.getNoteListData(getDateTime(), String.valueOf(pageindex), noteclas, "", SharedPreferencesUtil.getDeviceid(getActivity()), MyTypeFragment.this);
+
             }
 
             //上拉加载更多
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                LogUtils.e("log", "onPullUp");
                 pageindex++;
-                if (TextUtils.isEmpty(cityName)) {
-                    mNoteRequestBase.getNoteListData(getDataTime, String.valueOf(pageindex), noteclas, "", SharedPreferencesUtil.getDeviceid(getActivity()), MyTypeFragment.this);
-                } else {
-                    mNoteRequestBase.getNoteListDataForCity(getDataTime, String.valueOf(pageindex), noteclas, cityName, SharedPreferencesUtil.getDeviceid(getActivity()), MyTypeFragment.this);
-                }
+                mNoteRequestBase.getNoteListData(getDataTime, String.valueOf(pageindex), noteclas, "", SharedPreferencesUtil.getDeviceid(getActivity()), MyTypeFragment.this);
+
             }
         });
         realm = Realm.getDefaultInstance();
         RealmUtils realmUtils = new RealmUtils();
         try {
-            if (realm==null)return;
+            if (realm == null) return;
             noteclas = realmUtils.loadChanelByName(realm, noteclas).getId();
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if ("3".equals(noteclas)) {
-            cityName = SharedPreferencesUtil.getUserLikeCity(getActivity());
-            getNoteClassFromList();
-            initCityView(true);
-        } else {
-            initCityView(false);
+            // e.printStackTrace();
         }
     }
 
@@ -255,35 +198,6 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
         }, 300);
     }
 
-    private void initCityView(boolean flag) {
-        ll_cityInfo = (RelativeLayout) view.findViewById(R.id.ll_cityInfo);
-        tv_shiftcity = (TextView) view.findViewById(R.id.tv_shiftcity);
-        tv_cityname = (TextView) view.findViewById(R.id.tv_cityname);
-        if (flag) {
-            ll_cityInfo.setVisibility(View.VISIBLE);
-        } else {
-            ll_cityInfo.setVisibility(View.GONE);
-        }
-        String userlike = SharedPreferencesUtil.getUserLikeCity(getActivity());
-        if (TextUtils.isEmpty(userlike)) {
-            userlike = SharedPreferencesUtil.getLocationCity(getActivity());
-        }
-        if (TextUtils.isEmpty(userlike)) {
-            userlike = ("北京");
-        }
-        if (userlike.equals("地区")) {
-            userlike = "北京";
-        }
-        tv_cityname.setText("当前城市：" + userlike);
-        tv_shiftcity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ShiftCityActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -295,12 +209,13 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
 
     @Override
     public void onSuccess(String content, String isUrl) {
+        prsv_ScrollView.onRefreshComplete();
         switch (isUrl) {
             case RequestPath.GET_GETNOTE:
                 Gson gson = new Gson();
                 pgb.setVisibility(View.GONE);
                 NoteBean noteBean = gson.fromJson(content, NoteBean.class);
-                prsv_ScrollView.onRefreshComplete();
+
                 if (noteBean != null && "1".equals(noteBean.getResult())) {
                     mListData_jiage = noteBean.data_jiage;
                     if (pageindex > 1) {
@@ -314,19 +229,19 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
                     } else {
                         if (!MainActivity.isEditChannel && mHAdapter != null && mHListData != null && mHListData.size() > 0) {
                             mHListData = noteBean.getData();
-                            if (mListData_jiage != null&&mListData_jiage.size()>0 ) {
-                                removeRepeat(mHListData,mListData_jiage);
-                                mHListData.addAll(0,getJiage(mListData_jiage));
+                            if (mListData_jiage != null && mListData_jiage.size() > 0) {
+                                removeRepeat(mHListData, mListData_jiage);
+                                mHListData.addAll(0, getJiage(mListData_jiage));
                             }
                             mHAdapter.setmDatas(mHListData);
                             mHAdapter.notifyDataSetChanged();
                         } else {
                             mHListData = noteBean.getData();
-                            if (mListData_jiage != null ) {
-                                removeRepeat(mHListData,mListData_jiage);
-                                mHListData.addAll(0,getJiage(mListData_jiage));
+                            if (mListData_jiage != null) {
+                                removeRepeat(mHListData, mListData_jiage);
+                                mHListData.addAll(0, getJiage(mListData_jiage));
                             }
-                            mHAdapter = new WorldListAdapter(mHListData, mListData_jiage, mainActivity, "nnn");
+                            mHAdapter = new WorldListAdapters(mHListData, mListData_jiage, mainActivity, "nnn");
                             mHAdapter.notifyDataSetChanged();
                             mNoScrollListview.setAdapter(mHAdapter);
                         }
@@ -340,21 +255,23 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
 
     @Override
     public void onFailure(String content) {
+        prsv_ScrollView.onRefreshComplete();
     }
+
     //只显示前三个
-    private List<NoteBean.NoteEntity> getJiage(List<NoteBean.NoteEntity> mListData_jiage){
-        if (mListData_jiage!=null&&mListData_jiage.size()>0)
-        if (mListData_jiage.size()>3){
-            mListData_jiage.remove(mListData_jiage.size()-1);
-            getJiage(mListData_jiage);
-        }
+    private List<NoteBean.NoteEntity> getJiage(List<NoteBean.NoteEntity> mListData_jiage) {
+        if (mListData_jiage != null && mListData_jiage.size() > 0)
+            if (mListData_jiage.size() > 3) {
+                mListData_jiage.remove(mListData_jiage.size() - 1);
+                getJiage(mListData_jiage);
+            }
         return mListData_jiage;
     }
 
-    private List<NoteBean.NoteEntity> removeRepeat(List<NoteBean.NoteEntity> mHListData,List<NoteBean.NoteEntity> mListData_jiage){
-        if (mListData_jiage==null&&mListData_jiage.size()>0){
-            if (mHListData!=null&&mHListData.size()>0){
-                for (int i = 0; i <mListData_jiage.size() ; i++) {
+    private List<NoteBean.NoteEntity> removeRepeat(List<NoteBean.NoteEntity> mHListData, List<NoteBean.NoteEntity> mListData_jiage) {
+        if (mListData_jiage == null && mListData_jiage.size() > 0) {
+            if (mHListData != null && mHListData.size() > 0) {
+                for (int i = 0; i < mListData_jiage.size(); i++) {
                     mHListData.remove(mListData_jiage.get(i));
                 }
             }

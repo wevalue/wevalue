@@ -4,17 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/gray_f5"/>
     <ProgressBar
         android:layout_gravity="center"
         android:id="@+id/pgb"
         android:layout_width="20dp"
         android:layout_height="20dp" />
-
     <ListView
         android:background="@color/white"
-        android:layout_marginTop="10dp"
         android:id="@+id/ll_messagelist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent"
+        ></ListView>
 
 </LinearLayout>

@@ -1,15 +1,26 @@
 package com.wevalue.base;
 
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.umeng.analytics.MobclickAgent;
+import com.wevalue.MainActivity;
+import com.wevalue.R;
+import com.wevalue.ui.login.LoginActivity;
 import com.wevalue.utils.ActivityManagers;
+import com.wevalue.utils.DialogUtil;
 import com.wevalue.utils.LogUtils;
+import com.wevalue.utils.CustomDialog;
+import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 
 import org.json.JSONException;
@@ -17,12 +28,16 @@ import org.json.JSONException;
 public class BaseActivity extends FragmentActivity {
     private static final String TAG = "BaseActivity.log";
     private ActivityManagers activityManager = ActivityManagers.getActivityManager();
-
+    public Context context;
+    public Dialog loadingDialog ;
+    public CustomDialog selfDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /**禁止横屏的代码*/
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         LogUtils.d(TAG, "******" + this.getClass().getSimpleName() + "onCreate() invoked!******");
+        context =this;
+        loadingDialog = DialogUtil.createLoadingDialog(this);
         /**Android 沉浸式*/
 //		if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
 //			// 透明状态栏
@@ -72,6 +87,19 @@ public class BaseActivity extends FragmentActivity {
         LogUtils.d(TAG, "******" + this.getClass().getSimpleName() + "onRestart() invoked!******");
         super.onRestart();
 
+    }
+
+    /***
+     * 检测是否登录
+     * @return
+     */
+    public boolean checkLogin(){
+        String id = SharedPreferencesUtil.getUid(context);
+        if (TextUtils.isEmpty(id)) {
+            startActivity(new Intent(context, LoginActivity.class));
+            ShowUtil.showToast(this, "登录已过期，请重新登录");
+            return false;
+        }else return  true;
     }
 
     @Override

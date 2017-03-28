@@ -91,6 +91,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private RadioButton main_jiaoyou;
     private RadioButton main_wode;
     private RadioButton ll_add_sendnote;
+    private TextView ll_add_sendnote1;
     private ArrayList<Fragment> fragmentList;
     private MyViewPagerAdapter myViewPagerAdapter;
     private LazyViewPager lvp_main;
@@ -100,7 +101,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private int isClickType = 0; //1 = 图片 , 2 = 音频; 3 = 视频;
     private static final String PHOTO_FILE_NAME = "wevalue_img.jpg";
     private Long suijishu;
-    private RelativeLayout re_head_title;
     public ImageView iv_head_search, iv_head_add;
     public TextView tv_head_right_text;
     public TextView tv_head_title;
@@ -195,6 +195,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         main_jiaoyou = (RadioButton) findViewById(R.id.main_jiaoyou);
         main_wode = (RadioButton) findViewById(R.id.main_wode);
         ll_add_sendnote = (RadioButton) findViewById(R.id.ll_add_sendnote);
+        ll_add_sendnote1 = (TextView) findViewById(R.id.ll_add_sendnote1);
+        ll_add_sendnote1.setOnClickListener(this);
         main_home.setOnClickListener(this);
         main_pengyouquan.setOnClickListener(this);
         main_jiaoyou.setOnClickListener(this);
@@ -215,7 +217,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         lvp_main.setScrollble(false);
         lvp_main.setCurrentItem(0);
 
-        re_head_title = (RelativeLayout) findViewById(R.id.re_head_title);
         iv_head_search = (ImageView) findViewById(R.id.iv_head_search);
         iv_head_add = (ImageView) findViewById(R.id.iv_head_add);
         tv_head_right_text = (TextView) findViewById(R.id.tv_head_right_text);
@@ -233,8 +234,40 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         jianCeBanBen();
         InitAppVersion();
     }
-
+    public void showView(int index){
+        String uid = SharedPreferencesUtil.getUid(this);
+        if (TextUtils.isEmpty(uid)) {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            ShowUtil.showToast(this,R.string.no_login);
+           return;
+        }
+        switch (index){
+            case 0:
+                main_home.setChecked(true);
+                break;
+            case 1:
+                main_pengyouquan.setChecked(true);
+                break;
+            case 2:
+                main_jiaoyou.setChecked(true);
+                break;
+            case 3:
+                main_wode.setChecked(true);
+                break;
+        }
+        lvp_main.setCurrentItem(index);
+        setViewIsShow(true,index);
+    }
+    View.OnClickListener nullListener  =  new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            //什么都不做
+        }
+    };
     public void setViewIsShow(boolean isShow, int index) {
+        tv_head_title.setBackgroundResource(R.color.transparent);
+        //默认title 点击事件为空
+        tv_head_title.setOnClickListener(nullListener);
         if (isShow) {
             iv_head_search.setVisibility(View.VISIBLE);
             iv_head_add.setVisibility(View.VISIBLE);
@@ -244,61 +277,51 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             iv_head_add.setVisibility(View.GONE);
             tv_head_right_text.setVisibility(View.VISIBLE);
         }
-        re_head_title.setVisibility(View.VISIBLE);
         LogUtils.e("main 的 index = " + index);
         switch (index) {
             case 0:
                 tv_head_title.setText("世界");
                 worldFragment.resetUI();
-//                worldFragment.reSetTitles();
                 break;
             case 1:
-                re_head_title.setVisibility(View.GONE);
-                tv_head_title.setText("影响力");
+                if (influenceFragment!=null)
+                influenceFragment.setTitlt(tv_head_title);
                 break;
             case 2:
                 tv_head_title.setText("我们");
                 break;
             case 3:
                 tv_head_title.setText("我");
-//                personInfoFragment.setIsLoginStatus();
                 break;
         }
     }
 
     @Override
     public void onClick(View v) {
-        re_head_title.setVisibility(View.VISIBLE);
+        tv_head_title.setOnClickListener(null);
         String uid = SharedPreferencesUtil.getUid(this);
         switch (v.getId()) {
             case R.id.main_home:
                 if (worldFragment == null) {
                     return;
                 }
-
                 int i = lvp_main.getCurrentItem();
                 if (i == 0) {
                     worldFragment.refreshData();
                 }
-
                 lvp_main.setCurrentItem(0);
-                tv_head_title.setText("世界");
                 setViewIsShow(true, 0);
                 break;
-            case R.id.main_pengyouquan:
+            case R.id.main_pengyouquan://影响力
                 if (TextUtils.isEmpty(uid)) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     setCheckedStatus(main_pengyouquan);
                 } else {
-//                Intent intent=getPackageManager().getLaunchIntentForPackage(getPackageName());
-//                intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
                     int ii = lvp_main.getCurrentItem();
                     if (ii == 1) {
                         influenceFragment.refreshData();
                     }
-                    re_head_title.setVisibility(View.GONE);
-                    tv_head_title.setText("影响力");
+
                     lvp_main.setCurrentItem(1);
                     setViewIsShow(true, 1);
                 }
@@ -329,7 +352,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.tv_head_right_text://设置
                 startActivity(new Intent(MainActivity.this, SettingActivity.class));
                 break;
-            case R.id.ll_add_sendnote:
+            case R.id.ll_add_sendnote1:
                 if (!ExampleUtil.isConnected(this)) {
                     ShowUtil.showToast(this, "当前设备无网络，无法发布帖子。");
                     return;
@@ -535,7 +558,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        int index = lvp_main.getCurrentItem();
+       int index = lvp_main.getCurrentItem();
+       if (index==0&&worldFragment!=null)worldFragment.refreshData();
+        lvp_main.setCurrentItem(index);
         setViewIsShow(true, index);
         // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
         if (requestCode == REQUEST_CODE && resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
@@ -564,7 +589,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     LogUtils.e("123321", tempFile.getAbsolutePath());
                     intent = new Intent(MainActivity.this, ReleaseNoteActivity.class);
                     intent.putExtra("isSendType", 3);
-                    startActivity(intent);
+                    startActivityForResult(intent,10);
                     break;
                 case 3:
                     Uri uri = data.getData();
@@ -575,7 +600,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     intent = new Intent(MainActivity.this, ReleaseNoteActivity.class);
                     intent.putExtra("isSendType", 1);
                     intent.putExtra("fileUrl", videoUrl);
-                    startActivity(intent);
+                    startActivityForResult(intent,10);
                     break;
             }
         }
@@ -744,6 +769,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             SharedPreferencesUtil.setLongitude(getApplicationContext(), lon);
             SharedPreferencesUtil.setLocationCity(getApplicationContext(), location.getProvince());
             LogUtils.e("msg", location.getCity());
+           final String provinceName = location.getProvince();
+           final String cityName = location.getCity();
             mLocationClient.stop();
             HashMap map = new HashMap();
             map.put("code", RequestPath.CODE);
@@ -757,6 +784,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         JSONObject jsonObject = new JSONObject(content);
                         String message = jsonObject.getString("message");
                         LogUtils.e("msg", "地理位置更新" + message);
+                        SharedPreferencesUtil.setProvinceName(MainActivity.this,provinceName);
+                        SharedPreferencesUtil.setCityName(MainActivity.this,cityName);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

@@ -15,6 +15,7 @@ import com.wevalue.LauncherActivity;
 import com.wevalue.MainActivity;
 import com.wevalue.R;
 import com.wevalue.base.BaseActivity;
+import com.wevalue.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class GuideActivity extends BaseActivity {
 
     private ViewPager vp_guide_viewpager;
     private TextView tv_jinru_weizi;
-    private int[] imgs = {R.mipmap.welcome1, R.mipmap.welcome2, R.mipmap.welcome3, R.mipmap.welcome4};
+    private int[] imgs = {R.mipmap.welcome1, R.mipmap.welcome2, R.mipmap.welcome3, R.mipmap.welcome4,R.mipmap.welcome5};
     private List<ImageView> imageViewList = new ArrayList<>();
 
     @Override
@@ -53,9 +54,7 @@ public class GuideActivity extends BaseActivity {
                     Intent intent = new Intent(GuideActivity.this, ChoiceChannelActivity.class);
                     startActivity(intent);
                     finish();
-//                    Intent intent = new Intent(GuideActivity.this, MainActivity.class);
-//                    startActivity(intent);
-//                    finish();
+
                 }
 
             }

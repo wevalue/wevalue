@@ -121,7 +121,7 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
     //    private ArrayList<String> mYCDatas;//是否原創
 //    private ArrayList<String> mSFDatas;// 是否收費
 //    private ArrayList<String> mFWDatas;//範圍
-    private ArrayList<String> mQXDatas;//情緒
+    //private ArrayList<String> mQXDatas;//情緒
 
     private int isClickWho;
     private String fileUrl;
@@ -396,27 +396,6 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
      **/
     public void initHualunData() {
 
-//        mYCDatas = new ArrayList<>();
-//        mYCDatas.add("原创");
-//        mYCDatas.add("非原创");
-//
-//        mSFDatas = new ArrayList<>();
-//        mSFDatas.add("付费");
-//        mSFDatas.add("免费");
-//
-//        mFWDatas = new ArrayList<>();
-//        mFWDatas.add("世界");
-//        mFWDatas.add("朋友们");
-
-        mQXDatas = new ArrayList<>();
-        mQXDatas.add("喜爱");
-        mQXDatas.add("感动");
-        mQXDatas.add("同情");
-        mQXDatas.add("愤怒");
-        mQXDatas.add("恐惧");
-        mQXDatas.add("炫酷");
-        mQXDatas.add("搞笑");
-        mQXDatas.add("震撼");
     }
 
     /**
@@ -453,14 +432,26 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.tv_send_note:
                 tv_send_note.setEnabled(false);
-                if (TextUtils.isEmpty(et_title.getText().toString().trim()) && TextUtils.isEmpty(fileUrl) && MainActivity.mSelectedImage.size() == 0) {
+
+                    if (TextUtils.isEmpty(fileUrl)||"".equals(fileUrl)){
+                        if (isSendType==1) {
+                            ShowUtil.showToast(ReleaseNoteActivity.this, "视频不能为空");
+                            tv_send_note.setEnabled(true);
+                            return;
+                        }else if (isSendType==2){
+                            ShowUtil.showToast(ReleaseNoteActivity.this, "音频不能为空");
+                            tv_send_note.setEnabled(true);
+                            return;
+                        }
+                    }
+                if (TextUtils.isEmpty(et_title.getText().toString().trim()) ) {
                     ShowUtil.showToast(ReleaseNoteActivity.this, "发布标题不能为空");
                     tv_send_note.setEnabled(true);
                     return;
                 }
                 //如果发布的是纯文字 则必须写内容
                 if (isSendType == 4)
-                    if (TextUtils.isEmpty(et_content.getText().toString().trim()) && TextUtils.isEmpty(fileUrl) && MainActivity.mSelectedImage.size() == 0) {
+                    if (TextUtils.isEmpty(et_content.getText().toString().trim())  ) {
                         ShowUtil.showToast(ReleaseNoteActivity.this, "发布内容不能为空");
                         tv_send_note.setEnabled(true);
                         return;
@@ -472,6 +463,8 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                         return;
                     }
                 }
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0); //强制隐藏键盘
                 if (!ButtontimeUtil.isFastDoubleClick()) {
                     tv_send_note.setEnabled(true);
                     if (isFree) {
@@ -485,7 +478,9 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
                     } else {
                         HashMap map = new HashMap();
                         map.put("paytype", Constants.release);
-                        PopuUtil.initPayPopu(this, this, map);
+                        map.put("spendtype", Constants.suiyinpay);
+                        map.put("money", null);//打赏不需要传金额 所以为null
+                        PopuUtil.initPayfom(this, map, this);
                     }
                 }
                 break;
@@ -760,16 +755,22 @@ public class ReleaseNoteActivity extends BaseActivity implements View.OnClickLis
             allChannelList = channelBean.getData();
             for (int i = 0; i < allChannelList.size(); i++) {
                 s += allChannelList.get(i).getTypename();
-                if (allChannelList.get(i).getTypename().equals("推荐")) {
-                    allChannelList.remove(i);
-                } else if (allChannelList.get(i).getTypename().equals("视频")) {
-                    allChannelList.remove(i);
-                } else {
-                    if (!allChannelList.get(i).getId().equals("3")) {
-                        mTitleDatas.add(allChannelList.get(i).getTypename());
-                        mID.add(allChannelList.get(i).getId());
-                    }
+                //前两个不加进去
+                if (i>2){
+                    mTitleDatas.add(allChannelList.get(i).getTypename());
+                    mID.add(allChannelList.get(i).getId());
                 }
+
+//                if (allChannelList.get(i).getTypename().equals("推荐")) {
+//                    allChannelList.remove(i);
+//                } else if (allChannelList.get(i).getTypename().equals("视频")) {
+//                    allChannelList.remove(i);
+//                } else {
+//                    if (!allChannelList.get(i).getId().equals("3")) {
+//                        mTitleDatas.add(allChannelList.get(i).getTypename());
+//                        mID.add(allChannelList.get(i).getId());
+//                    }
+//                }
             }
             LogUtils.e(s);
         }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.wevalue.model.SiteMessageModel;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
+import com.wevalue.ui.we.activity.DaVActivity;
 import com.wevalue.ui.we.activity.MeassageActivity;
 import com.wevalue.ui.we.adapter.MessageAdapter;
 import com.wevalue.utils.LogUtils;
@@ -48,7 +50,6 @@ public class We_MessageFragment extends Fragment implements WZHttpListener {
     List<SiteMessageModel.DataBean> dataBeanList;
     WeFragment weFragment ;
     Context mContext;
-    View convertView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_friendsmessage, null);
@@ -70,28 +71,29 @@ public class We_MessageFragment extends Fragment implements WZHttpListener {
         initHeadView();
     }
     private void initHeadView() {
-        View convertView = LayoutInflater.from(mContext).inflate(R.layout.itemmessage, null);
-        ImageView iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
-        TextView tv_tittle = (TextView) convertView.findViewById(R.id.tv_tittle);
-        TextView tv_content = (TextView) convertView.findViewById(R.id.tv_content);
-        TextView tv_time = (TextView) convertView.findViewById(R.id.tv_time);
-        tv_time.setVisibility(View.GONE);
-        TextView tv_red_cycle = (TextView) convertView.findViewById(R.id.tv_red_cycle);
-        tv_red_cycle.setVisibility(View.GONE);
-        iv_icon.setImageResource(R.mipmap.we_message_invite_friends);
-        tv_tittle.setText("邀请好友");
-        tv_content.setText("让美好阅读的初心接力下去");
+        View convertView = LayoutInflater.from(mContext).inflate(R.layout.itemmessage_headview, null);
+        LinearLayout layout_da_v = (LinearLayout) convertView.findViewById(R.id.layout_da_v);
+        LinearLayout layout_invite_friends = (LinearLayout) convertView.findViewById(R.id.layout_invite_friends);
+
         messageList.addHeaderView(convertView);
-        convertView.setOnClickListener(new View.OnClickListener() {
+        layout_invite_friends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 initFriends();
             }
         });
+        layout_da_v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), DaVActivity.class);
+                startActivity(intent);
+            }
+        });
     }
    private void  initFriends(){
        String url = RequestPath.SERVER_PATH+"/web/invite.html";
-       String content = "好朋友就会玩一样的爱屁屁|#|我发现了个新世界，邀请你一起来看！";
+       String content = "好朋友才会玩一样的App|#|我发现了个新世界，邀请你一起来看！";
 
        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Shared.sx",Context.MODE_PRIVATE);
        boolean ishared = sharedPreferences.getBoolean("iShared",false);

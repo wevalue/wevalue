@@ -8,6 +8,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.wevalue.R;
 import com.wevalue.base.BaseActivity;
 import com.wevalue.model.NearbyEntity;
@@ -29,9 +31,11 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * 附近人
  * Created by Administrator on 2016-06-08.
  */
 public class AddFromNearbyActivity extends BaseActivity implements WZHttpListener, View.OnClickListener, FriendManagerInterface {
+    private PullToRefreshListView pullToRefreshListView;
     private ListView lv_nearby;
     private TextView tv_head_title;
     private ImageView iv_back;
@@ -42,6 +46,7 @@ public class AddFromNearbyActivity extends BaseActivity implements WZHttpListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby);
+        loadingDialog.show();
         initView();
     }
 
@@ -49,14 +54,29 @@ public class AddFromNearbyActivity extends BaseActivity implements WZHttpListene
      * 初始化控件
      */
     private void initView() {
-        lv_nearby = (ListView) findViewById(R.id.lv_nearby);
+        pullToRefreshListView = (PullToRefreshListView) findViewById(R.id.lv_nearby);
+        lv_nearby = pullToRefreshListView.getRefreshableView();
+        pullToRefreshListView.setRefreshing(true);
+        pullToRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+        pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                pageindex = 1;
+                getNearbyData();
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                getNearbyData();
+            }
+        });
         tv_head_title = (TextView) findViewById(R.id.tv_head_title);
         tv_head_title.setText("附近的人");
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_back.setOnClickListener(this);
         getNearbyData();
     }
-
+    private int pageindex =1;
     /**
      * 获取附近的人
      */
@@ -66,16 +86,20 @@ public class AddFromNearbyActivity extends BaseActivity implements WZHttpListene
         map.put("userid", SharedPreferencesUtil.getUid(getApplicationContext()));
         map.put("userlon", SharedPreferencesUtil.getLongitude(this));
         map.put("userlat", SharedPreferencesUtil.getLatitude(this));
+        map.put("pagenum", "30");
+        map.put("pageindex", pageindex+"");
         NetworkRequest.getRequest(RequestPath.GET_NEARBYUSER, map, AddFromNearbyActivity.this);
     }
 
     @Override
     public void onSuccess(String content, String isUrl) {
+        if (loadingDialog.isShowing())loadingDialog.dismiss();
         switch (isUrl) {
             case RequestPath.GET_NEARBYUSER:
                 Gson gson = new Gson();
                 NearbyEntity nearbyEntity = gson.fromJson(content, NearbyEntity.class);
                 if (nearbyEntity.getResult().equals("1")) {
+                    pageindex++;
                     nearbyUserList = nearbyEntity.data;
                     if (null != nearbyUserList && nearbyUserList.size() > 0) {
                         setAdapter();
@@ -107,7 +131,7 @@ public class AddFromNearbyActivity extends BaseActivity implements WZHttpListene
 
     @Override
     public void onFailure(String content) {
-
+        if (loadingDialog.isShowing())loadingDialog.dismiss();
     }
 
     private void setAdapter() {

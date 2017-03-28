@@ -3,9 +3,11 @@ package com.wevalue.net.Interfacerequest;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wevalue.WeValueApplication;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
@@ -42,6 +44,24 @@ public class UserEditRequest {
         }
 
     }
+
+    /**
+     * 开启或关闭免密支付
+     *  @param money 开启金额上限 比如 5块以下免密支付
+     * @param type  0 关闭， 1- 开启
+     * @param wzHttpListener
+     */
+    public  void openOnepay(String money, boolean type, WZHttpListener wzHttpListener) {
+        String url = RequestPath.POST_OPENONEPAY;
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("code", RequestPath.CODE);
+        map.put("userid", SharedPreferencesUtil.getUid(WeValueApplication.applicationContext));
+        map.put("money", money);
+        if (type) map.put("type", "1");
+        else map.put("type", "0");
+        NetworkRequest.postRequest(url, map,wzHttpListener);
+    }
+
 
     /**
      * 修改城市

@@ -23,24 +23,24 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="全部"
             android:textSize="16sp"/>
+        <!-- android:text="全部"-->
         <TextView
             android:id="@+id/tv_world"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="世界"
             android:textSize="16sp"/>
+        <!-- android:text="世界"-->
         <TextView
             android:id="@+id/tv_friends"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="朋友们"
             android:textSize="16sp"/>
+     <!--   android:text="圈子"-->
     </LinearLayout>
     <ImageView
         android:id="@+id/cursor"

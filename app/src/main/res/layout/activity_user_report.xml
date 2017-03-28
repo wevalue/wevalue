@@ -8,10 +8,14 @@
     tools:context="com.wevalue.ui.details.activity.UserReportActivity">
 
     <include layout="@layout/head" />
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <RadioGroup
@@ -99,10 +103,8 @@
                 android:background="@mipmap/me_btn_transperent"
                 android:gravity="center"
                 android:text="提交"
+                android:layout_marginBottom="20dp"
                 android:textColor="@color/white" />
         </LinearLayout>
-
-
-
-
+    </ScrollView>
 </LinearLayout>

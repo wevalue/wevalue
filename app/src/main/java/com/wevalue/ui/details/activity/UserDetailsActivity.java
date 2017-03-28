@@ -1,28 +1,31 @@
 package com.wevalue.ui.details.activity;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.Transformation;
 import com.google.gson.Gson;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.wevalue.R;
 import com.wevalue.WeValueApplication;
+import com.wevalue.adapter.NoteListAdapter;
 import com.wevalue.base.BaseActivity;
 import com.wevalue.model.NoteBean;
 import com.wevalue.net.FriendsManage.FriendManageBase;
@@ -30,78 +33,91 @@ import com.wevalue.net.FriendsManage.FriendManagerInterface;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.fragment.UserFriendsNoteFragment;
-import com.wevalue.ui.details.fragment.UserReleaseListFragment;
-import com.wevalue.ui.details.fragment.UserTransmitListFragment;
 import com.wevalue.ui.influence.PopClickInterface;
 import com.wevalue.ui.login.LoginActivity;
 import com.wevalue.ui.world.activity.ImgShowActivity;
+import com.wevalue.utils.ImageUitls;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.PopuUtil;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.ActionSheetDialog;
-import com.wevalue.view.LazyViewPager;
+import com.wevalue.view.NoScrollListview;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * 该类是用户详情页的界面
  */
-public class UserDetailsActivity extends BaseActivity implements View.OnClickListener, WZHttpListener, FriendManagerInterface, PopClickInterface {
+public class UserDetailsActivity extends BaseActivity implements View.OnClickListener, WZHttpListener, FriendManagerInterface, PopClickInterface{
+    private LinearLayout layout_head;//title背景
+    private LinearLayout tab_layout,tab_layout_top;//发布 转发 朋友 切换布局
+    private PullToRefreshScrollView pull_scrollView;//头像大背景
+    private ImageView iv_head_bg;//头像大背景
     private ImageView iv_user_img;//头像
-    private TextView tv_guanzhu;//关注
+    private ImageView iv_user_v;//大V标志
+    private TextView tv_nickname;//昵称
+    private TextView tv_dengji;//等级
     private TextView tv_jianjie;//简介
-    private ImageView cursor;// 动画图片
-    private TextView tv_head_title;//title
-    private TextView tv_2;//解除好友
-    private TextView tv_fensi;//粉丝
+
+
     private TextView tv_1;//加关注
+    private TextView tv_2;//加好友
+    private TextView tv_wz_hao;//微值号
+
+    private TextView tv_fensi;//粉丝
+    private TextView tv_guanzhu;//关注
+
+    private TextView tv_title;//标题
+    private ImageView iv_back;//返回
+    private ImageView iv_more;//更多按钮
+    /**因为滑到顶部要浮停在顶部 所以在顶部也加了一个同样的布局**/
     private TextView tv_fabu;//发布
     private TextView tv_zhuangfa;//转发
     private TextView tv_haoyoukejian;//好友可见
-    private TextView tv_wz_hao;//微值号
-    private View prompt_box;
-    private ImageView iv_back;
-    private LazyViewPager lvp_user_xq;
-    private ArrayList<Fragment> fragmentList;
-    private MyViewPagerAdapter myViewPagerAdapter;
+    private ImageView cursor;// 动画图片
+    private TextView tv_fabu_top;//发布
+    private TextView tv_zhuangfa_top;//转发
+    private TextView tv_haoyoukejian_top;//好友可见
+    private ImageView cursor_top;// 动画图片
+
+    /**帖子列表 与 适配器**/
+    private NoScrollListview ls_notelist; //
+    private NoteListAdapter mAdapter;
+
+    /**全局变量**/
     private int bmpW;// 动画图片宽度
     private int offset = 0;// 动画图片偏移量
     private int currIndex = 0;// 当前页卡编号
     private int screenW;//获取控件的宽度
     private NoteBean.UserBean userData;//用户详情实体类对象
-    private TextView tv_nickname;
-    private TextView tv_dengji;
-    private TextView tv_xingbie;
-    private TextView tv_remarkname;
-    private LinearLayout ll_fensi;//粉丝
-    private LinearLayout ll_guanzhu;
-    private LinearLayout ll_fensiguangzhu;
-    ProgressBar pgb;
+
     String isFriend = "";//该用户是否为好友关系
     String isFocus = "";//该用户是否为关注的人
     private String userremark;//给好友设置的备注
     private String isBlack;//0 没有拉黑 1 已拉黑
-    UserFriendsNoteFragment userFriendsNoteFragment;
-    UserReleaseListFragment userReleaseListFragment;
-    UserTransmitListFragment userTransmitListFragment;
-    String detailuserid = "";
+    private String userv;// 0 or 1  是否是大V
+
+    String detailuserid = "";//用户id
     private boolean isFirstLoad = true;
-    private ImageView iv_more;//更多按钮
+    private int headViewHeight;
+    private int tabLayoutScrollTop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_userxiangqing);
+        setContentView(R.layout.activity_userxiangqings);
         initView();
         infoView();
         InitImageView();
-        tv_head_title.setText("用户详情");
+        initPullToRefreshScrollView();
     }
 
     @Override
@@ -110,12 +126,77 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
         if (isFirstLoad) {
             detailuserid = getIntent().getStringExtra("detailuserid");
             getUserInfo();
-            initFragments();
             isFirstLoad = false;
         }
+
     }
 
+    private void initView() {
+        tab_layout = (LinearLayout) findViewById(R.id.tab_layout);
+        tab_layout_top = (LinearLayout) findViewById(R.id.tab_layout_top);
+        layout_head = (LinearLayout) findViewById(R.id.layout_head);
+        tv_nickname = (TextView) findViewById(R.id.tv_nickname);
+        tv_dengji = (TextView) findViewById(R.id.tv_dengji);
+        iv_more = (ImageView) findViewById(R.id.iv_more);
+        iv_more.setVisibility(View.INVISIBLE);
+        ls_notelist = (NoScrollListview) findViewById(R.id.ls_notelist);
+        ls_notelist.setFocusable(false);
+        mAdapter = new NoteListAdapter(this);
+        ls_notelist.setAdapter(mAdapter);
+        tab_layout.post(new Runnable() {
+            @Override
+            public void run() {
+                // 获取悬浮控件到顶部的距离
+                tabLayoutScrollTop = tab_layout.getTop();
+            }
+        });
+        layout_head.post(new Runnable() {
+            @Override
+            public void run() {
+                // 获取悬浮控件到顶部的距离
+                headViewHeight = layout_head.getHeight();
+            }
+        });
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void initPullToRefreshScrollView(){
+        pull_scrollView = (PullToRefreshScrollView) findViewById(R.id.pull_scrollView);
+        pull_scrollView.setMode(PullToRefreshBase.Mode.BOTH);
+        pull_scrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                pageindex = 1;
+                getUserInfo();
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                pageindex++;
+                getUserInfo();
+            }
+        });
+        pull_scrollView.setFocusable(false);
+        pull_scrollView.setOnScrollListener(new PullToRefreshScrollView.OnScrollListener() {
+            @Override
+            public void onScroll(int scrollY) {
+                Log.e("onScroll","scrollY = "+ scrollY);
+                //如果当前的 scrollY 大于 view 到顶部的距离 则显示 此view
+                if (scrollY >= tabLayoutScrollTop-headViewHeight){
+                    tab_layout_top.setVisibility(View.VISIBLE);
+                    layout_head.setBackgroundResource(R.color.gray_f5);
+                    tv_title.setTextColor(getColor(R.color.black_40));
+                }else {
+                    tab_layout_top.setVisibility(View.GONE);
+                    layout_head.setBackgroundResource(R.color.transparent);
+                    tv_title.setTextColor(getColor(R.color.transparent));
+                }
+            }
+        });
+    }
     private void infoView() {
+        iv_head_bg = (ImageView) findViewById(R.id.iv_head_bg);
+        iv_user_v = (ImageView) findViewById(R.id.iv_user_v);
         iv_user_img = (ImageView) findViewById(R.id.iv_user_img);
         iv_user_img.setOnClickListener(this);
         tv_guanzhu = (TextView) findViewById(R.id.tv_guanzhu);
@@ -124,58 +205,32 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
         tv_2 = (TextView) findViewById(R.id.tv_2);
         tv_1 = (TextView) findViewById(R.id.tv_1);
         tv_fensi = (TextView) findViewById(R.id.tv_fensi);
+        tv_haoyoukejian_top = (TextView) findViewById(R.id.tv_haoyoukejian_top);
         tv_haoyoukejian = (TextView) findViewById(R.id.tv_haoyoukejian);
+        tv_zhuangfa_top = (TextView) findViewById(R.id.tv_zhuangfa_top);
         tv_zhuangfa = (TextView) findViewById(R.id.tv_zhuangfa);
+        tv_fabu_top = (TextView) findViewById(R.id.tv_fabu_top);
         tv_fabu = (TextView) findViewById(R.id.tv_fabu);
-        tv_head_title = (TextView) findViewById(R.id.tv_head_title);
-        ll_fensi = (LinearLayout) findViewById(R.id.ll_fensi);
-        ll_guanzhu = (LinearLayout) findViewById(R.id.ll_guanzhu);
-        ll_fensiguangzhu = (LinearLayout) findViewById(R.id.ll_fensiguangzhu);
+
+        tv_title = (TextView) findViewById(R.id.tv_title);
         iv_back = (ImageView) findViewById(R.id.iv_back);
         cursor = (ImageView) findViewById(R.id.cursor);
+        cursor_top = (ImageView) findViewById(R.id.cursor_top);
         tv_guanzhu.setOnClickListener(this);
         tv_1.setOnClickListener(this);
         tv_fabu.setOnClickListener(this);
+        tv_fabu_top.setOnClickListener(this);
         tv_zhuangfa.setOnClickListener(this);
+        tv_zhuangfa_top.setOnClickListener(this);
         tv_haoyoukejian.setOnClickListener(this);
-        ll_fensi.setOnClickListener(this);
-        ll_guanzhu.setOnClickListener(this);
+        tv_haoyoukejian_top.setOnClickListener(this);
+
         tv_jianjie.setOnClickListener(this);
-        tv_head_title.setOnClickListener(this);
         tv_2.setOnClickListener(this);
         tv_fensi.setOnClickListener(this);
         iv_back.setOnClickListener(this);
-        lvp_user_xq = (LazyViewPager) findViewById(R.id.lvp_user_xq);
-        fragmentList = new ArrayList<>();
 
-    }
 
-    private void initFragments() {
-        Bundle bundle = new Bundle();
-        bundle.putString("detailuserid", detailuserid);
-        bundle.putString("isFriend", isFriend);
-        if (userFriendsNoteFragment == null) {
-            userFriendsNoteFragment = new UserFriendsNoteFragment();
-            userFriendsNoteFragment.setArguments(bundle);
-        }
-        if (userReleaseListFragment == null) {
-            userReleaseListFragment = new UserReleaseListFragment();
-            userReleaseListFragment.setArguments(bundle);
-        }
-        if (userTransmitListFragment == null) {
-            userTransmitListFragment = new UserTransmitListFragment();
-            userTransmitListFragment.setArguments(bundle);
-        }
-        fragmentList.add(userReleaseListFragment);
-        fragmentList.add(userTransmitListFragment);
-        fragmentList.add(userFriendsNoteFragment);
-        myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager());
-        lvp_user_xq.setAdapter(myViewPagerAdapter);
-        lvp_user_xq.setOffscreenPageLimit(2);
-        lvp_user_xq.setScrollble(false);
-        lvp_user_xq.setCurrentItem(1);
-        lineAnimation(1);
-        setFontColor(1);
     }
 
     private void InitImageView() {
@@ -188,6 +243,7 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
         Matrix matrix = new Matrix();
         matrix.postTranslate(offset, 0);
         cursor.setImageMatrix(matrix);// 设置动画初始位置
+        cursor_top.setImageMatrix(matrix);// 设置动画初始位置
     }
 
     private void lineAnimation(int index) {
@@ -197,6 +253,7 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
         animation.setFillAfter(true);// True:图片停在动画结束位置
         animation.setDuration(300);
         cursor.startAnimation(animation);
+        cursor_top.startAnimation(animation);
     }
 
     @Override
@@ -217,53 +274,68 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
                 intent.putExtra("imgUrl", url);
                 startActivity(intent);
                 break;
-            case R.id.ll_guanzhu:
-                if (TextUtils.isEmpty(detailuserid)) {
-                    // TODO: 2016/12/12 用户id为空  直接退出方法体
-                    return;
-                }
-                intent = new Intent(UserDetailsActivity.this, UserGuanZhuActivity.class);
-                intent.putExtra("detailuserid", detailuserid);
-                startActivity(intent);
-                break;
+//            case R.id.ll_guanzhu:
+//                if (TextUtils.isEmpty(detailuserid)) {
+//                    // TODO: 2016/12/12 用户id为空  直接退出方法体
+//                    return;
+//                }
+//                intent = new Intent(UserDetailsActivity.this, UserGuanZhuActivity.class);
+//                intent.putExtra("detailuserid", detailuserid);
+//                startActivity(intent);
+//                break;
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.ll_fensi:
-                if (TextUtils.isEmpty(detailuserid)) {
-                    // TODO: 2016/12/12 用户id为空  直接退出方法体
-                    return;
-                }
-                Intent intent1 = new Intent(UserDetailsActivity.this, UserFenSiActivity.class);
-                intent1.putExtra("detailuserid", detailuserid);
-                startActivity(intent1);
-                break;
+//            case R.id.ll_fensi:
+//                if (TextUtils.isEmpty(detailuserid)) {
+//                    // TODO: 2016/12/12 用户id为空  直接退出方法体
+//                    return;
+//                }
+//                Intent intent1 = new Intent(UserDetailsActivity.this, UserFenSiActivity.class);
+//                intent1.putExtra("detailuserid", detailuserid);
+//                startActivity(intent1);
+//                break;
             case R.id.tv_fabu:
-                if (lvp_user_xq == null) {
-                    // TODO: 2016/12/12 直接退出方法体
-                    return;
-                }
-                lvp_user_xq.setCurrentItem(0);
-                lineAnimation(0);
-                setFontColor(0);
+                currIndex = 0;
+                pageindex = 1;
+                getUserInfo();
+                lineAnimation(currIndex);
+                setFontColor(currIndex);
                 break;
             case R.id.tv_zhuangfa:
-                if (lvp_user_xq == null) {
-                    // TODO: 2016/12/12 直接退出方法体
-                    return;
-                }
-                lvp_user_xq.setCurrentItem(1);
-                lineAnimation(1);
-                setFontColor(1);
+                currIndex = 1;
+                pageindex = 1;
+                getUserInfo();
+                lineAnimation(currIndex);
+                setFontColor(currIndex);
                 break;
             case R.id.tv_haoyoukejian:
-                if (lvp_user_xq == null) {
-                    // TODO: 2016/12/12 直接退出方法体
-                    return;
-                }
-                lvp_user_xq.setCurrentItem(2);
-                lineAnimation(2);
-                setFontColor(2);
+                currIndex = 2;
+                pageindex = 1;
+                getUserInfo();
+                lineAnimation(currIndex);
+                setFontColor(currIndex);
+                break;
+            case R.id.tv_fabu_top:
+                currIndex = 0;
+                pageindex = 1;
+                getUserInfo();
+                lineAnimation(currIndex);
+                setFontColor(currIndex);
+                break;
+            case R.id.tv_zhuangfa_top:
+                currIndex = 1;
+                pageindex = 1;
+                getUserInfo();
+                lineAnimation(currIndex);
+                setFontColor(currIndex);
+                break;
+            case R.id.tv_haoyoukejian_top:
+                currIndex = 2;
+                pageindex = 1;
+                getUserInfo();
+                lineAnimation(currIndex);
+                setFontColor(currIndex);
                 break;
             case R.id.tv_2:
                 if (userData == null) {
@@ -309,6 +381,8 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onSuccess(String content, String isUrl) {
+        if (loadingDialog.isShowing())loadingDialog.dismiss();
+        pull_scrollView.onRefreshComplete();
         JSONObject object = null;
         String message = "";
         String result = "";
@@ -316,20 +390,29 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
             case RequestPath.GET_USERDETAILS:
                 Gson gson = new Gson();
                 NoteBean noteBean = gson.fromJson(content, NoteBean.class);
-                if (null != noteBean && noteBean.getResult().equals("1") && 0 != noteBean.getUser().size()) {
-                    // TODO: 2016/12/15   判断是否存在用户
-                    userData = noteBean.getUser().get(0);
-                    isFriend = userData.getIsfriend();
-                    isFocus = userData.getIsfocus();
-                    userremark = userData.getUserremark();
-                    isBlack = userData.getIsblack();
-                    iv_more.setVisibility(View.VISIBLE);//操作好友
-                    iv_more.setOnClickListener(this);
-                    pgb.setVisibility(View.GONE);
-                    fillData();
+                if (pageindex == 1) {
+                    if (null != noteBean && noteBean.getResult().equals("1") && 0 != noteBean.getUser().size()) {
+                        // TODO: 2016/12/15   判断是否存在用户
+                        userData = noteBean.getUser().get(0);
+                        isFriend = userData.getIsfriend();
+                        isFocus = userData.getIsfocus();
+                        userremark = userData.getUserremark();
+                        isBlack = userData.getIsblack();
+                        userv =  userData.getUserv();
+                        iv_more.setVisibility(View.VISIBLE);//操作好友
+                        iv_more.setOnClickListener(this);
+                        fillData();
+                        setListData(noteBean.getData());
+                        if (!TextUtils.isEmpty(noteBean.getMessage())) {
+                            ShowUtil.showToast(WeValueApplication.applicationContext, noteBean.getMessage());
+                            return;
+                        }
+                    } else
+                        Toast.makeText(this, noteBean.getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, noteBean.getMessage(), Toast.LENGTH_SHORT).show();
+                    setListData(noteBean.getData());
                 }
+
                 break;
             case RequestPath.POST_SETFRIENDREMARK:
                 try {
@@ -393,20 +476,38 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    private void setListData(List<NoteBean.NoteEntity> data) {
+
+        if (data == null || data.isEmpty()) {
+            //如果是第一次加载
+            if (pageindex == 1&&mAdapter!=null) {
+                mAdapter.setmDatas(new ArrayList<NoteBean.NoteEntity>());
+                mAdapter.notifyDataSetChanged();
+                return;
+            }
+
+        }
+        if (mAdapter != null) {
+            if (pageindex == 1){
+                mAdapter.clear();
+                mAdapter.setmDatas(data);
+                mAdapter.notifyDataSetChanged();
+            }else {
+                mAdapter.setmDatas(data);
+                mAdapter.notifyDataSetChanged();
+            }
+
+        }
+    }
+
     @Override
     public void onFailure(String content) {
         ShowUtil.showToast(this, content);
+        pull_scrollView.onRefreshComplete();
+        if (loadingDialog.isShowing())loadingDialog.dismiss();
     }
 
-    private void initView() {
-        pgb = (ProgressBar) findViewById(R.id.prg);
-        tv_nickname = (TextView) findViewById(R.id.tv_nickname);
-        tv_dengji = (TextView) findViewById(R.id.tv_dengji);
-        tv_xingbie = (TextView) findViewById(R.id.tv_xingbie);
-        tv_remarkname = (TextView) findViewById(R.id.tv_remarkname);
-        iv_more = (ImageView) findViewById(R.id.iv_more);
 
-    }
 
     //添加备注popuwindow 退出后的点击事件
     @Override
@@ -419,6 +520,17 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
         NetworkRequest.postRequest(RequestPath.POST_SETFRIENDREMARK, map, this);
     }
 
+   private void setUserRemark(){
+       tv_nickname.setText(userData.getUsernickname());
+       //如果是好友且设置了备注则 名字显示备注
+       if (isFriend.equals("1")){
+           String userRemark =  userData.getUserremark();
+           if (!TextUtils.isEmpty(userRemark)||!"".equals(userRemark)){
+               tv_nickname.setText(userRemark);
+           }
+       }
+   }
+
     /**
      * Title: MyViewPagerAdapter<br>
      * Description: TODO Viewpager适配器<br>
@@ -426,94 +538,20 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
      * @author xuzhuchao
      * @since JDK 1.7
      */
-
-    private class MyViewPagerAdapter extends FragmentPagerAdapter {
-
-        public MyViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-//            super.destroyItem(container, position, object);
-        }
-
-        @Override
-        public Fragment getItem(int arg0) {
-            return fragmentList.get(arg0);
-        }
-
-        @Override
-        public int getCount() {
-            return fragmentList.size();
-        }
-
-    }
-
     /*
     * 填充数据
     * */
     private void fillData() {
-        if (TextUtils.isEmpty(userremark)) {
-            tv_remarkname.setVisibility(View.GONE);
-        } else {
-            tv_remarkname.setVisibility(View.VISIBLE);
-            tv_remarkname.setText(userremark);
-        }
-        ll_fensiguangzhu.setVisibility(View.VISIBLE);
-
-
-        if (userData.getFocusnum() != null) {
-            int a = Integer.valueOf(userData.getFocusnum()).intValue();
-            if (a != 0) {
-                if (a < 10000) {
-                    tv_guanzhu.setText("关注  " + userData.getFocusnum());
-                } else {
-                    int y = a / 10000;
-                    if (y > 1000) {
-                        int q = y / 1000;
-                        tv_guanzhu.setText("关注  " + q + "千万");
-
-                    } else {
-                        tv_guanzhu.setText("关注  " + y + "万");
-                    }
-
-                }
-            } else {
-                tv_guanzhu.setText("关注  " + userData.getFocusnum());
-            }
-        }
-
-
-        if (userData.getFocusnum() != null) {
-            int a = Integer.valueOf(userData.getFansnum()).intValue();
-            if (a != 0) {
-                if (a < 10000) {
-                    tv_fensi.setText("粉丝  " + userData.getFansnum());
-                } else {
-                    int y = a / 10000;
-                    if (y > 1000) {
-                        int q = y / 1000;
-                        tv_fensi.setText("粉丝  " + q + "千万");
-
-                    } else {
-                        tv_fensi.setText("粉丝  " + y + "万");
-                    }
-
-                }
-            } else {
-                tv_fensi.setText("粉丝  " + userData.getFansnum());
-            }
-        }
-        if (null != userData) {
-            Glide.with(WeValueApplication.applicationContext).
-                    load(RequestPath.SERVER_PATH + userData.getUserface())
-                    .placeholder(R.mipmap.default_head)
-                    .into(iv_user_img);
-        }
+        tv_guanzhu.setText("关注  " + userData.getFocusnum());
+        tv_fensi.setText("粉丝  " + userData.getFansnum());
+        if ("1".equals(userv))
+            iv_user_v.setVisibility(View.VISIBLE);
+        else  iv_user_v.setVisibility(View.INVISIBLE);
+        ImageUitls.setHead(userData.getUserface(), iv_user_img);
+        Transformation<Bitmap> trans = new BlurTransformation(WeValueApplication.applicationContext,12,4);
+        ImageUitls.setImg(userData.getUserface(), iv_head_bg,trans);
         tv_jianjie.setText(userData.getUserinfo());
-        tv_xingbie.setText(userData.getUsersex());
-        tv_nickname.setText(userData.getUsernickname());
+        setUserRemark();
         tv_dengji.setText(userData.getUserlevel());
         tv_wz_hao.setText("微值号：" + userData.getUsernumber());
         LogUtils.e("isFriend", isFriend);
@@ -523,6 +561,7 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
             tv_2.setVisibility(View.VISIBLE);
             tv_1.setText("设置备注");
             tv_2.setText("解除好友");
+
         } else {
             if (isFocus.equals("1")) {   //该用户是自己关注的人
                 tv_1.setVisibility(View.VISIBLE);
@@ -577,44 +616,46 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
 
     /*获取用户详情的方法*/
     private void getUserInfo() {
+        loadingDialog.show();
         HashMap map = new HashMap();
         map.put("code", RequestPath.CODE);
         map.put("detailuserid", detailuserid);
         map.put("userid", SharedPreferencesUtil.getUid(this));
         map.put("pagenum", "10");
-        map.put("detaildata", "0");
-        map.put("pageindex", "1");
+        map.put("detaildata", (currIndex + 1) + ""); // 1 发布 2 转发 3 好友可见
+        map.put("pageindex", pageindex + "");
         NetworkRequest.getRequest(RequestPath.GET_USERDETAILS, map, this);
     }
 
+    private int pageindex = 1;
+
     /*改变字体颜色*/
     private void setFontColor(int position) {
-//        case R.id.tv_fabu:
-//        lvp_user_xq.setCurrentItem(0);
-//        lineAnimation(0);
-//        break;
-//        case R.id.tv_zhuangfa:
-//        lvp_user_xq.setCurrentItem(1);
-//        lineAnimation(1);
-//        break;
-//        case R.id.tv_haoyoukejian:
-//        lvp_user_xq.setCurrentItem(2);
-//        lineAnimation(2);
+
         switch (position) {
             case 0:
                 tv_fabu.setTextColor(getResources().getColor(R.color.blue));
+                tv_fabu_top.setTextColor(getResources().getColor(R.color.blue));
                 tv_zhuangfa.setTextColor(getResources().getColor(R.color.but_text_color));
+                tv_zhuangfa_top.setTextColor(getResources().getColor(R.color.but_text_color));
                 tv_haoyoukejian.setTextColor(getResources().getColor(R.color.but_text_color));
+                tv_haoyoukejian_top.setTextColor(getResources().getColor(R.color.but_text_color));
                 break;
             case 1:
                 tv_fabu.setTextColor(getResources().getColor(R.color.but_text_color));
+                tv_fabu_top.setTextColor(getResources().getColor(R.color.but_text_color));
                 tv_zhuangfa.setTextColor(getResources().getColor(R.color.blue));
+                tv_zhuangfa_top.setTextColor(getResources().getColor(R.color.blue));
                 tv_haoyoukejian.setTextColor(getResources().getColor(R.color.but_text_color));
+                tv_haoyoukejian_top.setTextColor(getResources().getColor(R.color.but_text_color));
                 break;
             case 2:
                 tv_fabu.setTextColor(getResources().getColor(R.color.but_text_color));
+                tv_fabu_top.setTextColor(getResources().getColor(R.color.but_text_color));
                 tv_zhuangfa.setTextColor(getResources().getColor(R.color.but_text_color));
+                tv_zhuangfa_top.setTextColor(getResources().getColor(R.color.but_text_color));
                 tv_haoyoukejian.setTextColor(getResources().getColor(R.color.blue));
+                tv_haoyoukejian_top.setTextColor(getResources().getColor(R.color.blue));
                 break;
         }
     }

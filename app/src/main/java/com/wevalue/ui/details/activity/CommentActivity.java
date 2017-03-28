@@ -3,7 +3,6 @@ package com.wevalue.ui.details.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,26 +13,20 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wevalue.MainActivity;
 import com.wevalue.R;
-import com.wevalue.WeValueApplication;
 import com.wevalue.base.BaseActivity;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.ui.details.adapter.NoScrollGridView_2_Adapter;
 import com.wevalue.ui.world.activity.PicChoiceActivity;
-import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
-import com.wevalue.utils.ZipBitmapUtil;
 import com.wevalue.view.ActionSheetDialog;
-import com.wevalue.view.NoScrollGridView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,38 +34,27 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 public class CommentActivity extends BaseActivity implements WZHttpListener, View.OnClickListener {
-    private NoScrollGridView nsgv_send_note_gridview;
     private TextView tv_back;
-    private TextView tv_head_title;
-    private TextView tv_nickname;
     private TextView tv_send_note;
-    private TextView tv_add_pic;
     private EditText et_content;
     private Long suijishu;
     private static final String PHOTO_FILE_NAME = "wevalue_img.jpg";
     private int width;
     private int height;
-    private Bitmap bitmap;
-    private List<Bitmap> mImgList;
-    private NoScrollGridView_2_Adapter mAdapter;
     private String noteId;
     private String repostId;
-    //    private String messState;
-//    private String replyId;
     private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment);
+        setContentView(R.layout.activity_comments);
         noteId = getIntent().getStringExtra("noteid");
         repostId = getIntent().getStringExtra("repostid");
-//        messState = getIntent().getStringExtra("messstate");
-//        replyId = getIntent().getStringExtra("messreplyid");
+
         /**获取频幕宽高*/
         WindowManager wm = this.getWindowManager();
         width = wm.getDefaultDisplay().getWidth();
@@ -87,18 +69,11 @@ public class CommentActivity extends BaseActivity implements WZHttpListener, Vie
     @Override
     protected void onResume() {
         super.onResume();
-        initGridViewData();
     }
 
     private void initView() {
         tv_back = (TextView) findViewById(R.id.tv_back);
         tv_back.setOnClickListener(this);
-        tv_head_title = (TextView) findViewById(R.id.tv_head_title);
-        tv_add_pic = (TextView) findViewById(R.id.tv_add_pic);
-        tv_add_pic.setOnClickListener(this);
-        tv_head_title.setText("写评论");
-        tv_nickname = (TextView) findViewById(R.id.tv_nickname);
-        tv_nickname.setText(SharedPreferencesUtil.getNickname(this));
         tv_send_note = (TextView) findViewById(R.id.tv_send_note);
         tv_send_note.setOnClickListener(this);
         et_content = (EditText) findViewById(R.id.et_content);
@@ -122,16 +97,6 @@ public class CommentActivity extends BaseActivity implements WZHttpListener, Vie
 
             }
         });
-        nsgv_send_note_gridview = (NoScrollGridView) findViewById(R.id.nsgv_send_note_gridview);
-        nsgv_send_note_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == MainActivity.mSelectedImage.size()) {
-                    addImg("手机拍照", "相册选择");
-                }
-            }
-        });
-        initGridViewData();
     }
 
     private void submit() {
@@ -154,8 +119,7 @@ public class CommentActivity extends BaseActivity implements WZHttpListener, Vie
         map.put("noteid", noteId);
         map.put("commcontent", content);
         map.put("commstate", "0");
-//        map.put("replyuserid", SharedPreferencesUtil.getUid(this));
-//        map.put("replycommid", replyId);
+
         map.put("repostid", repostId);
 
         if (imgFileLst != null && imgFileLst.size() > 0) {
@@ -191,86 +155,6 @@ public class CommentActivity extends BaseActivity implements WZHttpListener, Vie
                 startActivity(intent);
             }
         }).show();
-    }
-
-
-    /**
-     * 初始化gridview数据
-     */
-    private void initGridViewData() {
-        if (MainActivity.mSelectedImage == null) {
-            MainActivity.mSelectedImage = new LinkedList<>();
-        }
-        if (mImgList != null && mAdapter != null) {
-
-            for (int i = mImgList.size(); i < MainActivity.mSelectedImage.size(); i++) {
-                LogUtils.e("url --" + MainActivity.mSelectedImage.get(i));
-                Bitmap b = BitmapFactory.decodeFile(MainActivity.mSelectedImage.get(i));
-                Bitmap newB = ZipBitmapUtil.reduce(b, width, height, true);
-                mImgList.add(newB);
-            }
-            mAdapter.setmList(mImgList);
-            mAdapter.notifyDataSetChanged();
-        } else {
-            mImgList = new ArrayList<>();
-            for (int i = 0; i < MainActivity.mSelectedImage.size(); i++) {
-                LogUtils.e("url --" + MainActivity.mSelectedImage.get(i));
-                Bitmap b = BitmapFactory.decodeFile(MainActivity.mSelectedImage.get(i));
-                Bitmap newB = ZipBitmapUtil.reduce(b, width, height, true);
-                mImgList.add(newB);
-            }
-
-            mAdapter = new NoScrollGridView_2_Adapter(CommentActivity.this);
-            mAdapter.setmList(mImgList);
-            mAdapter.notifyDataSetChanged();
-            nsgv_send_note_gridview.setAdapter(mAdapter);
-            nsgv_send_note_gridview.setVisibility(View.VISIBLE);
-        }
-    }
-
-    /**
-     * 删除选中的图片
-     */
-    public void itemDeleteClick(int index) {
-        if (MainActivity.mSelectedImage.size() > index) {
-            MainActivity.mSelectedImage.remove(index);
-        }
-        if (mImgList.size() > index) {
-            mImgList.remove(index);
-            mAdapter.setmList(mImgList);
-        }
-        mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //  1 = 拍照, 2 = 选择照片, 3 = 录音 ,4= 本地音频, 5 =视频录制, 6 = 本地视频
-        if (resultCode == RESULT_OK) {
-            LogUtils.e("---------------" + requestCode);
-            switch (requestCode) {
-                case 2:
-                    File tempFile = new File(Environment.getExternalStorageDirectory() + "/DCIM/Camera/", suijishu + PHOTO_FILE_NAME);
-                    LogUtils.e("123321", tempFile.getAbsolutePath());
-                    MainActivity.mSelectedImage.add(tempFile.getAbsolutePath());
-                    try {
-                        //FileInputStream is = news FileInputStream(tempFile);
-                        Bitmap b = BitmapFactory.decodeFile(tempFile.getAbsolutePath().trim());
-                        bitmap = ZipBitmapUtil.reduce(b, width, height, true);
-                        if (WeValueApplication.phoneName.equals("samsung")) {
-                            bitmap = ZipBitmapUtil.rotate(b, 90);
-                        }
-                        mImgList.add(bitmap);
-                        mAdapter.setmList(mImgList);
-                        mAdapter.notifyDataSetChanged();
-                        LogUtils.e("123321", bitmap.getByteCount() + "size");
-//                        iv_img.setImageBitmap(bitmap);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-            }
-        }
     }
 
     @Override

@@ -113,6 +113,7 @@ public class NoteRankAdapter extends BaseAdapter {
         viewHolder.tv_price.setText("¥" + noteEntity.getPaynum());
         viewHolder.tv_income.setText("¥" + noteEntity.getShouyi());
         viewHolder.tv_day.setText(DateTiemUtils.editTime(noteEntity.getAddtime()));
+        viewHolder.tv_day.setText("微值号:"+noteEntity.getUsernumber());
         if (null != type) {
             //需要显示转发信息
             viewHolder.ll_head_info = (LinearLayout) convertView.findViewById(R.id.ll_head_info);

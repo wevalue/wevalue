@@ -72,7 +72,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
             android:background="@mipmap/xuanzekuang"
-            android:text="影响力"
+            android:text="关注"
             android:textColor="@color/but_text_color"
             android:textSize="16sp"
             android:layout_marginRight="15dp"

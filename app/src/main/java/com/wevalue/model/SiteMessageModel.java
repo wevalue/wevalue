@@ -172,6 +172,24 @@ public class SiteMessageModel {
         private String isfree;//": "0 = 付费, 1 = 免费,
         private String webcontent;//":  //html格式内容 7系统推送使用
         private String thistypenum;//未读消息的数量
+        private String userv;//是否大V
+        private String usernumber;//是否大V
+
+        public String getUsernumber() {
+            return usernumber;
+        }
+
+        public void setUsernumber(String usernumber) {
+            this.usernumber = usernumber;
+        }
+
+        public String getUserv() {
+            return userv;
+        }
+
+        public void setUserv(String userv) {
+            this.userv = userv;
+        }
 
         public String getIsfree() {
             return isfree;

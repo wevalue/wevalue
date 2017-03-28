@@ -3,11 +3,14 @@
     package="com.wevalue"
     android:versionCode="1"
     android:versionName="1.0.1">
+
     <uses-sdk android:minSdkVersion="16"></uses-sdk>
+
     <permission
         android:name="com.wevalue.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
     <permission android:name="android.permission.INTERACT_ACROSS_USERS" />
+
 
     <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="android.permission.BIND_TELECOM_CONNECTION_SERVICE" />
@@ -22,6 +25,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -66,7 +70,7 @@
         android:name=".WeValueApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
-        android:icon="@mipmap/logo"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
@@ -74,7 +78,8 @@
         android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
 
         <!-- 启动页 -->
-        <activity android:name=".LauncherActivity">
+        <activity android:name=".LauncherActivity"
+            android:theme="@style/launcherTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -86,7 +91,7 @@
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
         <!-- 引导页 -->
         <activity
@@ -183,12 +188,6 @@
         <activity
             android:name=".ui.mine.activity.GuanYuActivity"
             android:launchMode="singleTask" />
-
-        <!-- 意见反馈 -->
-        <activity
-            android:name=".ui.mine.activity.FanKuiActivity"
-            android:launchMode="singleTask" />
-
         <!-- 意见反馈 -->
         <activity
             android:name=".ui.mine.activity.FeedbackActivity"
@@ -253,8 +252,9 @@
             android:configChanges="orientation|screenSize" />
 
         <!-- 帖子详情 -->
-        <activity android:name=".ui.details.activity.NoteDetailActivity" />
-        <activity android:name=".ui.details.activity.NoteDetailActivity" />
+        <activity
+            android:name=".ui.details.activity.NoteDetailActivity"
+            android:theme="@style/AppTheme" />
 
         <!-- 图片查看界面 -->
         <activity
@@ -329,11 +329,19 @@
         <activity
             android:name=".ui.we.activity.MeassageActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.we.activity.ReplyCommentActivity" />
+        <!--大V 感兴趣的人界面-->
+        <activity
+            android:name=".ui.we.activity.DaVActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.details.adapter.ReplyCommentActivity"
+            android:theme="@style/act_dialog" />
         <activity
             android:name=".ui.add.activity.AddFromQrCodeActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.details.activity.CommentActivity" />
+        <activity
+            android:name=".ui.details.activity.CommentActivity"
+            android:theme="@style/act_dialog" />
         <activity
             android:name=".ui.mine.activity.RankActivity"
             android:launchMode="singleTask" />
@@ -355,9 +363,6 @@
         <activity android:name=".ui.details.activity.DragPhotoActivity" />
         <!--用户举报-->
         <activity android:name=".ui.details.activity.UserReportActivity"></activity>
-
-
-
 
         <!-- 配置信息; -->
 
@@ -478,7 +483,6 @@
             android:name="JPUSH_APPKEY"
             android:value="6194f9a1b89403697b961b62" /> <!-- </>值来自开发者平台取得的AppKey -->
 
-        <activity android:name=".ui.details.activity.RepostNoteDetailActivitys" />
         <!-- 调用新浪原生SDK，需要注册的回调activity -->
         <intent-filter>
             <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
@@ -493,7 +497,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
-                <data android:scheme="tencent100371282" />
+                <data android:scheme="tencent1105753931" />
 
                 <action android:name="android.intent.action.VIEW" />
 
@@ -525,8 +529,9 @@
             android:name=".ui.payment.alipay.ALiPayActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!--提现-->
-        <activity android:name=".ui.mine.activity.WithdrawActivity"
-            android:launchMode="singleTop"/>
+        <activity
+            android:name=".ui.mine.activity.WithdrawActivity"
+            android:launchMode="singleTop" />
         <!--微信登陆-->
         <activity
             android:name=".wxapi.WXEntryActivity"

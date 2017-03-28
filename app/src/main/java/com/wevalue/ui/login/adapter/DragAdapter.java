@@ -77,7 +77,7 @@ public class DragAdapter extends BaseAdapter {
 		}else {
 			iv_delete.setVisibility(View.GONE);
 		}
-		if (position == 0){
+		if (position == 0||position==1){
 //			item_text.setTextColor(context.getResources().getColor(R.color.black));
 			item_text.setEnabled(false);
 			iv_delete.setVisibility(View.GONE);

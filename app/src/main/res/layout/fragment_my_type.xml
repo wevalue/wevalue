@@ -32,47 +32,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/ll_cityInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/world_beijing_background"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/tv_shiftcity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="290dp"
-                    android:layout_marginTop="6dp"
-                    android:background="@mipmap/world_beijing_shiftcity"
-                    android:padding="5dp"
-                    android:text="切换城市"
-                    android:textColor="@color/white"
-                    android:textSize="12dp" />
-
-                <TextView
-                    android:id="@+id/textrefresh"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center_horizontal"
-                    android:text="已更新"
-                    android:textColor="@color/white"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/tv_cityname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:gravity="center_horizontal"
-                    android:text="当前城市：北京"
-                    android:textColor="@color/white"
-                    android:textSize="16dp" />
-            </RelativeLayout>
-
             <com.wevalue.view.NoScrollListview
                 android:id="@+id/mNoScrollListview"
                 android:layout_width="match_parent"

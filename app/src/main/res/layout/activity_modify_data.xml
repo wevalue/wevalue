@@ -44,7 +44,7 @@
         android:id="@+id/tv_xiugai_tishi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="10字以内，可由中英文、数字、“_”、 “-”组成"
+        android:text="40字以内，可由中英文、数字、“_”、 “-”组成"
         android:layout_margin="15dp"
         android:textSize="14sp"
         android:textColor="@color/but_text_color"/>

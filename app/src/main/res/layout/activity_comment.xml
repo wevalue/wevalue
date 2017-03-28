@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="com.wevalue.ui.we.activity.ReplyCommentActivity">
+              tools:context="com.wevalue.ui.details.adapter.ReplyCommentActivity">
     <include layout="@layout/head_3"/>
 
     <ScrollView

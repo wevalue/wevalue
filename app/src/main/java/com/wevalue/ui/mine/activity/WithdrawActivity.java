@@ -21,6 +21,10 @@ import com.wevalue.utils.ShowUtil;
 
 import java.util.HashMap;
 
+/**
+ * 提现
+ */
+
 public class WithdrawActivity extends BaseActivity implements View.OnClickListener, PayInterface {
     private ImageView iv_back;
     private TextView tv_head_title;

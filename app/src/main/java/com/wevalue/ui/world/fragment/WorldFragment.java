@@ -52,8 +52,6 @@ public class WorldFragment extends BaseFragment implements View.OnClickListener,
     private ArrayList<MyTypeFragment> fragments_type;
     private TabFragmentAdapter pagerAdapter;
     FragmentManager fragmentManager;
-    //默认的频道
-    String defaultChannel = "推荐,视频,地区";
     private GestureDetector gesture; //手势识别
     MainActivity.MyOnTouchListener myOnTouchListener;
     private ProgressBar pgb;
@@ -149,7 +147,6 @@ public class WorldFragment extends BaseFragment implements View.OnClickListener,
         fragments = new ArrayList<>();
         if (userlike.isEmpty()) {
             return;
-//            titles = defaultChannel.split(",");
         } else {
             titles = userlike.split(",");
         }
@@ -196,18 +193,6 @@ public class WorldFragment extends BaseFragment implements View.OnClickListener,
             }
         }
     }
-
-//    public void setDefaultChannel() {
-//        titles = defaultChannel.split(",");
-//        MainActivity.isEditChannel = true;
-//        switchFragment();
-////        LogUtils.e("resetUI===========先走吗?=================resetUI" + titles.length);
-//        pagerAdapter = new TabFragmentAdapter(fragments, getChildFragmentManager(), mContext);
-//        pagerAdapter.setTitles_adap(titles);
-//        viewPager.setAdapter(pagerAdapter);
-//        tablayout.setupWithViewPager(viewPager);
-//        tablayout.setTabTextColors(Color.BLACK, getResources().getColor(R.color.blue));
-//    }
 
     @Override
     public void onClick(View v) {
@@ -316,6 +301,7 @@ public class WorldFragment extends BaseFragment implements View.OnClickListener,
 
         @Override
         public Fragment getItem(int position) {
+
             return fragments.get(position);
         }
 

@@ -22,7 +22,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 /**
- * 钱包
+ * 钱包,银库
  */
 public class WalletActivity extends BaseActivity implements View.OnClickListener {
     private ImageView iv_back;

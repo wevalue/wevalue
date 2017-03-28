@@ -16,14 +16,13 @@
     <color name="transparent">#00000000</color>
     <color name="orange">#DD501E</color>
 
-    <color name="touming_white">#eaffffff</color>
+    <color name="touming_white">#e0ffffff</color>
 
-
-    <color name="blue">#54b1f2</color>
-    <color name="blue_price">#2a8cff</color>
-    <color name="blue_pale1">#4ab1fe</color>
-    <color name="login_text_blue">#54b1f2</color>
-    <color name="login_text_blue_2">#9552b2f7</color>
+    <color name="blue">#03c4f4</color>
+    <color name="blue_price">#03c4f4</color>
+    <color name="blue_pale1">#03c4f4</color>
+    <color name="login_text_blue">#03c4f4</color>
+    <color name="login_text_blue_2">#03c4f4</color>
     <color name="blue_pale1_1">#EDF4FA</color>
     <color name="ui_line">#eeeeee</color>
     <color name="ui_line_2">#d9d9d9</color>
@@ -63,14 +62,15 @@
     <color name="title_tv_color">#ffffffff</color>
 
     <!--基本色值-->
-    <color name="white">#ffffff</color>
     <color name="white_f5">#f5f5f5</color>
     <color name="gray">#999999</color>
-    <color name="green">#4EEE94</color><!-- #ff0000ff -->
+    <color name="green">#07d480</color>
+
+    <!--全局所有色值 以后色彩必须是这个里面以内-->
     <!--标题 人名-->
     <color name="black_40">#404040</color>
     <!--正文/评论/点赞/转发数量等-->
-    <color name="black_66">#404040</color>
+    <color name="black_66">#666666</color>
     <!--正文/评论/点赞/转发数量等-->
     <color name="black_80">#808080</color>
     <!--摘要 人名 收益 转发数等-->
@@ -79,6 +79,8 @@
     <color name="gray_e5">#e5e5e5</color>
     <!--背景底色-->
     <color name="gray_f5">#f5f5f5</color>
+    <!--纯白色-->
+    <color name="white">#ffffff</color>
     <!--主色-->
     <color name="main_color">#03c4f4</color>
     <!--绿色-->

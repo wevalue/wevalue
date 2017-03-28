@@ -22,6 +22,7 @@ import com.wevalue.view.LazyViewPager;
 import java.util.ArrayList;
 
 /**
+ * 排行榜
  * Created by Administrator on 2016-08-11.
  */
 public class RankingListActivity extends BaseActivity implements View.OnClickListener {

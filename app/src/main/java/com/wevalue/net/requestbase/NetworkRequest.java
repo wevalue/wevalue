@@ -28,6 +28,7 @@ import com.wevalue.utils.ShowUtil;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import jupush.ExampleUtil;
 
@@ -50,9 +51,12 @@ public class NetworkRequest {
 
     public NetworkRequest() {
         try {
-            socketFactory = SSLUtil.getSSLSocketFactory(WeValueApplication.applicationContext.getAssets().open("pass.cer"));
+            socketFactory = SSLUtil.getSSLSocketFactory(WeValueApplication.applicationContext.getAssets().open("weizhi.cer"));
             okHttpClient.setSslSocketFactory(socketFactory);
-        } catch (IOException e) {
+            okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);//链接超时
+            okHttpClient.setWriteTimeout(10, TimeUnit.SECONDS);//写超时
+            okHttpClient.setReadTimeout(10, TimeUnit.SECONDS);//读超时
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mPlatform = Platform.get();
@@ -78,8 +82,6 @@ public class NetworkRequest {
         String trueUrl = url;
         if (map != null && map.size() > 0) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
-                String a = entry.getKey();
-                String b = entry.getValue();
                 trueUrl += "&" + entry.getKey() + "=" + entry.getValue();
             }
         }

@@ -314,6 +314,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, WZHt
                 SharedPreferencesUtil.setUsernumber(getApplicationContext(), data.getString("usernumber"));//微值号
                 SharedPreferencesUtil.setSuiYinCount(getApplicationContext(), data.getString("usermoney"));//保存用户碎银数量
                 SharedPreferencesUtil.setUerAuthentic(getApplicationContext(), data.getString("istrue"));
+                SharedPreferencesUtil.setUserv(getApplicationContext(), data.getString("userv")); //是否是大V
                 setJupushAlisa(data.getString("userid"));
                 SharedPreferencesUtil.setZhangHao(getApplicationContext(), tel);
                 finish();

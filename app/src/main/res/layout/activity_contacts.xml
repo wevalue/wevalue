@@ -4,37 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@mipmap/main_top"
-        >
-
-        <RelativeLayout
-            android:id="@+id/rl_back"
-            android:layout_width="wrap_content"
-            android:paddingRight="20dp"
-            android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:src="@mipmap/back"
-                />
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="通讯录好友"
-            android:textColor="@android:color/white"
-            android:textSize="16dp" />
-    </RelativeLayout>
+    <include layout="@layout/head"/>
 
     <com.wevalue.view.sortview.view.EditTextWithDel
         android:id="@+id/et_search"

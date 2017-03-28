@@ -39,6 +39,12 @@ public class WebActivity extends BaseActivity{
     /**初始化控件*/
     private void initView() {
         iv_back = (ImageView) findViewById(R.id.iv_back);
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         tv_head_title = (TextView) findViewById(R.id.tv_head_title);
         web_mingxi = (WebView) findViewById(R.id.web_mingxi);
         web_mingxi.getSettings().setBlockNetworkImage(false);
@@ -46,7 +52,7 @@ public class WebActivity extends BaseActivity{
         //支持js
         web_mingxi.getSettings().setJavaScriptEnabled(true);
         tv_head_title.setText("钱包");
-
+        String url = getIntent().getStringExtra("url");
         int isWho = getIntent().getIntExtra("isWho",-1);
         if(isWho==1){
             tv_head_title.setText("碎银说明");
@@ -60,16 +66,12 @@ public class WebActivity extends BaseActivity{
             tv_head_title.setText("用户协议");
         }else if(isWho==6){
             tv_head_title.setText("费用说明");
+        }else {
+            tv_head_title.setText("");
+            web_mingxi.loadUrl(RequestPath.SERVER_WEB_PATH+url);
+            return;
         }
-        String url = getIntent().getStringExtra("url");
         getGradeInfo(url);
-
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
 
@@ -86,7 +88,7 @@ public class WebActivity extends BaseActivity{
                     JSONObject obj = new JSONObject(content);
                     if(obj.getString("result").equals("1")){
                         String agreement = obj.getString("data");
-                        web_mingxi.loadDataWithBaseURL(RequestPath.SERVER_PATH,agreement, "text/html", "UTF-8",null);
+                        web_mingxi.loadDataWithBaseURL(RequestPath.SERVER_WEB_PATH,agreement, "text/html", "UTF-8",null);
 
                     }else {
 

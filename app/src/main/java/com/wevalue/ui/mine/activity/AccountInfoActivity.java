@@ -1,8 +1,10 @@
 package com.wevalue.ui.mine.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -11,37 +13,49 @@ import android.widget.TextView;
 
 import com.wevalue.R;
 import com.wevalue.base.BaseActivity;
+import com.wevalue.net.Interfacerequest.UserEditRequest;
+import com.wevalue.net.RequestPath;
+import com.wevalue.net.requestbase.NetworkRequest;
+import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.login.ModifyPayPswActivity;
 import com.wevalue.ui.login.ModifyPswActivity;
+import com.wevalue.utils.ButtontimeUtil;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 
 public class AccountInfoActivity extends BaseActivity implements OnClickListener {
 
     private ImageView iv_back;
+
     private TextView tv_head_title;
 
 
     private LinearLayout ll_modify_login_psw;
     private LinearLayout ll_pay_psw;
     private LinearLayout ll_wangji_pay_psw;
-
+    private LinearLayout ll_no_pwd;//免密支付开关
+    private ImageView iv_no_pwd;//免密支付开关
 
     private String userTel;//获取记录在本地的用户手机号
     private String userEmail;//获取记录在本地的用户邮箱
 
     private String payStr;//是否设置过支付密码
-
+    boolean isOpen = false; //当前免密支付状态
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_info);
-
         userTel = SharedPreferencesUtil.getMobile(this);
         userEmail = SharedPreferencesUtil.getEmail(this);
         payStr = SharedPreferencesUtil.getPayPswStatus(this);
         initView();
+        checkedMianMi();
     }
 
 
@@ -51,6 +65,7 @@ public class AccountInfoActivity extends BaseActivity implements OnClickListener
     private void initView() {
 
         iv_back = (ImageView) findViewById(R.id.iv_back);
+
         tv_head_title = (TextView) findViewById(R.id.tv_head_title);
 
         tv_head_title.setText("账户与安全");
@@ -58,7 +73,9 @@ public class AccountInfoActivity extends BaseActivity implements OnClickListener
         ll_modify_login_psw = (LinearLayout) findViewById(R.id.ll_modify_login_psw);
         ll_pay_psw = (LinearLayout) findViewById(R.id.ll_pay_psw);
         ll_wangji_pay_psw = (LinearLayout) findViewById(R.id.ll_wangji_pay_psw);
-
+        ll_no_pwd = (LinearLayout) findViewById(R.id.ll_no_pwd);
+        ll_no_pwd.setOnClickListener(this);
+        iv_no_pwd = (ImageView) findViewById(R.id.iv_no_pwd);
 
         iv_back.setOnClickListener(this);
 
@@ -83,9 +100,7 @@ public class AccountInfoActivity extends BaseActivity implements OnClickListener
             case R.id.iv_back:
                 finish();
                 break;
-
             case R.id.ll_modify_login_psw://修改登录密码
-
                 if (!TextUtils.isEmpty(userTel) || !TextUtils.isEmpty(userEmail)) {
                     intent = new Intent(this, ModifyPswActivity.class);
                     intent.putExtra("who", "2");
@@ -110,8 +125,6 @@ public class AccountInfoActivity extends BaseActivity implements OnClickListener
                         startActivity(intent);
                         break;
                 }
-
-
                 break;
             case R.id.ll_wangji_pay_psw://忘记支付密码
 
@@ -127,14 +140,102 @@ public class AccountInfoActivity extends BaseActivity implements OnClickListener
                         startActivity(intent);
                         break;
                 }
-
-
                 break;
-
+            case R.id.ll_no_pwd://开启或关闭免密支付
+                //如果短时间内连点 则 不执行点击方法
+                if (!ButtontimeUtil.isFastDoubleClick())  openMianMi(!isOpen);;
+                break;
         }
+    }
 
+    /**
+     * 开启或关闭免密支付
+     *
+     * @param
+     */
+    private void openMianMi(final boolean b) {
+        loadingDialog.show();
+        UserEditRequest request = UserEditRequest.initUserEditRequest(this);
+        request.openOnepay("5", b, new WZHttpListener() {
+            @Override
+            public void onSuccess(String content, String isUrl) {
+                if (loadingDialog.isShowing()) loadingDialog.dismiss();
+                try {
+                    JSONObject object = new JSONObject(content);
+                    String result = object.getString("result");
+                    if ("1".equals(result)&&!isOpen) {
+                        ShowUtil.showToast(context, "开启免密支付");
+                        iv_no_pwd.setImageResource(R.mipmap.ic_open);
+                        isOpen= true;
+                    }else if ("1".equals(result)&&isOpen) {
+                        ShowUtil.showToast(context, "关闭免密支付");
+                        iv_no_pwd.setImageResource(R.mipmap.ic_closs);
+                        isOpen= false;
+                    }else {
+                        ShowUtil.showToast(context, "网络繁忙，请稍后再试");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ShowUtil.showToast(context, "网络繁忙，请稍后再试");
+                }
+            }
 
+            @Override
+            public void onFailure(String content) {
+                ShowUtil.showToast(context, "网络繁忙，请稍后再试");
+                if (loadingDialog.isShowing()) loadingDialog.dismiss();
+            }
+        });
     }
 
 
+
+    //是否开启了免密支付
+    private void checkedMianMi() {
+        String userid = SharedPreferencesUtil.getUid(this);
+        HashMap map = new HashMap();
+        map.put("code", RequestPath.CODE);
+        map.put("userid", userid);
+        //每个链接都会自动加 logintoken 所以在此不用再加了
+        // map.put("logintoken", logintoken);
+        NetworkRequest.postRequest(RequestPath.POST_CHECKONEPAY, map, new WZHttpListener() {
+            @Override
+            public void onSuccess(String content, String isUrl) {
+                Log.e("checkedMianMi", "content = " + content);
+                try {
+                    JSONObject object = new JSONObject(content);
+                    String result = object.getString("result");
+                    //判断数据是否成功返回 如果没有开启免密支付 则返回 0
+                    if ("1".equals(result)) {
+                        iv_no_pwd.setImageResource(R.mipmap.ic_open);
+                        isOpen = true;
+//                        JSONArray datarray = object.getJSONArray("data");
+//                        object = datarray.getJSONObject(0);
+//                        String moneys = object.getString("money");
+//                        String status = object.getString("status");
+//                        //判断免密是否开启
+//                        if (status.equals("1")) {
+//                            iv_no_pwd.setImageResource(R.mipmap.ic_open);
+//                            isOpen = true;
+//                        } else {
+//                            iv_no_pwd.setImageResource(R.mipmap.ic_closs);
+//                            isOpen = false;
+//                        }
+                    } else {
+                        iv_no_pwd.setImageResource(R.mipmap.ic_closs);
+                        isOpen = false;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ShowUtil.showToast(context, "网络繁忙，请稍后再试");
+                }
+            }
+
+            @Override
+            public void onFailure(String content) {
+                Log.e("checkedMianMi", "content = " + content);
+                ShowUtil.showToast(context, "content");
+            }
+        });
+    }
 }

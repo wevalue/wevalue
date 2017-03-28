@@ -21,19 +21,9 @@ public class WorldListGridViewAdapter extends BaseAdapter{
     private List<NoteBean.ImgUrl> mDatas;
     private Context mContext;
 
-    // 图片下载器
-//    private BitmapUtils mBitmap;
-//    private BitmapDisplayConfig bitmapDisplayConfig;
-
-    public WorldListGridViewAdapter(List<NoteBean.ImgUrl> mDatas, Context mContext
-            /*,BitmapUtils mBitmap,BitmapDisplayConfig bitmapDisplayConfig*/) {
-
-//        this.mBitmap = mBitmap;
-//        this.bitmapDisplayConfig = bitmapDisplayConfig;
+    public WorldListGridViewAdapter(List<NoteBean.ImgUrl> mDatas, Context mContext) {
         this.mDatas = mDatas;
         this.mContext = mContext;
-
-
     }
 
     @Override

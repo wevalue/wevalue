@@ -23,6 +23,19 @@ public class SharedPreferencesUtil {
         edit.clear().commit();
     }
 
+
+    /*保存用户是否是大V  0 不是 1 是*/
+    public static void setUserv(Context context, String s) {
+        SharedPreferences sp = WeValueApplication.applicationContext.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        Editor editor = sp.edit();
+        editor.putString("userv", s).commit();
+    }
+    //获取用户是否是大V  0 不是 1 是
+    public static String getUserv(Context context) {
+        SharedPreferences sp = WeValueApplication.applicationContext.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        return sp.getString("userv", "");
+    }
+
     /**
      * 保存热门城市
      */

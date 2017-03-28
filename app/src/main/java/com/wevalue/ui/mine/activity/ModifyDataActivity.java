@@ -109,9 +109,9 @@ public class ModifyDataActivity extends BaseActivity implements OnClickListener 
         } else if (isWho.equals("2")) {
             tv_head_title.setText("修改简介");
 //			tv_xiugai_tishi.setVisibility(View.GONE);
-            tv_xiugai_tishi.setText("20字以内，可由中英文、数字、“_”、 “-”组成");
+            tv_xiugai_tishi.setText("40字以内，可由中英文、数字、“_”、 “-”组成");
             et_set_nickname.setHint("请输入您的简介");
-            et_set_nickname.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)}); //最大输入长度
+            et_set_nickname.setFilters(new InputFilter[]{new InputFilter.LengthFilter(40)}); //最大输入长度
             et_set_nickname.setLines(2);
             et_set_nickname.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -121,8 +121,8 @@ public class ModifyDataActivity extends BaseActivity implements OnClickListener 
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    if (charSequence.length() == 20) {
-                        ShowUtil.showToast(ModifyDataActivity.this, "二十字以内");
+                    if (charSequence.length() == 40) {
+                        ShowUtil.showToast(ModifyDataActivity.this, "四十字以内");
 
                     }
                 }

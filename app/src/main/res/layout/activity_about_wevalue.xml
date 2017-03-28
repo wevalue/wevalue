@@ -152,7 +152,7 @@
            android:layout_marginBottom="20dp"
            android:textSize="12sp"
            android:textColor="@color/gray_2_text"
-           android:text="Copyright © 2016 www.wzbzchina.com"
+           android:text="Copyright © 2016 - 2017 www.wzbzchina.com"
            />
 
        <TextView

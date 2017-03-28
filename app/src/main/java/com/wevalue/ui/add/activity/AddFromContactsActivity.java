@@ -1,9 +1,13 @@
 package com.wevalue.ui.add.activity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -15,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.wevalue.PermissionsActivity;
 import com.wevalue.R;
 import com.wevalue.base.BaseActivity;
 import com.wevalue.model.ContactsBean;
@@ -25,6 +30,7 @@ import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.utils.LogUtils;
+import com.wevalue.utils.PermissionsChecker;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
 import com.wevalue.view.sortview.SortAdapter_2;
@@ -59,23 +65,33 @@ public class AddFromContactsActivity extends BaseActivity implements WZHttpListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
-        initViews();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            //申请权限  第二个参数是一个 数组 说明可以同时申请多个权限
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_CONTACTS}, 1);
+        } else {//已授权
+            initViews();
+        }
     }
 
     private void initViews() {
         mEtCityName = (EditTextWithDel) findViewById(R.id.et_search);
         sideBar = (SideBar) findViewById(R.id.sidrbar);
         dialog = (TextView) findViewById(R.id.dialog);
-        mTvTitle = (TextView) findViewById(R.id.tv_title);
+        mTvTitle = (TextView) findViewById(R.id.tv_head_title);
+        mTvTitle.setText("通讯录好友");
         sortListView = (ListView) findViewById(R.id.country_lvcountry);
-        rl_back = (RelativeLayout) findViewById(R.id.rl_back);
-        rl_back.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
         queryUserContacts();
     }
 
@@ -220,9 +236,10 @@ public class AddFromContactsActivity extends BaseActivity implements WZHttpListe
             Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
             // 这里是获取联系人表的电话里的信息  包括：名字，名字拼音，联系人id,电话号码；
             // 然后在根据"sort-key"排序
-            cursor = this.getContentResolver().query(
-                    uri,
-                    new String[]{"display_name", "sort_key", "contact_id", "data1"}, null, null, "sort_key");
+            cursor = context.getContentResolver().query(uri, null, null, null, null);
+//            cursor = this.getContentResolver().query(
+//                    uri,
+//                    new String[]{"display_name", "sort_key", "contact_id", "data1"}, null, null, "sort_key");
 
             if (cursor.moveToFirst()) {
                 do {
@@ -325,5 +342,10 @@ public class AddFromContactsActivity extends BaseActivity implements WZHttpListe
         map.put("userid", SharedPreferencesUtil.getUid(this));
         map.put("phonelist", phonelist);
         NetworkRequest.postRequest(RequestPath.POST_PHONELIST, map, this);
+    }
+
+    @Override
+    public int checkPermission(String permission, int pid, int uid) {
+        return super.checkPermission(permission, pid, uid);
     }
 }

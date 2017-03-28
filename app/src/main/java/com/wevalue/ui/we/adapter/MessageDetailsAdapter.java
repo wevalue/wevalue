@@ -21,7 +21,7 @@ import com.wevalue.net.requestbase.WZHttpListener;
 import com.wevalue.ui.details.activity.NoteDetailActivity;
 import com.wevalue.ui.details.activity.UserDetailsActivity;
 import com.wevalue.ui.we.activity.PushContentActivity;
-import com.wevalue.ui.we.activity.ReplyCommentActivity;
+import com.wevalue.ui.details.adapter.ReplyCommentActivity;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.SharedPreferencesUtil;
 import com.wevalue.utils.ShowUtil;
@@ -331,18 +331,10 @@ public class MessageDetailsAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
 
-                        if ( dataBeanList.get(position).getIsfree().equals("1")){
-                            Intent intent = new Intent(mContext, NoteDetailActivity.class);
-                            intent.putExtra("noteId", dataBeanList.get(position).getNoteid());
-                            intent.putExtra("repostid", dataBeanList.get(position).getRepostid());
-                            mContext.startActivity(intent);
-
-                        }else {
-                            Intent intent = new Intent(mContext, NoteDetailActivity.class);
-                            intent.putExtra("noteId", dataBeanList.get(position).getNoteid());
-                            intent.putExtra("repostid", dataBeanList.get(position).getRepostid());
-                            mContext.startActivity(intent);
-                        }
+                        Intent intent = new Intent(mContext, NoteDetailActivity.class);
+                        intent.putExtra("noteId", dataBeanList.get(position).getNoteid());
+                        intent.putExtra("repostid", dataBeanList.get(position).getRepostid());
+                        mContext.startActivity(intent);
                     }
                 });
                 viewHolder.rootView.setOnClickListener(new View.OnClickListener() {

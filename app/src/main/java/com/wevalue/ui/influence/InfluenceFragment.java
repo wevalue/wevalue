@@ -19,12 +19,13 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.umeng.analytics.MobclickAgent;
 import com.wevalue.R;
+import com.wevalue.adapter.NoteListAdapter;
 import com.wevalue.base.BaseFragment;
+import com.wevalue.model.CarouselBean;
 import com.wevalue.model.NoteBean;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
-import com.wevalue.adapter.NoteListAdapter;
 import com.wevalue.ui.world.activity.SearchActivity;
 import com.wevalue.utils.ActivityUtils;
 import com.wevalue.utils.DateTiemUtils;
@@ -43,20 +44,18 @@ import java.util.List;
 import java.util.TimeZone;
 
 
-public class InfluenceFragment extends BaseFragment implements WZHttpListener, View.OnClickListener, PopClickInterface {
+public class InfluenceFragment extends BaseFragment implements WZHttpListener, View.OnClickListener {
     private View view = null;
     private Context mContext;
     private NoScrollListview mNoScrollListview;
     private PullToRefreshScrollView prsv_ScrollView;
     private NoteListAdapter mHAdapter;
-    private List<NoteBean.NoteEntity> mHListData;
-    private List<NoteBean.NoteEntity> mListData_lunbo;
+    //private List<NoteBean.NoteEntity> mHListData;
+    private List<CarouselBean> mListData_lunbo;
     //去掉价格  所以 给个初始值 为 size = 0
     private List<NoteBean.NoteEntity> mListData_jiage = new ArrayList<NoteBean.NoteEntity>();
     private int pageindex = 1;
-    //标题
-    private ImageView iv_search,iv_more;
-    private TextView tv_head_title,tv_head1_title;
+
     private String notezone = "1"; // 1 朋友们  2 影响力
     private String orderstatus = "1";//1倒序   0 正序
     private String ordertype = "0";
@@ -145,19 +144,6 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
     }
 
     private void initView(View view) {
-        iv_search = (ImageView) view.findViewById(R.id.iv_search);
-        iv_search.setOnClickListener(this);
-        iv_more = (ImageView) view.findViewById(R.id.iv_more);
-        iv_more.setOnClickListener(this);
-        tv_head_title = (TextView) view.findViewById(R.id.tv_head_title);
-        tv_head1_title = (TextView) view.findViewById(R.id.tv_head1_title);
-        tv_head_title.setOnClickListener(this);
-        tv_head1_title.setOnClickListener(this);
-
-        tv_head1_title.setTextColor(getResources().getColor(R.color.blue_price));
-        tv_head1_title.setBackgroundResource(R.drawable.shape_linde_down);
-
-
         pgb = (ProgressBar) view.findViewById(R.id.pgb);
         prsv_ScrollView = (PullToRefreshScrollView) view.findViewById(R.id.prsv_ScrollView);
         tv_heat = (TextView) view.findViewById(R.id.tv_heat);
@@ -182,15 +168,15 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
         drawable_time_p.setBounds(0, 0, drawable_time_p.getMinimumWidth(), drawable_time_p.getMinimumHeight());
        // tv_iszan.setCompoundDrawables(iszan, null, null, null);
 
-        mHListData = new ArrayList<>();
+        //mHListData = new ArrayList<>();
         mNoScrollListview = (NoScrollListview) view.findViewById(R.id.mNoScrollListview);
         mNoScrollListview.setFocusable(false);
         mNoScrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                Intent intent = null;
                 //跳转到转发帖子详情页
-                ActivityUtils.gotoNoteDetails(getActivity(),mHListData.get(position),"2");
+                NoteBean.NoteEntity noteEntity = (NoteBean.NoteEntity) parent.getAdapter().getItem(position);
+                ActivityUtils.gotoNoteDetails(getActivity(),noteEntity,"2");
             }
         });
         mNoScrollListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -248,8 +234,7 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
            // mListData_jiage = noteBean.data_jiage;
             if (pageindex > 1) {
                 if (noteBean.getData().size() > 0) {
-                    mHListData.addAll(noteBean.data);
-                    mHAdapter.setmDatas(mHListData);
+                    mHAdapter.setmDatas(noteBean.data);
                     mHAdapter.setOrderType(ordertype);
                     mHAdapter.notifyDataSetChanged();
                 } else {
@@ -257,21 +242,13 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
                     ShowUtil.showToast(getActivity(), "没有更多数据了");
                 }
             } else {
-
-                if (mHListData != null) {
-                    mHListData.clear();
-                }
-                if (ordertype.equals("0")) {
-                    if (mListData_lunbo != null && mListData_lunbo.size() > 0) {
-                        mHListData.addAll(mListData_lunbo);
-                    }
-                }
-                if (noteBean.data != null && noteBean.data.size() > 0) {
-                    mHListData.addAll(noteBean.data);
-                }
-                mHAdapter = new NoteListAdapter(mHListData, getActivity(), mListData_lunbo, mListData_jiage);
+                mHAdapter = new NoteListAdapter(new ArrayList<NoteBean.NoteEntity>(), getActivity());
                 mHAdapter.setOrderType(ordertype);
                 mNoScrollListview.setAdapter(mHAdapter);
+                if (noteBean.data != null && noteBean.data.size() > 0) {
+                    mHAdapter.setmDatas(noteBean.data);
+                    mHAdapter.notifyDataSetChanged();
+                }
 
             }
         } else {
@@ -284,20 +261,16 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
         pgb.setVisibility(View.GONE);
         prsv_ScrollView.onRefreshComplete();
     }
-    private void selecedTile(String notezone){
+    private void selecedTile(String notezone,TextView titleView){
         this.notezone = notezone;
-        tv_head_title.setTextColor(getResources().getColor(R.color.blue_pale1));
-        tv_head_title.setBackgroundResource(R.color.transparent);
-        tv_head1_title.setTextColor(getResources().getColor(R.color.blue_pale1));
-        tv_head1_title.setBackgroundResource(R.color.transparent);
     if (notezone.equals("2")){
         statisticsEvent("tv_influence");
-        tv_head_title.setTextColor(getResources().getColor(R.color.blue_price));
-        tv_head_title.setBackgroundResource(R.drawable.shape_linde_down);
+        titleView.setText("");
+        titleView.setBackgroundResource(R.mipmap.iv_gz);
     }else {
         statisticsEvent("tv_friend");
-        tv_head1_title.setTextColor(getResources().getColor(R.color.blue_price));
-        tv_head1_title.setBackgroundResource(R.drawable.shape_linde_down);
+        titleView.setText("");
+        titleView.setBackgroundResource(R.mipmap.iv_py);
     }
         pgb.setVisibility(View.VISIBLE);
         pageindex = 1;
@@ -346,19 +319,19 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
     @Override
     public void onClick(View v) {
         switch (v.getId()) {//
-            case R.id.tv_head_title: //影响力
-                selecedTile("2");
-                break;
-            case R.id.tv_head1_title://朋友们
-                selecedTile("1");
-                break;
-            case R.id.iv_search://搜索
-                MobclickAgent.onEvent(getActivity(), StatisticsConsts.event_search);//友盟统计搜索启动
-                startActivity(new Intent(getActivity(), SearchActivity.class));
-                break;
-            case R.id.iv_more: //更多
-                PopuUtil.initpopu(getActivity(), iv_more);
-                break;
+//            case R.id.tv_head_title: //影响力
+//                selecedTile("2");
+//                break;
+//            case R.id.tv_head1_title://朋友们
+//                selecedTile("1");
+//                break;
+//            case R.id.iv_search://搜索
+//                MobclickAgent.onEvent(getActivity(), StatisticsConsts.event_search);//友盟统计搜索启动
+//                startActivity(new Intent(getActivity(), SearchActivity.class));
+//                break;
+//            case R.id.iv_more: //更多
+//                PopuUtil.initpopu(getActivity(), iv_more);
+//                break;
             case R.id.tv_heat:
                 statisticsEvent("tv_heat");
                 selecedText(tv_heat,"1");
@@ -389,20 +362,20 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
         NetworkRequest.getRequest(RequestPath.GET_INFLUENCENOTES, map, InfluenceFragment.this);
     }
 
-    @Override
-    public void onClickOk(String content) {
-        switch (content) {
-            case "影响力":
-                notezone = "2";
-                break;
-            case "朋友们":
-                notezone = "1";
-                break;
-        }
-        ordertype = "0";
-        pgb.setVisibility(View.VISIBLE);
-        getNoteList();
-    }
+//    @Override
+//    public void onClickOk(String content) {
+//        switch (content) {
+//            case "影响力":
+//                notezone = "2";
+//                break;
+//            case "朋友们":
+//                notezone = "1";
+//                break;
+//        }
+//        ordertype = "0";
+//        pgb.setVisibility(View.VISIBLE);
+//        getNoteList();
+//    }
 
     /*友盟统计页面时长*/
     private void statisticsEvent(String page) {
@@ -443,5 +416,24 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
                 break;
         }
         lastClickButton = page;
+    }
+    public void setTitlt(final TextView titleView){
+        titleView.setText("");
+        if (notezone.equals("1")){
+            titleView.setBackgroundResource(R.mipmap.iv_py);
+        }else {
+            titleView.setBackgroundResource(R.mipmap.iv_gz);
+        }
+        titleView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (notezone.equals("1"))
+                    notezone = "2";
+                else {
+                    notezone = "1";
+                }
+                selecedTile(notezone,titleView);
+            }
+        });
     }
 }

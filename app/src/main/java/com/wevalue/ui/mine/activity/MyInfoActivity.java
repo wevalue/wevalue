@@ -137,7 +137,6 @@ public class MyInfoActivity extends BaseActivity implements OnClickListener {
 
         mUserEditRequest = UserEditRequest.initUserEditRequest(this);
         initView();
-        initAddressPicker();
     }
 
     /**
@@ -293,9 +292,6 @@ public class MyInfoActivity extends BaseActivity implements OnClickListener {
                 it.putExtra("nickname", tv_nickname.getText().toString());
                 startActivityForResult(it, MODIFY_USER_INFO);
                 break;
-            case R.id.rl_addr://地址
-                pvOptions.show();
-                break;
             case R.id.rl_dengji://等级
                 it = new Intent(this, GradeActivity.class);
                 startActivity(it);
@@ -323,87 +319,6 @@ public class MyInfoActivity extends BaseActivity implements OnClickListener {
                 break;
         }
     }
-
-
-    /**
-     * 初始化 车轮控件
-     */
-    private void initAddressPicker() {
-        try {
-            cityList = new ArrayList<>();
-            cityList = dbUtils.findAll(Selector.from(City.class));
-            areaList = new ArrayList<>();
-            areaList = dbUtils.findAll(Selector.from(Area.class));
-            provinceList = new ArrayList<Province>();
-            provinceList = (ArrayList) dbUtils.findAll(Selector.from(Province.class));
-
-            if (null != provinceList && provinceList.size() > 0) {
-                for (int i = 0; i < provinceList.size(); i++) {
-                    // 设置市级
-                    ArrayList<String> city_2 = new ArrayList<String>();
-                    String id = provinceList.get(i).getProvinceid();
-                    String name = provinceList.get(i).getProvincename();
-
-                    for (int j = 0; j < cityList.size(); j++) {
-                        String pid = cityList.get(j).getpId();
-
-                        if (id.equals(pid)) {
-//                            if (name.equals(cityList.get(j).getCityname())) {
-//                                for (int k = 0; k < areaList.size(); k++) {
-//                                    if (id.equals(areaList.get(k).getpId())) {
-//                                        city_2.add(areaList.get(k).getDistrictname());
-//                                    }
-//                                }
-//
-//                            } else {
-                            city_2.add(cityList.get(j).getCityname());
-//                            }
-
-                        }
-                    }
-
-                    cityItems.add(city_2);
-                }
-            }
-
-
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-
-        //选项选择器
-        pvOptions = new OptionsPickerView(this);
-
-        //二级联动效果
-        pvOptions.setPicker(provinceList, cityItems, true);
-        //设置选择的二级单位
-        pvOptions.setLabels("", "");
-//		pvOptions.setTitle("选择店铺地址");
-        pvOptions.setCyclic(false, false, false);
-        //设置默认选中的二级项目
-        //监听确定选择按钮
-        pvOptions.setSelectOptions(0, 0, 0);
-        pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3) {
-                //返回的分别是二个级别的选中位置
-                String provinceName = provinceList.get(options1).getProvincename();
-                String city;
-                city = cityItems.get(options1).get(options2);
-                if (provinceName.equals(city)) {
-                    tv_addr.setText(provinceName);
-                } else {
-                    tv_addr.setText(provinceName + " " + city);
-                }
-                mUserEditRequest.setCityData(provinceName, city, tv_addr);
-
-            }
-        });
-
-
-    }
-
 
     /**
      * 选择性别

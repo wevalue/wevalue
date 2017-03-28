@@ -1,7 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
@@ -15,20 +14,26 @@
 
     <com.wevalue.view.LazyViewPager
         android:id="@+id/lvp_main"
+        android:layout_below="@+id/re_head_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_marginBottom="48dp"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="51dp">
+        android:background="@color/transparent"
+        android:layout_height="65dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <RadioGroup
             android:id="@+id/main_tab_group"
             android:layout_width="match_parent"
             android:layout_height="49dp"
             android:layout_alignParentBottom="true"
-            android:background="#F5F5F4"
+            android:background="@color/white"
             android:gravity="bottom"
             android:orientation="horizontal"
             android:paddingTop="2dp">
@@ -53,8 +58,8 @@
             <RadioButton
                 android:id="@+id/ll_add_sendnote"
                 style="@style/main_tab_bottom_notext"
+                android:visibility="invisible"
                 android:drawableTop="@mipmap/main_add" />
-
 
             <RadioButton
                 android:id="@+id/main_jiaoyou"
@@ -64,7 +69,6 @@
                 android:textColor="@drawable/tab_text_color"
                 android:textSize="14sp" />
 
-
             <RadioButton
                 android:id="@+id/main_wode"
                 style="@style/main_tab_bottom"
@@ -73,16 +77,29 @@
                 android:textColor="@drawable/tab_text_color"
                 android:textSize="14sp" />
         </RadioGroup>
-
+        <TextView
+            android:id="@+id/ll_add_sendnote1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@mipmap/main_add"
+            android:maxHeight="65dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:text="发布"
+            android:textColor="@drawable/tab_text_color"
+            android:drawablePadding="3dp"
+            android:textSize="14sp" />
         <TextView
             android:id="@+id/tv_red_cycle"
             android:layout_width="6dp"
             android:layout_height="6dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="94dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@drawable/tab_text_color"
             android:background="@drawable/wz_text_xiaoyuandian"
             android:visibility="gone" />
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

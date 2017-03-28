@@ -23,51 +23,81 @@ import java.util.ArrayList;
 
 
 /**
+ * 搜索界面
+ *
  * Created by xuhua on 2016/8/16.
  */
 public class SearchActivity extends BaseActivity implements View.OnClickListener, PopClickInterface {
 
-    private TextView tv_head_title;
+    private TextView tv_clear;
     private ArrayList<String> World;//世界
     private EditText ed_sousuo;
     private ImageView tv_back;
-
+    private int isWho = 3 ;//默认是综合 =3 ， 1 用户 ，  2 信息
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         infoView();
-        initHualunData();
+        initView();
     }
+    TextView tv_zonghe,tv_info,tv_user;
+    private void initView() {
+        tv_zonghe = (TextView) findViewById(R.id.tv_zonghe);
+        tv_info = (TextView) findViewById(R.id.tv_info);
+        tv_user = (TextView) findViewById(R.id.tv_user);
 
+        tv_zonghe.setOnClickListener(this);
+        tv_info.setOnClickListener(this);
+        tv_user.setOnClickListener(this);
+    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_head_title:
-                String position = "";
-                switch (tv_head_title.getText().toString().trim()) {
-                    case "信息":
-                        position = "2";
-                        break;
-                    case "用户":
-                        position = "1";
-                        break;
-                }
-//                PopuUtil.initSearchPopu(this, tv_head_title, position, this);
-                initHuaLunPicker(World);
-                pvOptions.show();
+            case R.id.tv_clear:
+                finish();
                 break;
             case R.id.tv_back:
                 finish();
+                break;
+            case R.id.tv_zonghe:
+                tv_zonghe.setTextColor(getResources().getColor(R.color.white));
+                tv_zonghe.setBackgroundResource(R.drawable.shape_round5_frame_right_full_blue);
+                tv_info.setBackgroundResource(R.drawable.shape_frame_blue);
+                tv_info.setTextColor(getResources().getColor(R.color.main_color));
+                tv_user.setBackgroundResource(R.drawable.shape_round5_frame_left_blue);
+                tv_user.setTextColor(getResources().getColor(R.color.main_color));
+                isWho = 3;
+                break;
+            case R.id.tv_info:
+                tv_zonghe.setTextColor(getResources().getColor(R.color.main_color));
+                tv_zonghe.setBackgroundResource(R.drawable.shape_round5_frame_right_blue);
+                tv_info.setBackgroundResource(R.drawable.shape_frame_full_blue);
+                tv_info.setTextColor(getResources().getColor(R.color.white));
+                tv_user.setBackgroundResource(R.drawable.shape_round5_frame_left_blue);
+                tv_user.setTextColor(getResources().getColor(R.color.main_color));
+                isWho = 2;
+                break;
+            case R.id.tv_user:
+                tv_zonghe.setTextColor(getResources().getColor(R.color.main_color));
+                tv_zonghe.setBackgroundResource(R.drawable.shape_round5_frame_right_blue);
+
+                tv_info.setBackgroundResource(R.drawable.shape_frame_blue);
+                tv_info.setTextColor(getResources().getColor(R.color.main_color));
+
+                tv_user.setBackgroundResource(R.drawable.shape_round5_frame_left_full_blue);
+                tv_user.setTextColor(getResources().getColor(R.color.white));
+
+                isWho = 1;
                 break;
         }
     }
 
     private void infoView() {
-        tv_head_title = (TextView) findViewById(R.id.tv_head_title);
+        tv_clear = (TextView) findViewById(R.id.tv_clear);
         tv_back = (ImageView) findViewById(R.id.tv_back);
-        tv_head_title.setOnClickListener(this);
+        tv_clear.setOnClickListener(this);
         tv_back.setOnClickListener(this);
         ed_sousuo = (EditText) findViewById(R.id.ed_sousuo);
         ed_sousuo.addTextChangedListener(new TextWatcher() {
@@ -92,7 +122,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    String s1 = tv_head_title.getText().toString().trim();
                     String content = ed_sousuo.getText().toString().trim();
                     LogUtils.e("content =++++++=" + content);
                     if (TextUtils.isEmpty(content)) {
@@ -100,38 +129,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                         return false;
                     }
                     Intent intent = new Intent(SearchActivity.this, SearchJieguoActivity.class);
-                    if (s1.equals("用户")) {
-                        intent.putExtra("isWho", 1);
-                    } else if (s1.equals("信息")) {
-                        intent.putExtra("isWho", 2);
-                    } else if (s1.equals("综合")) {
-                        intent.putExtra("isWho", 3);
-                    }
+                    intent.putExtra("isWho", isWho);
                     intent.putExtra("content", content);
                     startActivity(intent);
                     return true;
                 }
-
-//                if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-//                    String s1 = tv_head_title.getText().toString().trim();
-//                    String content = ed_sousuo.getText().toString().trim();
-//                    LogUtils.e("content =++++++=" + content);
-//                    if (TextUtils.isEmpty(content)) {
-//                        ShowUtil.showToast(SearchActivity.this, "搜索内容不得为空");
-//                        return false;
-//                    }
-//                    Intent intent = news Intent(SearchActivity.this, SearchJieguoActivity.class);
-//                    if (s1.equals("用户")) {
-//                        intent.putExtra("isWho", 1);
-//                    } else if (s1.equals("信息")) {
-//                        intent.putExtra("isWho", 2);
-//                    } else if (s1.equals("综合")) {
-//                        intent.putExtra("isWho", 3);
-//                    }
-//                    intent.putExtra("content", content);
-//                    startActivity(intent);
-//                    return true;
-//                }
                 return false;
             }
         });
@@ -142,36 +144,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    private OptionsPickerView pvOptions;
 
-    /**
-     * 初始化 车轮控件
-     */
-    private void initHuaLunPicker(ArrayList<String> list) {
-        //选项选择器
-        pvOptions = new OptionsPickerView(this);
-        pvOptions.setPicker(list);
-        pvOptions.setLabels("", "");
-        pvOptions.setCyclic(false, false, false);
-        //监听确定选择按钮
-        pvOptions.setSelectOptions(0, 0, 0);
-        pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3) {
-                tv_head_title.setText(World.get(options1));
-            }
-        });
-    }
-
-    /**
-     * 初始化数据
-     **/
-    public void initHualunData() {
-        World = new ArrayList<>();
-        World.add("综合");
-        World.add("信息");
-        World.add("用户");
-    }
 }
 
 

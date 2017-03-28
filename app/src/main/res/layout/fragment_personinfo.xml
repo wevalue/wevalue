@@ -11,19 +11,35 @@
         android:background="@color/white"
         android:gravity="center_vertical">
 
-        <com.wevalue.view.RoundImageView
-            android:id="@+id/iv_user_photo"
-            android:layout_width="70dp"
+        <RelativeLayout
+            android:layout_width="75dp"
             android:layout_height="70dp"
-            android:layout_marginLeft="15dp"
-            android:src="@mipmap/default_head" />
+            android:layout_marginLeft="15dp">
+
+            <com.wevalue.view.RoundImageView
+                android:id="@+id/iv_user_photo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@mipmap/default_head" />
+
+            <ImageView
+                android:id="@+id/iv_user_v"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:visibility="invisible"
+                android:layout_marginBottom="3dp"
+                android:src="@mipmap/ic_v" />
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/tv_denglu"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="登录/注册"
             android:textColor="@color/black" />
@@ -86,11 +102,11 @@
                 android:id="@+id/tv_user_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="1dp"
+                android:singleLine="true"
                 android:text="个人简介"
                 android:textColor="@color/but_text_color"
-                android:singleLine="true"
-                android:layout_marginRight="10dp"
                 android:textSize="14sp" />
 
         </LinearLayout>

@@ -5,110 +5,107 @@
     android:background="@color/background"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <include layout="@layout/head" />
-    
-
 
 
     <LinearLayout
         android:id="@+id/ll_modify_login_psw"
         android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
         android:layout_height="45dp"
-        android:orientation="horizontal"
-        >
-        <TextView 
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
             android:text="修改登录密码"
             android:textColor="@color/text_black"
-            android:textSize="16sp"
-            />
-        <TextView 
+            android:textSize="16sp" />
+
+        <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:singleLine="true"
             android:text=""
             android:textColor="@color/but_text_color"
-            android:textSize="16sp"
-            />
-        <ImageView 
+            android:textSize="16sp" />
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/arrows_left_2"
-            android:layout_marginRight="15dp"
             android:layout_gravity="center_vertical"
-            />
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/arrows_left_2" />
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/ui_line"
-        android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
-        />
+        android:layout_marginRight="15dp"
+        android:background="@color/ui_line" />
 
     <LinearLayout
         android:id="@+id/ll_pay_psw"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="1dp"
-        android:orientation="horizontal"
-        >
-        <TextView 
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
             android:text="修改支付密码"
             android:textColor="@color/text_black"
-            android:textSize="16sp"
-            />
-        <TextView 
+            android:textSize="16sp" />
+
+        <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:singleLine="true"
             android:text=""
             android:textColor="@color/but_text_color"
-            android:textSize="16sp"
-            />
-        <ImageView 
+            android:textSize="16sp" />
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/arrows_left_2"
-            android:layout_marginRight="15dp"
             android:layout_gravity="center_vertical"
-            />
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/arrows_left_2" />
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/ui_line"
-        android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
-        />
+        android:layout_marginRight="15dp"
+        android:background="@color/ui_line" />
 
     <LinearLayout
         android:id="@+id/ll_wangji_pay_psw"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="1dp"
-        android:orientation="horizontal"
-        >
+        android:background="@color/white"
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="100dp"
             android:layout_height="wrap_content"
@@ -116,34 +113,72 @@
             android:layout_marginLeft="15dp"
             android:text="忘记支付密码"
             android:textColor="@color/text_black"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
+
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:singleLine="true"
             android:text=""
             android:textColor="@color/but_text_color"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/arrows_left_2"
-            android:layout_marginRight="15dp"
             android:layout_gravity="center_vertical"
-            />
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/arrows_left_2" />
     </LinearLayout>
-    <TextView
+
+    <LinearLayout
+        android:id="@+id/ll_no_pwd"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/ui_line"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        />
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:text="免密支付"
+            android:textColor="@color/text_black"
+            android:textSize="16sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="(五元以内)"
+            android:textColor="@color/black_99"
+            android:textSize="12sp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="@color/but_text_color"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iv_no_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/ic_closs"
+             />
+    </LinearLayout>
+
 
 </LinearLayout>

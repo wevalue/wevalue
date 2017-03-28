@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="朋友们"
+            android:text="圈子"
             android:textSize="16sp"/>
     </LinearLayout>
     <ImageView

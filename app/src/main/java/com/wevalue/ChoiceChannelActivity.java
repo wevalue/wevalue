@@ -64,13 +64,7 @@ public class ChoiceChannelActivity extends BaseActivity implements View.OnClickL
            return;
        }
         List<ChannelBean.Channel> channels = channelBean.getData();
-        if (channelBean.getData().size() > 3) {
-            channels.remove(channels.get(0));
-            channels.remove(channels.get(0));
-            channels.remove(channels.get(0));
-        }
-        adapter.addAll(channelBean.getData());
-        adapter.notifyDataSetChanged();
+        adapter.setData(channels);
     }
 
     @Override
@@ -93,6 +87,7 @@ public class ChoiceChannelActivity extends BaseActivity implements View.OnClickL
             SharedPreferencesUtil.setUserlike(this, str);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            SharedPreferencesUtil.setIsFristStart(this, "2");
             finish();
         }
     }

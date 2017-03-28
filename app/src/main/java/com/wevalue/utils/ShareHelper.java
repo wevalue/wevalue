@@ -28,10 +28,11 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 public class ShareHelper {
     Context context;
     private Handler mHan;
-
+    MyActionListener myActionListener ;
     public ShareHelper(Context context, Handler mHan) {
         this.context = context;
         this.mHan = mHan;
+        myActionListener = new MyActionListener();
     }
 
     public void initShare(String sharePlatform, String url, String message) {
@@ -51,7 +52,7 @@ public class ShareHelper {
                 sp.setUrl(url);
                 Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
                 weibo.authorize();
-                weibo.setPlatformActionListener(new MyActionListener()); // 设置分享事件回调
+                weibo.setPlatformActionListener(myActionListener); // 设置分享事件回调
                 weibo.share(sp);
                 break;
             case Constants.shareWeixinMoment: //分享到微信朋友圈
@@ -60,7 +61,7 @@ public class ShareHelper {
                 }
                 Platform wx = ShareSDK.getPlatform(context.getApplicationContext(), WechatMoments.NAME);
 //                wx.authorize();
-                wx.setPlatformActionListener(new MyActionListener());
+                wx.setPlatformActionListener(myActionListener);
                 WechatMoments.ShareParams sp_weixin = new WechatMoments.ShareParams();
                 sp_weixin.setShareType(Platform.SHARE_WEBPAGE);
                 sp_weixin.setUrl(url);
@@ -76,7 +77,7 @@ public class ShareHelper {
                 qzonesp.setSite("陕西微值辩证科技有限公司");
                 qzonesp.setSiteUrl(url);
                 Platform qzone = ShareSDK.getPlatform(QZone.NAME);
-                qzone.setPlatformActionListener(new MyActionListener()); // 设置分享事件回调
+                qzone.setPlatformActionListener(myActionListener); // 设置分享事件回调
                 qzone.share(qzonesp);
                 break;
             case Constants.shareWeixinFriend://分享到微信朋友
@@ -84,7 +85,7 @@ public class ShareHelper {
                     initReceiver();
                 }
                 Platform weixin = ShareSDK.getPlatform(context.getApplicationContext(), Wechat.NAME);
-                weixin.setPlatformActionListener(new MyActionListener());
+                weixin.setPlatformActionListener(myActionListener);
                 Wechat.ShareParams sp_wx_friend = new Wechat.ShareParams();
                 sp_wx_friend.setShareType(Platform.SHARE_WEBPAGE);
                 sp_wx_friend.setUrl(url);
@@ -109,7 +110,7 @@ public class ShareHelper {
                 //sp.setImageUrl(imgUrl);
                 Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
                 weibo.authorize();
-                weibo.setPlatformActionListener(new MyActionListener()); // 设置分享事件回调
+                weibo.setPlatformActionListener(myActionListener); // 设置分享事件回调
                 weibo.share(sp);
                 break;
             case Constants.shareWeixinMoment: //分享到微信朋友圈
@@ -117,7 +118,7 @@ public class ShareHelper {
                     initReceiver();
                 }
                 Platform wx = ShareSDK.getPlatform(context.getApplicationContext(), WechatMoments.NAME);
-                wx.setPlatformActionListener(new MyActionListener());
+                wx.setPlatformActionListener(myActionListener);
                 WechatMoments.ShareParams sp_weixin = new WechatMoments.ShareParams();
                 sp_weixin.setShareType(Platform.SHARE_WEBPAGE);
                 sp_weixin.setUrl(url);
@@ -135,7 +136,7 @@ public class ShareHelper {
                 qzonesp.setSiteUrl(url);
                 qzonesp.setImageUrl(imgUrl);
                 Platform qzone = ShareSDK.getPlatform(QZone.NAME);
-                qzone.setPlatformActionListener(new MyActionListener()); // 设置分享事件回调
+                qzone.setPlatformActionListener(myActionListener); // 设置分享事件回调
                 qzone.share(qzonesp);
                 break;
             case Constants.shareWeixinFriend://分享到微信朋友
@@ -143,7 +144,7 @@ public class ShareHelper {
                     initReceiver();
                 }
                 Platform weixin = ShareSDK.getPlatform(context.getApplicationContext(), Wechat.NAME);
-                weixin.setPlatformActionListener(new MyActionListener());
+                weixin.setPlatformActionListener(myActionListener);
                 Wechat.ShareParams sp_wx_friend = new Wechat.ShareParams();
                 sp_wx_friend.setShareType(Platform.SHARE_WEBPAGE);
                 sp_wx_friend.setUrl(url);
