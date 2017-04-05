@@ -56,8 +56,8 @@
     -->
 
     <ShareSDK
-        AppKey = "18de02f9d6063"/> <!-- 修改成你在sharesdk后台注册的应用的appkey"-->
-    
+        AppKey = "18ddfd724bc9c"/> <!-- 修改成你在sharesdk后台注册的应用的appkey"-->
+
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
     <SinaWeibo
         Id="1"
@@ -71,15 +71,15 @@
     <QZone
         Id="2"
         SortId="3"
-        AppId="1105753931"
-        AppKey="vCwtUeMaNwMrsi66"
+        AppId="1105925513"
+        AppKey="YJF7E1F0Q9cGndyp"
         Enable="true" />
-    
+
+
+
     <!-- 
     	Wechat微信和WechatMoments微信朋友圈的appid是一样的；
-    
                        注意：开发者不能用我们这两个平台的appid,否则分享不了
-    
        	  微信测试的时候，微信测试需要先签名打包出apk,
 		sample测试微信，要先签名打包，keystore在sample项目中，密码123456
 		
@@ -94,12 +94,19 @@
         AppSecret="f0909bea96024116bff551643ce54c0e"
         BypassApproval="false"
         Enable="true" />
-    
+
     <WechatMoments
         Id="4"
         SortId="2"
         AppId="wxeb128aba017ef3b9"
         AppSecret="f0909bea96024116bff551643ce54c0e"
         BypassApproval="false"
+        Enable="true" />
+
+    <QQ
+        Id="5"
+        SortId="3"
+        AppId="1105925513"
+        AppKey="YJF7E1F0Q9cGndyp"
         Enable="true" />
 </DevInfor>

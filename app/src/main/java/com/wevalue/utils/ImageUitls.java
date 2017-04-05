@@ -38,7 +38,6 @@ public class ImageUitls {
                 .into(view);
     }
 
-
     /**
      * 设置图片
      * @param url
@@ -50,6 +49,7 @@ public class ImageUitls {
         Glide.with(WeValueApplication.applicationContext)
                 .load(url)
                 .placeholder(rid)
+                .crossFade()
                 .into(view);
     }
 

@@ -47,6 +47,8 @@ public class AccountInfoActivity extends BaseActivity implements OnClickListener
 
     private String payStr;//是否设置过支付密码
     boolean isOpen = false; //当前免密支付状态
+    private boolean isHavePaypwd = false; //用户有没有设置支付密码
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +56,13 @@ public class AccountInfoActivity extends BaseActivity implements OnClickListener
         userTel = SharedPreferencesUtil.getMobile(this);
         userEmail = SharedPreferencesUtil.getEmail(this);
         payStr = SharedPreferencesUtil.getPayPswStatus(this);
+        if ("1".equals(payStr)) {
+            isHavePaypwd = true;
+            checkedMianMi();
+        }
         initView();
-        checkedMianMi();
+
+
     }
 
 
@@ -106,24 +113,24 @@ public class AccountInfoActivity extends BaseActivity implements OnClickListener
                     intent.putExtra("who", "2");
                     startActivity(intent);
                 } else {
-                    ShowUtil.showToast(this, "您还没有绑定手机或者邮箱");
+                    ShowUtil.showToast(this, "请先绑定手机号");
                 }
 
                 break;
 
             case R.id.ll_pay_psw://支付密码
 
-                switch (payStr) {
-                    case "1"://修改支付密码
-                        intent = new Intent(this, ModifyPayPswActivity.class);
-                        intent.putExtra("who", "3");
-                        startActivity(intent);
-                        break;
-                    case "0"://设置支付密码
-                        intent = new Intent(this, SetPayPswActivity.class);
-                        intent.putExtra("isSet", "set");
-                        startActivity(intent);
-                        break;
+                    switch (payStr) {
+                        case "1"://修改支付密码
+                            intent = new Intent(this, ModifyPayPswActivity.class);
+                            intent.putExtra("who", "3");
+                            startActivity(intent);
+                            break;
+                        case "0"://设置支付密码
+                            intent = new Intent(this, SetPayPswActivity.class);
+                            intent.putExtra("isSet", "set");
+                            startActivity(intent);
+                            break;
                 }
                 break;
             case R.id.ll_wangji_pay_psw://忘记支付密码
@@ -142,8 +149,26 @@ public class AccountInfoActivity extends BaseActivity implements OnClickListener
                 }
                 break;
             case R.id.ll_no_pwd://开启或关闭免密支付
+
                 //如果短时间内连点 则 不执行点击方法
-                if (!ButtontimeUtil.isFastDoubleClick())  openMianMi(!isOpen);;
+                if (!ButtontimeUtil.isFastDoubleClick()) {
+                    if (TextUtils.isEmpty(SharedPreferencesUtil.getMobile(this))) {
+                        Intent it = new Intent(this, BindingTelEmailActivity.class);
+                        it.putExtra("who", "tel");
+                        this.startActivity(it);
+                        ShowUtil.showToast(this, "请先绑定手机号");
+                    } else if (!"1".equals(SharedPreferencesUtil.getPayPswStatus(this))){
+                        //设置支付密码
+                        Intent set = new Intent();
+                        set.setClass(this, SetPayPswActivity.class);
+                        set.putExtra("isSet", "set");
+                        this.startActivity(set);
+                        ShowUtil.showToast(this, "请设置支付密码");
+                    }else{
+                        openMianMi(!isOpen);
+                    }
+
+                }
                 break;
         }
     }
@@ -154,6 +179,13 @@ public class AccountInfoActivity extends BaseActivity implements OnClickListener
      * @param
      */
     private void openMianMi(final boolean b) {
+        if (!isHavePaypwd) {
+            Intent intent = new Intent(this, SetPayPswActivity.class);
+            intent.putExtra("isSet", "set");
+            startActivity(intent);
+            ShowUtil.showToast(this, "请先去设置支付密码");
+            return;
+        }
         loadingDialog.show();
         UserEditRequest request = UserEditRequest.initUserEditRequest(this);
         request.openOnepay("5", b, new WZHttpListener() {
@@ -163,15 +195,15 @@ public class AccountInfoActivity extends BaseActivity implements OnClickListener
                 try {
                     JSONObject object = new JSONObject(content);
                     String result = object.getString("result");
-                    if ("1".equals(result)&&!isOpen) {
+                    if ("1".equals(result) && !isOpen) {
                         ShowUtil.showToast(context, "开启免密支付");
                         iv_no_pwd.setImageResource(R.mipmap.ic_open);
-                        isOpen= true;
-                    }else if ("1".equals(result)&&isOpen) {
+                        isOpen = true;
+                    } else if ("1".equals(result) && isOpen) {
                         ShowUtil.showToast(context, "关闭免密支付");
                         iv_no_pwd.setImageResource(R.mipmap.ic_closs);
-                        isOpen= false;
-                    }else {
+                        isOpen = false;
+                    } else {
                         ShowUtil.showToast(context, "网络繁忙，请稍后再试");
                     }
                 } catch (Exception e) {
@@ -187,7 +219,6 @@ public class AccountInfoActivity extends BaseActivity implements OnClickListener
             }
         });
     }
-
 
 
     //是否开启了免密支付
@@ -209,18 +240,6 @@ public class AccountInfoActivity extends BaseActivity implements OnClickListener
                     if ("1".equals(result)) {
                         iv_no_pwd.setImageResource(R.mipmap.ic_open);
                         isOpen = true;
-//                        JSONArray datarray = object.getJSONArray("data");
-//                        object = datarray.getJSONObject(0);
-//                        String moneys = object.getString("money");
-//                        String status = object.getString("status");
-//                        //判断免密是否开启
-//                        if (status.equals("1")) {
-//                            iv_no_pwd.setImageResource(R.mipmap.ic_open);
-//                            isOpen = true;
-//                        } else {
-//                            iv_no_pwd.setImageResource(R.mipmap.ic_closs);
-//                            isOpen = false;
-//                        }
                     } else {
                         iv_no_pwd.setImageResource(R.mipmap.ic_closs);
                         isOpen = false;

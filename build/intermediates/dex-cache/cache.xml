@@ -3,345 +3,381 @@
 
     <item
         is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/exploded-aar/wevalue_android/WXLikeVideoRecorderLib/unspecified/jars/libs/ffmpeg.jar"
+        jar="E:\GitHub\wevalue\app\libs\umeng-analytics-v6.0.9.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="b9c230c5a796ee378d478fb877c94dff3d485cfe">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/8/ffmpeg_60f97f762c92021e255a935db04a1eed973bab0a/classes.dex" />
+        sha1="5259c1d58a8f2373c2bbb7cb0ff33aee0eef4503">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\umeng-analytics-v6.0.9_9ce5ca2dec93eae86ad69af837008ec6512580a6\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/huiwen/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.7/751f548c85fa49f330cecbb1875893f971b33c4e/gson-2.7.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="751f548c85fa49f330cecbb1875893f971b33c4e">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.7_145ed816383ec3a6363b226bcf1dc0c055e253db/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/ShareSDK-SinaWeibo-2.7.7.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="9d6f84355d4f6252240aebc751ba21eaea07e2dd">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-SinaWeibo-2.7.7_64dd06b70dc2b5cd86b3c314ad84012a479e1d23/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.0.1_7a5d464d5b3533f3daa989a40c3068a481e6691c/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/ShareSDK-Wechat-Moments-2.7.7.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="1029839bf5cfc4522366b1fc17eb30627fa5b431">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-Wechat-Moments-2.7.7_9a2105685905302d035b30b1cf0972685e3004a7/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="ac90fd7fb5ffc0ea70a860cf40ecffde0f9288ac">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_f9f3241e766b141f0ea0eee26210d909851db10f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="ac34049c87757f0ae7de6ea0d26f79eccbf2f832">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_7743bc646c6baa3cb46d843c9efafade8fa45233/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/exploded-aar/io.reactivex/rxandroid/1.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="5a2386ad9bfff580b206a7fe305cdccd00798159">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/io.reactivex-rxandroid-1.2.1_fa65417fdccaac69b4953b71d0e964f2a7ce02fe/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.1.1_4b7907977106f3a69f86c960a459b6b9a7286356/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/pgyer_sdk_2.4.5.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="b6dcf861c0dd2c7673110b9b3da795be86d4acd0">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/pgyer_sdk_2.4.5_5d51064e3b1f7263daba0675fe6a93809cdda700/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/exploded-aar/com.getkeepsafe.relinker/relinker/1.2.2/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="b64dd5f01bc37de289f90fd59299b0c76d119611">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.getkeepsafe.relinker-relinker-1.2.2_8131571b4cc305703b0e2f0719f505cd892a4f8a/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/exploded-aar/io.realm/realm-android-library/2.0.2/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="716030a2499afe39ca5b9c8bc09bc868ca372206">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/io.realm-realm-android-library-2.0.2_16e5266e82178b01e7fbc6fc29d0dd4a6baa450c/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/okio-1.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="02534c458682c73f5b9871131ab3098d3f987ca3">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/okio-1.0.0_a953fc065cd81f0524444bbcfca8a6b424afd669/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/exploded-aar/cn.jiguang/jpush/2.1.8/jars/libs/jpush-android-2.1.8.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="86f15a6e7555400affa351041374d5129e99660e">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/jpush-android-2.1.8_25142780ed5f492658cc8f64e7f787a8ddfb621c/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.7.0/9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4/glide-3.7.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/glide-3.7.0_02b492049277427629cfaa1e8cb19c5fbf02632e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/.gradle/caches/modules-2/files-2.1/io.realm/realm-annotations/2.0.2/e97f64258ef6d0daeb26b3b88988215e0b14d9b2/realm-annotations-2.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="e97f64258ef6d0daeb26b3b88988215e0b14d9b2">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/realm-annotations-2.0.2_16784f9205edad9958c64f31bf8fd9bbfa5e3ac1/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/exploded-aar/cn.jiguang/jpush/2.1.8/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="6bae57dc18d9f50285151cc473361ddaddb156cd">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/cn.jiguang-jpush-2.1.8_36618660f743e28a4925fd950081670032787fd6/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/.gradle/caches/modules-2/files-2.1/com.mcxiaoke.volley/library/1.0.19/a8f23f65fc1e522ee4a1a697ee569901a46741fa/library-1.0.19.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="a8f23f65fc1e522ee4a1a697ee569901a46741fa">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/library-1.0.19_c4235d12653e82705618ec5364c980a994553c80/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/zxing.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="6fe22c135f19470d05b0816d5996c442ef67da3f">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/zxing_44a2b8e218552281bec63669c497fc149e117651/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="5c5699834e9722f1c288fea2de82725d078ba127">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.1.1_9ada2fa1f87a9d779caf279f32ac6451c64e3dd1/classes.dex" />
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\com.android.support-appcompat-v7-23.1.1_8d57cbb4b2f5bbb58b8ec66a6ac4890dda4cc662\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jar="E:\GitHub\wevalue\app\build\intermediates\incremental-classes\baidu\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="8eec2be3cfdbf7df3092db25d196aac0efafc991">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\instant-run-bootstrap_2af28a2dc74d5a58659c3b06b702480662bbe52f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\wevalue\WXLikeVideoRecorderLib\unspecified\jars\libs\ffmpeg.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b9c230c5a796ee378d478fb877c94dff3d485cfe">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\8\ffmpeg_68d90860d7c593a2caf37ecfd2303ff7a2239422\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\MobCommons-2017.0322.0931.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d49d36ec407502d69c217d81a87283eba9c746b2">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\MobCommons-2017.0322.0931_6b784a1c7bfbdefd954239daf79ceffc2bba4419\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\xox\.gradle\caches\modules-2\files-2.1\com.mcxiaoke.volley\library\1.0.19\a8f23f65fc1e522ee4a1a697ee569901a46741fa\library-1.0.19.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="a8f23f65fc1e522ee4a1a697ee569901a46741fa">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\library-1.0.19_c6265909901240d1324abc52c8c47fd9e243d0b2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\MobTools-2017.0322.0931.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="242b3a8f9b6b47d2ea8cf932cd978a5b6651d22a">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\MobTools-2017.0322.0931_2aab4ae585cdf7e2c566b1135e1528ca0e4879be\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\zxing.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="6fe22c135f19470d05b0816d5996c442ef67da3f">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\zxing_867f95fc40e344bfa9996dce0c5b319d9db0c789\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\ShareSDK-Wechat-Core-2.8.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="002b4be4096d7ce75e969449fc81b62e312748a6">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\ShareSDK-Wechat-Core-2.8.2_dd42c63537bc35438ed1b150a7d491006666363f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\libs\internal_impl-23.1.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.1.1_fdcc3a7d6bb404167246b26df58b6a6250e41c1a/classes.dex" />
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\internal_impl-23.1.1_e842260837588527638f5a99919fc77ee54c1a73\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/ShareSDK-Wechat-Core-2.7.7.jar"
+        jar="C:\Users\xox\.gradle\caches\modules-2\files-2.1\io.realm\realm-annotations\2.0.2\e97f64258ef6d0daeb26b3b88988215e0b14d9b2\realm-annotations-2.0.2.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="7942d022e2d3d8ed7ccbaf17df22da2eeddddfff">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-Wechat-Core-2.7.7_78be1dee348cbb37407f387875746afcaa72576c/classes.dex" />
+        sha1="e97f64258ef6d0daeb26b3b88988215e0b14d9b2">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\realm-annotations-2.0.2_68c4ffd945fa2a4e7d72026dff036f119b8e0df3\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/alipaySdk-20161009.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="1275bd1ea78a827546f3014ee58371d65ab1280e">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/alipaySdk-20161009_281944e01183f2afefc656b54e11efc6d3ff7ba1/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/pinyin4j-2.5.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="baadab97e6e787f81c369eb27c4ca52a8b38290c">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/pinyin4j-2.5.0_f103281164c00d8d5f9dcc95aa96def7ad298802/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/umeng-analytics-v6.0.8.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="9bc143560e9f01e5d299a752e8013e636b7ac13f">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/umeng-analytics-v6.0.8_d32f59311957269d8662ee34d53d42ece5171713/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/libammsdk.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="d7c2f29c05b35e8c8713be2b81c41cf18f98b64a">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/libammsdk_b815de45a3f0332bfb3e76cebbf1aa97974e2b7c/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/nineoldanimatin.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="0c9460454d4f6578861c7312199a6bab9e1a9db7">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/nineoldanimatin_b7a71be177acc4d318057077db63a83fc99f7d52/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/exploded-aar/wevalue_android/WXLikeVideoRecorderLib/unspecified/jars/libs/javacpp.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="be2d53e0ee959256f758f075024402c7b5ea03fd">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/8/javacpp_4b8eefc46f97dab7dea98027b4f48f37cc883a13/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/ShareSDK-Wechat-2.7.7.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="b97a04213d77372e90bbd280ad2149a0623e4e0b">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-Wechat-2.7.7_02d069e661808bfa5806302f9b0f69ac8d953c3b/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/ShareSDK-Core-2.7.7.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="b060c818956585ebc16be9c034ba4970e5552d25">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-Core-2.7.7_f105b83283784fec3309157f88d89c7d1846c5e4/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/exploded-aar/com.jiechic.library/xUtils/2.6.14/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="fe75606aa9485cd20177894c204291a79a0cc7ab">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.jiechic.library-xUtils-2.6.14_34bb157185b02c6792a0b978dde7ae6149e4bc1e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/BaiduLBS_Android.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="b833a076b8eca1608de4d124ca4bbb39257ce020">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/BaiduLBS_Android_534c59182f7e72b5900230c51b02beac52761710/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.1.1_a6ee8301902d7f55a4b61997a916b77d3fe84ca7/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/MobTools-2016.0830.1940.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="210bf77409df74387b9df1d7987de310a2e0b145">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/MobTools-2016.0830.1940_35a7ac4525b69ee30bf24b009246457875190594/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/okhttp-2.1.0.jar"
+        jar="E:\GitHub\wevalue\app\libs\okhttp-2.1.0.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="9b51f7d0c19f179b52beab7cb433f8ba5cf786a4">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/okhttp-2.1.0_93c461d55003fd30cdc7e3a0bb90d517d06bdafa/classes.dex" />
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\okhttp-2.1.0_38f3203b9fd2c3aa2777cf96c74b699bbfa1c582\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/ShareSDK-QZone-2.7.7.jar"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\com.makeramen\roundedimageview\2.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="558713df8d3cc7543375e51e63a0638aeb0e2e9f">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/ShareSDK-QZone-2.7.7_0bf53bcf4d5a6a140264fc4a1b82827fcc9b6218/classes.dex" />
+        sha1="814fc0c3ec69a944add398217d90077301501a74">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\com.makeramen-roundedimageview-2.2.1_c34bdae6eaaceaa8979225c9872bd2d17df9aa2c\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/huiwen/Desktop/wevalue_android/app/libs/MobCommons-2016.0830.1940.jar"
+        jar="E:\GitHub\wevalue\app\libs\nineoldanimatin.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="ca36dc249a46648f8c8f53ad5ee4a935e80956a8">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/2/MobCommons-2016.0830.1940_23edba35bf47d5e8da902bd4ef8df94ef8f33d98/classes.dex" />
+        sha1="0c9460454d4f6578861c7312199a6bab9e1a9db7">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\nineoldanimatin_88cc9bb43c6f9eeb666b8dd1eb6ddbfbf0918018\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/huiwen/.gradle/caches/modules-2/files-2.1/io.reactivex/rxjava/1.1.6/2586312cd2b8a511e4c6236736f5a039fc0f2273/rxjava-1.1.6.jar"
+        jar="C:\Users\xox\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.7\751f548c85fa49f330cecbb1875893f971b33c4e\gson-2.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="751f548c85fa49f330cecbb1875893f971b33c4e">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\gson-2.7_ec08dc4f40d7d32401ff455d3dc420921e3a3dd4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\jp.wasabeef\glide-transformations\2.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="dca7a60bcc49fedf852b01a28826329c330ba977">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\jp.wasabeef-glide-transformations-2.0.0_435e78421f5c66898561d4dffd4455188acd6cb5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\cn.jiguang\jpush\2.1.8\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="6bae57dc18d9f50285151cc473361ddaddb156cd">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\cn.jiguang-jpush-2.1.8_4173056d21ffe563c621301a60ae675ae289c779\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\io.reactivex\rxandroid\1.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5a2386ad9bfff580b206a7fe305cdccd00798159">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\io.reactivex-rxandroid-1.2.1_bcffd79eee30f6f9c8c5160afbc02cb52d0d1c6f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\SDK\extras\android\m2repository\com\android\support\support-annotations\23.1.1\support-annotations-23.1.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\support-annotations-23.1.1_2d8b48096e1da4c96bb56725af3580061fb9bde9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\com.jiechic.library\xUtils\2.6.14\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="fe75606aa9485cd20177894c204291a79a0cc7ab">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\com.jiechic.library-xUtils-2.6.14_39cae0ee9bd7cf6bf47223559738937eb7ed3659\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\io.realm\realm-android-library\2.0.2\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="716030a2499afe39ca5b9c8bc09bc868ca372206">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\io.realm-realm-android-library-2.0.2_67f00efecdaca67971dfabc299496e0f6368153d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\cn.jiguang\jpush\2.1.8\jars\libs\jpush-android-2.1.8.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="86f15a6e7555400affa351041374d5129e99660e">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\jpush-android-2.1.8_6355a00490ada4acf0f28f1720901cff90f282ce\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\libammsdk.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d7c2f29c05b35e8c8713be2b81c41cf18f98b64a">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\libammsdk_92714fc234881deed82004fad1be338805de69a1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\okio-1.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="02534c458682c73f5b9871131ab3098d3f987ca3">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\okio-1.0.0_70d0242168694311a5e9a13c58341cf872a67e1c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\ShareSDK-Wechat-Moments-2.8.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="1b40dd5cc7381571d1cc57e03fcf328598d559c4">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\ShareSDK-Wechat-Moments-2.8.2_8a6a3b36de79be1eab57a1e1777055e0618dc3b4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\xox\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\glide-3.7.0_8fb25a4d38fe03ea159c4e1f41900c03e55fb131\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\alipaySdk-20161009.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="1275bd1ea78a827546f3014ee58371d65ab1280e">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\alipaySdk-20161009_0acc47c0a7007a18785de716a8def28f3d8efa41\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\ShareSDK-SinaWeibo-2.8.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="e8408628154b6e153c46dc0217cfa4b6ed0694b9">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\ShareSDK-SinaWeibo-2.8.2_1f32c782241d55c24edbd117a0acae8a9a5b1abf\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\xox\.gradle\caches\modules-2\files-2.1\io.reactivex\rxjava\1.1.6\2586312cd2b8a511e4c6236736f5a039fc0f2273\rxjava-1.1.6.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="2586312cd2b8a511e4c6236736f5a039fc0f2273">
-        <dex dex="/Users/huiwen/Desktop/wevalue_android/app/build/intermediates/transforms/dex/debug/folders/1000/10/rxjava-1.1.6_69c2395b86df2ada0cfe8d9e2e9828adeee7d150/classes.dex" />
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\rxjava-1.1.6_3af307583f6e5b921016a841a58c8e9d6a41ce41\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\ShareSDK-Wechat-2.8.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="f3f9d8cdaf36e449309698b6d3ec46fd47e4e14c">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\ShareSDK-Wechat-2.8.2_b7b70f1474696468150220ed55be6b8331b6c16a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\ShareSDK-Core-2.8.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="521f72e4ce63c721c5d3006bfa4fa712dd51bea9">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\ShareSDK-Core-2.8.2_8cc23f92d6d5104175cf747710423b257a4bcc5b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\com.android.support\design\23.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\com.android.support-design-23.0.1_8a6e5d941be4111f7b89492b748c126c95521b61\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\build\intermediates\incremental-runtime-classes\baidu\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="63ed3acfa6f939fbacec4ff8e8c7271a99f5ae72">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\instant-run_39c6f1c3fd5962690a7a579318e456b6937bc6a5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\com.android.support-support-v4-23.1.1_89061c7c45836ed26d090ed6980b0725d90599ac\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\wevalue\WXLikeVideoRecorderLib\unspecified\jars\libs\javacpp.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="be2d53e0ee959256f758f075024402c7b5ea03fd">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\8\javacpp_5ddd534519cbe6eb31f35250df19e44ccdff0d64\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\pinyin4j-2.5.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="baadab97e6e787f81c369eb27c4ca52a8b38290c">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\pinyin4j-2.5.0_1ff15ff5a7288e983a8836009f8a5e51ed508a3b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\com.getkeepsafe.relinker\relinker\1.2.2\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b64dd5f01bc37de289f90fd59299b0c76d119611">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\com.getkeepsafe.relinker-relinker-1.2.2_bccf2cfb6d182b6577ac1f677fdffbf58b483664\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\pgyer_sdk_2.4.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b6dcf861c0dd2c7673110b9b3da795be86d4acd0">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\pgyer_sdk_2.4.5_302edcceef114b6b5f94aa4975c2c3a442404749\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\ShareSDK-QQ-2.8.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="fbb64a7456b98849ee2868a55aa0b3bb3f6e6a29">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\ShareSDK-QQ-2.8.2_4db372a0376acd545e597a5771668845c8011dcb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\BaiduLBS_Android.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b833a076b8eca1608de4d124ca4bbb39257ce020">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\BaiduLBS_Android_3fa4d335e057533def001b2c84a7b971dae5d59b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\10\com.android.support-multidex-1.0.1_cd7c650417464f026a25c29bdda27aedfc43dfb5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\GitHub\wevalue\app\libs\ShareSDK-QZone-2.8.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="dc2c7e7eaa2bad4c5333b6471d388a64df781d1b">
+        <dex dex="E:\GitHub\wevalue\app\build\intermediates\transforms\dex\baidu\debug\folders\1000\2\ShareSDK-QZone-2.8.2_f86137a88c3ed0ca8cd00309a805b93e3d155aea\classes.dex" />
     </item>
 
 </items>

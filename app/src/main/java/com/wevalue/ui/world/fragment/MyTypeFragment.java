@@ -281,6 +281,7 @@ public class MyTypeFragment extends BaseFragment implements WZHttpListener {
 
     //从帖子的标签类型获取帖子标签类型的ID
     private void getNoteClassFromList() {
+        if (null!=pgb)pgb.setVisibility(View.VISIBLE);
         if (TextUtils.isEmpty(cityName)) {
             mNoteRequestBase.getNoteListData(getDateTime(), String.valueOf(pageindex), noteclas, null, SharedPreferencesUtil.getDeviceid(getActivity()), this);
         } else {

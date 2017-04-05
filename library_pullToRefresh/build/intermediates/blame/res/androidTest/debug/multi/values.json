@@ -1,0 +1,767 @@
+[
+    {
+        "outputFile": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 38,
+                    "endOffset": 89
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 38,
+                        "endOffset": 89
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 94,
+                    "endColumn": 37,
+                    "endOffset": 127
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 94,
+                        "endColumn": 37,
+                        "endOffset": 127
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 132,
+                    "endColumn": 50,
+                    "endOffset": 178
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 132,
+                        "endColumn": 50,
+                        "endOffset": 178
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 183,
+                    "endColumn": 44,
+                    "endOffset": 223
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 183,
+                        "endColumn": 44,
+                        "endOffset": 223
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 228,
+                    "endColumn": 50,
+                    "endOffset": 274
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 228,
+                        "endColumn": 50,
+                        "endOffset": 274
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 279,
+                    "endColumn": 51,
+                    "endOffset": 326
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 279,
+                        "endColumn": 51,
+                        "endOffset": 326
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 331,
+                    "endColumn": 45,
+                    "endOffset": 372
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 331,
+                        "endColumn": 45,
+                        "endOffset": 372
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 377,
+                    "endColumn": 44,
+                    "endOffset": 417
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 377,
+                        "endColumn": 44,
+                        "endOffset": 417
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 422,
+                    "endColumn": 39,
+                    "endOffset": 457
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 422,
+                        "endColumn": 39,
+                        "endOffset": 457
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 462,
+                    "endColumn": 49,
+                    "endOffset": 507
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 462,
+                        "endColumn": 49,
+                        "endOffset": 507
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 512,
+                    "endColumn": 43,
+                    "endOffset": 551
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 512,
+                        "endColumn": 43,
+                        "endOffset": 551
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 13,
+                    "startColumn": 4,
+                    "startOffset": 556,
+                    "endColumn": 38,
+                    "endOffset": 590
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 13,
+                        "startColumn": 4,
+                        "startOffset": 556,
+                        "endColumn": 38,
+                        "endOffset": 590
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 595,
+                    "endColumn": 40,
+                    "endOffset": 631
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 14,
+                        "startColumn": 4,
+                        "startOffset": 595,
+                        "endColumn": 40,
+                        "endOffset": 631
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 636,
+                    "endColumn": 40,
+                    "endOffset": 672
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 636,
+                        "endColumn": 40,
+                        "endOffset": 672
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 16,
+                    "startColumn": 4,
+                    "startOffset": 677,
+                    "endColumn": 44,
+                    "endOffset": 717
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 16,
+                        "startColumn": 4,
+                        "startOffset": 677,
+                        "endColumn": 44,
+                        "endOffset": 717
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 17,
+                    "startColumn": 4,
+                    "startOffset": 722,
+                    "endColumn": 45,
+                    "endOffset": 763
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 17,
+                        "startColumn": 4,
+                        "startOffset": 722,
+                        "endColumn": 45,
+                        "endOffset": 763
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 18,
+                    "startColumn": 4,
+                    "startOffset": 768,
+                    "endColumn": 45,
+                    "endOffset": 809
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 18,
+                        "startColumn": 4,
+                        "startOffset": 768,
+                        "endColumn": 45,
+                        "endOffset": 809
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 19,
+                    "startColumn": 4,
+                    "startOffset": 814,
+                    "endColumn": 49,
+                    "endOffset": 859
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 19,
+                        "startColumn": 4,
+                        "startOffset": 814,
+                        "endColumn": 49,
+                        "endOffset": 859
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 20,
+                    "startColumn": 4,
+                    "startOffset": 864,
+                    "endColumn": 46,
+                    "endOffset": 906
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 20,
+                        "startColumn": 4,
+                        "startOffset": 864,
+                        "endColumn": 46,
+                        "endOffset": 906
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 21,
+                    "startColumn": 4,
+                    "startOffset": 911,
+                    "endColumn": 40,
+                    "endOffset": 947
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 21,
+                        "startColumn": 4,
+                        "startOffset": 911,
+                        "endColumn": 40,
+                        "endOffset": 947
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 22,
+                    "startColumn": 4,
+                    "startOffset": 952,
+                    "endColumn": 47,
+                    "endOffset": 995
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 22,
+                        "startColumn": 4,
+                        "startOffset": 952,
+                        "endColumn": 47,
+                        "endOffset": 995
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 23,
+                    "startColumn": 4,
+                    "startOffset": 1000,
+                    "endColumn": 48,
+                    "endOffset": 1044
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 23,
+                        "startColumn": 4,
+                        "startOffset": 1000,
+                        "endColumn": 48,
+                        "endOffset": 1044
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 24,
+                    "startColumn": 4,
+                    "startOffset": 1049,
+                    "endColumn": 49,
+                    "endOffset": 1094
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 24,
+                        "startColumn": 4,
+                        "startOffset": 1049,
+                        "endColumn": 49,
+                        "endOffset": 1094
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 25,
+                    "startColumn": 4,
+                    "startOffset": 1099,
+                    "endColumn": 41,
+                    "endOffset": 1136
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 25,
+                        "startColumn": 4,
+                        "startOffset": 1099,
+                        "endColumn": 41,
+                        "endOffset": 1136
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 40,
+                    "startColumn": 4,
+                    "startOffset": 2746,
+                    "endColumn": 61,
+                    "endOffset": 2803
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 40,
+                        "startColumn": 4,
+                        "startOffset": 2746,
+                        "endColumn": 61,
+                        "endOffset": 2803
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 41,
+                    "startColumn": 4,
+                    "startOffset": 2808,
+                    "endColumn": 63,
+                    "endOffset": 2867
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 41,
+                        "startColumn": 4,
+                        "startOffset": 2808,
+                        "endColumn": 63,
+                        "endOffset": 2867
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 42,
+                    "startColumn": 4,
+                    "startOffset": 2872,
+                    "endColumn": 63,
+                    "endOffset": 2931
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 42,
+                        "startColumn": 4,
+                        "startOffset": 2872,
+                        "endColumn": 63,
+                        "endOffset": 2931
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 43,
+                    "startColumn": 4,
+                    "startOffset": 2936,
+                    "endColumn": 54,
+                    "endOffset": 2986
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 43,
+                        "startColumn": 4,
+                        "startOffset": 2936,
+                        "endColumn": 54,
+                        "endOffset": 2986
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 44,
+                    "startColumn": 4,
+                    "startOffset": 2991,
+                    "endColumn": 56,
+                    "endOffset": 3043
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 44,
+                        "startColumn": 4,
+                        "startOffset": 2991,
+                        "endColumn": 56,
+                        "endOffset": 3043
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 45,
+                    "startColumn": 4,
+                    "startOffset": 3048,
+                    "endColumn": 54,
+                    "endOffset": 3098
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 45,
+                        "startColumn": 4,
+                        "startOffset": 3048,
+                        "endColumn": 54,
+                        "endOffset": 3098
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 46,
+                    "startColumn": 4,
+                    "startOffset": 3103,
+                    "endColumn": 37,
+                    "endOffset": 3136
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 46,
+                        "startColumn": 4,
+                        "startOffset": 3103,
+                        "endColumn": 37,
+                        "endOffset": 3136
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 47,
+                    "startColumn": 4,
+                    "startOffset": 3141,
+                    "endColumn": 39,
+                    "endOffset": 3176
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 47,
+                        "startColumn": 4,
+                        "startOffset": 3141,
+                        "endColumn": 39,
+                        "endOffset": 3176
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 48,
+                    "startColumn": 4,
+                    "startOffset": 3181,
+                    "endColumn": 36,
+                    "endOffset": 3213
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 48,
+                        "startColumn": 4,
+                        "startOffset": 3181,
+                        "endColumn": 36,
+                        "endOffset": 3213
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 49,
+                    "startColumn": 4,
+                    "startOffset": 3218,
+                    "endColumn": 75,
+                    "endOffset": 3289
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 49,
+                        "startColumn": 4,
+                        "startOffset": 3218,
+                        "endColumn": 75,
+                        "endOffset": 3289
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 50,
+                    "startColumn": 4,
+                    "startOffset": 3294,
+                    "endColumn": 113,
+                    "endOffset": 3403
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 50,
+                        "startColumn": 4,
+                        "startOffset": 3294,
+                        "endColumn": 113,
+                        "endOffset": 3403
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 51,
+                    "startColumn": 4,
+                    "startOffset": 3408,
+                    "endColumn": 77,
+                    "endOffset": 3481
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 51,
+                        "startColumn": 4,
+                        "startOffset": 3408,
+                        "endColumn": 77,
+                        "endOffset": 3481
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 52,
+                    "startColumn": 4,
+                    "startOffset": 3486,
+                    "endColumn": 60,
+                    "endOffset": 3542
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 52,
+                        "startColumn": 4,
+                        "startOffset": 3486,
+                        "endColumn": 60,
+                        "endOffset": 3542
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 53,
+                    "startColumn": 4,
+                    "startOffset": 3547,
+                    "endColumn": 66,
+                    "endOffset": 3609
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 53,
+                        "startColumn": 4,
+                        "startOffset": 3547,
+                        "endColumn": 66,
+                        "endOffset": 3609
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 54,
+                    "startColumn": 4,
+                    "startOffset": 3614,
+                    "endColumn": 68,
+                    "endOffset": 3678
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 54,
+                        "startColumn": 4,
+                        "startOffset": 3614,
+                        "endColumn": 68,
+                        "endOffset": 3678
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 55,
+                    "startColumn": 4,
+                    "startOffset": 3683,
+                    "endColumn": 65,
+                    "endOffset": 3744
+                },
+                "from": {
+                    "file": "E:\\GitHub\\wevalue\\library_pullToRefresh\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 55,
+                        "startColumn": 4,
+                        "startOffset": 3683,
+                        "endColumn": 65,
+                        "endOffset": 3744
+                    }
+                }
+            }
+        ]
+    }
+]

@@ -67,7 +67,7 @@ public class MyInfoActivity extends BaseActivity implements OnClickListener {
     private TextView tv_head_title;
     private TextView tv_nickname;
     private TextView tv_sex, tv_tel, tv_email;
-    ;
+
     private TextView tv_addr;
     private TextView tv_jianjie;
     private TextView tv_wevalue_number;
@@ -128,7 +128,7 @@ public class MyInfoActivity extends BaseActivity implements OnClickListener {
 
         mBitmap = new BitmapUtils(this);
         bitmapDisplayConfig = new BitmapDisplayConfig();
-        bitmapDisplayConfig.setShowOriginal(true); // 显示原始图片,不压缩, 尽量不要使用,
+        bitmapDisplayConfig.setShowOriginal(false); // 显示原始图片,不压缩, 尽量不要使用,
         // 图片太大时容易OOM。
         bitmapDisplayConfig.setBitmapConfig(Config.RGB_565);
         bitmapDisplayConfig.setLoadingDrawable(getResources().getDrawable(R.mipmap.default_head));
@@ -154,6 +154,8 @@ public class MyInfoActivity extends BaseActivity implements OnClickListener {
         tv_nickname = (TextView) findViewById(R.id.tv_nickname);
         tv_sex = (TextView) findViewById(R.id.tv_sex);
         tv_addr = (TextView) findViewById(R.id.tv_addr);
+        String addr = SharedPreferencesUtil.getProvinceName(context) + " " + SharedPreferencesUtil.getCityName(context);
+        tv_addr.setText(addr);
         tv_head_title.setText("我的信息");
         tv_tel = (TextView) findViewById(R.id.tv_tel);
         tv_email = (TextView) findViewById(R.id.tv_email);
@@ -166,6 +168,7 @@ public class MyInfoActivity extends BaseActivity implements OnClickListener {
         rl_sex = (RelativeLayout) findViewById(R.id.rl_sex);
         rl_jianjie = (RelativeLayout) findViewById(R.id.rl_jianjie);
         rl_addr = (RelativeLayout) findViewById(R.id.rl_addr);
+
         rl_zhanghu = (RelativeLayout) findViewById(R.id.rl_zhanghu);
         rl_QR = (RelativeLayout) findViewById(R.id.rl_QR);
         rl_dengji = (RelativeLayout) findViewById(R.id.rl_dengji);
@@ -212,7 +215,6 @@ public class MyInfoActivity extends BaseActivity implements OnClickListener {
         super.onStart();
         tv_nickname.setText(SharedPreferencesUtil.getNickname(this));
         tv_jianjie.setText(SharedPreferencesUtil.getUserInfo(this));
-        tv_addr.setText(SharedPreferencesUtil.getProvinceName(this) + " " + SharedPreferencesUtil.getCityName(this));
         tv_wevalue_number.setText(SharedPreferencesUtil.getUsernumber(this));
 
         String tel = SharedPreferencesUtil.getMobile(this);

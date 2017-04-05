@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -229,10 +230,10 @@ public class GridPasswordView extends LinearLayout implements PasswordView {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+            Log.e("onTextChanged",s+"");
             if (s == null) {
                 return;
             }
-
             String newStr = s.toString();
             if (newStr.length() == 1) {
                 mPasswordArr[0] = newStr;

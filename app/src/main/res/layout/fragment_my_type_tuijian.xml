@@ -26,7 +26,7 @@
             <com.wevalue.view.CarouselView
                 android:id="@+id/carouselView"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"/>
+                android:layout_height="wrap_content"/>
             <com.wevalue.view.NoScrollListview
                 android:id="@+id/mNoScrollListview"
                 android:layout_width="match_parent"

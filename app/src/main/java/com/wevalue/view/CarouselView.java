@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,12 +47,17 @@ public class CarouselView<T extends CarouselBean> extends RelativeLayout impleme
 
     public CarouselView(Context context) {
         super(context);
-        LayoutInflater.from(context).inflate(R.layout.view_carousel, this, true);
+        initView(context);
     }
 
     public CarouselView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initView(context);
+    }
+
+    private void initView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.view_carousel, this, true);
+
     }
 
     public void setDelayTime(long delayTime) {
@@ -74,8 +80,9 @@ public class CarouselView<T extends CarouselBean> extends RelativeLayout impleme
             vpAdapter = new VPAdapter(activity);
             vp_viewpager.setAdapter(vpAdapter);
             vp_viewpager.addOnPageChangeListener(this);
-            addDian(activity, ll_dd, list);
         }
+        if (ll_dd.getChildCount() > 0) ll_dd.removeAllViews();
+        addDian(activity, ll_dd, list);
     }
 
     /**
@@ -165,7 +172,7 @@ public class CarouselView<T extends CarouselBean> extends RelativeLayout impleme
     public void onPageSelected(int currentItem) {
         Log.e("CarouselView", "onPageSelected = " + currentItem);
         //切换viewpager的 导航点点
-        if (lists.isEmpty())return;
+        if (lists.isEmpty()) return;
         View currentText = ll_dd.getChildAt(currentItem
                 % lists.size());
         if (currentText != null) {

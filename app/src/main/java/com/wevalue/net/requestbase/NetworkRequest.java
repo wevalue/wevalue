@@ -53,9 +53,9 @@ public class NetworkRequest {
         try {
             socketFactory = SSLUtil.getSSLSocketFactory(WeValueApplication.applicationContext.getAssets().open("weizhi.cer"));
             okHttpClient.setSslSocketFactory(socketFactory);
-            okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);//链接超时
-            okHttpClient.setWriteTimeout(10, TimeUnit.SECONDS);//写超时
-            okHttpClient.setReadTimeout(10, TimeUnit.SECONDS);//读超时
+            okHttpClient.setConnectTimeout(20, TimeUnit.SECONDS);//链接超时
+            okHttpClient.setWriteTimeout(20, TimeUnit.SECONDS);//写超时
+            okHttpClient.setReadTimeout(20, TimeUnit.SECONDS);//读超时
         } catch (Exception e) {
             e.printStackTrace();
         }

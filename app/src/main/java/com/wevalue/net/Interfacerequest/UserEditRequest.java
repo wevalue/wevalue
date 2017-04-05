@@ -66,8 +66,7 @@ public class UserEditRequest {
     /**
      * 修改城市
      */
-    public void setCityData(final String provinceName, final String cityName, final TextView tv_addr) {
-
+    public void setCityData(final String provinceName, final String cityName) {
         String url = RequestPath.POST_UPDATEUSERINFO;
         Map<String, Object> map = new HashMap<>();
         map.put("code", RequestPath.CODE);
@@ -80,14 +79,11 @@ public class UserEditRequest {
                 try {
                     JSONObject obj = new JSONObject(content);
                     if (obj.getString("result").equals("1")) {
-                        ShowUtil.showToast(mContext, obj.getString("message"));
-                        if (provinceName.equals(cityName)) {
-                            tv_addr.setText(provinceName);
-                        } else {
-                            tv_addr.setText(provinceName + " " + cityName);
-                        }
+                        Log.e("UserEditRequest","更新地址成功");
+                        SharedPreferencesUtil.setProvinceName(WeValueApplication.applicationContext,provinceName);
+                        SharedPreferencesUtil.setCityName(WeValueApplication.applicationContext,cityName);
                     } else {
-                        ShowUtil.showToast(mContext, obj.getString("message"));
+                        Log.e("UserEditRequest","更新地址失败");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

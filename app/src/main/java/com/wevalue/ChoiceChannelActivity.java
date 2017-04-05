@@ -81,6 +81,8 @@ public class ChoiceChannelActivity extends BaseActivity implements View.OnClickL
                 }
             }
             LogUtils.e("str==" + str);
+            //先把以前的选择清除
+            SharedPreferencesUtil.setUserlike(this, "");
             if (TextUtils.isEmpty(str)) {
                 return;
             }

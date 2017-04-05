@@ -132,7 +132,7 @@ public class NoteListAdapter extends ArrayAdapter {
 
         viewHolder.tv_price.setText("价格 "+noteEntity.getPaynum());
         viewHolder.tv_income.setText("收益 "+noteEntity.getShouyi());
-        viewHolder.tv_day.setText("微值号:"+noteEntity.getUsernumber());
+        viewHolder.tv_day.setText("微值号 "+noteEntity.getUsernumber());
 
         viewHolder.tv_title.setText(noteEntity.getTitle());
 
@@ -212,6 +212,7 @@ public class NoteListAdapter extends ArrayAdapter {
             viewHolder.tv_author.setText("@" + mDatas.get(position).getOldusernickname());
             viewHolder.layout_single_img.setBackgroundResource(R.color.background);
         }
+
         viewHolder.layout_single_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -225,7 +226,7 @@ public class NoteListAdapter extends ArrayAdapter {
             public void onItemClick(AdapterView<?> parent, View view, int index, long id) {
                 if (notetype.equals("5")) {//如果是图文 直接跳转详情界面
                     //跳转到转发帖子详情页
-                    ActivityUtils.gotoNoteDetails(mActivity,noteEntity,"2");
+                    ActivityUtils.gotoNoteDetails(mActivity,noteEntity,"0");
                 } else {
                     openImg(noteEntity, index);
                 }
@@ -261,7 +262,7 @@ public class NoteListAdapter extends ArrayAdapter {
         //跳转到转发帖子详情页
         intent = new Intent(mActivity, NoteDetailActivity.class);
         intent.putExtra("noteId", noteEntity.getNoteid());
-        intent.putExtra("repostid", "0");
+        intent.putExtra("repostid", noteEntity.getRepostid());
         mActivity.startActivity(intent);
     }
 

@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/huiwen/Desktop/wevalue_android/library/src/main/assets"/><source path="/Users/huiwen/Desktop/wevalue_android/library/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/huiwen/Desktop/wevalue_android/library/src/debug/assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="E:\GitHub\wevalue\library\src\main\assets"/><source path="E:\GitHub\wevalue\library\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="E:\GitHub\wevalue\library\src\debug\assets"/></dataSet></merger>

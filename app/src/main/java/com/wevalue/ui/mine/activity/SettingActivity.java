@@ -30,6 +30,7 @@ import com.wevalue.utils.DataCleanManager;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.PopuUtil;
 import com.wevalue.utils.SharedPreferencesUtil;
+import com.wevalue.utils.ShowUtil;
 import com.wevalue.utils.UpdateManager;
 import com.wevalue.youmeng.StatisticsConsts;
 
@@ -38,6 +39,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
 import jupush.JpushTagSet;
 
 
@@ -103,9 +108,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener, WZ
             tv_back_app.setVisibility(View.VISIBLE);
         }
         try {
-            if (DataCleanManager.getFolderSize(this.getCacheDir()) > 1024 ) {
+            if (DataCleanManager.getFolderSize(this.getCacheDir()) > 1024) {
                 tv_cache_num.setText(DataCleanManager.getCacheSize(this.getCacheDir()));
-            }else {
+            } else {
                 tv_cache_num.setText("暂无缓存");
             }
         } catch (Exception e) {
@@ -156,7 +161,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener, WZ
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                MobclickAgent.onEvent(this,StatisticsConsts.event_setting,"清除缓存");
+                MobclickAgent.onEvent(this, StatisticsConsts.event_setting, "清除缓存");
                 break;
             case R.id.tv_banben://版本更新
                 InitAppVersion();
@@ -168,17 +173,25 @@ public class SettingActivity extends BaseActivity implements OnClickListener, WZ
             case R.id.ll_guanyu:
                 in = new Intent(this, AboutWeValueActivity.class);
                 startActivity(in);
-                MobclickAgent.onEvent(this,StatisticsConsts.event_setting,"关于微值");
+                MobclickAgent.onEvent(this, StatisticsConsts.event_setting, "关于微值");
                 break;
             case R.id.rl_zhanghu:
-                in = new Intent(this, AccountInfoActivity.class);
-                startActivity(in);
-                MobclickAgent.onEvent(this,StatisticsConsts.event_setting,"账户安全");
+                if (TextUtils.isEmpty(SharedPreferencesUtil.getMobile(this))) {
+                    Intent it = new Intent(this, BindingTelEmailActivity.class);
+                    it.putExtra("who", "tel");
+                    startActivity(it);
+                    ShowUtil.showToast(this, "请先绑定手机号");
+                } else {
+                    in = new Intent(this, AccountInfoActivity.class);
+                    startActivity(in);
+                    MobclickAgent.onEvent(this, StatisticsConsts.event_setting, "账户安全");
+                }
                 break;
             case R.id.tv_back_app:
                 PopuUtil.initpopu(this, "确定退出登录吗？", new PopClickInterface() {
                     @Override
                     public void onClickOk(String content) {
+                        clearShardInfo();
                         SharedPreferencesUtil.clearSharedPreferencesInfo(WeValueApplication.applicationContext, "UserInfo");
                         //清空极光推送的别名绑定
                         JpushTagSet tagSet = new JpushTagSet(SettingActivity.this, "null");
@@ -191,11 +204,20 @@ public class SettingActivity extends BaseActivity implements OnClickListener, WZ
                         }, 300);
                     }
                 });
-                MobclickAgent.onEvent(this,StatisticsConsts.event_setting,"退出登录");
+                MobclickAgent.onEvent(this, StatisticsConsts.event_setting, "退出登录");
                 break;
         }
     }
 
+    /**
+     * 清除第三方登录信息
+     */
+   private void clearShardInfo(){
+       Platform qqPlatform = ShareSDK.getPlatform(context, QQ.NAME);
+       qqPlatform.removeAccount(true);
+       Platform wxPlatform = ShareSDK.getPlatform(context, Wechat.NAME);
+       wxPlatform.removeAccount(true);
+   }
 
     /**
      * 加载检测App版本号
@@ -272,7 +294,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener, WZ
             if (!newVersion.equals(localVersion)) {
                 LogUtils.e("log", "newVersion = " + newVersion + "---localVersion = " + localVersion);
                 // 这里来检测版本是否需要更新
-                UpdateManager mUpdateManager = new UpdateManager(SettingActivity.this, newVersion,"0");
+                UpdateManager mUpdateManager = new UpdateManager(SettingActivity.this, newVersion, "0");
                 mUpdateManager.checkUpdateInfo();
             } else {
 

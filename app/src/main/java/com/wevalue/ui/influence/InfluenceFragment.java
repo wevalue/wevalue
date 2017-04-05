@@ -249,7 +249,7 @@ public class InfluenceFragment extends BaseFragment implements WZHttpListener, V
                     mHAdapter.setmDatas(noteBean.data);
                     mHAdapter.notifyDataSetChanged();
                 }
-
+                mHAdapter.notifyDataSetChanged();
             }
         } else {
             ShowUtil.showToast(mContext, noteBean.getMessage());

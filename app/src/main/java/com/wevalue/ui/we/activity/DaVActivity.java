@@ -103,6 +103,7 @@ public class DaVActivity extends BaseActivity implements View.OnClickListener,WZ
 
     @Override
     public void onSuccess(String content, String isUrl) {
+        pullLayout.onRefreshComplete();
         Log.d("DaVActivity","content = "+content);
         Gson gson = new Gson();
         messageModel = gson.fromJson(content, SiteMessageModel.class);
@@ -120,6 +121,6 @@ public class DaVActivity extends BaseActivity implements View.OnClickListener,WZ
 
     @Override
     public void onFailure(String content) {
-
+        pullLayout.onRefreshComplete();
     }
 }

@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/Users/huiwen/Desktop/wevalue_android/WXLikeVideoRecorderLib/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
+        "outputFile": "E:\\GitHub\\wevalue\\WXLikeVideoRecorderLib\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -11,31 +11,7 @@
                     "endOffset": 534
                 },
                 "from": {
-                    "file": "/Users/huiwen/Desktop/wevalue_android/WXLikeVideoRecorderLib/build/intermediates/bundles/debug/res/values/values.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 4,
-                        "startOffset": 485,
-                        "endColumn": 53,
-                        "endOffset": 534
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "outputFile": "/Users/huiwen/Desktop/wevalue_android/E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 4,
-                    "startColumn": 4,
-                    "startOffset": 485,
-                    "endColumn": 53,
-                    "endOffset": 534
-                },
-                "from": {
-                    "file": "/Users/huiwen/Desktop/wevalue_android/E:\\Works\\WeValue\\WXLikeVideoRecorderLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "E:\\GitHub\\wevalue\\WXLikeVideoRecorderLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,

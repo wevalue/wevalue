@@ -1,1 +1,1 @@
-include ':app', ':base_library_pullToRefresh_chenyoca', ':WXLikeVideoRecorderLib', ':library', ':pickerview', ':photoview_library'
+include ':app', ':library_pullToRefresh', ':WXLikeVideoRecorderLib', ':library', ':pickerview', ':photoview_library', ':jcvideoplayer-lib'

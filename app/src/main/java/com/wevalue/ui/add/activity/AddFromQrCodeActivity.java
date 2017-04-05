@@ -130,7 +130,6 @@ public class AddFromQrCodeActivity extends BaseActivity implements WZHttpListene
                     message = object.getString("message");
                     result = object.getString("result");
                     ShowUtil.showToast(this, message);
-                    finish();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

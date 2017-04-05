@@ -1,6 +1,7 @@
 package com.wevalue.ui.add.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -29,6 +30,7 @@ import com.wevalue.net.FriendsManage.FriendManagerInterface;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
+import com.wevalue.ui.details.activity.UserDetailsActivity;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.PermissionsChecker;
 import com.wevalue.utils.SharedPreferencesUtil;
@@ -105,12 +107,6 @@ public class AddFromContactsActivity extends BaseActivity implements WZHttpListe
         adapter = new SortAdapter_2(this, sourceDateList, this);
         sortListView.setAdapter(adapter);
         //点击条目跳转用户详情页
-        sortListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
         initDatas();
         initEvents();
     }
@@ -133,7 +129,11 @@ public class AddFromContactsActivity extends BaseActivity implements WZHttpListe
         sortListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mTvTitle.setText(((SortModel) adapter.getItem(position)).getName());
+               // mTvTitle.setText(((SortModel) adapter.getItem(position)).getName());
+                final SortModel mContent = (SortModel) parent.getAdapter().getItem(position);
+                Intent intent = new Intent(AddFromContactsActivity.this, UserDetailsActivity.class);
+                intent.putExtra("detailuserid",mContent.getUserId());
+                startActivity(intent);
             }
         });
 

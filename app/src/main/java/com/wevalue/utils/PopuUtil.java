@@ -41,6 +41,7 @@ import com.wevalue.ui.add.activity.RankingListActivity;
 import com.wevalue.ui.influence.PopClickInterface;
 import com.wevalue.ui.login.LoginActivity;
 import com.wevalue.ui.mine.activity.AccountInfoActivity;
+import com.wevalue.ui.mine.activity.BindingTelEmailActivity;
 import com.wevalue.ui.mine.activity.FeedbackActivity;
 import com.wevalue.ui.mine.activity.SetPayPswActivity;
 import com.wevalue.ui.mine.activity.WebActivity;
@@ -815,7 +816,6 @@ public class PopuUtil {
 
         final String message = map.get("message") == null ? "微值价值分享" : map.get("message");
         final String shareUrl = map.get("url") == null ? RequestPath.SHARE_HTML : map.get("url");
-
         final ShareHelper shareHelper = new ShareHelper(activity, handler);
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -1163,9 +1163,24 @@ public class PopuUtil {
         tv_onepay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //去开启免密支付界面
-                Intent intent = new Intent(activity,AccountInfoActivity.class);
-                activity.startActivity(intent);
+                if (TextUtils.isEmpty(SharedPreferencesUtil.getMobile(activity))) {
+                    Intent it = new Intent(activity, BindingTelEmailActivity.class);
+                    it.putExtra("who", "tel");
+                    activity.startActivity(it);
+                    ShowUtil.showToast(activity, "请先绑定手机号");
+                } else if (!"1".equals(SharedPreferencesUtil.getPayPswStatus(activity))){
+                    //设置支付密码
+                    Intent intent = new Intent();
+                    intent.setClass(activity, SetPayPswActivity.class);
+                    intent.putExtra("isSet", "set");
+                    activity.startActivity(intent);
+                    ShowUtil.showToast(activity, "请设置支付密码");
+                }else{
+                    //去开启免密支付界面
+                    Intent intent = new Intent(activity,AccountInfoActivity.class);
+                    activity.startActivity(intent);
+                }
+
             }
         });
         switch (paytype) {

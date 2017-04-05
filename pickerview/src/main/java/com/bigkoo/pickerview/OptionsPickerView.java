@@ -11,6 +11,7 @@ import com.bigkoo.pickerview.view.WheelOptions;
 import java.util.ArrayList;
 
 /**
+ * 车轮 选择器
  * Created by Sai on 15/11/22.
  */
 public class OptionsPickerView<T> extends BasePickerView implements View.OnClickListener {

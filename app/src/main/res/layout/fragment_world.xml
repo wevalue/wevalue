@@ -5,16 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--</LinearLayout>-->
-    <!--app:tabIndicatorColor="@android:color/white"-->
-
-
     <RelativeLayout
         android:id="@+id/rl_is_show_tablayout"
         android:layout_width="match_parent"

@@ -187,14 +187,14 @@ public class ShareHelper {
         public void onError(Platform arg0, int arg1, Throwable arg2) {
             arg2.printStackTrace();
             LogUtils.e("log", "---onError---Throwable--" + arg2.getMessage().toString());
-            mHan.sendEmptyMessageAtTime(2, SystemClock.uptimeMillis()+2000);
+            mHan.sendEmptyMessage(2);
             //ShowUtil.showToast(context, "分享失败");
         }
 
         @Override
         public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
             LogUtils.e("log", "---onComplete-----");
-            mHan.sendEmptyMessageAtTime(1, SystemClock.uptimeMillis()+2000);
+            mHan.sendEmptyMessage(1);
             //ShowUtil.showToast(context, "分享成功");
         }
 
@@ -202,7 +202,6 @@ public class ShareHelper {
         public void onCancel(Platform arg0, int arg1) {
             LogUtils.e("log", "---onCancel-----");
             mHan.sendEmptyMessage(3);
-            mHan.sendEmptyMessageAtTime(3, SystemClock.uptimeMillis()+2000);
             // ShowUtil.showToast(context, "取消分享");
         }
     }

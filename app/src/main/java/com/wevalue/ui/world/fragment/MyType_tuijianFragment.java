@@ -2,6 +2,7 @@ package com.wevalue.ui.world.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +13,10 @@ import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -38,6 +41,7 @@ import com.wevalue.ui.mine.activity.FeedbackActivity;
 import com.wevalue.ui.mine.activity.WebActivity;
 import com.wevalue.ui.world.adapter.WorldListAdapters;
 import com.wevalue.utils.DateTiemUtils;
+import com.wevalue.utils.DialogUtil;
 import com.wevalue.utils.ImageUitls;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.PopuUtil;
@@ -92,7 +96,7 @@ public class MyType_tuijianFragment extends BaseFragment implements WZHttpListen
     private String getDataTime;
     private  String noteClass = "3";
 //    private ProgressBar pgb;
-public ProgressDialog loadingDialog ;
+public Dialog loadingDialog ;
     public MyType_tuijianFragment() {
 
     }
@@ -132,8 +136,7 @@ public ProgressDialog loadingDialog ;
         mContext = getContext();
         mainActivity = (MainActivity) this.getActivity();
         mNoteRequestBase = NoteRequestBase.getNoteRequestBase(getActivity());
-        loadingDialog = new ProgressDialog(getActivity());
-        loadingDialog.setMessage("请稍候...");
+        loadingDialog = DialogUtil.createLoadingDialog(getActivity());
         view = LayoutInflater.from(mContext).inflate(R.layout.fragment_my_type_tuijian, null);
 
         //根据父窗体getActivity()为fragment设置手势识别
@@ -147,6 +150,7 @@ public ProgressDialog loadingDialog ;
 //        };
 //        ((MainActivity) getActivity()).registerMyOnTouchListener(myOnTouchListener);
         initView();
+
         String tuijianJson = SharedPreferencesUtil.getContent(getActivity(), "tuijian");
         if (TextUtils.isEmpty(tuijianJson)) {
             loadingDialog.show();
@@ -184,6 +188,11 @@ public ProgressDialog loadingDialog ;
         LogUtils.e("轮播  -  initView");
         //轮播图
         carouselView = (CarouselView) view.findViewById(R.id.carouselView);
+        WindowManager wm = (WindowManager) getContext()
+                .getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, (int)(width/2.5));
+        carouselView.setLayoutParams(params);
         prsv_ScrollView = (PullToRefreshScrollView) view.findViewById(R.id.prsv_ScrollView);
         mNoScrollListview = (NoScrollListview) view.findViewById(R.id.mNoScrollListview);
         mNoScrollListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -117,10 +117,10 @@ public class SetPayPswActivity extends BaseActivity implements View.OnClickListe
         et_code = (EditText) findViewById(R.id.et_code);
         et_psw = (EditText) findViewById(R.id.et_psw);
         et_psw_2 = (EditText) findViewById(R.id.et_psw_2);
-
         StringBuffer buffer = new StringBuffer(tel);
         buffer.replace(3, 7, "****");
         tv_tel.setText(buffer.toString());
+
         tv_tel.setTextColor(Color.BLACK);
         tv_tel.setFocusable(false);
         tv_tel.setFocusableInTouchMode(false);
@@ -129,7 +129,6 @@ public class SetPayPswActivity extends BaseActivity implements View.OnClickListe
         iv_back.setOnClickListener(this);
         tv_head_right.setOnClickListener(this);
     }
-
 
     /**
      * 获取验证码
@@ -144,7 +143,6 @@ public class SetPayPswActivity extends BaseActivity implements View.OnClickListe
         map.put("type", "1");
         map.put("phone", tel);
         map.put("resetpwd", "1");
-
         NetworkRequest.postRequest(RequestPath.POST_GETCODE, map, this);
     }
 
@@ -191,6 +189,7 @@ public class SetPayPswActivity extends BaseActivity implements View.OnClickListe
         Map<String, Object> map = new HashMap<>();
         map.put("code", RequestPath.CODE);
         map.put("userid", uid);
+        map.put("userphone", tel);
         map.put("type", "2");
         map.put("newpwd", psw);
         NetworkRequest.postRequest(url, map, this);
@@ -257,7 +256,8 @@ public class SetPayPswActivity extends BaseActivity implements View.OnClickListe
                     if (obj.getString("result").equals("1")) {
                         SharedPreferencesUtil.setPayPswStatus(this, "1");
                         ShowUtil.showToast(SetPayPswActivity.this, obj.getString("message"));
-                        openMianMiDialog();
+                        finish();
+                        //openMianMiDialog();
                     } else {
                         ShowUtil.showToast(SetPayPswActivity.this, obj.getString("message"));
                     }

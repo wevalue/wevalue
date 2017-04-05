@@ -43,7 +43,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="15dp"
                     android:paddingLeft="10dp"
-                    android:textColor="@color/login_text_blue"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/login_text_blue"
                     android:hint="请输入手机号"/>
 

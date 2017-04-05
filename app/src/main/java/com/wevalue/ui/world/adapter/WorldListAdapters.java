@@ -175,7 +175,6 @@ public class WorldListAdapters extends BaseAdapter {
                 }
             }
         });
-
         return convertView;
     }
 
@@ -183,7 +182,7 @@ public class WorldListAdapters extends BaseAdapter {
         Glide.with(WeValueApplication.applicationContext)
                 .load(RequestPath.SERVER_WEB_PATH+url)
                 .asBitmap()
-                .placeholder(R.mipmap.default_head)
+                .placeholder(R.mipmap.pictures_no)
                 .into(view);
     }
     private ViewHolder viewHolder = null;

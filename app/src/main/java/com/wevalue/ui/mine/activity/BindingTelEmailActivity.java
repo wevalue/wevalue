@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wevalue.R;
@@ -35,7 +36,7 @@ import java.util.Map;
  * 绑定或修改手机/邮箱
  */
 public class BindingTelEmailActivity extends BaseActivity implements OnClickListener, WZHttpListener {
-
+    private RelativeLayout layout_oldPhone;
     private EditText et_tel, et_code;
     private EditText et_old_tel;
     private ImageView iv_back;
@@ -46,10 +47,10 @@ public class BindingTelEmailActivity extends BaseActivity implements OnClickList
     private String isTelAndEmail;
 
     private String type = "1";
-    private String isParam;
+    private String isParam; //手机  邮箱
     private String who;//1 = 手机号;  2=邮箱
     private String acthCode;
-
+    private boolean isNullPhone = false;
     private int coun;
     private Handler mSendCoedHandler = new Handler() {
         @Override
@@ -92,6 +93,7 @@ public class BindingTelEmailActivity extends BaseActivity implements OnClickList
      * 初始化控件
      */
     private void initView() {
+        layout_oldPhone = (RelativeLayout) findViewById(R.id.layout_oldPhone);
         iv_back = (ImageView) findViewById(R.id.iv_back);
         but_getcode = (Button) findViewById(R.id.but_getcode);
         tv_head_title = (TextView) findViewById(R.id.tv_head_title);
@@ -114,7 +116,10 @@ public class BindingTelEmailActivity extends BaseActivity implements OnClickList
             isTelAndEmail = "userphone";
             if (TextUtils.isEmpty(SharedPreferencesUtil.getMobile(this))) {
                 tv_head_title.setText("绑定手机号");
+                isNullPhone = true;
+                layout_oldPhone.setVisibility(View.GONE);
             } else {
+                layout_oldPhone.setVisibility(View.VISIBLE);
                 tv_head_title.setText("修改手机号码");
                 StringBuffer buffer = new StringBuffer(SharedPreferencesUtil.getMobile(this));
                 buffer.replace(3, 7, "****");
@@ -122,6 +127,7 @@ public class BindingTelEmailActivity extends BaseActivity implements OnClickList
                 et_old_tel.setTextColor(Color.BLACK);
                 et_old_tel.setFocusableInTouchMode(false);
                 et_old_tel.setFocusable(false);
+                isNullPhone = false;
             }
 
         } else if (who.equals("email")) {
@@ -206,10 +212,12 @@ public class BindingTelEmailActivity extends BaseActivity implements OnClickList
                     LogUtils.e("log", "  if----");
                     return;
                 } else {
-                    old_tel = et_old_tel.getText().toString().trim();
-                    if (TextUtils.isEmpty(old_tel)) {
-                        ShowUtil.showToast(this, "请输入旧手机号码!");
-                        return;
+                    if (!isNullPhone){
+                        old_tel = et_old_tel.getText().toString().trim();
+                        if (TextUtils.isEmpty(old_tel)) {
+                            ShowUtil.showToast(this, "请输入旧手机号码!");
+                            return;
+                        }
                     }
 //                    if (!SharedPreferencesUtil.getMobile(this).equals(old_tel)) {
 //                        ShowUtil.showToast(this, "您输入的号码不匹配!");

@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/huiwen/Desktop/wevalue_android/library/src/main/jniLibs"/></dataSet><dataSet config="release"><source path="/Users/huiwen/Desktop/wevalue_android/library/src/release/jniLibs"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="E:\GitHub\wevalue\library\src\main\jniLibs"/></dataSet><dataSet config="release"><source path="E:\GitHub\wevalue\library\src\release\jniLibs"/></dataSet></merger>

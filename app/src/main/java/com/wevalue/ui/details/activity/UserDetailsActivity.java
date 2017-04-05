@@ -436,6 +436,8 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
                     if (result.equals("1")) {
                         isBlack = "0";
                         ShowUtil.showToast(UserDetailsActivity.this, message);
+                        pageindex = 1;
+                        getUserInfo();
                     } else {
                         ShowUtil.showToast(UserDetailsActivity.this, message);
                     }
@@ -452,6 +454,8 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
                     if (result.equals("1")) {
                         isBlack = "1";
                         ShowUtil.showToast(UserDetailsActivity.this, message);
+                        pageindex = 1;
+                        getUserInfo();
                     } else {
                         ShowUtil.showToast(UserDetailsActivity.this, message);
                     }
@@ -481,6 +485,7 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
         if (data == null || data.isEmpty()) {
             //如果是第一次加载
             if (pageindex == 1&&mAdapter!=null) {
+                mAdapter.clear();
                 mAdapter.setmDatas(new ArrayList<NoteBean.NoteEntity>());
                 mAdapter.notifyDataSetChanged();
                 return;
@@ -548,7 +553,7 @@ public class UserDetailsActivity extends BaseActivity implements View.OnClickLis
             iv_user_v.setVisibility(View.VISIBLE);
         else  iv_user_v.setVisibility(View.INVISIBLE);
         ImageUitls.setHead(userData.getUserface(), iv_user_img);
-        Transformation<Bitmap> trans = new BlurTransformation(WeValueApplication.applicationContext,12,4);
+        Transformation<Bitmap> trans = new BlurTransformation(WeValueApplication.applicationContext,24);
         ImageUitls.setImg(userData.getUserface(), iv_head_bg,trans);
         tv_jianjie.setText(userData.getUserinfo());
         setUserRemark();

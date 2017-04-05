@@ -474,7 +474,7 @@ public class SharedPreferencesUtil {
      * 保存城市Name
      */
     public static void setCityName(Context context, String cityName) {
-        SharedPreferences sp = WeValueApplication.applicationContext.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         Editor editor = sp.edit();
         editor.putString("cityName", cityName).commit();
     }
@@ -483,7 +483,7 @@ public class SharedPreferencesUtil {
      * 获取城市Name
      */
     public static String getCityName(Context context) {
-        SharedPreferences sp = WeValueApplication.applicationContext.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        SharedPreferences sp =context.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         return sp.getString("cityName", "");
     }
 
@@ -491,7 +491,7 @@ public class SharedPreferencesUtil {
      * 保存省Name
      */
     public static void setProvinceName(Context context, String provinceName) {
-        SharedPreferences sp = WeValueApplication.applicationContext.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         Editor editor = sp.edit();
         editor.putString("provinceName", provinceName).commit();
     }
@@ -500,7 +500,7 @@ public class SharedPreferencesUtil {
      * 获取省Name
      */
     public static String getProvinceName(Context context) {
-        SharedPreferences sp = WeValueApplication.applicationContext.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         return sp.getString("provinceName", "");
     }
 

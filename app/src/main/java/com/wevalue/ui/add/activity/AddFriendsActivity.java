@@ -1,7 +1,11 @@
 package com.wevalue.ui.add.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,7 +22,7 @@ import com.wevalue.ui.world.activity.SearchJieguoActivity;
 import com.wevalue.utils.LogUtils;
 import com.wevalue.utils.ShowUtil;
 
-/**
+/**添加好友
  * Created by Administrator on 2016-08-11.
  */
 public class AddFriendsActivity extends BaseActivity implements View.OnClickListener{
@@ -77,13 +81,28 @@ public class AddFriendsActivity extends BaseActivity implements View.OnClickList
                 finish();
             break;
             case R.id.rl_saoyisao:
-                intent = new Intent(this, CaptureActivity.class);
-                startActivity(intent);
+                if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    //申请权限  第二个参数是一个 数组 说明可以同时申请多个权限
+                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, 1);
+                } else {//已授权
+                    intent = new Intent(this, CaptureActivity.class);
+                    startActivity(intent);
+                }
             break;
             case R.id.rl_tongxunlu:
                 intent = new Intent(this, AddFromContactsActivity.class);
                 startActivity(intent);
             break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode== Activity.RESULT_OK&&requestCode==1){
+            Intent intent = new Intent(this, CaptureActivity.class);
+            startActivity(intent);
         }
     }
 }

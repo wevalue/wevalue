@@ -116,7 +116,7 @@ public class NoteDetailActivity extends BaseActivity implements WZHttpListener, 
 
     private int pagerIndex = 1; //评论加载页数  第几页
 
-    private String repostid;//转发id
+    private String repostid = "0";//转发id
     private String noteId;//帖子id
     private String repostfrom = "3";////1世界 2影响力 3其他
 
@@ -154,7 +154,6 @@ public class NoteDetailActivity extends BaseActivity implements WZHttpListener, 
         mNoteRequestBase.getNoteInfoRepostlist(RequestPath.GET_NOTECOMMLIST, noteId, repostid, pagerIndex, this);
         //获取帖子打赏数据
         getNoteRewardList(RequestPath.GET_NOTEREWARDLIST, noteId, repostid, 1, this);
-
     }
 
     /**
@@ -170,6 +169,7 @@ public class NoteDetailActivity extends BaseActivity implements WZHttpListener, 
         } else {
             noteId = "1";
         }
+        if (TextUtils.isEmpty(repostid))repostid = "0";
     }
 
     private void initPullToRefreshScrollView() {
@@ -471,7 +471,7 @@ public class NoteDetailActivity extends BaseActivity implements WZHttpListener, 
      * 填充数据: 转发帖子的信息 和 原帖子的信息 不同
      * 主要区别在于 作者，收益，转发量，评论量不同
      **/
-    public void setUIData(NoteBean.NoteEntity noteEntity) {
+    public void setUIData(final NoteBean.NoteEntity noteEntity) {
         if (noteEntity == null) {
 
             return;
@@ -486,7 +486,13 @@ public class NoteDetailActivity extends BaseActivity implements WZHttpListener, 
         tv_price.setText("价格 " + noteEntity.getPaynum());
         tv_income.setText("收益 " + noteEntity.getShouyi());
         tv_weizhi.setText("微值号 " + noteEntity.getUsernumber());
-
+        tv_weizhi.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                ShowUtil.showToast(context,"帖子ID: "+noteEntity.getNoteid());
+                return false;
+            }
+        });
         tv_note_content.setText(noteEntity.getContent());
         tv_read_num.setText(noteEntity.getClickcount());
         //判断是否是转发信息
@@ -558,9 +564,11 @@ public class NoteDetailActivity extends BaseActivity implements WZHttpListener, 
         if ("1".equals(isShare)) {
             head_view.iv_share_note.setVisibility(View.GONE);
         } else {
-            if ("1".equals(noteEntity.getIsfree())&&myUserid.equals(noteEntity.getUserid())){
+            if (myUserid.equals(noteEntity.getUserid())){
                 head_view.iv_share_note.setVisibility(View.VISIBLE);
-            }else {
+            }else if (!"1".equals(noteEntity.getIsfree())){
+                head_view.iv_share_note.setVisibility(View.VISIBLE);
+            } else {
                 head_view.iv_share_note.setVisibility(View.GONE);
             }
             head_view.iv_share_note.setOnClickListener(this);
@@ -787,6 +795,7 @@ public class NoteDetailActivity extends BaseActivity implements WZHttpListener, 
         HashMap<String, Object> map = new HashMap<>();
         map.put("code", RequestPath.CODE);
         map.put("noteid", noteId);
+        map.put("repostid", repostid);
         map.put("userid", SharedPreferencesUtil.getUid(this));
         map.put("noteFee", noteEntity.getIsfree());
         map.put("rewardmoney", money);

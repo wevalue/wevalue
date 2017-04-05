@@ -21,6 +21,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.wevalue.net.RequestPath;
 import com.wevalue.net.requestbase.NetworkRequest;
 import com.wevalue.net.requestbase.WZHttpListener;
+import com.wevalue.ui.mine.activity.BindingTelEmailActivity;
 import com.wevalue.ui.mine.activity.SetPayPswActivity;
 import com.wevalue.utils.Constants;
 import com.wevalue.utils.LogUtils;
@@ -91,11 +92,11 @@ public class PaymentBase1 implements WZHttpListener {
         });
     }
 
-   public void setWithdrawInfo(String outtype,String outaccount,String outtruename ){
-       this.outtype = outtype;
-       this.outaccount = outaccount;
-       this.outtruename = outtruename;
-   }
+    public void setWithdrawInfo(String outtype, String outaccount, String outtruename) {
+        this.outtype = outtype;
+        this.outaccount = outaccount;
+        this.outtruename = outtruename;
+    }
 
     //初始化本地支付订单
     public void initOrderInfo() {
@@ -103,7 +104,7 @@ public class PaymentBase1 implements WZHttpListener {
         money = hashMap.get("money");
         paytype = hashMap.get("paytype");
         //提现才会传下面这几个 否则可以不传
-        if (paytype.equals(Constants.withdraw)){
+        if (paytype.equals(Constants.withdraw)) {
             outtype = hashMap.get("outtype");
             outaccount = hashMap.get("outaccount");
             outtruename = hashMap.get("outtruename");
@@ -123,16 +124,34 @@ public class PaymentBase1 implements WZHttpListener {
                 initReceiver();//声明微信支付成功的广播接收者
                 break;
             case Constants.suiyinpay:
-                if (!TextUtils.isEmpty(paypwd)){
+                if ("1".equals(paypwd)) {
                     checkedMianMi();
-                }else {
-                    setPwd();
+                } else {
+                    checkPwd();
                 }
                 break;
         }
     }
+
+    private  void checkPwd(){
+        if (TextUtils.isEmpty(SharedPreferencesUtil.getMobile(activity))) {
+            Intent it = new Intent(activity, BindingTelEmailActivity.class);
+            it.putExtra("who", "tel");
+            activity.startActivity(it);
+            ShowUtil.showToast(activity, "请先绑定手机号");
+        } else {
+            //设置支付密码
+            Intent intent = new Intent();
+            intent.setClass(activity, SetPayPswActivity.class);
+            intent.putExtra("isSet", "set");
+            activity.startActivity(intent);
+            ShowUtil.showToast(activity, "请设置支付密码");
+        }
+    }
+
     CustomDialog selfDialog;
-    private void setPwd(){
+
+    private void setPwd() {
         selfDialog = new CustomDialog(activity);
         selfDialog.setTitle("提示");
         selfDialog.setMessage("是否立马去设置支付密码?");
@@ -141,7 +160,7 @@ public class PaymentBase1 implements WZHttpListener {
             public void onYesClick() {
                 Intent intent = new Intent();
                 intent.setClass(activity, SetPayPswActivity.class);
-                intent.putExtra("isSet","set");
+                intent.putExtra("isSet", "set");
                 activity.startActivity(intent);
                 selfDialog.dismiss();
             }
@@ -154,6 +173,7 @@ public class PaymentBase1 implements WZHttpListener {
         });
         selfDialog.show();
     }
+
     private Double getInt(String money) {
         try {
             Double dou = Double.parseDouble(money);
@@ -176,7 +196,7 @@ public class PaymentBase1 implements WZHttpListener {
         map.put("code", RequestPath.CODE);
         map.put("userid", userid);
         //每个链接都会自动加 logintoken 所以在此不用再加了
-       // map.put("logintoken", logintoken);
+        // map.put("logintoken", logintoken);
         NetworkRequest.postRequest(RequestPath.POST_CHECKONEPAY, map, new WZHttpListener() {
             @Override
             public void onSuccess(String content, String isUrl) {
@@ -198,7 +218,7 @@ public class PaymentBase1 implements WZHttpListener {
                             //验证碎银的支付密码
                             verifyPayPsw();
                         }
-                    }else {
+                    } else {
                         //如果没有开启免密支付 则验证碎银的支付密码
                         verifyPayPsw();
                     }
@@ -213,6 +233,7 @@ public class PaymentBase1 implements WZHttpListener {
             }
         });
     }
+
     //获取服务器端订单信息
     public void obtainOrderInfo() {
         LogUtils.e("wxdebug", "获取支付订单方法");

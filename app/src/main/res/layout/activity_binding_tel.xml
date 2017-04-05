@@ -10,6 +10,7 @@
     <include layout="@layout/head" />
 
     <RelativeLayout
+        android:id="@+id/layout_oldPhone"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="30dp"
